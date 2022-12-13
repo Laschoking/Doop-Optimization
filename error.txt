@@ -1,0 +1,75 @@
+> Task :generators:code-processor:generateGrammarSource UP-TO-DATE
+> Task :generators:code-processor:compileJava UP-TO-DATE
+> Task :generators:code-processor:compileGroovy UP-TO-DATE
+> Task :generators:code-processor:processResources NO-SOURCE
+> Task :generators:code-processor:classes UP-TO-DATE
+> Task :generators:code-processor:jar UP-TO-DATE
+> Task :generators:fact-generator-common:compileJava UP-TO-DATE
+> Task :generators:fact-generator-common:processResources NO-SOURCE
+> Task :generators:fact-generator-common:classes UP-TO-DATE
+> Task :generators:fact-generator-common:shadowJar UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :compileGroovy UP-TO-DATE
+> Task :resolveApktool
+> Task :generators:dex-fact-generator:compileJava UP-TO-DATE
+> Task :generators:dex-fact-generator:processResources NO-SOURCE
+> Task :generators:dex-fact-generator:classes UP-TO-DATE
+> Task :generators:dex-fact-generator:jar
+> Task :generators:dex-fact-generator:fatJar
+> Task :generators:dex-fact-generator:installJar
+> Task :generators:soot-fact-generator:compileJava UP-TO-DATE
+> Task :generators:soot-fact-generator:compileGroovy NO-SOURCE
+> Task :generators:soot-fact-generator:processResources NO-SOURCE
+> Task :generators:soot-fact-generator:classes UP-TO-DATE
+> Task :generators:soot-fact-generator:jar
+> Task :generators:soot-fact-generator:fatJar
+> Task :generators:soot-fact-generator:installJar
+> Task :generators:wala-fact-generator:compileJava UP-TO-DATE
+> Task :generators:wala-fact-generator:processResources UP-TO-DATE
+> Task :generators:wala-fact-generator:classes UP-TO-DATE
+> Task :generators:wala-fact-generator:jar
+> Task :generators:wala-fact-generator:fatJar
+> Task :generators:wala-fact-generator:installJar
+> Task :resourceInstaller
+> Task :processResources
+> Task :classes
+> Task :writeGitCommitHash UP-TO-DATE
+
+> Task :run
+Main class(es) expanded with 'docs/doop-101-examples/Example'
+WARNING: Handling of Java reflection is disabled!
+New context-insensitive analysis
+Id       : dfb4b38f6c4d5bcbb245dc5d6f2e948afff2816eb06fb73944b6f3627d383aae
+Inputs   : docs/doop-101-examples/Example.jar
+Libraries: 
+Using a timeout of 90 min.
+Adding extra logic file /home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/extra.dl
+Generic exception java.lang.RuntimeException: Command exited with non-zero status:
+ cpp -P -DPLATFORM=java_8 -DCONFIGURATION=ContextInsensitiveConfiguration -DMERGE_LIBRARY_OBJECTS_PER_METHOD -DX_STATS_NONE -DX_SERVER_LOGIC_THRESHOLD=1000 -DJRE18 /home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/extra.dl /tmp/tmp11500025677872238198pre
+Command exited with non-zero status:
+ cpp -P -DPLATFORM=java_8 -DCONFIGURATION=ContextInsensitiveConfiguration -DMERGE_LIBRARY_OBJECTS_PER_METHOD -DX_STATS_NONE -DX_SERVER_LOGIC_THRESHOLD=1000 -DJRE18 /home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/extra.dl /tmp/tmp11500025677872238198pre
+java.lang.RuntimeException: Command exited with non-zero status:
+ cpp -P -DPLATFORM=java_8 -DCONFIGURATION=ContextInsensitiveConfiguration -DMERGE_LIBRARY_OBJECTS_PER_METHOD -DX_STATS_NONE -DX_SERVER_LOGIC_THRESHOLD=1000 -DJRE18 /home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/extra.dl /tmp/tmp11500025677872238198pre
+	at org.clyze.utils.Executor.invoke(Executor.groovy:83)
+	at org.clyze.utils.Executor.execute(Executor.groovy:32)
+	at org.clyze.doop.utils.CPreprocessor.preprocess(CPreprocessor.groovy:91)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at org.clyze.doop.utils.CPreprocessor.includeAtEnd0(CPreprocessor.groovy:119)
+	at org.clyze.doop.utils.CPreprocessor.includeAtEnd(CPreprocessor.groovy:108)
+	at org.clyze.doop.core.SouffleAnalysis.mainAnalysis(SouffleAnalysis.groovy:196)
+	at org.clyze.doop.core.SouffleAnalysis.runAnalysisAndProduceStats(SouffleAnalysis.groovy:140)
+	at org.clyze.doop.core.SouffleAnalysis.run(SouffleAnalysis.groovy:39)
+	at org.clyze.doop.Main$1.run(Main.groovy:119)
+ERROR: Command exited with non-zero status:
+ cpp -P -DPLATFORM=java_8 -DCONFIGURATION=ContextInsensitiveConfiguration -DMERGE_LIBRARY_OBJECTS_PER_METHOD -DX_STATS_NONE -DX_SERVER_LOGIC_THRESHOLD=1000 -DJRE18 /home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/extra.dl /tmp/tmp11500025677872238198pre
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.3.3/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 27s
+24 actionable tasks: 12 executed, 12 up-to-date

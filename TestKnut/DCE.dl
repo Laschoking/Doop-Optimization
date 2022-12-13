@@ -1,0 +1,78 @@
+.decl VarSimpleName(x:Var, y:Var)
+.input VarSimpleName(IO="file", filename="Var-SimpleName.facts", delimiter="\t")
+
+.decl SpecialMethodInvocation(?instruction:symbol, ?index:float, ?signature:symbol, ?base:symbol, ?method:symbol)
+.input SpecialMethodInvocation(IO="file", filename="SpecialMethodInvocation.facts", delimiter="\t")
+
+//.decl StaticMethodInvocation(?instruction:symbol, ?index:float, ?signature:symbol, ?method:symbol)
+
+.decl VirtualMethodInvocation(?instruction:symbol, ?index:float, ?signature:symbol, ?base:symbol, ?method:symbol)
+.input VirtualMethodInvocation(IO="file", filename="VirtualMethodInvocation.facts", delimiter="\t")
+
+.decl StoreInstanceField(?instruction:symbol, ?index:float, ?from:symbol, ?base:symbol, ?signature:symbol, ?method:symbol)
+.input StoreInstanceField(IO="file", filename="StoreInstanceField.facts", delimiter="\t")
+
+.decl LoadInstanceField(?instruction:symbol, ?index:float, ?to:symbol, ?base:symbol, ?signature:symbol, ?method:symbol)
+.input LoadInstanceField(IO="file", filename="LoadInstanceField.facts", delimter="\t")
+
+.decl Return(?instruction:symbol, ?index:float, ?var:symbol, ?method:symbol)
+.input Return(IO="file", filename="Return.facts", delimter="\t")
+
+ .decl IfVar(?instruction:Var, ?pos:float, ?var:Var)
+ .input IfVar(IO="file", filename="IfVar.facts", delimter="\t")
+
+.decl ActualParam(?instr:float, ?v1:Var, ?v2:Var)
+.input ActualParam(IO="file", filename="ActualParam.facts", delimter="\t")
+
+.type Var <: symbol
+//.decl deadVar(v:Var)
+//.decl liveVar(v:Var)
+//.output liveVar
+//.output deadVar
+
+//in LoadInstanceField gilt nur die Var auf der rechten seite als in Benutzung
+//da nicht bekannt ist ob z = ax.parent; später verwendet wird 
+//diese Abhaengigkeit taucht auch später nicht auf z.b. in DFG
+
+//liveVar(?var) :-  VarSimpleName(?var, _), Flows_EXT(?var, ?zvar), ?zvar != ?var;
+ //   VarSimpleName(?var, _), SpecialMethodInvocation(_,_,_,?var,_);
+  //  VarSimpleName(?var, _), VirtualMethodInvocation(_,_,_,?var,_);
+   // VarSimpleName(?var, _), StoreInstanceField(_,_,_,?var,_,_);
+    //VarSimpleName(?var, _), StoreInstanceField(_,_,?var,_,_,_);
+    //VarSimpleName(?var,_), LoadInstanceField(_,_,_,?var,_,_);
+    //VarSimpleName(?var,_), Return(_,_,?var,_);
+    //VarSimpleName(?var,_), IfVar(_,_,?var);
+    //VarSimpleName(?var,_), ActualParam(_,_,?var).
+
+
+//deadVar(?var) :- VarSimpleName(?var, _), !liveVar(?var).
+
+
+
+
+.decl test_op(?val:symbol)
+test_op("1.1L").
+test_op("1.16").
+
+
+.functor str_to_float(x:symbol):float
+.functor testId(x:number):number
+
+.decl test3(?f:float)
+//test3(@str_to_float(?g)) :- test_op(?g).
+//test3(?v):- ?v=@testId(5).
+test3(?v):- ?v=@str_to_float("-8.0L").
+.decl test2(?f:symbol)
+.input test2(IO="file", filename="test2.csv", delimiter="\t")
+test2(?f):-  test_op(?g), match(".*L", ?g),?f=substr(?g,0,strlen(?g)-1);
+              test_op(?g),  !match(".*L", ?g),?f=to_string(?g).
+
+
+//.input test3(IO="file", filename="test2.csv", delimiter="\t")
+
+
+
+//.output Oper
+.output test_op
+.output test2
+.output test3

@@ -205,7 +205,7 @@ class SouffleScript {
 								 '-F' + factsDir.canonicalPath,
 								 '-D' + db.canonicalPath] as List<String>)
 		if (options.profile)
-			executionCommand << ("-p${outDir}/profile.txt" as String)
+			executionCommand << ("-p${outDir}/" as String)
 
 		def cmd = executionCommand.join(" ")
 		if (options.provenance || options.liveProf) {

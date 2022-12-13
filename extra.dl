@@ -1,0 +1,7 @@
+#!java
+
+
+
+decl. Methods(m : Method)
+Methods(m) :- ApplicationMethod(m).
+.output Methods

@@ -1,0 +1,100 @@
+
+.type Var <: symbol
+.type Method <: symbol
+.type Operator <: symbol
+.type Assignment <: symbol
+
+.decl AssignLocal(?ass:Assignment, ?instr:float, ?from:Var, ?to:Var,?meth:Method)
+.input AssignLocal(IO="file", filename="AssignLocal.facts", delimiter="\t")
+
+.decl AssignNumConstant(?assign:Assignment, ?inst:float, ?const:float, ?var:Var, ?meth:Method)
+.input AssignNumConstant(IO="file", filename="AssignNumConstant.facts", delimiter="\t")
+
+.decl AssignBinop(?assign:Assignment, ?inst:float, ?to:Var, ?meth:Method)
+.input AssignBinop(IO="file", filename="AssignBinop.facts", delimter="\t")
+
+.decl AssignOperFromConstant(?assign:Assignment, ?pos:float, ?const:float)
+.input AssignOperFromConstant(IO="file", filename="AssignOperFromConstant.facts", delimter="\t")
+
+.decl AssignOperFrom(?assign:Assignment,?pos:float, ?var:Var)
+.input AssignOperFrom(IO="file", filename="AssignOperFrom.facts", delimter="\t")
+
+.decl OperatorAt(?assign:Assignment, ?op:Operator)
+.input OperatorAt(IO="file", filename="OperatorAt.facts", delimter="\t")
+
+
+// (IO="file", filename="", delimter="\t")
+// (IO="file", filename="", delimter="\t")
+
+
+//Achtung: normale Assignments sind ok, aber bei Phi-Assignments
+
+
+
+//in quickOp Eingabe von zwei Zahlen und String Operator
+//dann wird in compRes das Ergebnis erzeugt!!!
+.decl quickOp(?v1:float,?v2:float, ?op:symbol)
+.decl compRes(?res:float,?v1:float,?v2:float, ?op:symbol)
+
+compRes(?res,?v1,?v2,?op):- ?res= ?v1 + ?v2, ?op="+", quickOp(?v1,?v2,?op);
+                            ?res= ?v1 - ?v2, ?op="-", quickOp(?v1,?v2,?op);
+                            ?res= ?v1 / ?v2, ?op="/", quickOp(?v1,?v2,?op);
+                            ?res= ?v1 * ?v2, ?op="*", quickOp(?v1,?v2,?op);
+                            //?res= ?v1 % ?v2, ?op="%", quickOp(?v1,?v2,?op);
+                            ?res= ?v1 ^ ?v2, ?op="^", quickOp(?v1,?v2,?op).
+
+
+
+//Pro Funktion
+//VarType -> Funktion & wo definiert (durch assign)
+
+.decl NewAssignNumConstant(?assign:Assignment, ?instr:float, ?const:symbol, ?var:Var, ?meth:Method)
+NewAssignNumConstant(?ass,?instr,?const_fl,?var,?meth) :- AssignNumConstant(?ass,?instr,?const,?var,?meth),
+                                                        match(".*L", ?const),?const_fl=substr(?const,0,strlen(?const)-1);
+                                                        AssignNumConstant(?ass,?instr,?const,?var,?meth),
+                                                        !match(".*L", ?const),?const_fl=to_string(?const).
+
+.decl NewAssignNumConstant2(?assign:Assignment, ?instr:float, ?const:float, ?var:Var, ?meth:Method)
+NewAssignNumConstant2(?ass,?instr,?const,?var,?meth) :- NewAssignNumConstant2(?ass,?instr,?const,?var,?meth).
+
+
+.decl Const(?var:Var, ?val:float, ?assign:Assignment, ?meth:Method)
+
+Const(?var, ?val, ?assign,?meth) :- NewAssignNumConstant2(?assign,_, ?val, ?var,?meth).
+
+Const(?to,?val, ?assign,?meth) :- Const(?from,?val,_,?meth), AssignLocal(?assign,_,?from, ?to,?meth), !contains("phi-assign",?assign).
+
+//stack 21 = j#_18 * 5
+
+
+
+//in case that second part is constant (z= f+3)
+quickOp(?val1,?val2,?op) :-   Const(?from,?val1,_,?meth), AssignOperFrom(?assign,_,?from),  
+                                AssignBinop(?assign, _, _, ?meth), AssignOperFromConstant(?assign,_,?val2), 
+                                OperatorAt(?assign, ?op), !contains("phi-assign",?assign).
+
+Const(?to,?res, ?assign,?meth):- Const(?from,?val1,_,?meth), AssignOperFrom(?assign,_,?from),
+                                 AssignBinop(?assign, _, ?to, ?meth), AssignOperFromConstant(?assign,_,?val2),
+                                 OperatorAt(?assign, ?op),compRes(?res,?val1,?val2,?op), !contains("phi-assign",?assign).
+
+
+//in case second part is also Variable (z=f+q)
+
+quickOp(?val1,?val2,?op) :-     Const(?from1,?val1,_,?meth), AssignOperFrom(?assign,_,?from1),  
+                                AssignBinop(?assign, _, _, ?meth), 
+                                Const(?from2,?val2,_,?meth), AssignOperFrom(?assign,_,?from2), 
+                                OperatorAt(?assign, ?op), !contains("phi-assign",?assign),
+                                ?from1 != ?from2.
+
+Const(?to,?res, ?assign,?meth):- Const(?from1,?val1,_,?meth), AssignOperFrom(?assign,_,?from1),  
+                                AssignBinop(?assign, _, ?to, ?meth), 
+                                Const(?from2,?val2,_,?meth), AssignOperFrom(?assign,_,?from2), 
+                                OperatorAt(?assign, ?op), compRes(?res,?val1,?val2,?op), !contains("phi-assign",?assign),
+                                ?from1 != ?from2.
+
+
+.output quickOp
+.output compRes
+.output Const
+
+//assign prüfen

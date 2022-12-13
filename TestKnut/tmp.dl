@@ -1,0 +1,13 @@
+.decl Var_DeclaringMethod(v: symbol, m: symbol)
+.input Var_DeclaringMethod(IO="file", filename="Var-DeclaringMethod.facts", delimiter="\t")
+
+.decl Temp(v: symbol)
+Temp(v) :-
+Var_DeclaringMethod(v, "<Animal: void <init>()>").
+
+.decl BlueCarCount(x: number)
+BlueCarCount(c) :- c = count:{Var_DeclaringMethod(_, "<Animal: void <init>()>")}.
+ .output BlueCarCount
+
+
+.output Temp

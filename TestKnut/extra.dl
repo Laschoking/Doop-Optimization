@@ -1,0 +1,13 @@
+#!java
+.decl Temp(v: Var, h: Value)
+
+Temp(v, h) :-
+  mainAnalysis.VarPointsTo(_, h, _, v),
+  Var_DeclaringMethod(v, "<Example: void test(int)>").
+
+.output Temp
+
+
+decl. Methods(m : Method)
+Methods(m) :- ApplicationMethod(m).
+.output Methods
