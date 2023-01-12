@@ -5,6 +5,8 @@
 .type Assignment <: symbol
 .type MethodInv <: symbol
 
+.decl VarDeclaringMethod(?var:Var,?method:Method)
+.input VarDeclaringMethod(IO="file", filename="Var-DeclaringMethod.facts", delimiter="\t")
 
 .decl AssignLocal(?inst:Assignment, ?nr:number,?var1:Var, ?var2:Var, ?method:Method)
 .input AssignLocal(IO="file", filename="AssignLocal.facts", delimiter="\t")
@@ -151,64 +153,112 @@ StaticCondition(?ifAssign,?value) :-
     ((?value = 1 , ?left != ?right);
     (?value = 0 , ?left = ?right)).
 
-.decl Exist_CFGPath(?BB1 : Assignment, ?BB2: Assignment,?nrPhiNodes:number)
-.decl test(?BB1 : Assignment, ?BB2: Assignment,?nrPhiNodes:number)
+.decl Exist_CFGPath(?BB1 : Assignment, ?BB2: Assignment)
+.output Exist_CFGPath
 
-test(?BB1, ?BB2, ?n1):-
-    Exist_CFGPath(?BB1, ?BB2, ?n1),
-    Exist_CFGPath(?BB1, ?BB2, ?n2),
-    ?n1!=?n2.
+Exist_CFGPath(?BB1,?BB1),
+Exist_CFGPath(?BB2,?BB2),
+Exist_CFGPath(?BB1, ?BB2):-
+    MayPredecessorBBModuloThrow(?BB1, ?BB2).
 
-.output test
+Exist_CFGPath(?BB1, ?BB3):-
+    Exist_CFGPath(?BB1, ?BB2), 
+    Exist_CFGPath(?BB2, ?BB3).
 
-NextPhiBB(?BB1, "blubb" , ?BB2),
-Exist_CFGPath(?BB1, ?BB2,?nrPhiNodes):-
-    MayPredecessorBBModuloThrow(?BB1, ?BB2),
-    ?BB1 != ?BB2,
+
+
+.decl AllReachablePhiNodes(?BB1:Assignment, ?BB2:Assignment)
+.output AllReachablePhiNodes
+
+AllReachablePhiNodes(?BB1, ?phiAssign):-
+    MayPredecessorBBModuloThrow(?BB1, ?phiAssign),
+    AllPhiAssigns(?phiAssign,_),
+    !NextInSamePhiNode(?phiAssign,?BB1). //avoid phi-assign/1 -> phi-assign/0 edges
+
+
+AllReachablePhiNodes(?BB1, ?phiAssign):-
+    Exist_CFGPath(?BB1, ?BB2),
+    AllReachablePhiNodes(?BB2, ?phiAssign),
+    !NextInSamePhiNode(?phiAssign,?BB1). //avoid phi-assign/1 -> phi-assign/0 edges
     
-    ((AllPhiAssigns(?BB2,_),
-    ?nrPhiNodes=1);
-    (!AllPhiAssigns(?BB2,_),
-    !contains("/phi-assign/",?BB2),
-    ?nrPhiNodes = 0)).
-
-Exist_CFGPath(?BB1, ?BB3,?nrPhiNodes):-
-    Exist_CFGPath(?BB1, ?BB2, ?nrPhiNodes1), 
-    Exist_CFGPath(?BB2, ?BB3, ?nrPhiNodes2),
-    ?BB1 != ?BB3, 
-    ((?nrPhiNodes = 1,
-    ?nrPhiNodes1 + ?nrPhiNodes2 >= 1 ); //??
-    (?nrPhiNodes = 0,
-    ?nrPhiNodes1 + ?nrPhiNodes2 < 1)).
-
-//Exist_CFGPath(?BB1, ?BB3, ?nrPhiNodes):-
- //   Exist_CFGPath(?BB1, ?BB2, _),
-  //  Exist_CFGPath(?BB2, ?BB3, _).
-.decl NextPhiBB(?BB1 : Assignment, ?BB:Assignment, ?BB2: Assignment)
-//Assumption: if BB contains Phi-Node it is the first statement
-
-
-
-NextPhiBB(?BB1, ?BB2, ?BB3):-
-    Exist_CFGPath(?BB1 ,?BB2,0),
-    NextPhiBB(?BB2,_, ?BB3).
 
 .decl AllPhiAssigns(?phiAssign:Assignment,?lineNr:number)
 .output AllPhiAssigns
 
 AllPhiAssigns(?phiAssign,?lineNr):-
     AssignLocal(?phiAssign, ?lineNr,_,_,_),
-    NextInSamePhiNode(?phiAssign, _).
+    (NextInSamePhiNode(?phiAssign, _);
+    NextInSamePhiNode(_,?phiAssign)).
+
+.decl AllIfAssign(?ifAssign:Assignment)
+AllIfAssign(?ifAssign):-
+    IfVar(?ifAssign,_,_).
+
+.decl StaticIfBranchesJoined(?ifAssign:Assignment, ?then:Assignment, ?else:Assignment,?phiAssign:Assignment,?lineNr:number)
+.decl StaticIfBranchesMeetAt(?ifAssign:Assignment, ?then:Assignment, ?else:Assignment,?phiAssign:Assignment,?lineNr:number)
+
+//see, where then-else branches join
+
+StaticIfBranchesJoined(?ifAssign,?thenBegin, ?elseBegin, ?phiAssign,?lineNr):-
+    AllIfAssign(?ifAssign),
+    JumpTarget(?elseBegin,?ifAssign),
+    Instruction_Next(?ifAssign, ?thenBegin),
+    AllReachablePhiNodes(?elseBegin, ?phiAssign),    //enforce that only the joining of both branches
+    AllReachablePhiNodes(?thenBegin, ?phiAssign),                 // is met and no further ?phiAssign are included, once branches join
+    AllPhiAssigns(?phiAssign,?lineNr).
+
+StaticIfBranchesMeetAt(?ifAssign,?thenBegin, ?elseBegin, ?phiAssign,?z):-
+    ?z = min ?lineNr : StaticIfBranchesJoined(?ifAssign,_, _, _,?lineNr),
+    StaticIfBranchesJoined(?ifAssign,?thenBegin, ?elseBegin, ?phiAssign,?z).
+
+.decl ConditionalConstFoldingOutput(?phiAssign:Assignment, ?to:Var, ?val:number)
+
+ConditionalConstFoldingOutput(?phiAssign2, ?to , ?val),
+IntConstFolding(?phiAssign2, ?to, ?val,?method, ?c + 1):-
+    StaticCondition(?ifAssign,1),
+    StaticIfBranchesMeetAt(?ifAssign, _, ?elseBegin,?phiAssign1,_),
+    NextInSamePhiNode(?phiAssign1, ?phiAssign2),
+    AssignLocal(?phiAssign2,_, ?from, ?to,_),
+    IntConstFolding(?varAssign, ?from, ?val, _,?c),
+    BasicBlockHead(?varHead,?varAssign),
+    Exist_CFGPath(?elseBegin, ?varHead),
+    VarDeclaringMethod(?to, ?method).
+
+ConditionalConstFoldingOutput(?phiAssign2, ?to , ?val),
+BoolConstFolding(?phiAssign2, ?to, ?val,?method):-
+    StaticCondition(?ifAssign,1),
+    StaticIfBranchesMeetAt(?ifAssign, _, ?elseBegin,?phiAssign1,_),
+    NextInSamePhiNode(?phiAssign1, ?phiAssign2),
+    AssignLocal(?phiAssign2,_, ?from, ?to,_),
+    BoolConstFolding(?varAssign, ?from, ?val, _),
+    BasicBlockHead(?varHead,?varAssign),
+    Exist_CFGPath(?elseBegin, ?varHead),
+    VarDeclaringMethod(?to, ?method).
 
 
+ConditionalConstFoldingOutput(?phiAssign, ?to , ?val),
+IntConstFolding(?phiAssign, ?to, ?val,?method, ?c + 1):-
+    StaticCondition(?ifAssign,0),
+    StaticIfBranchesMeetAt(?ifAssign, ?thenBegin, _,?phiAssign,?lineNr),
+    AssignLocal(?phiAssign,?lineNr, ?from, ?to,_),
+    IntConstFolding(?varAssign, ?from, ?val, _,?c),
+    BasicBlockHead(?varHead,?varAssign),
+    Exist_CFGPath(?thenBegin, ?varHead),
+    VarDeclaringMethod(?to, ?method).
 
+ConditionalConstFoldingOutput(?phiAssign, ?to , ?val),
+BoolConstFolding(?phiAssign, ?to, ?val,?method):-
+    StaticCondition(?ifAssign,0),
+    StaticIfBranchesMeetAt(?ifAssign, ?thenBegin, _,?phiAssign,?lineNr),
+    AssignLocal(?phiAssign,?lineNr, ?from, ?to,_),
+    BoolConstFolding(?varAssign, ?from, ?val, _),
+    BasicBlockHead(?varHead,?varAssign),
+    Exist_CFGPath(?thenBegin, ?varHead),
+    VarDeclaringMethod(?to, ?method).
 
-
-
-
-
-
-
-
-.output NextPhiBB
-.output Exist_CFGPath
+.output AllIfAssign
+.output ConditionalConstFoldingOutput
+.output StaticIfBranchesMeetAt
+.output StaticIfBranchesJoined
+.output IntConstFolding
+.output BoolConstFolding

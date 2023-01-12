@@ -1,0 +1,10 @@
+<Example: void main(java.lang.String[])>/assign/14	<Example: void main(java.lang.String[])>/l#_21	750	<Example: void main(java.lang.String[])>	2
+<Example: void main(java.lang.String[])>/assign/11	<Example: void main(java.lang.String[])>/j#_18	5	<Example: void main(java.lang.String[])>	1
+<Example: void main(java.lang.String[])>/assign/13	<Example: void main(java.lang.String[])>/z#_20	150	<Example: void main(java.lang.String[])>	1
+<Example: void main(java.lang.String[])>/assign/15	<Example: void main(java.lang.String[])>/j#3#_22	750	<Example: void main(java.lang.String[])>	3
+<Example: void main(java.lang.String[])>/assign/16	<Example: void main(java.lang.String[])>/m#_25	0	<Example: void main(java.lang.String[])>	1
+<Example: void main(java.lang.String[])>/phi-assign/0	<Example: void main(java.lang.String[])>/m_$$A_1#_26	0	<Example: void main(java.lang.String[])>	2
+<Example: void main(java.lang.String[])>/phi-assign/1	<Example: void main(java.lang.String[])>/m_$$A_1#_26	1	<Example: void main(java.lang.String[])>	4
+<Example: void main(java.lang.String[])>/phi-assign/2	<Example: void main(java.lang.String[])>/j#3_$$A_1#_26	750	<Example: void main(java.lang.String[])>	4
+<Example: void main(java.lang.String[])>/assign/21	<Example: void main(java.lang.String[])>/m_$$A_2#_25	1	<Example: void main(java.lang.String[])>	3
+<Example: void main(java.lang.String[])>/assign/21	<Example: void main(java.lang.String[])>/m_$$A_2#_25	2	<Example: void main(java.lang.String[])>	5
