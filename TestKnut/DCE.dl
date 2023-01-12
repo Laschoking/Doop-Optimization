@@ -4,7 +4,6 @@
 .decl SpecialMethodInvocation(?instruction:symbol, ?index:float, ?signature:symbol, ?base:symbol, ?method:symbol)
 .input SpecialMethodInvocation(IO="file", filename="SpecialMethodInvocation.facts", delimiter="\t")
 
-//.decl StaticMethodInvocation(?instruction:symbol, ?index:float, ?signature:symbol, ?method:symbol)
 
 .decl VirtualMethodInvocation(?instruction:symbol, ?index:float, ?signature:symbol, ?base:symbol, ?method:symbol)
 .input VirtualMethodInvocation(IO="file", filename="VirtualMethodInvocation.facts", delimiter="\t")
@@ -24,55 +23,29 @@
 .decl ActualParam(?instr:float, ?v1:Var, ?v2:Var)
 .input ActualParam(IO="file", filename="ActualParam.facts", delimter="\t")
 
+
+.decl AssignNumConstant(?assign:symbol, ?inst:float, ?const:symbol, ?var:symbol, ?meth:symbol)
+.input AssignNumConstant(IO="file", filename="AssignNumConstant.facts", delimiter="\t")
+
+
+.decl VarType(?var:Var, ?type:symbol)
+.input VarType(IO="file", filename="Var-Type.facts", delimiter="\t")
+
 .type Var <: symbol
-//.decl deadVar(v:Var)
-//.decl liveVar(v:Var)
-//.output liveVar
-//.output deadVar
-
-//in LoadInstanceField gilt nur die Var auf der rechten seite als in Benutzung
-//da nicht bekannt ist ob z = ax.parent; später verwendet wird 
-//diese Abhaengigkeit taucht auch später nicht auf z.b. in DFG
-
-//liveVar(?var) :-  VarSimpleName(?var, _), Flows_EXT(?var, ?zvar), ?zvar != ?var;
- //   VarSimpleName(?var, _), SpecialMethodInvocation(_,_,_,?var,_);
-  //  VarSimpleName(?var, _), VirtualMethodInvocation(_,_,_,?var,_);
-   // VarSimpleName(?var, _), StoreInstanceField(_,_,_,?var,_,_);
-    //VarSimpleName(?var, _), StoreInstanceField(_,_,?var,_,_,_);
-    //VarSimpleName(?var,_), LoadInstanceField(_,_,_,?var,_,_);
-    //VarSimpleName(?var,_), Return(_,_,?var,_);
-    //VarSimpleName(?var,_), IfVar(_,_,?var);
-    //VarSimpleName(?var,_), ActualParam(_,_,?var).
-
-
-//deadVar(?var) :- VarSimpleName(?var, _), !liveVar(?var).
 
 
 
-
-.decl test_op(?val:symbol)
-test_op("1.1L").
-test_op("1.16").
 
 
 .functor str_to_float(x:symbol):float
 .functor testId(x:number):number
-
-.decl test3(?f:float)
-//test3(@str_to_float(?g)) :- test_op(?g).
-//test3(?v):- ?v=@testId(5).
-test3(?v):- ?v=@str_to_float("-8.0L").
-.decl test2(?f:symbol)
-.input test2(IO="file", filename="test2.csv", delimiter="\t")
-test2(?f):-  test_op(?g), match(".*L", ?g),?f=substr(?g,0,strlen(?g)-1);
-              test_op(?g),  !match(".*L", ?g),?f=to_string(?g).
+.functor retType(x:symbol):symbol
+.decl test(?type:symbol)
 
 
-//.input test3(IO="file", filename="test2.csv", delimiter="\t")
+test(?type):- VarType(?var,?type),AssignNumConstant(_,_,_,?var,_).
 
 
 
-//.output Oper
-.output test_op
-.output test2
-.output test3
+
+.output test

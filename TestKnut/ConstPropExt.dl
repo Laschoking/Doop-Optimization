@@ -1,0 +1,214 @@
+
+.type Var <: symbol
+.type Method <: symbol
+.type Operator <: symbol
+.type Assignment <: symbol
+.type MethodInv <: symbol
+
+
+.decl AssignLocal(?inst:Assignment, ?nr:number,?var1:Var, ?var2:Var, ?method:Method)
+.input AssignLocal(IO="file", filename="AssignLocal.facts", delimiter="\t")
+
+.decl BasicBlockHead(?inst:Assignment, ?ins:Assignment)
+.input BasicBlockHead(IO="file", filename="BasicBlockHead.csv", delimiter="\t")
+
+.decl JumpTarget(?inst:Assignment, ?instr:Assignment)
+.input JumpTarget(IO="file", filename="JumpTarget.csv", delimiter="\t")
+
+.decl IsJumpTarget(?inst:Assignment)
+.input IsJumpTarget(IO="file", filename="IsJumpTarget.csv", delimiter="\t")
+
+.decl Instruction_Next(?inst:Assignment,?inst1:Assignment)
+.input Instruction_Next(IO="file", filename="Instruction_Next.csv", delimiter="\t")
+
+.decl MaySuccessorBBModuloThrow(?inst:Assignment, ?inst1:Assignment)
+.input MaySuccessorBBModuloThrow(IO="file", filename="MaySuccessorBBModuloThrow.csv", delimiter="\t")
+
+.decl MayPredecessorBBModuloThrow(?inst:Assignment, ?inst1:Assignment)
+.input MayPredecessorBBModuloThrow(IO="file", filename="MayPredecessorBBModuloThrow.csv", delimiter="\t")
+
+
+.decl NextInSamePhiNode(?inst:Assignment,?inst1:Assignment)
+.input NextInSamePhiNode(IO="file", filename="NextInSamePhiNode.csv", delimiter="\t")
+
+
+.decl OperatorAt(?assign:Assignment, ?op:Operator)
+.input OperatorAt(IO="file", filename="OperatorAt.facts", delimter="\t")
+
+
+
+.decl VarType(?var:Var, ?type:symbol)
+.input VarType(IO="file", filename="Var-Type.facts", delimiter="\t")
+
+
+.decl IntConstFolding(?instruction:Assignment, ?variable:Var, ?value:number, ?meth:symbol, ?use:number)
+.input IntConstFolding(IO="file", filename="IntConstFolding.csv",delimiter="\t")
+
+.decl BoolConstFolding(?instruction:Assignment, ?var:Var, ?value:number, ?meth:symbol)
+.input BoolConstFolding(IO="file", filename="BoolConstFolding.csv",delimiter="\t")
+
+
+.decl IfVar(?instr:Assignment, ?n: number, ?var:Var)
+.input IfVar(IO="file", filename="IfVar.facts",delimiter="\t")
+
+.decl IfConstant(?instr:Assignment, ?n:number, ?val:number)
+.input IfConstant(IO="file", filename="IfConstant.facts", delimiter="\t")
+
+
+
+.decl StaticCondition(?instr:Assignment, ?value:number)
+.output StaticCondition
+
+
+//Int Condition <=
+
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    IntConstFolding(_,?var1,?left,_, _),
+    IfConstant(?ifAssign, ?pos2, ?right),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"<="),
+    ((?value = 1, ?left <= ?right);
+    (?value = 0, ?left > ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfConstant(?ifAssign, ?pos1, ?left),
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    IntConstFolding(_,?var2,?right,_, _),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"<="),
+    ((?value = 1, ?left <= ?right);
+    (?value = 0, ?left > ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    IntConstFolding(_,?var1,?left,_, _),
+    IntConstFolding(_,?var2,?right,_,_),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"<="),
+    ((?value = 1, ?left <= ?right);
+    (?value = 0, ?left > ?right)).
+
+
+//Boolean Condition ==
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    BoolConstFolding(_,?var1,?left,_),
+    IfConstant(?ifAssign, ?pos2, ?right),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"=="),
+    ((?value = 1 , ?left = ?right);
+    (?value = 0 , ?left != ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfConstant(?ifAssign, ?pos1, ?left),
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    BoolConstFolding(_,?var2,?right,_),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"=="),
+    ((?value = 1 , ?left = ?right);
+    (?value = 0 , ?left != ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1),
+    IfVar(?ifAssign, ?pos2, ?var2),  
+    BoolConstFolding(_,?var1,?left,_),
+    BoolConstFolding(_,?var2,?right,_),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"=="),
+    ((?value = 1 , ?left = ?right);
+    (?value = 0 , ?left != ?right)).
+
+
+    
+//Boolean Condition !=
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    BoolConstFolding(_,?var1,?left,_),
+    IfConstant(?ifAssign, ?pos2, ?right),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"!="),
+    ((?value = 1 , ?left != ?right);
+    (?value = 0 , ?left = ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfConstant(?ifAssign, ?pos1, ?left),
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    BoolConstFolding(_,?var2,?right,_),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"!="),
+    ((?value = 1 , ?left != ?right);
+    (?value = 0 , ?left = ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    BoolConstFolding(_,?var1,?left,_),
+    BoolConstFolding(_,?var2,?right,_),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"!="),
+    ((?value = 1 , ?left != ?right);
+    (?value = 0 , ?left = ?right)).
+
+.decl Exist_CFGPath(?BB1 : Assignment, ?BB2: Assignment,?nrPhiNodes:number)
+.decl test(?BB1 : Assignment, ?BB2: Assignment,?nrPhiNodes:number)
+
+test(?BB1, ?BB2, ?n1):-
+    Exist_CFGPath(?BB1, ?BB2, ?n1),
+    Exist_CFGPath(?BB1, ?BB2, ?n2),
+    ?n1!=?n2.
+
+.output test
+
+NextPhiBB(?BB1, "blubb" , ?BB2),
+Exist_CFGPath(?BB1, ?BB2,?nrPhiNodes):-
+    MayPredecessorBBModuloThrow(?BB1, ?BB2),
+    ?BB1 != ?BB2,
+    
+    ((AllPhiAssigns(?BB2,_),
+    ?nrPhiNodes=1);
+    (!AllPhiAssigns(?BB2,_),
+    !contains("/phi-assign/",?BB2),
+    ?nrPhiNodes = 0)).
+
+Exist_CFGPath(?BB1, ?BB3,?nrPhiNodes):-
+    Exist_CFGPath(?BB1, ?BB2, ?nrPhiNodes1), 
+    Exist_CFGPath(?BB2, ?BB3, ?nrPhiNodes2),
+    ?BB1 != ?BB3, 
+    ((?nrPhiNodes = 1,
+    ?nrPhiNodes1 + ?nrPhiNodes2 >= 1 ); //??
+    (?nrPhiNodes = 0,
+    ?nrPhiNodes1 + ?nrPhiNodes2 < 1)).
+
+//Exist_CFGPath(?BB1, ?BB3, ?nrPhiNodes):-
+ //   Exist_CFGPath(?BB1, ?BB2, _),
+  //  Exist_CFGPath(?BB2, ?BB3, _).
+.decl NextPhiBB(?BB1 : Assignment, ?BB:Assignment, ?BB2: Assignment)
+//Assumption: if BB contains Phi-Node it is the first statement
+
+
+
+NextPhiBB(?BB1, ?BB2, ?BB3):-
+    Exist_CFGPath(?BB1 ,?BB2,0),
+    NextPhiBB(?BB2,_, ?BB3).
+
+.decl AllPhiAssigns(?phiAssign:Assignment,?lineNr:number)
+.output AllPhiAssigns
+
+AllPhiAssigns(?phiAssign,?lineNr):-
+    AssignLocal(?phiAssign, ?lineNr,_,_,_),
+    NextInSamePhiNode(?phiAssign, _).
+
+
+
+
+
+
+
+
+
+
+
+.output NextPhiBB
+.output Exist_CFGPath

@@ -9,15 +9,20 @@
 extern "C" {
 
 float str_to_float(const char* x) {
-    double j  = 1.1;
     char g[strlen(x)];
     //const char* g = *x;
     const char c = 'L';
     if (strchr(x, c)!= NULL){
-        j = 2.1;
         int i = 0;
+        //bool exp = false; E wird gehandelt
         while(i <strlen(x)){
-            if (x[i]!= 'L')
+            if (x[i] != 'L' && x[i] != 'F')
+            //davon ausgehend, dass nur 1 E gelesen wird
+                /*if (x[i] == 'E'){
+                    exp = true;
+                }else if(exp){
+                    g[i-1] = x[i];
+                }*/
                 g[i]=x[i];
             i++;
 
@@ -29,6 +34,18 @@ float str_to_float(const char* x) {
 }
 }
 
+const char * retType(const char* x){
+    int i = 0;
+    const char * t = "i";
+    while(x[i++] != '\0'){
+        if (x[i]== '.' || x[i] == 'E'){
+            t = "f";
+            break;
+        }
+
+    }
+return t;
+}
 int testId(int i){
     return i;
 }

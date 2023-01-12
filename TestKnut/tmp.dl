@@ -1,13 +1,14 @@
-.decl Var_DeclaringMethod(v: symbol, m: symbol)
-.input Var_DeclaringMethod(IO="file", filename="Var-DeclaringMethod.facts", delimiter="\t")
+.decl BasicBlockBegin(v: symbol)
+.input BasicBlockBegin(IO="file", filename="BasicBlockBegin.csv", delimiter="\t")
 
-.decl Temp(v: symbol)
-Temp(v) :-
-Var_DeclaringMethod(v, "<Animal: void <init>()>").
+.decl BasicBlockHead(v: symbol,g:symbol)
+.input BasicBlockHead(IO="file", filename="BasicBlockHead.csv", delimiter="\t")
 
-.decl BlueCarCount(x: number)
-BlueCarCount(c) :- c = count:{Var_DeclaringMethod(_, "<Animal: void <init>()>")}.
- .output BlueCarCount
+.decl OutOpt(?s:symbol, ?x:symbol)
+.decl couBB(n:number)
+OutOpt(?x,?head):- BasicBlockBegin(?head), BasicBlockHead(?x,?head).
 
+couBB(count:{OutOpt(_,_)}).
+couBB(count:{BasicBlockHead(_,_)}).
 
-.output Temp
+.output couBB

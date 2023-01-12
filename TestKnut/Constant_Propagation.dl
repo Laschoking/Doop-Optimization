@@ -3,17 +3,18 @@
 .type Method <: symbol
 .type Operator <: symbol
 .type Assignment <: symbol
+.type MethodInv <: symbol
 
 .decl AssignLocal(?ass:Assignment, ?instr:float, ?from:Var, ?to:Var,?meth:Method)
 .input AssignLocal(IO="file", filename="AssignLocal.facts", delimiter="\t")
 
-.decl AssignNumConstant(?assign:Assignment, ?inst:float, ?const:float, ?var:Var, ?meth:Method)
+.decl AssignNumConstant(?assign:Assignment, ?inst:float, ?const:symbol, ?var:Var, ?meth:Method)
 .input AssignNumConstant(IO="file", filename="AssignNumConstant.facts", delimiter="\t")
 
 .decl AssignBinop(?assign:Assignment, ?inst:float, ?to:Var, ?meth:Method)
 .input AssignBinop(IO="file", filename="AssignBinop.facts", delimter="\t")
 
-.decl AssignOperFromConstant(?assign:Assignment, ?pos:float, ?const:float)
+.decl AssignOperFromConstant(?assign:Assignment, ?pos:float, ?const:symbol)
 .input AssignOperFromConstant(IO="file", filename="AssignOperFromConstant.facts", delimter="\t")
 
 .decl AssignOperFrom(?assign:Assignment,?pos:float, ?var:Var)
@@ -22,9 +23,40 @@
 .decl OperatorAt(?assign:Assignment, ?op:Operator)
 .input OperatorAt(IO="file", filename="OperatorAt.facts", delimter="\t")
 
+.decl ActualParam(?index:number, ?inv:MethodInv, ?var:Var)
+.input ActualParam(IO="file", filename="ActualParam.facts", delimter="\t")
+
+.decl VarType(?var:Var, ?type:symbol)
+.input VarType(IO="file", filename="Var-Type.facts", delimiter="\t")
 
 // (IO="file", filename="", delimter="\t")
 // (IO="file", filename="", delimter="\t")
+
+
+.decl ConstType(?left:symbol,?right:symbol,?op:symbol,?res:symbol)
+ConstType("i","i","+","i").
+ConstType("i","i","-","i").
+ConstType("i","i","*","i").
+ConstType("i","i","/","f").
+ConstType("i","i","^","i").
+
+ConstType("f","i","+","f").
+ConstType("f","i","-","f").
+ConstType("f","i","/","f").
+ConstType("f","i","*","f").
+ConstType("f","i","^","f").
+
+ConstType("i","f","+","f").
+ConstType("i","f","-","f").
+ConstType("i","f","/","f").
+ConstType("i","f","*","f").
+ConstType("i","f","^","f").
+
+ConstType("f","f","+","f").
+ConstType("f","f","-","f").
+ConstType("f","f","/","f").
+ConstType("f","f","*","f").
+ConstType("f","f","^","f").
 
 
 //Achtung: normale Assignments sind ok, aber bei Phi-Assignments
@@ -48,53 +80,53 @@ compRes(?res,?v1,?v2,?op):- ?res= ?v1 + ?v2, ?op="+", quickOp(?v1,?v2,?op);
 //Pro Funktion
 //VarType -> Funktion & wo definiert (durch assign)
 
-.decl NewAssignNumConstant(?assign:Assignment, ?instr:float, ?const:symbol, ?var:Var, ?meth:Method)
-NewAssignNumConstant(?ass,?instr,?const_fl,?var,?meth) :- AssignNumConstant(?ass,?instr,?const,?var,?meth),
-                                                        match(".*L", ?const),?const_fl=substr(?const,0,strlen(?const)-1);
-                                                        AssignNumConstant(?ass,?instr,?const,?var,?meth),
-                                                        !match(".*L", ?const),?const_fl=to_string(?const).
+.functor str_to_float(x:symbol):float
+.functor retType(x:symbol):symbol
+//varType either 'f' or 'i'
 
-.decl NewAssignNumConstant2(?assign:Assignment, ?instr:float, ?const:float, ?var:Var, ?meth:Method)
-NewAssignNumConstant2(?ass,?instr,?const,?var,?meth) :- NewAssignNumConstant2(?ass,?instr,?const,?var,?meth).
+.decl Const(?var:Var, ?varType: symbol, ?val:float, ?assign:Assignment, ?meth:Method)
+.decl ConstRes(?var:Var, ?varType:symbol, ?val:float, ?assign:Assignment, ?meth:Method)
+.decl ConstFunctionParam(?inv:MethodInv,?var:Var, ?varType:symbol, ?val:float)
+//?type=@retType(?val_sym),
+Const(?var, ?type, ?val, ?assign,?meth) :- ?val=@str_to_float(?val_sym),  AssignNumConstant(?assign,_, ?val_sym, ?var,?meth), VarType(?var,?type).
 
-
-.decl Const(?var:Var, ?val:float, ?assign:Assignment, ?meth:Method)
-
-Const(?var, ?val, ?assign,?meth) :- NewAssignNumConstant2(?assign,_, ?val, ?var,?meth).
-
-Const(?to,?val, ?assign,?meth) :- Const(?from,?val,_,?meth), AssignLocal(?assign,_,?from, ?to,?meth), !contains("phi-assign",?assign).
+Const(?to,?type,?val, ?assign,?meth) :- Const(?from,?type, ?val,_,?meth), AssignLocal(?assign,_,?from, ?to,?meth), !contains("phi-assign",?assign).
 
 //stack 21 = j#_18 * 5
 
 
 
 //in case that second part is constant (z= f+3)
-quickOp(?val1,?val2,?op) :-   Const(?from,?val1,_,?meth), AssignOperFrom(?assign,_,?from),  
+quickOp(?val1,@str_to_float(?val2),?op) :-   Const(?from,_, ?val1,_,?meth), AssignOperFrom(?assign,_,?from),  
                                 AssignBinop(?assign, _, _, ?meth), AssignOperFromConstant(?assign,_,?val2), 
                                 OperatorAt(?assign, ?op), !contains("phi-assign",?assign).
 
-Const(?to,?res, ?assign,?meth):- Const(?from,?val1,_,?meth), AssignOperFrom(?assign,_,?from),
+Const(?to,?type,?res, ?assign,?meth):- Const(?from,?type1, ?val1,_,?meth), AssignOperFrom(?assign,_,?from),
                                  AssignBinop(?assign, _, ?to, ?meth), AssignOperFromConstant(?assign,_,?val2),
-                                 OperatorAt(?assign, ?op),compRes(?res,?val1,?val2,?op), !contains("phi-assign",?assign).
+                                 OperatorAt(?assign, ?op),compRes(?res,?val1,@str_to_float(?val2),?op), 
+                                 !contains("phi-assign",?assign),ConstType(?type1,@retType(?val2),?op,?type).
 
 
 //in case second part is also Variable (z=f+q)
 
-quickOp(?val1,?val2,?op) :-     Const(?from1,?val1,_,?meth), AssignOperFrom(?assign,_,?from1),  
+quickOp(?val1,?val2,?op) :-     Const(?left,_,?val1,_,?meth), AssignOperFrom(?assign,_,?left),  
                                 AssignBinop(?assign, _, _, ?meth), 
-                                Const(?from2,?val2,_,?meth), AssignOperFrom(?assign,_,?from2), 
+                                Const(?right,_,?val2,_,?meth), AssignOperFrom(?assign,_,?right), 
                                 OperatorAt(?assign, ?op), !contains("phi-assign",?assign),
-                                ?from1 != ?from2.
+                                ?left != ?right.
 
-Const(?to,?res, ?assign,?meth):- Const(?from1,?val1,_,?meth), AssignOperFrom(?assign,_,?from1),  
+Const(?to,?resType,?res, ?assign,?meth):- Const(?left,?leftType,?val1,_,?meth), AssignOperFrom(?assign,_,?left),  
                                 AssignBinop(?assign, _, ?to, ?meth), 
-                                Const(?from2,?val2,_,?meth), AssignOperFrom(?assign,_,?from2), 
+                                Const(?right,?rightType,?val2,_,?meth), AssignOperFrom(?assign,_,?right), 
                                 OperatorAt(?assign, ?op), compRes(?res,?val1,?val2,?op), !contains("phi-assign",?assign),
-                                ?from1 != ?from2.
+                                ?left != ?right, ConstType(?leftType,?rightType,?op,?resType).
 
 
+ConstRes(?to,?type,?res, ?assign,?meth) :- Const(?to,?type,?res, ?assign,?meth), !AssignNumConstant(?assign,_, _, _,?meth).
+ConstFunctionParam(?inv,?var,?type,?val):- ActualParam(_,?inv,?var), Const(?var,?type,?val,_,_).
 .output quickOp
 .output compRes
 .output Const
-
+.output ConstRes
+.output ConstFunctionParam
 //assign prüfen

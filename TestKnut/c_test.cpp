@@ -40,9 +40,24 @@ float str_to_float1(const char* x) {
 
 }
 
+const char * retType(const char* x){
+    int i = 0;
+    const char * t = "i";
+    while(x[i++] != '\0'){
+        if (x[i]== '.' || x[i] == 'E'){
+            t = "f";
+            break;
+        }
+
+    }
+return t;
+}
+
+
 
 int main(){
-    std::cout << str_to_float1("1.3451L");
+    //std::cout << str_to_float1("1.3451L");
+    std::cout << retType("4.4564");
 }
 }
 /*

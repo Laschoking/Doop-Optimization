@@ -1,0 +1,272 @@
+public class Example extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        Example this#_0;
+
+        this#_0 := @this: Example;
+
+        specialinvoke this#_0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[]) throws java.io.IOException
+    {
+        Example $stack17;
+        java.lang.String[] args#_0;
+        int $stack18, l#_21, j#3#_22;
+        java.io.BufferedReader $stack19, buffer#_9;
+        java.io.InputStreamReader $stack20;
+        java.io.InputStream $stack21;
+        java.lang.String line#_13, $stack24, result#_15;
+        java.lang.StringBuilder $stack23, $stack25, $stack26;
+        byte $stack28, $stack30, j#_18;
+        float k#_19, $stack29;
+        boolean a1#_24, a#_32, b#_33, d#_34, f#_36, $stack42, $stack39, $stack37, e#_35, $stack33, $stack42_$$A_1, $stack42_$$A_2, $stack39_$$A_1, $stack39_$$A_2, $stack37_$$A_1, $stack37_$$A_2, $stack33_$$A_1, $stack33_$$A_2, e_$$A_1#_37;
+        java.io.PrintStream $stack31;
+        short z#_20;
+
+        args#_0 := @parameter0: java.lang.String[];
+
+        $stack17 = new Example;
+
+        specialinvoke $stack17.<Example: void <init>()>();
+
+        $stack18 = lengthof args#_0;
+
+        virtualinvoke $stack17.<Example: void test(int)>($stack18);
+
+        $stack19 = new java.io.BufferedReader;
+
+        $stack20 = new java.io.InputStreamReader;
+
+        $stack21 = <java.lang.System: java.io.InputStream in>;
+
+        specialinvoke $stack20.<java.io.InputStreamReader: void <init>(java.io.InputStream)>($stack21);
+
+        specialinvoke $stack19.<java.io.BufferedReader: void <init>(java.io.Reader)>($stack20);
+
+        buffer#_9 = $stack19;
+
+        line#_13 = virtualinvoke buffer#_9.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        staticinvoke <Example: void sanitize(java.lang.Object)>(line#_13);
+
+        $stack23 = new java.lang.StringBuilder;
+
+        specialinvoke $stack23.<java.lang.StringBuilder: void <init>()>();
+
+        $stack24 = args#_0[0];
+
+        $stack25 = virtualinvoke $stack23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($stack24);
+
+        $stack26 = virtualinvoke $stack25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(line#_13);
+
+        result#_15 = virtualinvoke $stack26.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        j#_18 = 5;
+
+        $stack28 = neg j#_18;
+
+        k#_19 = (float) $stack28;
+
+        z#_20 = 150;
+
+        l#_21 = j#_18 * z#_20;
+
+        j#3#_22 = l#_21;
+
+        $stack29 = (float) j#3#_22;
+
+        $stack30 = $stack29 cmpl k#_19;
+
+        if $stack30 <= 0 goto label01;
+
+        $stack42 = 1; #assign/17
+
+(0)     goto label02;   #goto/0
+
+     label01:
+(1)     $stack42_$$A_1 = 0; #assign/18
+
+     label02:             # phi-assign/0, phi-assign/1
+        $stack42_$$A_2 = Phi($stack42 #0, $stack42_$$A_1 #1);
+
+        a1#_24 = $stack42_$$A_2;
+
+        $stack31 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack31.<java.io.PrintStream: void println(java.lang.String)>(result#_15);
+
+        a#_32 = 0;
+
+        if a#_32 != 0 goto label03;
+
+        goto label04;
+
+     label03:
+        $stack39_$$A_1 = 1;
+
+(2)     goto label05;
+
+     label04:
+(3)     $stack39 = 0;
+
+     label05:
+        $stack39_$$A_2 = Phi($stack39_$$A_1 #2, $stack39 #3);
+
+        b#_33 = $stack39_$$A_2;
+
+        d#_34 = 1;
+
+        if a#_32 == 0 goto label06;
+
+        if d#_34 == 0 goto label06;
+
+        $stack37 = 1;
+
+(4)     goto label07;
+
+     label06:
+(5)     $stack37_$$A_1 = 0;
+
+     label07:
+        $stack37_$$A_2 = Phi($stack37 #4, $stack37_$$A_1 #5);
+
+        e#_35 = $stack37_$$A_2;
+
+        if a#_32 != 0 goto label08;
+
+        if d#_34 == 0 goto label09;
+
+     label08:
+        $stack33_$$A_1 = 1;
+
+(6)     goto label10;
+
+     label09:
+(7)     $stack33 = 0;
+
+     label10:
+        $stack33_$$A_2 = Phi($stack33_$$A_1 #6, $stack33 #7);
+
+        f#_36 = $stack33_$$A_2;
+
+        e_$$A_1#_37 = 1;
+
+        staticinvoke <Example: int moreTest(int,boolean)>(z#_20, f#_36);
+
+        return;
+    }
+
+    static void sanitize(java.lang.Object)
+    {
+        java.lang.Object o#_0;
+
+        o#_0 := @parameter0: java.lang.Object;
+
+        return;
+    }
+
+    static int moreTest(int, boolean)
+    {
+        boolean g#_0;
+        int z#_0, $stack2, $stack3;
+
+        z#_0 := @parameter0: int;
+
+        g#_0 := @parameter1: boolean;
+
+        if g#_0 == 0 goto label1;
+
+        $stack3 = z#_0 - 5;
+
+        return $stack3;
+
+     label1:
+        $stack2 = z#_0 - 3;
+
+        return $stack2;
+    }
+
+    void test(int)
+    {
+        int l#_0;
+        Dog $stack5;
+        Cat $stack6, c1#_62, $stack7, c2#_63, $stack8;
+        Example this#_0;
+        Animal a#_56, a_$$A_1#_58, a_$$A_2#_59;
+
+        this#_0 := @this: Example;
+
+        l#_0 := @parameter0: int; # assign/1
+
+        if l#_0 != 0 goto label1; # /if/0
+
+        $stack8 = new Cat;  #assign/2
+
+        specialinvoke $stack8.<Cat: void <init>()>();
+
+        a#_56 = $stack8;    #assign/3
+
+(0)     goto label2;        #goto/0
+
+     label1:
+        $stack5 = new Dog;  #assign/4
+
+        specialinvoke $stack5.<Dog: void <init>()>();
+
+(1)     a_$$A_1#_58 = $stack5;   #/assign/5
+
+     label2:
+        a_$$A_2#_59 = Phi(a#_56 #0, a_$$A_1#_58 #1);    #phi-assign/0&1
+
+        virtualinvoke a_$$A_2#_59.<Animal: void play()>();
+
+        $stack6 = new Cat;     #assign/7
+
+        specialinvoke $stack6.<Cat: void <init>()>();
+
+        c1#_62 = $stack6;
+
+        $stack7 = new Cat;
+
+        specialinvoke $stack7.<Cat: void <init>()>();
+
+        c2#_63 = $stack7;
+
+        virtualinvoke c1#_62.<Cat: void setParent(Cat)>(c2#_63);
+
+        virtualinvoke this#_0.<Example: void morePlay(Cat)>(c1#_62);
+
+        return;
+    }
+
+    void morePlay(Cat)
+    {
+        Cat c#_0, p#_70;
+        Animal a1#_73, a2#_74;
+        Example this#_0;
+
+        this#_0 := @this: Example;
+
+        c#_0 := @parameter0: Cat;
+
+        p#_70 = virtualinvoke c#_0.<Cat: Cat getParent()>();
+
+        virtualinvoke p#_70.<Cat: void play()>();
+
+        a1#_73 = virtualinvoke p#_70.<Cat: Animal playWith(Animal)>(c#_0);
+
+        a2#_74 = virtualinvoke c#_0.<Cat: Animal playWith(Animal)>(p#_70);
+
+        if a1#_73 != a2#_74 goto label1;
+
+        return;
+
+     label1:
+        return;
+    }
+}

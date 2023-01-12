@@ -1,0 +1,59 @@
+<Example: void main(java.lang.String[])>/phi-assign/1	blubb	<Example: void main(java.lang.String[])>/assign/19
+<Example: void main(java.lang.String[])>/phi-assign/1	blubb	<Example: void main(java.lang.String[])>/read-field-out/0
+<Example: void main(java.lang.String[])>/phi-assign/1	<Example: void main(java.lang.String[])>/assign/19	<Example: void main(java.lang.String[])>/phi-assign/0
+<Example: void main(java.lang.String[])>/phi-assign/1	<Example: void main(java.lang.String[])>/assign/23	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/phi-assign/1	<Example: void main(java.lang.String[])>/assign/24	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/phi-assign/1	<Example: void main(java.lang.String[])>/read-field-out/0	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/phi-assign/1	<Example: void main(java.lang.String[])>/read-field-out/0	<Example: void main(java.lang.String[])>/assign/23
+<Example: void main(java.lang.String[])>/phi-assign/1	<Example: void main(java.lang.String[])>/read-field-out/0	<Example: void main(java.lang.String[])>/assign/24
+<Example: void main(java.lang.String[])>/phi-assign/1	<Example: void main(java.lang.String[])>/read-field-out/0	<Example: void main(java.lang.String[])>/goto/1
+<Example: void main(java.lang.String[])>/phi-assign/1	<Example: void main(java.lang.String[])>/goto/1	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/phi-assign/1	<Example: void main(java.lang.String[])>/goto/1	<Example: void main(java.lang.String[])>/assign/24
+<Example: void main(java.lang.String[])>/phi-assign/5	blubb	<Example: void main(java.lang.String[])>/assign/29
+<Example: void main(java.lang.String[])>/phi-assign/5	blubb	<Example: void main(java.lang.String[])>/if/3
+<Example: void main(java.lang.String[])>/phi-assign/5	<Example: void main(java.lang.String[])>/assign/28	<Example: void main(java.lang.String[])>/phi-assign/6
+<Example: void main(java.lang.String[])>/phi-assign/5	<Example: void main(java.lang.String[])>/assign/29	<Example: void main(java.lang.String[])>/phi-assign/6
+<Example: void main(java.lang.String[])>/phi-assign/5	<Example: void main(java.lang.String[])>/if/3	<Example: void main(java.lang.String[])>/phi-assign/6
+<Example: void main(java.lang.String[])>/phi-assign/5	<Example: void main(java.lang.String[])>/if/3	<Example: void main(java.lang.String[])>/assign/28
+<Example: void main(java.lang.String[])>/phi-assign/5	<Example: void main(java.lang.String[])>/if/3	<Example: void main(java.lang.String[])>/assign/29
+<Example: void main(java.lang.String[])>/phi-assign/7	blubb	<Example: void main(java.lang.String[])>/assign/32
+<Example: void main(java.lang.String[])>/phi-assign/7	blubb	<Example: void main(java.lang.String[])>/if/5
+<Example: void main(java.lang.String[])>/phi-assign/7	<Example: void main(java.lang.String[])>/assign/32	<Example: void main(java.lang.String[])>/phi-assign/8
+<Example: void main(java.lang.String[])>/phi-assign/7	<Example: void main(java.lang.String[])>/assign/33	<Example: void main(java.lang.String[])>/phi-assign/8
+<Example: void main(java.lang.String[])>/phi-assign/7	<Example: void main(java.lang.String[])>/if/5	<Example: void main(java.lang.String[])>/phi-assign/8
+<Example: void main(java.lang.String[])>/phi-assign/7	<Example: void main(java.lang.String[])>/if/5	<Example: void main(java.lang.String[])>/assign/32
+<Example: void main(java.lang.String[])>/phi-assign/7	<Example: void main(java.lang.String[])>/if/5	<Example: void main(java.lang.String[])>/assign/33
+<Example: int moreTest(int,boolean)>/assign/1	blubb	<Example: int moreTest(int,boolean)>/assign/2
+<Example: int moreTest(int,boolean)>/assign/1	blubb	<Example: int moreTest(int,boolean)>/assign/3
+<Example: void test(int)>/assign/1	blubb	<Example: void test(int)>/assign/2
+<Example: void test(int)>/assign/1	blubb	<Example: void test(int)>/assign/4
+<Example: void test(int)>/assign/1	<Example: void test(int)>/assign/2	<Example: void test(int)>/phi-assign/0
+<Example: void test(int)>/assign/1	<Example: void test(int)>/assign/4	<Example: void test(int)>/phi-assign/0
+<Example: void morePlay(Cat)>/assign/1	blubb	<Example: void morePlay(Cat)>/return-void/0
+<Example: void morePlay(Cat)>/assign/1	blubb	<Example: void morePlay(Cat)>/return-void/1
+<Example: void main(java.lang.String[])>/assign/19	blubb	<Example: void main(java.lang.String[])>/phi-assign/0
+<Example: void test(int)>/assign/2	blubb	<Example: void test(int)>/phi-assign/0
+<Example: void test(int)>/assign/4	blubb	<Example: void test(int)>/phi-assign/0
+<Example: void main(java.lang.String[])>/assign/1	blubb	<Example: void main(java.lang.String[])>/phi-assign/0
+<Example: void main(java.lang.String[])>/assign/23	blubb	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/assign/24	blubb	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/assign/28	blubb	<Example: void main(java.lang.String[])>/phi-assign/6
+<Example: void main(java.lang.String[])>/assign/29	blubb	<Example: void main(java.lang.String[])>/phi-assign/6
+<Example: void main(java.lang.String[])>/assign/32	blubb	<Example: void main(java.lang.String[])>/phi-assign/8
+<Example: void main(java.lang.String[])>/assign/33	blubb	<Example: void main(java.lang.String[])>/phi-assign/8
+<Example: void main(java.lang.String[])>/read-field-out/0	blubb	<Example: void main(java.lang.String[])>/assign/23
+<Example: void main(java.lang.String[])>/read-field-out/0	blubb	<Example: void main(java.lang.String[])>/goto/1
+<Example: void main(java.lang.String[])>/read-field-out/0	<Example: void main(java.lang.String[])>/assign/23	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/read-field-out/0	<Example: void main(java.lang.String[])>/assign/24	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/read-field-out/0	<Example: void main(java.lang.String[])>/goto/1	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/read-field-out/0	<Example: void main(java.lang.String[])>/goto/1	<Example: void main(java.lang.String[])>/assign/24
+<Example: void main(java.lang.String[])>/goto/1	blubb	<Example: void main(java.lang.String[])>/assign/24
+<Example: void main(java.lang.String[])>/goto/1	<Example: void main(java.lang.String[])>/assign/24	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/if/3	blubb	<Example: void main(java.lang.String[])>/assign/28
+<Example: void main(java.lang.String[])>/if/3	blubb	<Example: void main(java.lang.String[])>/assign/29
+<Example: void main(java.lang.String[])>/if/3	<Example: void main(java.lang.String[])>/assign/28	<Example: void main(java.lang.String[])>/phi-assign/6
+<Example: void main(java.lang.String[])>/if/3	<Example: void main(java.lang.String[])>/assign/29	<Example: void main(java.lang.String[])>/phi-assign/6
+<Example: void main(java.lang.String[])>/if/5	blubb	<Example: void main(java.lang.String[])>/assign/32
+<Example: void main(java.lang.String[])>/if/5	blubb	<Example: void main(java.lang.String[])>/assign/33
+<Example: void main(java.lang.String[])>/if/5	<Example: void main(java.lang.String[])>/assign/32	<Example: void main(java.lang.String[])>/phi-assign/8
+<Example: void main(java.lang.String[])>/if/5	<Example: void main(java.lang.String[])>/assign/33	<Example: void main(java.lang.String[])>/phi-assign/8

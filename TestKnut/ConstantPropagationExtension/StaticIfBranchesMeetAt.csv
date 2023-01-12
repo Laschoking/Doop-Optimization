@@ -1,0 +1,6 @@
+<Example: void main(java.lang.String[])>/if/1	<Example: void main(java.lang.String[])>/goto/1	<Example: void main(java.lang.String[])>/assign/23	<Example: void main(java.lang.String[])>/phi-assign/4
+<Example: void main(java.lang.String[])>/if/2	<Example: void main(java.lang.String[])>/if/3	<Example: void main(java.lang.String[])>/assign/29	<Example: void main(java.lang.String[])>/phi-assign/6
+<Example: void main(java.lang.String[])>/if/3	<Example: void main(java.lang.String[])>/assign/28	<Example: void main(java.lang.String[])>/assign/29	<Example: void main(java.lang.String[])>/phi-assign/6
+<Example: void main(java.lang.String[])>/if/4	<Example: void main(java.lang.String[])>/if/5	<Example: void main(java.lang.String[])>/assign/32	<Example: void main(java.lang.String[])>/phi-assign/8
+<Example: void main(java.lang.String[])>/if/4	<Example: void main(java.lang.String[])>/if/5	<Example: void main(java.lang.String[])>/assign/32	<Example: void main(java.lang.String[])>/phi-assign/9
+<Example: void main(java.lang.String[])>/if/5	<Example: void main(java.lang.String[])>/assign/32	<Example: void main(java.lang.String[])>/assign/33	<Example: void main(java.lang.String[])>/phi-assign/8
