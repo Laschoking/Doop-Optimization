@@ -5,6 +5,13 @@
 .type Assignment <: symbol
 .type MethodInv <: symbol
 
+.decl MultiplePhiAssignsInBB(?phi1:Assignment, ?phi2:Assignment)
+.output MultiplePhiAssignsInBB
+
+.decl AllPhiAssigns(?phiAssign:Assignment,?lineNr:number)
+.output AllPhiAssigns
+
+
 .decl OptInstructionFromMethodIndex(?method:Method, ?insNr:number, ?varAssign:Assignment)
 .input OptInstructionFromMethodIndex(IO="file", filename="OptInstructionFromMethodIndex.csv", delimiter="\t")
 
@@ -25,6 +32,9 @@
 
 .decl Instruction_Next(?inst:Assignment,?inst1:Assignment)
 .input Instruction_Next(IO="file", filename="Instruction_Next.csv", delimiter="\t")
+
+.decl Instruction_Prev(?inst:Assignment,?inst1:Assignment)
+.input Instruction_Prev(IO="file", filename="Instruction_Prev.csv", delimiter="\t")
 
 .decl MaySuccessorBBModuloThrow(?inst:Assignment, ?inst1:Assignment)
 .input MaySuccessorBBModuloThrow(IO="file", filename="MaySuccessorBBModuloThrow.csv", delimiter="\t")
@@ -94,6 +104,95 @@ StaticCondition(?ifAssign,?value) :-
     OperatorAt(?ifAssign,"<="),
     ((?value = 1, ?left <= ?right);
     (?value = 0, ?left > ?right)).
+
+//Int Condition >=
+
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    IntConstFolding(_,?var1,?left,_, _),
+    IfConstant(?ifAssign, ?pos2, ?right),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,">="),
+    ((?value = 1, ?left >= ?right);
+    (?value = 0, ?left < ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfConstant(?ifAssign, ?pos1, ?left),
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    IntConstFolding(_,?var2,?right,_, _),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,">="),
+    ((?value = 1, ?left >= ?right);
+    (?value = 0, ?left < ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    IntConstFolding(_,?var1,?left,_, _),
+    IntConstFolding(_,?var2,?right,_,_),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,">="),
+    ((?value = 1, ?left >= ?right);
+    (?value = 0, ?left < ?right)).
+
+//Int Condition ==
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    IntConstFolding(_,?var1,?left,_, _),
+    IfConstant(?ifAssign, ?pos2, ?right),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"=="),
+    ((?value = 1, ?left = ?right);
+    (?value = 0, ?left != ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfConstant(?ifAssign, ?pos1, ?left),
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    IntConstFolding(_,?var2,?right,_, _),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"=="),
+    ((?value = 1, ?left = ?right);
+    (?value = 0, ?left != ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    IntConstFolding(_,?var1,?left,_, _),
+    IntConstFolding(_,?var2,?right,_,_),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"=="),
+    ((?value = 1, ?left = ?right);
+    (?value = 0, ?left != ?right)).
+
+
+//Int Condition !=
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    IntConstFolding(_,?var1,?left,_, _),
+    IfConstant(?ifAssign, ?pos2, ?right),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"!="),
+    ((?value = 1, ?left != ?right);
+    (?value = 0, ?left = ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfConstant(?ifAssign, ?pos1, ?left),
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    IntConstFolding(_,?var2,?right,_, _),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"!="),
+    ((?value = 1, ?left != ?right);
+    (?value = 0, ?left = ?right)).
+
+StaticCondition(?ifAssign,?value) :- 
+    IfVar(?ifAssign, ?pos1, ?var1), 
+    IfVar(?ifAssign, ?pos2, ?var2), 
+    IntConstFolding(_,?var1,?left,_, _),
+    IntConstFolding(_,?var2,?right,_,_),
+    ?pos1 < ?pos2,
+    OperatorAt(?ifAssign,"!="),
+    ((?value = 1, ?left != ?right);
+    (?value = 0, ?left = ?right)).
 
 
 //Boolean Condition ==
@@ -183,10 +282,21 @@ AllReachablePhiNodes(?BB1, ?phiAssign):-
     Exist_CFGPath(?BB1, ?BB2),
     AllReachablePhiNodes(?BB2, ?phiAssign),
     !NextInSamePhiNode(?phiAssign,?BB1). //avoid phi-assign/1 -> phi-assign/0 edges
-    
 
-.decl AllPhiAssigns(?phiAssign:Assignment,?lineNr:number)
-.output AllPhiAssigns
+
+
+MultiplePhiAssignsInBB(?phiAssign1, ?phiAssign2):-
+    AllPhiAssigns(?phiAssign2, _),
+    AllPhiAssigns(?phiAssign1, _),
+    BasicBlockHead(?phiAssign2,?phiAssign1).
+
+
+MultiplePhiAssignsInBB(?phiAssign1, ?phiAssign3):-
+    NextInSamePhiNode(?phiAssign1, ?phiAssign2),
+    MultiplePhiAssignsInBB(?phiAssign2, ?phiAssign3).
+
+
+
 
 AllPhiAssigns(?phiAssign,?lineNr):-
     AssignLocal(?phiAssign, ?lineNr,_,_,_),
@@ -194,15 +304,15 @@ AllPhiAssigns(?phiAssign,?lineNr):-
     NextInSamePhiNode(_,?phiAssign)).
 
 .decl AllIfAssign(?ifAssign:Assignment)
+
 AllIfAssign(?ifAssign):-
     IfVar(?ifAssign,_,_).
 
 .decl StaticIfBranchesJoined(?ifAssign:Assignment, ?firstBranch:Assignment, ?secondBranch:Assignment, ?phiAssign:Assignment,?lineNr:number)
 .decl StaticIfBranchesMeetAt(?ifAssign:Assignment, ?firstBranch:Assignment, ?secondBranch:Assignment, ?phiAssign:Assignment,?phiAssgin2:Assignment)
 
-//see, where then-else branches join
-
-//find the order of then & else branch going into phi-Nodes
+// 1. see, where then-else branches join
+// 2. find the order of then & else branch going into phi-Nodes
 // then-branch means the BB following the if-condition, else is the conditional jump BB
 StaticIfBranchesJoined(?ifAssign,?firstBranch, ?secondBranch,?phiAssign,?lineNr):-
     AllIfAssign(?ifAssign),
@@ -225,31 +335,94 @@ StaticIfBranchesJoined(?ifAssign,?firstBranch, ?secondBranch,?phiAssign,?lineNr)
     Exist_CFGPath(?elseBegin,?pos1),
     Exist_CFGPath(?thenBegin,?pos2))).
 
+// extract the first phi-assignment, where both branches are joining
 StaticIfBranchesMeetAt(?ifAssign,?firstBranch, ?secondBranch, ?phiAssign1, ?phiAssign2):-
     ?z = min ?lineNr : StaticIfBranchesJoined(?ifAssign,_,  _,_,?lineNr),
     StaticIfBranchesJoined(?ifAssign,?firstBranch, ?secondBranch, ?phiAssign1,?z),
     NextInSamePhiNode(?phiAssign1, ?phiAssign2).
 
+StaticIfBranchesMeetAt(?ifAssign,?firstBranch, ?secondBranch, ?phiAssign3, ?phiAssign4):-
+    StaticIfBranchesMeetAt(?ifAssign,?firstBranch, ?secondBranch, ?phiAssign1, _),
+    MultiplePhiAssignsInBB(?phiAssign1, ?phiAssign3),
+    NextInSamePhiNode(?phiAssign3, ?phiAssign4).
 
-//.decl GuessBBtoPhiOrder(?phiAssign,)
 
+
+//iterieren durch aktuellen Phi-Block ob andere Blöcke existieren
 .decl ConditionalConstFoldingOutput(?phiAssign:Assignment, ?to:Var, ?val:number)
 
-// we don't know the order of then & else branch in the phi-Nodes
-//therefor check, which branch goes in phi-assignment from lower instruction number
-//assuming that the order of labels is total
+//IntConstfolding:
+
+ConditionalConstFoldingOutput(?phiAssign, ?to , ?val),
+IntConstFolding(?phiAssign, ?to, ?val,?method,?use + 1):-
+    StaticCondition(?ifAssign,0),
+    Instruction_Next(?ifAssign,?thenBB),
+    !AllIfAssign(?thenBB),
+    ((AllIfAssign(?prevIfAssign),    //check if if-assign comes before or after current if-assignment
+    Instruction_Prev(?ifAssign,?prevIfAssign), 
+    StaticCondition(?prevIfAssign,0));
+    (!AllIfAssign(?prevIfAssign),
+    Instruction_Prev(?ifAssign,?prevIfAssign))),
+
+    // ignore this if-assignment if one is following (because we didnt jump, we go into it directly)
+    !AllIfAssign(?thenBB),
+    (StaticIfBranchesMeetAt(?ifAssign, ?thenBB, _ ,?phiAssign,_);
+    StaticIfBranchesMeetAt(?ifAssign, _, ?thenBB, _, ?phiAssign)),
+    AssignLocal(?phiAssign,_, ?from, ?to,_),
+    IntConstFolding(_, ?from, ?val, _,?use),
+    VarDeclaringMethod(?to, ?method).
 
 
+ConditionalConstFoldingOutput(?phiAssign, ?to , ?val),
+IntConstFolding(?phiAssign, ?to, ?val,?method,?use + 1):-
+    StaticCondition(?ifAssign,1),
+    JumpTarget(?elseBB,?ifAssign),
+    ((AllIfAssign(?prevIfAssign),    //check if if-assign comes before or after current if-assignment
+    Instruction_Prev(?ifAssign,?prevIfAssign), 
+    StaticCondition(?prevIfAssign,0));
+    (!AllIfAssign(?prevIfAssign),
+    Instruction_Prev(?ifAssign,?prevIfAssign))),
+
+    // ignore this if-assignment if one is following (because we didnt jump, we go into it directly)
+    !AllIfAssign(?elseBB),
+    (StaticIfBranchesMeetAt(?ifAssign, ?elseBB, _ ,?phiAssign,_);
+    StaticIfBranchesMeetAt(?ifAssign, _, ?elseBB, _, ?phiAssign)),
+    AssignLocal(?phiAssign,_, ?from, ?to,_),
+    IntConstFolding(_, ?from, ?val, _,?use),
+    VarDeclaringMethod(?to, ?method).
+
+
+
+//BoolConstantFolding
+
+ConditionalConstFoldingOutput(?phiAssign, ?to , ?val),
+BoolConstFolding(?phiAssign, ?to, ?val,?method):-
+    StaticCondition(?ifAssign,0),
+    Instruction_Next(?ifAssign,?thenBB),
+    !AllIfAssign(?thenBB),
+    ((AllIfAssign(?prevIfAssign),    //check if if-assign comes before or after current if-assignment
+    Instruction_Prev(?ifAssign,?prevIfAssign), 
+    StaticCondition(?prevIfAssign,0));
+    (!AllIfAssign(?prevIfAssign),
+    Instruction_Prev(?ifAssign,?prevIfAssign))),
+
+    // ignore this if-assignment if one is following (because we didnt jump, we go into it directly)
+    !AllIfAssign(?thenBB),
+    (StaticIfBranchesMeetAt(?ifAssign, ?thenBB, _ ,?phiAssign,_);
+    StaticIfBranchesMeetAt(?ifAssign, _, ?thenBB, _, ?phiAssign)),
+    AssignLocal(?phiAssign,_, ?from, ?to,_),
+    BoolConstFolding(_, ?from, ?val, _),
+    VarDeclaringMethod(?to, ?method).
 
 ConditionalConstFoldingOutput(?phiAssign, ?to , ?val),
 BoolConstFolding(?phiAssign, ?to, ?val,?method):-
     StaticCondition(?ifAssign,1),
     JumpTarget(?elseBB,?ifAssign),
-    ((AllIfAssign(?preIfAssign),    //check if if-assign comes before or after current if-assignment
-    Instruction_Next(?preIfAssign,?ifAssign), 
-    StaticCondition(?preIfAssign,0));
-    (!AllIfAssign(?preIfAssign),
-    Instruction_Next(?preIfAssign,?ifAssign))),
+    ((AllIfAssign(?prevIfAssign),    //check if if-assign comes before or after current if-assignment
+    Instruction_Prev(?ifAssign,?prevIfAssign), 
+    StaticCondition(?prevIfAssign,0));
+    (!AllIfAssign(?prevIfAssign),
+    Instruction_Prev(?ifAssign,?prevIfAssign))),
 
     // ignore this if-assignment if one is following (because we didnt jump, we go into it directly)
     !AllIfAssign(?elseBB),
@@ -260,24 +433,7 @@ BoolConstFolding(?phiAssign, ?to, ?val,?method):-
     VarDeclaringMethod(?to, ?method).
 
 
-ConditionalConstFoldingOutput(?phiAssign, ?to , ?val),
-BoolConstFolding(?phiAssign, ?to, ?val,?method):-
-    StaticCondition(?ifAssign,0),
-    Instruction_Next(?ifAssign,?thenBB),
-    !AllIfAssign(?thenBB),
-    ((AllIfAssign(?preIfAssign),    //check if if-assign comes before or after current if-assignment
-    Instruction_Next(?preIfAssign,?ifAssign), 
-    StaticCondition(?preIfAssign,0));
-    (!AllIfAssign(?preIfAssign),
-    Instruction_Next(?preIfAssign,?ifAssign))),
 
-    // ignore this if-assignment if one is following (because we didnt jump, we go into it directly)
-    !AllIfAssign(?thenBB),
-    (StaticIfBranchesMeetAt(?ifAssign, ?thenBB, _ ,?phiAssign,_);
-    StaticIfBranchesMeetAt(?ifAssign, _, ?thenBB, _, ?phiAssign)),
-    AssignLocal(?phiAssign,_, ?from, ?to,_),
-    BoolConstFolding(_, ?from, ?val, _),
-    VarDeclaringMethod(?to, ?method).
 
 
 //aktueller Fehler first & secondBranch geben an, welche branch in welchen Phi-Node
