@@ -5,6 +5,9 @@
 .type Assignment <: symbol
 .type MethodInv <: symbol
 
+.decl OptInstructionFromMethodIndex(?method:Method, ?insNr:number, ?varAssign:Assignment)
+.input OptInstructionFromMethodIndex(IO="file", filename="OptInstructionFromMethodIndex.csv", delimiter="\t")
+
 .decl VarDeclaringMethod(?var:Var,?method:Method)
 .input VarDeclaringMethod(IO="file", filename="Var-DeclaringMethod.facts", delimiter="\t")
 
@@ -194,67 +197,93 @@ AllPhiAssigns(?phiAssign,?lineNr):-
 AllIfAssign(?ifAssign):-
     IfVar(?ifAssign,_,_).
 
-.decl StaticIfBranchesJoined(?ifAssign:Assignment, ?then:Assignment, ?else:Assignment,?phiAssign:Assignment,?lineNr:number)
-.decl StaticIfBranchesMeetAt(?ifAssign:Assignment, ?then:Assignment, ?else:Assignment,?phiAssign:Assignment,?lineNr:number)
+.decl StaticIfBranchesJoined(?ifAssign:Assignment, ?firstBranch:Assignment, ?secondBranch:Assignment, ?phiAssign:Assignment,?lineNr:number)
+.decl StaticIfBranchesMeetAt(?ifAssign:Assignment, ?firstBranch:Assignment, ?secondBranch:Assignment, ?phiAssign:Assignment,?phiAssgin2:Assignment)
 
 //see, where then-else branches join
 
-StaticIfBranchesJoined(?ifAssign,?thenBegin, ?elseBegin, ?phiAssign,?lineNr):-
+//find the order of then & else branch going into phi-Nodes
+// then-branch means the BB following the if-condition, else is the conditional jump BB
+StaticIfBranchesJoined(?ifAssign,?firstBranch, ?secondBranch,?phiAssign,?lineNr):-
     AllIfAssign(?ifAssign),
     JumpTarget(?elseBegin,?ifAssign),
     Instruction_Next(?ifAssign, ?thenBegin),
     AllReachablePhiNodes(?elseBegin, ?phiAssign),    //enforce that only the joining of both branches
     AllReachablePhiNodes(?thenBegin, ?phiAssign),                 // is met and no further ?phiAssign are included, once branches join
-    AllPhiAssigns(?phiAssign,?lineNr).
+    AllPhiAssigns(?phiAssign,?lineNr),
+    MayPredecessorBBModuloThrow(?pos1, ?phiAssign),
+    MayPredecessorBBModuloThrow(?pos2, ?phiAssign),
+    OptInstructionFromMethodIndex(_,?insNr1,?pos1),
+    OptInstructionFromMethodIndex(_,?insNr2,?pos2),
+    ?insNr1 < ?insNr2,
+    ((?firstBranch = ?thenBegin,
+    ?secondBranch = ?elseBegin,
+    Exist_CFGPath(?thenBegin,?pos1),
+    Exist_CFGPath(?elseBegin,?pos2));
+    (?firstBranch = ?elseBegin,
+    ?secondBranch = ?thenBegin,
+    Exist_CFGPath(?elseBegin,?pos1),
+    Exist_CFGPath(?thenBegin,?pos2))).
 
-StaticIfBranchesMeetAt(?ifAssign,?thenBegin, ?elseBegin, ?phiAssign,?z):-
-    ?z = min ?lineNr : StaticIfBranchesJoined(?ifAssign,_, _, _,?lineNr),
-    StaticIfBranchesJoined(?ifAssign,?thenBegin, ?elseBegin, ?phiAssign,?z).
+StaticIfBranchesMeetAt(?ifAssign,?firstBranch, ?secondBranch, ?phiAssign1, ?phiAssign2):-
+    ?z = min ?lineNr : StaticIfBranchesJoined(?ifAssign,_,  _,_,?lineNr),
+    StaticIfBranchesJoined(?ifAssign,?firstBranch, ?secondBranch, ?phiAssign1,?z),
+    NextInSamePhiNode(?phiAssign1, ?phiAssign2).
+
+
+//.decl GuessBBtoPhiOrder(?phiAssign,)
 
 .decl ConditionalConstFoldingOutput(?phiAssign:Assignment, ?to:Var, ?val:number)
 
-ConditionalConstFoldingOutput(?phiAssign2, ?to , ?val),
-IntConstFolding(?phiAssign2, ?to, ?val,?method, ?c + 1):-
-    StaticCondition(?ifAssign,1),
-    StaticIfBranchesMeetAt(?ifAssign, _, ?elseBegin,?phiAssign1,_),
-    NextInSamePhiNode(?phiAssign1, ?phiAssign2),
-    AssignLocal(?phiAssign2,_, ?from, ?to,_),
-    IntConstFolding(?varAssign, ?from, ?val, _,?c),
-    BasicBlockHead(?varHead,?varAssign),
-    Exist_CFGPath(?elseBegin, ?varHead),
-    VarDeclaringMethod(?to, ?method).
+// we don't know the order of then & else branch in the phi-Nodes
+//therefor check, which branch goes in phi-assignment from lower instruction number
+//assuming that the order of labels is total
 
-ConditionalConstFoldingOutput(?phiAssign2, ?to , ?val),
-BoolConstFolding(?phiAssign2, ?to, ?val,?method):-
-    StaticCondition(?ifAssign,1),
-    StaticIfBranchesMeetAt(?ifAssign, _, ?elseBegin,?phiAssign1,_),
-    NextInSamePhiNode(?phiAssign1, ?phiAssign2),
-    AssignLocal(?phiAssign2,_, ?from, ?to,_),
-    BoolConstFolding(?varAssign, ?from, ?val, _),
-    BasicBlockHead(?varHead,?varAssign),
-    Exist_CFGPath(?elseBegin, ?varHead),
-    VarDeclaringMethod(?to, ?method).
 
 
 ConditionalConstFoldingOutput(?phiAssign, ?to , ?val),
-IntConstFolding(?phiAssign, ?to, ?val,?method, ?c + 1):-
-    StaticCondition(?ifAssign,0),
-    StaticIfBranchesMeetAt(?ifAssign, ?thenBegin, _,?phiAssign,?lineNr),
-    AssignLocal(?phiAssign,?lineNr, ?from, ?to,_),
-    IntConstFolding(?varAssign, ?from, ?val, _,?c),
-    BasicBlockHead(?varHead,?varAssign),
-    Exist_CFGPath(?thenBegin, ?varHead),
+BoolConstFolding(?phiAssign, ?to, ?val,?method):-
+    StaticCondition(?ifAssign,1),
+    JumpTarget(?elseBB,?ifAssign),
+    ((AllIfAssign(?preIfAssign),    //check if if-assign comes before or after current if-assignment
+    Instruction_Next(?preIfAssign,?ifAssign), 
+    StaticCondition(?preIfAssign,0));
+    (!AllIfAssign(?preIfAssign),
+    Instruction_Next(?preIfAssign,?ifAssign))),
+
+    // ignore this if-assignment if one is following (because we didnt jump, we go into it directly)
+    !AllIfAssign(?elseBB),
+    (StaticIfBranchesMeetAt(?ifAssign, ?elseBB, _ ,?phiAssign,_);
+    StaticIfBranchesMeetAt(?ifAssign, _, ?elseBB, _, ?phiAssign)),
+    AssignLocal(?phiAssign,_, ?from, ?to,_),
+    BoolConstFolding(_, ?from, ?val, _),
     VarDeclaringMethod(?to, ?method).
+
 
 ConditionalConstFoldingOutput(?phiAssign, ?to , ?val),
 BoolConstFolding(?phiAssign, ?to, ?val,?method):-
     StaticCondition(?ifAssign,0),
-    StaticIfBranchesMeetAt(?ifAssign, ?thenBegin, _,?phiAssign,?lineNr),
-    AssignLocal(?phiAssign,?lineNr, ?from, ?to,_),
-    BoolConstFolding(?varAssign, ?from, ?val, _),
-    BasicBlockHead(?varHead,?varAssign),
-    Exist_CFGPath(?thenBegin, ?varHead),
+    Instruction_Next(?ifAssign,?thenBB),
+    !AllIfAssign(?thenBB),
+    ((AllIfAssign(?preIfAssign),    //check if if-assign comes before or after current if-assignment
+    Instruction_Next(?preIfAssign,?ifAssign), 
+    StaticCondition(?preIfAssign,0));
+    (!AllIfAssign(?preIfAssign),
+    Instruction_Next(?preIfAssign,?ifAssign))),
+
+    // ignore this if-assignment if one is following (because we didnt jump, we go into it directly)
+    !AllIfAssign(?thenBB),
+    (StaticIfBranchesMeetAt(?ifAssign, ?thenBB, _ ,?phiAssign,_);
+    StaticIfBranchesMeetAt(?ifAssign, _, ?thenBB, _, ?phiAssign)),
+    AssignLocal(?phiAssign,_, ?from, ?to,_),
+    BoolConstFolding(_, ?from, ?val, _),
     VarDeclaringMethod(?to, ?method).
+
+
+//aktueller Fehler first & secondBranch geben an, welche branch in welchen Phi-Node
+// eingeht, aber es gibt noch keine Verbindung zu den tatsächlichen Then & else Branches
+
+
 
 .output AllIfAssign
 .output ConditionalConstFoldingOutput
@@ -262,3 +291,5 @@ BoolConstFolding(?phiAssign, ?to, ?val,?method):-
 .output StaticIfBranchesJoined
 .output IntConstFolding
 .output BoolConstFolding
+
+
