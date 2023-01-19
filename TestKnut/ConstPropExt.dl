@@ -9,7 +9,7 @@
 .output MultiplePhiAssignsInBB
 
 .decl AllPhiAssigns(?phiAssign:Assignment,?lineNr:number)
-.output AllPhiAssigns
+.input AllPhiAssigns(IO="file", filename="AllPhiAssigns.csv", delimiter="\t")
 
 
 .decl OptInstructionFromMethodIndex(?method:Method, ?insNr:number, ?varAssign:Assignment)
@@ -268,7 +268,7 @@ Exist_CFGPath(?BB1, ?BB3):-
     Exist_CFGPath(?BB2, ?BB3).
 
 
-
+//beschränkung auf gleiche Methode bei Allem!!!
 .decl AllReachablePhiNodes(?BB1:Assignment, ?BB2:Assignment)
 .output AllReachablePhiNodes
 
@@ -296,12 +296,16 @@ MultiplePhiAssignsInBB(?phiAssign1, ?phiAssign3):-
     MultiplePhiAssignsInBB(?phiAssign2, ?phiAssign3).
 
 
+.decl MultiPhiAssigns(?phiAssign1:Assignment, ?phiAssign2:Assignment)
+
+MultiPhiAssigns(?phiAssign1, ?phiAssign2):-
+    NextInSamePhiNode(?phiAssign1, ?phiAssign2).
+
+MultiPhiAssigns(?phiAssign1, ?phiAssign3):-
+    MultiPhiAssigns(?phiAssign1, ?phiAssign2),
+    MultiPhiAssign(?phiAssign2, ?phiAssign3).
 
 
-AllPhiAssigns(?phiAssign,?lineNr):-
-    AssignLocal(?phiAssign, ?lineNr,_,_,_),
-    (NextInSamePhiNode(?phiAssign, _);
-    NextInSamePhiNode(_,?phiAssign)).
 
 .decl AllIfAssign(?ifAssign:Assignment)
 
@@ -370,6 +374,7 @@ IntConstFolding(?phiAssign, ?to, ?val,?method,?use + 1):-
     StaticIfBranchesMeetAt(?ifAssign, _, ?thenBB, _, ?phiAssign)),
     AssignLocal(?phiAssign,_, ?from, ?to,_),
     IntConstFolding(_, ?from, ?val, _,?use),
+    //!contains("phi-assign/",?assign),
     VarDeclaringMethod(?to, ?method).
 
 
@@ -389,6 +394,7 @@ IntConstFolding(?phiAssign, ?to, ?val,?method,?use + 1):-
     StaticIfBranchesMeetAt(?ifAssign, _, ?elseBB, _, ?phiAssign)),
     AssignLocal(?phiAssign,_, ?from, ?to,_),
     IntConstFolding(_, ?from, ?val, _,?use),
+    //!contains("phi-assign/",?assign),
     VarDeclaringMethod(?to, ?method).
 
 
@@ -412,6 +418,7 @@ BoolConstFolding(?phiAssign, ?to, ?val,?method):-
     StaticIfBranchesMeetAt(?ifAssign, _, ?thenBB, _, ?phiAssign)),
     AssignLocal(?phiAssign,_, ?from, ?to,_),
     BoolConstFolding(_, ?from, ?val, _),
+    //!contains("phi-assign/",?assign),
     VarDeclaringMethod(?to, ?method).
 
 ConditionalConstFoldingOutput(?phiAssign, ?to , ?val),
@@ -430,6 +437,7 @@ BoolConstFolding(?phiAssign, ?to, ?val,?method):-
     StaticIfBranchesMeetAt(?ifAssign, _, ?elseBB, _, ?phiAssign)),
     AssignLocal(?phiAssign,_, ?from, ?to,_),
     BoolConstFolding(_, ?from, ?val, _),
+    //!contains("phi-assign/",?assign),
     VarDeclaringMethod(?to, ?method).
 
 

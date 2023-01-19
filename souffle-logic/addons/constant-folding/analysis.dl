@@ -8,11 +8,10 @@
 .decl BoolConstFolding(?instruction:symbol, ?variable:symbol, ?value:number, ?method:symbol)
 
 
-.decl FloatConstant(?instr:symbol, ?var:symbol, ?value:number, ?method:symbol, ?type:symbol)
 .decl IntConstant(?instr:symbol, ?var:symbol, ?value:number, ?method:symbol, ?type:symbol)
 .decl BoolConstant(?instr:symbol, ?var:symbol, ?value:number, ?meth:symbol)
 
-.decl AssignOperFromConstant(?instr:symbol, ?pos:number, ?from:number)
+.decl AssignOperFromConstant(?instr:symbol, ?pos:number, ?from:symbol)
 .input AssignOperFromConstant(IO="file", filename="AssignOperFromConstant.facts", delimiter="\t")
 
 .output IntConstant
@@ -21,7 +20,6 @@
 .output IntNonZeroConstFolding
 .output BoolConstFolding
 .output AssignBinary
-
 
 // Constant Folding
 
@@ -50,9 +48,15 @@ AssignBinary(?instr, ?var, ?left, ?right, ?meth, ?prev_use1, ?prev_use2) :-
     IntConstFolding(_, ?right_oper2, ?right, ?meth, ?prev_use2).
 
 
-AssignBinary(?instr, ?var, ?left, ?right, ?meth,  0,?prev_use2) :-
+AssignBinary(?instr, ?var, ?left, ?right, ?meth, 0,?prev_use2) :-
     _AssignBinop(?instr, _, ?var, ?meth),
-    AssignOperFromConstant(?instr, ?pos1, ?left),
+    AssignOperFromConstant(?instr, ?pos1, ?x),
+    ((contains("L", ?x),
+    ?z = strlen(?x),
+    ?s = substr(?x,0,?z-1),
+    ?left = to_number(?s));
+    (!contains("L", ?x),
+    ?left = to_number(?x))),
     _AssignOperFrom(?instr, ?pos2, ?right_oper2),
     ?pos1 < ?pos2,
     IntConstFolding(_, ?right_oper2, ?right, ?meth, ?prev_use2).  
@@ -60,16 +64,15 @@ AssignBinary(?instr, ?var, ?left, ?right, ?meth,  0,?prev_use2) :-
 AssignBinary(?instr, ?var, ?left, ?right, ?meth, ?prev_use1 , 0) :-
     _AssignBinop(?instr, _, ?var, ?meth),
     _AssignOperFrom(?instr, ?pos1, ?right_oper1),
-    AssignOperFromConstant(?instr, ?pos2, ?right),
+    AssignOperFromConstant(?instr, ?pos2, ?x),
+    ((contains("L", ?x),
+    ?z = strlen(?x),
+    ?s = substr(?x,0,?z-1),
+    ?right = to_number(?s));
+    (!contains("L", ?x),
+    ?right = to_number(?x))),
     ?pos1 < ?pos2,
     IntConstFolding(_, ?right_oper1, ?left, ?meth, ?prev_use1).
-
-
-   
-
-
-
-
 
 AssignBinaryNonZeroRight(?instr, ?var, ?left, ?right, ?meth, ?prev_use1, ?prev_use2) :-
     _AssignBinop(?instr, _, ?var, ?meth),
@@ -90,7 +93,7 @@ IntConstFolding(?instr, ?var, ?value, ?meth, 1) :-
 IntConstFolding(?instr, ?to, ?value, ?meth, ?use) :-
     _AssignLocal(?instr, _, ?from, ?to, ?meth),
     IntConstFolding(_, ?from, ?value, ?meth, ?prev_use),
-    !AllPhiAssigns(?instr),
+    !AllPhiAssigns(?instr,_),
     ?prev_use < 5, ?use = ?prev_use + 1.
 
 IntConstFolding(?instr, ?var, ?value, ?meth, ?use) :-
@@ -185,7 +188,7 @@ BoolConstFolding(?instr, ?var, ?value, ?meth) :-
 
 BoolConstFolding(?instr, ?to, ?value, ?meth) :-
     _AssignLocal(?instr, _, ?from, ?to, ?meth),
-    !AllPhiAssigns(?instr),
+    !AllPhiAssigns(?instr,_),
     BoolConstFolding(_, ?from, ?value, ?meth).
 
 
@@ -362,11 +365,11 @@ BoolConstFolding(?instr, ?var, ?value, ?meth) :-
     ?value = 0.
 
 
-.decl AllPhiAssigns(?phiAssign:symbol)
+.decl AllPhiAssigns(?phiAssign:symbol,?n:number)
 .output AllPhiAssigns
 
-AllPhiAssigns(?phiAssign):-
-    _AssignLocal(?phiAssign, _,_,_,_),
+AllPhiAssigns(?phiAssign,?lineNr):-
+    _AssignLocal(?phiAssign, ?lineNr,_,_,_),
     (NextInSamePhiNode(?phiAssign, _);
     NextInSamePhiNode(_,?phiAssign)).
 
@@ -375,7 +378,7 @@ IntConstant(?instr, ?var, to_number(?value), ?meth, ?type) :-
     Instruction_Method(?instr, ?meth),    
     AssignInstruction_To(?instr, ?var),
     AssignNumConstant_Id(?instr, ?value),
-    !AllPhiAssigns(?instr),
+    !AllPhiAssigns(?instr,_),
     _Var_Type(?var, ?type),
     (Type_int(?type) ; Type_byte(?type) ;
      Type_short(?type)).
@@ -385,6 +388,6 @@ BoolConstant(?instr, ?var, to_number(?value), ?meth) :-
     Instruction_Method(?instr, ?meth),    
     AssignInstruction_To(?instr, ?var),
     AssignNumConstant_Id(?instr, ?value),
-    !AllPhiAssigns(?instr),
+    !AllPhiAssigns(?instr,_),
     _Var_Type(?var, ?type),
     Type_boolean(?type).
