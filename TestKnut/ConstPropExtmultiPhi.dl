@@ -13,7 +13,7 @@
 .input BasicBlockBegin(IO="file", filename="BasicBlockBegin.csv", delimiter="\t")
 
 .decl AllPhiNodes(?phiNode:Instruction,?lineNr:number)
-//.input AllPhiNodes(IO="file", filename="AllPhiNodes.csv", delimiter="\t")#
+//.input AllPhiNodes(IO="file", filename="AllPhiNodes.csv", delimiter="\t")
 
 
 .decl If(?ifNode:Instruction, ?lineNr:number, ?jump:number, ?method:symbol)
@@ -275,11 +275,11 @@ StaticCondition(?ifNode,?value) :-
 .decl MultiPhiNode(?phiNode1:Instruction, ?phiNode2:Instruction,?n:number)
 .decl NrOfMultiPhiNodes(?phiNode:Instruction, ?n : number)
 
-.decl OriginalPhiBranches(?preBB:Instruction,?lineNr:number, ?phiNode:Instruction)
-.decl OrderPhiBranchesBB(?preBB :Instruction, ?phiNode:Instruction,?order:number)
-.decl OrderPhiBranchesJoinedInformation(?preBB :Instruction, ?phiNode:Instruction,?postPhiNode:Instruction)
+.decl OriginalPhiBranches(?phiNode:Instruction, ?preBB:Instruction,?lineNr:number)
+.decl OrderPhiBranchesBB(?phiNode:Instruction, ?preBB :Instruction, ?order:number)
+.decl OrderPhiBranchesJoinedInformation(?phiNode:Instruction, ?preBB :Instruction, ?postPhiNode:Instruction)
 
-.decl BackwardsJoinPhiBranches(?preBB:Instruction,?phiNode:Instruction,?postPhiNode:Instruction,?n : number)
+.decl BackwardsJoinPhiBranches(?phiNode:Instruction,?preBB:Instruction,?postPhiNode:Instruction,?n : number)
 .decl PhiBranchesGetThroughIf(?ifNode:Instruction, ?postPhiNode1:Instruction, ?postPhiNode2:Instruction, ?phiNode:Instruction,?c:number)
 
 .decl PhiBranchesMeetAtIf(?ifNode:Instruction, ?postPhiNode1:Instruction, ?postPhiNode2:Instruction, ?phiNode:Instruction,?c:number)
@@ -293,7 +293,10 @@ StaticCondition(?ifNode,?value) :-
 .decl NrOfPhiConstantsInPhiBB(?phiNode:Instruction, ?nr : number)
 .decl MultiPhiNodeContainsConstant(?phiNode:Instruction,?phiNode1:Instruction)
 .decl LinkPhiNodesInBB(?phiNode1:Instruction, ?phiNode2:Instruction)
+.decl NrOfPredBB(?BB:Instruction, ?b:number)
 
+
+.output NrOfPredBB
 .output LinkPhiNodesInBB
 .output MultiPhiNodeContainsConstant
 .output NrOfPhiConstantsInPhiBB
@@ -312,6 +315,11 @@ StaticCondition(?ifNode,?value) :-
 .output AllPhiNodes
 .output MultiPhiNode
 .output NrOfMultiPhiNodes
+
+
+NrOfPredBB(?BB1,?c):-
+    BasicBlockBegin(?BB1),
+    ?c = count : {MaySuccessorBBModuloThrow(?BB1,_)}.
 
 IsConstant(?var):-
     IntConstFolding(_, ?var, _, _,_);
@@ -385,11 +393,10 @@ AllIfNodes(?ifNode,?lineNr):-
 
 
 //only start if at least one constant in Phi-node
-OriginalPhiBranches(?preBB,?lineNr, ?phiNode):-
+OriginalPhiBranches(?phiNode, ?preBB,?lineNr):-
     AllPhiBeginningsInNewBB(?phiNode),
     NrOfMultiPhiNodes(?phiNode,?d),
-    ?c = count : {MaySuccessorBBModuloThrow(?phiNode,_)},
-    ?c = ?d,
+    NrOfPredBB(?phiNode, ?d),
     MaySuccessorBBModuloThrow(?phiNode,?preBB),
     OptInstructionFromMethodIndex(_, ?lineNr,?preBB),
     NrOfPhiConstantsInPhiBB(?phiNode, ?nrConst),
@@ -397,9 +404,9 @@ OriginalPhiBranches(?preBB,?lineNr, ?phiNode):-
 
 
 
-OrderPhiBranchesBB(?preBB, ?phiNode, ?l):-
-    ?l = count : {OriginalPhiBranches(_, ?lineNrBB,?phiNode), ?lineNr1 < ?lineNrBB},
-    OriginalPhiBranches(?preBB, ?lineNr1, ?phiNode).
+OrderPhiBranchesBB(?phiNode, ?preBB, ?l):-
+    ?l = count : {OriginalPhiBranches(?phiNode, _ , ?lineNrBB), ?lineNr1 < ?lineNrBB},
+    OriginalPhiBranches(?phiNode , ?preBB, ?lineNr1).
 
 OrderPostPhiNodes(?phiNode, ?postPhiNode,?l):-
     ?l = count : {MultiPhiNode(?phiNode, _ , ?lineNrPhi),  ?lineNrPhi1 < ?lineNrPhi},
@@ -407,24 +414,24 @@ OrderPostPhiNodes(?phiNode, ?postPhiNode,?l):-
     MultiPhiNode(?phiNode, ?phiNode, _).
 
     
-OrderPhiBranchesJoinedInformation(?preBB, ?phiNode, ?postPhiNode):-
+OrderPhiBranchesJoinedInformation(?phiNode, ?preBB, ?postPhiNode):-
     OrderPostPhiNodes(?phiNode, ?postPhiNode,?l),
-    OrderPhiBranchesBB(?preBB, ?phiNode, ?l).
+    OrderPhiBranchesBB(?phiNode, ?preBB, ?l).
 
 
     
 //gibt es Fälle in denen der ?preBB  schon gleich das If-assign ist?
-BackwardsJoinPhiBranches(?preBB, ?phiNode,?postPhiNode,1):-
-    OrderPhiBranchesJoinedInformation(?preBB, ?phiNode, ?postPhiNode).
+BackwardsJoinPhiBranches(?phiNode,?preBB,?postPhiNode,1):-
+    OrderPhiBranchesJoinedInformation(?phiNode, ?preBB, ?postPhiNode).
 
 //if two branches meet before, remember the if-Instruction as reference point
 //if-assign on the (up-) way to start
 
 PhiBranchesGetThroughIf(?ifNode, ?postPhiNode1,  ?postPhiNode2,?phiNode,?c),
-BackwardsJoinPhiBranches(?preBB,?phiNode,?ifNode,?c):-
+BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode,?c):-
     AllIfNodes(?ifNode,_),
-    BackwardsJoinPhiBranches(?BB1,?phiNode,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?BB2,?phiNode,?postPhiNode2,?count2),
+    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
+    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
     ?postPhiNode1 != ?postPhiNode2,
     //?BB1 < ?BB2,
     Instruction_Next(?ifNode,?BB1),
@@ -436,8 +443,8 @@ BackwardsJoinPhiBranches(?preBB,?phiNode,?ifNode,?c):-
     NrOfMultiPhiNodes(?phiNode, ?nrPhiAss),
     ?nrPhiAss > ?c.
 
-BackwardsJoinPhiBranches(?preBB,?phiNode,?postPhiNode1,?count1):-
-    BackwardsJoinPhiBranches(?BB1,?phiNode,?postPhiNode1,?count1),
+BackwardsJoinPhiBranches(?phiNode,?preBB,?postPhiNode1,?count1):-
+    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
     MaySuccessorBBModuloThrow(?BB1, ?preBB),
     BasicBlockTail(?preBB, ?preBBTail),
     !AllIfNodes(?preBBTail,_).
@@ -450,12 +457,12 @@ BackwardsJoinPhiBranches(?preBB,?phiNode,?postPhiNode1,?count1):-
 //?count indicates how many branches have joined definitely
 //those branches that have multiple predeccessors are not included
 PhiBranchesGetThroughIf(?ifNode1, ?postPhiNode1,  ?postPhiNode2,?phiNode,?count2),
-BackwardsJoinPhiBranches(?preBB,?phiNode,?ifNode1, ?count2):-
+BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1, ?count2):-
     AllIfNodes(?ifNode1,?ifLineNr1),
     AllIfNodes(?ifNode2,?ifLineNr2),
     ?ifNode1 != ?ifNode2,
-    BackwardsJoinPhiBranches(?BB1,?phiNode,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?BB2,?phiNode,?postPhiNode2,?count2),
+    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
+    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
     ?postPhiNode1 != ?postPhiNode2,
     MaySuccessorBBModuloThrow(?BB1, ?preBB),
     MaySuccessorBBModuloThrow(?BB2, ?preBB),
@@ -474,12 +481,12 @@ BackwardsJoinPhiBranches(?preBB,?phiNode,?ifNode1, ?count2):-
 
 
 PhiBranchesGetThroughIf(?ifNode1, ?postPhiNode1,  ?postPhiNode2,?phiNode,?count1),
-BackwardsJoinPhiBranches(?preBB,?phiNode,?ifNode1,?count1):-
+BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1,?count1):-
     AllIfNodes(?ifNode1,?ifLineNr1),
     AllIfNodes(?ifNode2,?ifLineNr2),
     ?ifNode1 != ?ifNode2,
-    BackwardsJoinPhiBranches(?BB1,?phiNode,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?BB2,?phiNode,?postPhiNode2,?count2),
+    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
+    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
     ?postPhiNode1 != ?postPhiNode2,
     //?BB1 < ?BB2,
     MaySuccessorBBModuloThrow(?BB1, ?preBB),
@@ -503,8 +510,8 @@ BackwardsJoinPhiBranches(?preBB,?phiNode,?ifNode1,?count1):-
 
 PhiBranchesMeetAtIf(?ifNode, ?postPhiNode1, ?postPhiNode2, ?phiNode,?c):-
     AllIfNodes(?ifNode,_),
-    BackwardsJoinPhiBranches(?BB1,?phiNode,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?BB2,?phiNode,?postPhiNode2,?count2),
+    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
+    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
     ?postPhiNode1 != ?postPhiNode2,
     MaySuccessorBBModuloThrow(?BB1, ?preBB),
     MaySuccessorBBModuloThrow(?BB2, ?preBB),
@@ -514,14 +521,14 @@ PhiBranchesMeetAtIf(?ifNode, ?postPhiNode1, ?postPhiNode2, ?phiNode,?c):-
     Instruction_Next(?ifNode,?BB1),
     JumpTarget(?BB2,?ifNode),    
     ?nrPhiAss = ?c,
-    ?b = count : {MaySuccessorBBModuloThrow(?BB1, _)},
-    ?b = count : {MaySuccessorBBModuloThrow(?BB2, _)},
+    NrOfPredBB(?BB1, ?b),
+    NrOfPredBB(?BB2, ?b),
     ?b = 1.
 
 
 PhiBranchesMeetAtIf(?ifNode1, ?postPhiNode1, ?postPhiNode2, ?phiNode,?c):-
-    BackwardsJoinPhiBranches(?BB1,?phiNode,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?BB2,?phiNode,?postPhiNode2,?count2),
+    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
+    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
     ?postPhiNode1 != ?postPhiNode2,
     MaySuccessorBBModuloThrow(?BB1, ?preBB),
     MaySuccessorBBModuloThrow(?BB2, ?preBB),
@@ -534,7 +541,7 @@ PhiBranchesMeetAtIf(?ifNode1, ?postPhiNode1, ?postPhiNode2, ?phiNode,?c):-
     Instruction_Next(?ifNode1,?BB1),
     JumpTarget(?BB2,?ifNode1),    
     ?nrPhiAss = ?c,
-    ?a = count : {MaySuccessorBBModuloThrow(?BB1, _)},
+    NrOfPredBB(?BB1, ?a),
     ?a > 1, 
     ?multiJumpBB = ?BB1,
     ?ifLineNr1 < ?ifLineNr2,
@@ -546,19 +553,18 @@ PhiBranchesMeetAtIf(?ifNode1, ?postPhiNode1, ?postPhiNode2, ?phiNode,?c):-
     AllIfNodes(?ifNode1,?ifLineNr1),
     AllIfNodes(?ifNode2,?ifLineNr2),
     ?ifNode1 != ?ifNode2,
-    BackwardsJoinPhiBranches(?BB1,?phiNode,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?BB2,?phiNode,?postPhiNode2,?count2),
+    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
+    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
     ?postPhiNode1 != ?postPhiNode2,
-    //?BB1 < ?BB2,
     MaySuccessorBBModuloThrow(?BB1, ?preBB),
     MaySuccessorBBModuloThrow(?BB2, ?preBB),
     BasicBlockTail(?preBB, ?ifNode1),
-    ?c = ?count1 +?count2,
+    ?c = ?count1 + ?count2,
     NrOfMultiPhiNodes(?phiNode, ?nrPhiAss),
     Instruction_Next(?ifNode1,?BB1),
     JumpTarget(?BB2,?ifNode1),    
     ?nrPhiAss = ?c,
-    ?b = count : {MaySuccessorBBModuloThrow(?BB2, _)},
+    NrOfPredBB(?BB2, ?b), 
     ?b > 1, 
     ?multiJumpBB = ?BB2,
     ?ifLineNr1 < ?ifLineNr2,
