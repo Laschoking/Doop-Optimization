@@ -141,7 +141,7 @@ BinaryExpressionBB(?BB2, ?exp,?to):-
     NewMayPredecessorBBModuloThrow(?BB1,?BB2),
     NrOfPredBB(?BB2,1).
 
-
+//would be non-stratified negation
 //BinaryExpressionBB(?BB,?exp, ?to):-
 //    PotentialExpression(?BB1, ?BB2, ?exp, ?to),
 //    !NonIntersectionExpressions(?BB1, ?BB2, ?exp,?to).
