@@ -1,0 +1,43 @@
+.type Var <: symbol
+.type Method <: symbol
+.type Operator <: symbol
+.type Instruction <: symbol
+.type MethodInv <: symbol
+
+.decl UseBB(?BB:Instruction, ?var:Var)
+.input UseBB(IO="file", filename="UseBB.csv", delimiter="\t")
+
+.decl DefBB(?BB:Instruction, ?var:Var)
+.input DefBB(IO="file", filename="DefBB.csv", delimiter="\t")
+
+.decl Def(?BB:Instruction, ?var:Var)
+.input Def(IO="file", filename="Def.csv", delimiter="\t")
+
+.decl VarSimpleName(?s:Var, ?p:Var)
+.input VarSimpleName(IO="file", filename="Var-SimpleName.facts", delimiter="\t")
+
+.decl LiveVarInBB(?BB:Instruction, ?var:Var)
+.input LiveVarInBB(IO="file", filename="LiveVarInBB.csv", delimiter="\t")
+
+.decl OutDef(?var:Var)
+.decl OutUse(?var:Var)
+
+OutDef(?var):-
+    !Def(_,?var),
+    VarSimpleName(?var,_).
+
+OutUse(?var):-
+    !UseBB(_, ?var),
+    VarSimpleName(?var,_).
+    
+//.output OutDef
+//.output OutUse
+.decl LiveVarTest(?ins:Instruction, ?var:Var)
+LiveVarTest(?BB, ?var):-
+    DefBB(?BB, ?var),
+    !LiveVarInBB(_, ?var).
+.decl test(?var):-
+    Def(_, ?var),
+    
+    
+.output LiveVarTest
