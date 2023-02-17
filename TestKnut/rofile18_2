@@ -1,0 +1,2484 @@
+{
+ "root": {
+  "program": {
+   "configuration": {
+    "": "Analysis/ConstProp_2.dl",
+    "fact-dir": "../out/18example_multi_phi_all_cfg/database",
+    "include-dir": " -I.",
+    "jobs": "4",
+    "output-dir": "ConstProp_Results/18_2",
+    "profile": "rofile18_2",
+    "relationCount": "39",
+    "ruleCount": "65",
+    "version": "2.1"
+   },
+   "relation": {
+    "AllPhiNodes": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "AllPhiNodes(?phiNode) :- \n   PhiNodeHead(?phiNode1,?phiNode),\n   AssignLocal(?phiNode1,_,_,_,_).": {
+       "atom-frequency": {
+        "AllPhiNodes(?phiNode) :- \n   PhiNodeHead(?phiNode1,?phiNode),\n   AssignLocal(?phiNode1,_,_,_,_).": {
+         "PhiNodeHead": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 6,
+       "runtime": { "start": 1675336231031215, "end": 1675336231031229},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [326:1-329:44]"
+      }
+     },
+     "num-tuples": 6,
+     "reads": 0,
+     "runtime": { "start": 1675336231031210, "end": 1675336231031246},
+     "savetime": { "start": 1675336231031256, "end": 1675336231031373},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [81:7-81:18]"
+    },
+    "ApplyPhiConstFolding": {
+     "maxRSS": {
+      "post": 11912,
+      "pre": 11912
+     },
+     "non-recursive-rule": {
+      "ApplyPhiConstFolding(?rootIfNode,?phiNode1) :- \n   PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   OrderPhiBranchesBB(?phiNode,?BB1,?order),\n   LinkConstPhiNodesToOrder(?phiNode,?phiNode1,?order).": {
+       "atom-frequency": {
+        "ApplyPhiConstFolding(?rootIfNode,?phiNode1) :- \n   PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   OrderPhiBranchesBB(?phiNode,?BB1,?order),\n   LinkConstPhiNodesToOrder(?phiNode,?phiNode1,?order).": {
+         "LinkConstPhiNodesToOrder": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "OrderPhiBranchesBB": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "PossiblePhiConstFolding": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 5,
+       "runtime": { "start": 1675336231037690, "end": 1675336231037711},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [445:1-448:58]"
+      }
+     },
+     "num-tuples": 5,
+     "reads": 0,
+     "runtime": { "start": 1675336231037665, "end": 1675336231037730},
+     "savetime": { "start": 1675336231037740, "end": 1675336231037857},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [90:7-90:27]"
+    },
+    "AssignLocal": {
+     "loadtime": { "start": 1675336231031087, "end": 1675336231031197},
+     "num-tuples": 43,
+     "reads": 14,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [34:7-34:18]"
+    },
+    "BasicBlockBegin": {
+     "loadtime": { "start": 1675336231030804, "end": 1675336231030855},
+     "num-tuples": 45,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [21:7-21:22]"
+    },
+    "BasicBlockHead": {
+     "loadtime": { "start": 1675336231031740, "end": 1675336231031886},
+     "num-tuples": 123,
+     "reads": 78,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [37:7-37:21]"
+    },
+    "BasicBlockTail": {
+     "loadtime": { "start": 1675336231030726, "end": 1675336231030792},
+     "num-tuples": 45,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [18:7-18:21]"
+    },
+    "BoolConstFolding": {
+     "loadtime": { "start": 1675336231033578, "end": 1675336231033628},
+     "num-tuples": 9,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [71:7-71:23]"
+    },
+    "Dominates": {
+     "loadtime": { "start": 1675336231030573, "end": 1675336231030712},
+     "num-tuples": 110,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [15:7-15:16]"
+    },
+    "If": {
+     "loadtime": { "start": 1675336231030866, "end": 1675336231030909},
+     "num-tuples": 10,
+     "reads": 11,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [24:7-24:9]"
+    },
+    "IfConstant": {
+     "loadtime": { "start": 1675336231035110, "end": 1675336231035175},
+     "num-tuples": 9,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [77:7-77:17]"
+    },
+    "IfNode": {
+     "maxRSS": {
+      "post": 11912,
+      "pre": 11912
+     },
+     "non-recursive-rule": {
+      "IfNode(?ifNode) :- \n   IfVar(?ifNode,_,_),\n   If(?ifNode,_,_,_).": {
+       "atom-frequency": {
+        "IfNode(?ifNode) :- \n   IfVar(?ifNode,_,_),\n   If(?ifNode,_,_,_).": {
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 10,
+       "runtime": { "start": 1675336231034857, "end": 1675336231034883},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [317:1-320:36]"
+      }
+     },
+     "num-tuples": 10,
+     "reads": 11,
+     "runtime": { "start": 1675336231034830, "end": 1675336231034898},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [88:7-88:13]"
+    },
+    "IfNodeIndex": {
+     "maxRSS": {
+      "post": 11912,
+      "pre": 11912
+     },
+     "non-recursive-rule": {
+      "IfNodeIndex(?method,?ifNode,?lineNr) :- \n   IfVar(?ifNode,_,_),\n   If(?ifNode,?lineNr,_,?method).": {
+       "atom-frequency": {
+        "IfNodeIndex(?method,?ifNode,?lineNr) :- \n   IfVar(?ifNode,_,_),\n   If(?ifNode,?lineNr,_,?method).": {
+         "If": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 10,
+       "runtime": { "start": 1675336231034656, "end": 1675336231034679},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [317:1-320:36]"
+      }
+     },
+     "num-tuples": 10,
+     "reads": 0,
+     "runtime": { "start": 1675336231034639, "end": 1675336231034695},
+     "savetime": { "start": 1675336231034704, "end": 1675336231034822},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [87:7-87:18]"
+    },
+    "IfVar": {
+     "loadtime": { "start": 1675336231034513, "end": 1675336231034625},
+     "num-tuples": 11,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [74:7-74:12]"
+    },
+    "InstructionInPhiNode": {
+     "loadtime": { "start": 1675336231028740, "end": 1675336231028888},
+     "num-tuples": 14,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [9:7-9:27]"
+    },
+    "Instruction_Next": {
+     "loadtime": { "start": 1675336231032647, "end": 1675336231032775},
+     "num-tuples": 123,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [46:7-46:23]"
+    },
+    "IntConstFolding": {
+     "loadtime": { "start": 1675336231033506, "end": 1675336231033565},
+     "num-tuples": 10,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [68:7-68:22]"
+    },
+    "IsConstant": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "IsConstant(?var) :- \n   BoolConstFolding(_,?var,_,_).": {
+       "atom-frequency": {
+        "IsConstant(?var) :- \n   BoolConstFolding(_,?var,_,_).": {
+         "BoolConstFolding": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 9,
+       "runtime": { "start": 1675336231033688, "end": 1675336231033707},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [313:1-315:37]"
+      },
+      "IsConstant(?var) :- \n   IntConstFolding(_,?var,_,_,_).": {
+       "atom-frequency": {
+        "IsConstant(?var) :- \n   IntConstFolding(_,?var,_,_,_).": {
+         "IntConstFolding": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 10,
+       "runtime": { "start": 1675336231033658, "end": 1675336231033673},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [313:1-315:37]"
+      }
+     },
+     "num-tuples": 19,
+     "reads": 14,
+     "runtime": { "start": 1675336231033642, "end": 1675336231033720},
+     "savetime": { "start": 1675336231033729, "end": 1675336231033849},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [92:7-92:17]"
+    },
+    "JumpTarget": {
+     "loadtime": { "start": 1675336231032545, "end": 1675336231032633},
+     "num-tuples": 25,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [40:7-40:17]"
+    },
+    "LinkConstPhiNodesToOrder": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "LinkConstPhiNodesToOrder(?startPhiNode,?newPhiNode1,?order) :- \n   LinkStartPhiToLaterPhiBlocks(?startPhiNode,?newPhiNode),\n   PhiNodeContainsConstant(?newPhiNode,?newPhiNode1),\n   OrderPhiBlock(?newPhiNode,?newPhiNode1,?order).": {
+       "atom-frequency": {
+        "LinkConstPhiNodesToOrder(?startPhiNode,?newPhiNode1,?order) :- \n   LinkStartPhiToLaterPhiBlocks(?startPhiNode,?newPhiNode),\n   PhiNodeContainsConstant(?newPhiNode,?newPhiNode1),\n   OrderPhiBlock(?newPhiNode,?newPhiNode1,?order).": {
+         "LinkStartPhiToLaterPhiBlocks": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "OrderPhiBlock": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "PhiNodeContainsConstant": {
+          "level": 1,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 15,
+       "runtime": { "start": 1675336231034327, "end": 1675336231034352},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [396:1-399:54]"
+      }
+     },
+     "num-tuples": 15,
+     "reads": 0,
+     "runtime": { "start": 1675336231034299, "end": 1675336231034371},
+     "savetime": { "start": 1675336231034381, "end": 1675336231034504},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [95:7-95:31]"
+    },
+    "LinkStartPhiToLaterPhiBlocks": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "LinkStartPhiToLaterPhiBlocks(?startPhiNode,?newPhiNode) :- \n   PhiBeginningBB(?startPhiNode),\n   PhiBeginningPhiBlock(?newPhiNode),\n   PhiNodeHead(?startPhiNode1,?startPhiNode),\n   BasicBlockHead(?newPhiNode,?startPhiNode1),\n   NrOfPhiNodesPerBlock(?startPhiNode,?c),\n   NrOfPhiNodesPerBlock(?newPhiNode,?c).": {
+       "atom-frequency": {
+        "LinkStartPhiToLaterPhiBlocks(?startPhiNode,?newPhiNode) :- \n   PhiBeginningBB(?startPhiNode),\n   PhiBeginningPhiBlock(?newPhiNode),\n   PhiNodeHead(?startPhiNode1,?startPhiNode),\n   BasicBlockHead(?newPhiNode,?startPhiNode1),\n   NrOfPhiNodesPerBlock(?startPhiNode,?c),\n   NrOfPhiNodesPerBlock(?newPhiNode,?c).": {
+         "NrOfPhiNodesPerBlock": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "PhiBeginningBB": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "PhiBeginningPhiBlock": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "PhiNodeHead": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1675336231031928, "end": 1675336231032359},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [360:1-366:42]"
+      },
+      "LinkStartPhiToLaterPhiBlocks(?startPhiNode,?startPhiNode) :- \n   PhiBeginningBB(?startPhiNode).": {
+       "atom-frequency": {
+        "LinkStartPhiToLaterPhiBlocks(?startPhiNode,?startPhiNode) :- \n   PhiBeginningBB(?startPhiNode).": {
+         "PhiBeginningBB": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 6,
+       "runtime": { "start": 1675336231031907, "end": 1675336231031911},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [357:1-358:35]"
+      }
+     },
+     "num-tuples": 7,
+     "reads": 0,
+     "runtime": { "start": 1675336231031901, "end": 1675336231032383},
+     "savetime": { "start": 1675336231032396, "end": 1675336231032534},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [94:7-94:35]"
+    },
+    "MayPredecessorBBModuloThrow": {
+     "loadtime": { "start": 1675336231032875, "end": 1675336231032946},
+     "num-tuples": 46,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [55:7-55:34]"
+    },
+    "MaySuccessorBBModuloThrow": {
+     "loadtime": { "start": 1675336231032790, "end": 1675336231032861},
+     "num-tuples": 46,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [52:7-52:32]"
+    },
+    "NrOfPhiNodesPerBlock": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "NrOfPhiNodesPerBlock(?phiNode,@generator_0) :- \n   PhiBeginningPhiBlock(?phiNode),\n   @generator_0 = count : { PhiNodeHead(+underscore_132,?phiNode) }.": {
+       "atom-frequency": {
+        "NrOfPhiNodesPerBlock(?phiNode,@generator_0) :- \n   PhiBeginningPhiBlock(?phiNode),\n   @generator_0 = count : { PhiNodeHead(+underscore_132,?phiNode) }.": {
+         "PhiBeginningPhiBlock": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 6,
+       "runtime": { "start": 1675336231029458, "end": 1675336231030400},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [334:1-336:45]"
+      }
+     },
+     "num-tuples": 6,
+     "reads": 6,
+     "runtime": { "start": 1675336231029453, "end": 1675336231030420},
+     "savetime": { "start": 1675336231030429, "end": 1675336231030564},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [83:7-83:27]"
+    },
+    "NrOfPredBB": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "NrOfPredBB(?BB1,@generator_0) :- \n   BasicBlockBegin(?BB1),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_159) },\n   @generator_1 = count : { MayPredecessorBBModuloThrow(?BB1,+underscore_160) }.": {
+       "atom-frequency": {
+        "NrOfPredBB(?BB1,@generator_0) :- \n   BasicBlockBegin(?BB1),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_159) },\n   @generator_1 = count : { MayPredecessorBBModuloThrow(?BB1,+underscore_160) }.": {
+         "BasicBlockBegin": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 45,
+       "runtime": { "start": 1675336231032975, "end": 1675336231033012},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [339:1-343:56]"
+      }
+     },
+     "num-tuples": 45,
+     "reads": 5,
+     "runtime": { "start": 1675336231032959, "end": 1675336231033032},
+     "savetime": { "start": 1675336231033041, "end": 1675336231033173},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [96:7-96:17]"
+    },
+    "NrOfSuccBB": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "NrOfSuccBB(?BB1,@generator_1) :- \n   BasicBlockBegin(?BB1),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_161) },\n   @generator_1 = count : { MayPredecessorBBModuloThrow(?BB1,+underscore_162) }.": {
+       "atom-frequency": {
+        "NrOfSuccBB(?BB1,@generator_1) :- \n   BasicBlockBegin(?BB1),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_161) },\n   @generator_1 = count : { MayPredecessorBBModuloThrow(?BB1,+underscore_162) }.": {
+         "BasicBlockBegin": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 45,
+       "runtime": { "start": 1675336231033212, "end": 1675336231033250},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [339:1-343:56]"
+      }
+     },
+     "num-tuples": 45,
+     "reads": 6,
+     "runtime": { "start": 1675336231033182, "end": 1675336231033269},
+     "savetime": { "start": 1675336231033277, "end": 1675336231033408},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [97:7-97:17]"
+    },
+    "OperatorAt": {
+     "loadtime": { "start": 1675336231033417, "end": 1675336231033492},
+     "num-tuples": 15,
+     "reads": 372,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [61:7-61:17]"
+    },
+    "OptInstructionFromMethodIndex": {
+     "loadtime": { "start": 1675336231030921, "end": 1675336231031073},
+     "num-tuples": 138,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [28:7-28:36]"
+    },
+    "OrderPhiBlock": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "OrderPhiBlock(?phiNode,?phiNode1,@generator_0) :- \n   PhiBeginningPhiBlock(?phiNode),\n   PhiNodeIndex(?phiNode,?phiNode1,?lineNrPhi1),\n   @generator_0 = count : { PhiNodeIndex(?phiNode,+underscore_146,?lineNrPhi),?lineNrPhi1 < ?lineNrPhi }.": {
+       "atom-frequency": {
+        "OrderPhiBlock(?phiNode,?phiNode1,@generator_0) :- \n   PhiBeginningPhiBlock(?phiNode),\n   PhiNodeIndex(?phiNode,?phiNode1,?lineNrPhi1),\n   @generator_0 = count : { PhiNodeIndex(?phiNode,+underscore_146,?lineNrPhi),?lineNrPhi1 < ?lineNrPhi }.": {
+         "PhiBeginningPhiBlock": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "PhiNodeIndex": {
+          "level": 1,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 14,
+       "runtime": { "start": 1675336231031571, "end": 1675336231031596},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [390:1-393:89]"
+      }
+     },
+     "num-tuples": 14,
+     "reads": 0,
+     "runtime": { "start": 1675336231031566, "end": 1675336231031615},
+     "savetime": { "start": 1675336231031624, "end": 1675336231031733},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [89:7-89:20]"
+    },
+    "OrderPhiBranchesBB": {
+     "maxRSS": {
+      "post": 11912,
+      "pre": 11912
+     },
+     "non-recursive-rule": {
+      "OrderPhiBranchesBB(?phiNode,?BB,@generator_0) :- \n   OriginalPhiBranches(?phiNode,?BB,?lineNr1),\n   @generator_0 = count : { OriginalPhiBranches(?phiNode,+underscore_137,?lineNrBB),?lineNr1 < ?lineNrBB }.": {
+       "atom-frequency": {
+        "OrderPhiBranchesBB(?phiNode,?BB,@generator_0) :- \n   OriginalPhiBranches(?phiNode,?BB,?lineNr1),\n   @generator_0 = count : { OriginalPhiBranches(?phiNode,+underscore_137,?lineNrBB),?lineNr1 < ?lineNrBB }.": {
+         "OriginalPhiBranches": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 9,
+       "runtime": { "start": 1675336231036925, "end": 1675336231036946},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [385:1-387:91]"
+      }
+     },
+     "num-tuples": 9,
+     "reads": 15,
+     "runtime": { "start": 1675336231036902, "end": 1675336231036965},
+     "savetime": { "start": 1675336231036975, "end": 1675336231037092},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [85:7-85:25]"
+    },
+    "OriginalPhiBranches": {
+     "maxRSS": {
+      "post": 11912,
+      "pre": 11912
+     },
+     "non-recursive-rule": {
+      "OriginalPhiBranches(?phiNode,?preBB,?lineNr) :- \n   PhiBeginningBB(?phiNode),\n   PhiBBHasConst(?phiNode),\n   NrOfPhiNodesPerBlock(?phiNode,?d),\n   NrOfPredBB(?phiNode,?d),\n   MaySuccessorBBModuloThrow(?phiNode,?preBB),\n   OptInstructionFromMethodIndex(_,?lineNr,?preBB),\n   AssignLocal(?phiNode,?lineNr1,_,_,?method),\n   IfNodeIndex(?method,?ifNode,?lineNr2),\n   StaticCondition(?ifNode,_),\n   ?lineNr2 < ?lineNr1.": {
+       "atom-frequency": {
+        "OriginalPhiBranches(?phiNode,?preBB,?lineNr) :- \n   PhiBeginningBB(?phiNode),\n   PhiBBHasConst(?phiNode),\n   NrOfPhiNodesPerBlock(?phiNode,?d),\n   NrOfPredBB(?phiNode,?d),\n   MaySuccessorBBModuloThrow(?phiNode,?preBB),\n   OptInstructionFromMethodIndex(_,?lineNr,?preBB),\n   AssignLocal(?phiNode,?lineNr1,_,_,?method),\n   IfNodeIndex(?method,?ifNode,?lineNr2),\n   StaticCondition(?ifNode,_),\n   ?lineNr2 < ?lineNr1.": {
+         "AssignLocal": {
+          "level": 6,
+          "num-tuples": 0
+         },
+         "IfNodeIndex": {
+          "level": 7,
+          "num-tuples": 0
+         },
+         "MaySuccessorBBModuloThrow": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "NrOfPhiNodesPerBlock": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "OptInstructionFromMethodIndex": {
+          "level": 5,
+          "num-tuples": 0
+         },
+         "PhiBeginningBB": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 9,
+       "runtime": { "start": 1675336231036696, "end": 1675336231036730},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [371:1-381:25]"
+      }
+     },
+     "num-tuples": 9,
+     "reads": 0,
+     "runtime": { "start": 1675336231036672, "end": 1675336231036753},
+     "savetime": { "start": 1675336231036762, "end": 1675336231036889},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [84:7-84:26]"
+    },
+    "PhiBBHasConst": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "PhiBBHasConst(?phiNode) :- \n   LinkStartPhiToLaterPhiBlocks(?phiNode,?nextPhiNode),\n   PhiNodeContainsConstant(?nextPhiNode,_).": {
+       "atom-frequency": {
+        "PhiBBHasConst(?phiNode) :- \n   LinkStartPhiToLaterPhiBlocks(?phiNode,?nextPhiNode),\n   PhiNodeContainsConstant(?nextPhiNode,_).": {
+         "LinkStartPhiToLaterPhiBlocks": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231034127, "end": 1675336231034148},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [351:1-354:46]"
+      },
+      "PhiBBHasConst(?phiNode) :- \n   PhiNodeContainsConstant(?phiNode,_).": {
+       "atom-frequency": {
+        "PhiBBHasConst(?phiNode) :- \n   PhiNodeContainsConstant(?phiNode,_).": {
+         "PhiNodeContainsConstant": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 5,
+       "runtime": { "start": 1675336231034096, "end": 1675336231034112},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [351:1-354:46]"
+      }
+     },
+     "num-tuples": 5,
+     "reads": 12,
+     "runtime": { "start": 1675336231034065, "end": 1675336231034162},
+     "savetime": { "start": 1675336231034170, "end": 1675336231034291},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [99:7-99:20]"
+    },
+    "PhiBeginningBB": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "PhiBeginningBB(?phiNode) :- \n   InstructionInPhiNode(?phiNode,?phiNode).": {
+       "atom-frequency": {
+        "PhiBeginningBB(?phiNode) :- \n   InstructionInPhiNode(?phiNode,?phiNode).": {
+         "InstructionInPhiNode": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 6,
+       "runtime": { "start": 1675336231028907, "end": 1675336231029086},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [331:1-332:45]"
+      }
+     },
+     "num-tuples": 6,
+     "reads": 0,
+     "runtime": { "start": 1675336231028904, "end": 1675336231029105},
+     "savetime": { "start": 1675336231029115, "end": 1675336231029262},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [86:7-86:21]"
+    },
+    "PhiBeginningPhiBlock": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "PhiBeginningPhiBlock(?phiNode) :- \n   PhiNodeHead(?phiNode,?phiNode).": {
+       "atom-frequency": {
+        "PhiBeginningPhiBlock(?phiNode) :- \n   PhiNodeHead(?phiNode,?phiNode).": {
+         "PhiNodeHead": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 6,
+       "runtime": { "start": 1675336231029336, "end": 1675336231029350},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [322:1-323:37]"
+      }
+     },
+     "num-tuples": 6,
+     "reads": 0,
+     "runtime": { "start": 1675336231029331, "end": 1675336231029367},
+     "savetime": { "start": 1675336231029376, "end": 1675336231029445},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [98:7-98:27]"
+    },
+    "PhiNodeContainsConstant": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "PhiNodeContainsConstant(?phiNode,?phiNode1) :- \n   PhiNodeHead(?phiNode1,?phiNode),\n   AssignLocal(?phiNode1,_,?from,_,_),\n   IsConstant(?from).": {
+       "atom-frequency": {
+        "PhiNodeContainsConstant(?phiNode,?phiNode1) :- \n   PhiNodeHead(?phiNode1,?phiNode),\n   AssignLocal(?phiNode1,_,?from,_,_),\n   IsConstant(?from).": {
+         "AssignLocal": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "PhiNodeHead": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 12,
+       "runtime": { "start": 1675336231033885, "end": 1675336231033910},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [346:1-349:23]"
+      }
+     },
+     "num-tuples": 12,
+     "reads": 7,
+     "runtime": { "start": 1675336231033857, "end": 1675336231033928},
+     "savetime": { "start": 1675336231033937, "end": 1675336231034056},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [93:7-93:30]"
+    },
+    "PhiNodeHead": {
+     "loadtime": { "start": 1675336231029271, "end": 1675336231029319},
+     "num-tuples": 14,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [12:7-12:18]"
+    },
+    "PhiNodeIndex": {
+     "maxRSS": {
+      "post": 11344,
+      "pre": 11344
+     },
+     "non-recursive-rule": {
+      "PhiNodeIndex(?phiNode,?phiNode1,?lineNr) :- \n   PhiNodeHead(?phiNode1,?phiNode),\n   AssignLocal(?phiNode1,?lineNr,_,_,_).": {
+       "atom-frequency": {
+        "PhiNodeIndex(?phiNode,?phiNode1,?lineNr) :- \n   PhiNodeHead(?phiNode1,?phiNode),\n   AssignLocal(?phiNode1,?lineNr,_,_,_).": {
+         "AssignLocal": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "PhiNodeHead": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11344,
+        "pre": 11344
+       },
+       "num-tuples": 14,
+       "runtime": { "start": 1675336231031387, "end": 1675336231031419},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [326:1-329:44]"
+      }
+     },
+     "num-tuples": 14,
+     "reads": 0,
+     "runtime": { "start": 1675336231031382, "end": 1675336231031437},
+     "savetime": { "start": 1675336231031445, "end": 1675336231031558},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [100:7-100:19]"
+    },
+    "PossiblePhiConstFolding": {
+     "iteration": {
+      "0": {
+       "copytime": { "start": 1675336231037371, "end": 1675336231037387},
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 2,
+       "recursive-rule": {
+        "PossiblePhiConstFolding(?rootIfNode,?BB2,?phiNode) :- \n   PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   !OrderPhiBranchesBB(?phiNode,?BB1,_),\n   NrOfSuccBB(?BB1,1),\n   MayPredecessorBBModuloThrow(?BB1,?BB2).": {
+         "0": {
+          "atom-frequency": {
+           "@new_PossiblePhiConstFolding(?rootIfNode,?BB2,?phiNode) :- \n   @delta_PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   !OrderPhiBranchesBB(?phiNode,?BB1,_),\n   NrOfSuccBB(?BB1,1),\n   MayPredecessorBBModuloThrow(?BB1,?BB2).": {
+            "@delta_PossiblePhiConstFolding": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "MayPredecessorBBModuloThrow": {
+             "level": 2,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 11912,
+           "pre": 11912
+          },
+          "num-tuples": 1,
+          "runtime": { "start": 1675336231037322, "end": 1675336231037343},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [438:1-442:45]"
+         }
+        },
+        "PossiblePhiConstFolding(?rootIfNode,?BB2,?phiNode) :- \n   PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   !OrderPhiBranchesBB(?phiNode,?BB1,_),\n   NrOfSuccBB(?BB1,?a),\n   ?a > 1,\n   BasicBlockTail(?BB1,?tailNode),\n   IfNode(?tailNode),\n   StaticCondition(?tailNode,?value),\n   ?value = 0,\n   Instruction_Next(?tailNode,?BB2).": {
+         "0": {
+          "atom-frequency": {
+           "@new_PossiblePhiConstFolding(?rootIfNode,?BB2,?phiNode) :- \n   @delta_PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   !OrderPhiBranchesBB(?phiNode,?BB1,_),\n   NrOfSuccBB(?BB1,?a),\n   ?a > 1,\n   BasicBlockTail(?BB1,?tailNode),\n   IfNode(?tailNode),\n   StaticCondition(?tailNode,?value),\n   ?value = 0,\n   Instruction_Next(?tailNode,?BB2).": {
+            "@delta_PossiblePhiConstFolding": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "BasicBlockTail": {
+             "level": 2,
+             "num-tuples": 0
+            },
+            "Instruction_Next": {
+             "level": 5,
+             "num-tuples": 0
+            },
+            "NrOfSuccBB": {
+             "level": 1,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 11912,
+           "pre": 11912
+          },
+          "num-tuples": 1,
+          "runtime": { "start": 1675336231037236, "end": 1675336231037259},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [425:1-436:35]"
+         }
+        },
+        "PossiblePhiConstFolding(?rootIfNode,?BB2,?phiNode) :- \n   PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   !OrderPhiBranchesBB(?phiNode,?BB1,_),\n   NrOfSuccBB(?BB1,?a),\n   ?a > 1,\n   BasicBlockTail(?BB1,?tailNode),\n   IfNode(?tailNode),\n   StaticCondition(?tailNode,?value),\n   ?value = 1,\n   JumpTarget(?BB2,?tailNode).": {
+         "0": {
+          "atom-frequency": {
+           "@new_PossiblePhiConstFolding(?rootIfNode,?BB2,?phiNode) :- \n   @delta_PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   !OrderPhiBranchesBB(?phiNode,?BB1,_),\n   NrOfSuccBB(?BB1,?a),\n   ?a > 1,\n   BasicBlockTail(?BB1,?tailNode),\n   IfNode(?tailNode),\n   StaticCondition(?tailNode,?value),\n   ?value = 1,\n   JumpTarget(?BB2,?tailNode).": {
+            "@delta_PossiblePhiConstFolding": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "BasicBlockTail": {
+             "level": 2,
+             "num-tuples": 0
+            },
+            "JumpTarget": {
+             "level": 5,
+             "num-tuples": 0
+            },
+            "NrOfSuccBB": {
+             "level": 1,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 11912,
+           "pre": 11912
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1675336231037282, "end": 1675336231037303},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [425:1-436:35]"
+         }
+        }
+       },
+       "runtime": { "start": 1675336231037221, "end": 1675336231037360}
+      },
+      "1": {
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "recursive-rule": {
+        "PossiblePhiConstFolding(?rootIfNode,?BB2,?phiNode) :- \n   PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   !OrderPhiBranchesBB(?phiNode,?BB1,_),\n   NrOfSuccBB(?BB1,1),\n   MayPredecessorBBModuloThrow(?BB1,?BB2).": {
+         "0": {
+          "maxRSS": {
+           "post": 11912,
+           "pre": 11912
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1675336231037486, "end": 1675336231037504},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [438:1-442:45]"
+         }
+        },
+        "PossiblePhiConstFolding(?rootIfNode,?BB2,?phiNode) :- \n   PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   !OrderPhiBranchesBB(?phiNode,?BB1,_),\n   NrOfSuccBB(?BB1,?a),\n   ?a > 1,\n   BasicBlockTail(?BB1,?tailNode),\n   IfNode(?tailNode),\n   StaticCondition(?tailNode,?value),\n   ?value = 0,\n   Instruction_Next(?tailNode,?BB2).": {
+         "0": {
+          "maxRSS": {
+           "post": 11912,
+           "pre": 11912
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1675336231037413, "end": 1675336231037431},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [425:1-436:35]"
+         }
+        },
+        "PossiblePhiConstFolding(?rootIfNode,?BB2,?phiNode) :- \n   PossiblePhiConstFolding(?rootIfNode,?BB1,?phiNode),\n   !OrderPhiBranchesBB(?phiNode,?BB1,_),\n   NrOfSuccBB(?BB1,?a),\n   ?a > 1,\n   BasicBlockTail(?BB1,?tailNode),\n   IfNode(?tailNode),\n   StaticCondition(?tailNode,?value),\n   ?value = 1,\n   JumpTarget(?BB2,?tailNode).": {
+         "0": {
+          "maxRSS": {
+           "post": 11912,
+           "pre": 11912
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1675336231037450, "end": 1675336231037469},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [425:1-436:35]"
+         }
+        }
+       },
+       "runtime": { "start": 1675336231037397, "end": 1675336231037519}
+      }
+     },
+     "maxRSS": {
+      "post": 11912,
+      "pre": 11912
+     },
+     "non-recursive-rule": {
+      "PossiblePhiConstFolding(?rootIfNode,?nextBB,?phiNode) :- \n   RootIfNode(?rootIfNode,?phiNode,@generator_0),\n   StaticCondition(?rootIfNode,?value),\n   ?value = 0,\n   Instruction_Next(?rootIfNode,?nextBB),\n   @generator_0 = min ?lineNr : { RootIfNode(?rootIfNode,+underscore_147,?lineNr) }.": {
+       "atom-frequency": {
+        "PossiblePhiConstFolding(?rootIfNode,?nextBB,?phiNode) :- \n   RootIfNode(?rootIfNode,?phiNode,@generator_0),\n   StaticCondition(?rootIfNode,?value),\n   ?value = 0,\n   Instruction_Next(?rootIfNode,?nextBB),\n   @generator_0 = min ?lineNr : { RootIfNode(?rootIfNode,+underscore_147,?lineNr) }.": {
+         "Instruction_Next": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "RootIfNode": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 3,
+       "runtime": { "start": 1675336231037124, "end": 1675336231037148},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [416:1-423:60]"
+      },
+      "PossiblePhiConstFolding(?rootIfNode,?nextBB,?phiNode) :- \n   RootIfNode(?rootIfNode,?phiNode,@generator_0),\n   StaticCondition(?rootIfNode,?value),\n   ?value = 1,\n   JumpTarget(?nextBB,?rootIfNode),\n   @generator_0 = min ?lineNr : { RootIfNode(?rootIfNode,+underscore_148,?lineNr) }.": {
+       "atom-frequency": {
+        "PossiblePhiConstFolding(?rootIfNode,?nextBB,?phiNode) :- \n   RootIfNode(?rootIfNode,?phiNode,@generator_0),\n   StaticCondition(?rootIfNode,?value),\n   ?value = 1,\n   JumpTarget(?nextBB,?rootIfNode),\n   @generator_0 = min ?lineNr : { RootIfNode(?rootIfNode,+underscore_148,?lineNr) }.": {
+         "JumpTarget": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "RootIfNode": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1675336231037167, "end": 1675336231037193},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [416:1-423:60]"
+      }
+     },
+     "num-tuples": 4,
+     "reads": 2,
+     "runtime": { "start": 1675336231037101, "end": 1675336231037211},
+     "savetime": { "start": 1675336231037529, "end": 1675336231037652},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [91:7-91:30]"
+    },
+    "RootIfNode": {
+     "maxRSS": {
+      "post": 11912,
+      "pre": 11912
+     },
+     "non-recursive-rule": {
+      "RootIfNode(?ifNode,?phiNode,?lineNr) :- \n   PhiBeginningBB(?phiNode),\n   PhiBBHasConst(?phiNode),\n   Dominates(?dom,?phiNode),\n   ?dom != ?phiNode,\n   PhiNodeIndex(?phiNode,?phiNode,?lineNr),\n   BasicBlockTail(?dom,?ifNode),\n   IfNode(?ifNode).": {
+       "atom-frequency": {
+        "RootIfNode(?ifNode,?phiNode,?lineNr) :- \n   PhiBeginningBB(?phiNode),\n   PhiBBHasConst(?phiNode),\n   Dominates(?dom,?phiNode),\n   ?dom != ?phiNode,\n   PhiNodeIndex(?phiNode,?phiNode,?lineNr),\n   BasicBlockTail(?dom,?ifNode),\n   IfNode(?ifNode).": {
+         "BasicBlockTail": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "Dominates": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "PhiBeginningBB": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "PhiNodeIndex": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 10,
+       "runtime": { "start": 1675336231034921, "end": 1675336231034951},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [405:1-412:21]"
+      }
+     },
+     "num-tuples": 10,
+     "reads": 0,
+     "runtime": { "start": 1675336231034907, "end": 1675336231034969},
+     "savetime": { "start": 1675336231034977, "end": 1675336231035101},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [101:7-101:17]"
+    },
+    "StaticCondition": {
+     "maxRSS": {
+      "post": 11912,
+      "pre": 11912
+     },
+     "non-recursive-rule": {
+      "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left > ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left > ?right.": {
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035313, "end": 1675336231035331},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [138:1-145:35]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+         "BoolConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036201, "end": 1675336231036221},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [257:1-264:37]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035712, "end": 1675336231035732},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [197:1-204:36]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left < ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left < ?right.": {
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035515, "end": 1675336231035533},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [168:1-175:35]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?right),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?right),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036413, "end": 1675336231036434},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [288:1-295:36]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?right),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfConstant(?ifNode,?pos1,?right),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035992, "end": 1675336231036012},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [227:1-234:35]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+         "BoolConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 2,
+       "runtime": { "start": 1675336231036343, "end": 1675336231036364},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [279:1-286:36]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+         "BoolConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036486, "end": 1675336231036507},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [297:1-305:36]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036063, "end": 1675336231036084},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [236:1-244:35]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1675336231035921, "end": 1675336231035944},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [218:1-225:35]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left > ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left > ?right.": {
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035379, "end": 1675336231035403},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [147:1-155:35]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"<=\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left > ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"<=\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left > ?right.": {
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035246, "end": 1675336231035266},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [129:1-136:35]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+         "BoolConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 2,
+       "runtime": { "start": 1675336231036133, "end": 1675336231036154},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [248:1-255:37]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+         "BoolConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036272, "end": 1675336231036293},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [266:1-274:37]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035784, "end": 1675336231035803},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [206:1-214:36]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035648, "end": 1675336231035668},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [188:1-195:36]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left < ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left < ?right.": {
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035578, "end": 1675336231035601},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [177:1-185:35]"
+      },
+      "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\">=\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left < ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,0) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\">=\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left < ?right.": {
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035450, "end": 1675336231035470},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [159:1-166:35]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+         "BoolConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036377, "end": 1675336231036399},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [288:1-295:36]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035957, "end": 1675336231035979},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [227:1-234:35]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left <= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left <= ?right.": {
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035280, "end": 1675336231035299},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [138:1-145:35]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left >= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?left),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left >= ?right.": {
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035483, "end": 1675336231035502},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [168:1-175:35]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?right),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?right),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036168, "end": 1675336231036188},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [257:1-264:37]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?right),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfConstant(?ifNode,?pos1,?right),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+         "IfConstant": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035681, "end": 1675336231035699},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [197:1-204:36]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+         "BoolConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036307, "end": 1675336231036329},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [279:1-286:36]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+         "BoolConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036447, "end": 1675336231036471},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [297:1-305:36]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036025, "end": 1675336231036049},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [236:1-244:35]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"!=\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035817, "end": 1675336231035906},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [218:1-225:35]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left <= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left <= ?right.": {
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035344, "end": 1675336231035364},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [147:1-155:35]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"<=\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left <= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"<=\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left <= ?right.": {
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035208, "end": 1675336231035229},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [129:1-136:35]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+         "BoolConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1675336231036098, "end": 1675336231036119},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [248:1-255:37]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+         "BoolConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231036234, "end": 1675336231036258},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [266:1-274:37]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035746, "end": 1675336231035770},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [206:1-214:36]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\"==\"),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035616, "end": 1675336231035635},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [188:1-195:36]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left >= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left >= ?right.": {
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1675336231035545, "end": 1675336231035564},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [177:1-185:35]"
+      },
+      "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\">=\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left >= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?ifNode,1) :- \n   IfVar(?ifNode,?pos1,?var1),\n   OperatorAt(?ifNode,\">=\"),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left >= ?right.": {
+         "IfConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11912,
+        "pre": 11912
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1675336231035417, "end": 1675336231035437},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [159:1-166:35]"
+      }
+     },
+     "num-tuples": 7,
+     "reads": 58,
+     "runtime": { "start": 1675336231035189, "end": 1675336231036522},
+     "savetime": { "start": 1675336231036531, "end": 1675336231036662},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/Analysis/ConstProp_2.dl [82:7-82:22]"
+    }
+   },
+   "runtime": { "start": 1675336231028734, "end": 1675336231037867},
+   "starttime": { "time": 1675336231028457},
+   "usage": {
+    "timepoint": {
+     "1675336231028503": {
+      "maxRSS": 10888,
+      "systemtime": 7902,
+      "usertime": 118530
+     },
+     "1675336231028784": {
+      "maxRSS": 10888,
+      "systemtime": 7922,
+      "usertime": 118844
+     },
+     "1675336231028951": {
+      "maxRSS": 11344,
+      "systemtime": 7937,
+      "usertime": 119057
+     },
+     "1675336231029125": {
+      "maxRSS": 11344,
+      "systemtime": 7964,
+      "usertime": 119470
+     },
+     "1675336231029279": {
+      "maxRSS": 11344,
+      "systemtime": 7995,
+      "usertime": 119935
+     },
+     "1675336231029339": {
+      "maxRSS": 11344,
+      "systemtime": 8003,
+      "usertime": 120052
+     },
+     "1675336231029383": {
+      "maxRSS": 11344,
+      "systemtime": 8008,
+      "usertime": 120131
+     },
+     "1675336231029460": {
+      "maxRSS": 11344,
+      "systemtime": 8029,
+      "usertime": 120439
+     },
+     "1675336231030438": {
+      "maxRSS": 11344,
+      "systemtime": 8077,
+      "usertime": 121163
+     },
+     "1675336231030580": {
+      "maxRSS": 11344,
+      "systemtime": 8092,
+      "usertime": 121382
+     },
+     "1675336231030734": {
+      "maxRSS": 11344,
+      "systemtime": 8110,
+      "usertime": 121661
+     },
+     "1675336231030812": {
+      "maxRSS": 11344,
+      "systemtime": 8120,
+      "usertime": 121807
+     },
+     "1675336231030873": {
+      "maxRSS": 11344,
+      "systemtime": 8128,
+      "usertime": 121923
+     },
+     "1675336231030927": {
+      "maxRSS": 11344,
+      "systemtime": 8135,
+      "usertime": 122025
+     },
+     "1675336231031095": {
+      "maxRSS": 11344,
+      "systemtime": 8155,
+      "usertime": 122338
+     },
+     "1675336231031217": {
+      "maxRSS": 11344,
+      "systemtime": 8171,
+      "usertime": 122573
+     },
+     "1675336231031262": {
+      "maxRSS": 11344,
+      "systemtime": 8176,
+      "usertime": 122653
+     },
+     "1675336231031389": {
+      "maxRSS": 11344,
+      "systemtime": 8190,
+      "usertime": 122851
+     },
+     "1675336231031452": {
+      "maxRSS": 11344,
+      "systemtime": 8196,
+      "usertime": 122953
+     },
+     "1675336231031573": {
+      "maxRSS": 11344,
+      "systemtime": 8209,
+      "usertime": 123146
+     },
+     "1675336231031631": {
+      "maxRSS": 11344,
+      "systemtime": 8216,
+      "usertime": 123242
+     },
+     "1675336231031747": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 123425
+     },
+     "1675336231031910": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 126647
+     },
+     "1675336231031934": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 126690
+     },
+     "1675336231032404": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 126977
+     },
+     "1675336231032552": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127080
+     },
+     "1675336231032655": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127174
+     },
+     "1675336231032797": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127316
+     },
+     "1675336231032881": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127400
+     },
+     "1675336231032966": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127485
+     },
+     "1675336231032981": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127500
+     },
+     "1675336231033047": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127566
+     },
+     "1675336231033189": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127665
+     },
+     "1675336231033218": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127685
+     },
+     "1675336231033283": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127751
+     },
+     "1675336231033424": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127852
+     },
+     "1675336231033513": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 127933
+     },
+     "1675336231033585": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128005
+     },
+     "1675336231033649": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128069
+     },
+     "1675336231033663": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128084
+     },
+     "1675336231033694": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128114
+     },
+     "1675336231033734": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128154
+     },
+     "1675336231033864": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128244
+     },
+     "1675336231033891": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128263
+     },
+     "1675336231033943": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128316
+     },
+     "1675336231034071": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128404
+     },
+     "1675336231034102": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128427
+     },
+     "1675336231034132": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128457
+     },
+     "1675336231034176": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128501
+     },
+     "1675336231034306": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128590
+     },
+     "1675336231034333": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128610
+     },
+     "1675336231034386": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128664
+     },
+     "1675336231034520": {
+      "maxRSS": 11344,
+      "systemtime": 8228,
+      "usertime": 128758
+     },
+     "1675336231034646": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 128877
+     },
+     "1675336231034661": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 128892
+     },
+     "1675336231034709": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 128941
+     },
+     "1675336231034837": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129028
+     },
+     "1675336231034862": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129045
+     },
+     "1675336231034913": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129095
+     },
+     "1675336231034926": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129109
+     },
+     "1675336231034983": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129166
+     },
+     "1675336231035116": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129260
+     },
+     "1675336231035195": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129331
+     },
+     "1675336231035213": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129349
+     },
+     "1675336231035252": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129387
+     },
+     "1675336231035285": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129421
+     },
+     "1675336231035318": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129453
+     },
+     "1675336231035349": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129485
+     },
+     "1675336231035384": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129519
+     },
+     "1675336231035423": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129558
+     },
+     "1675336231035456": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129591
+     },
+     "1675336231035488": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129623
+     },
+     "1675336231035520": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129656
+     },
+     "1675336231035551": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129686
+     },
+     "1675336231035583": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129719
+     },
+     "1675336231035621": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129757
+     },
+     "1675336231035653": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129789
+     },
+     "1675336231035686": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129821
+     },
+     "1675336231035717": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129853
+     },
+     "1675336231035751": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129886
+     },
+     "1675336231035789": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129925
+     },
+     "1675336231035822": {
+      "maxRSS": 11912,
+      "systemtime": 8228,
+      "usertime": 129957
+     },
+     "1675336231035927": {
+      "maxRSS": 11912,
+      "systemtime": 11160,
+      "usertime": 137644
+     },
+     "1675336231035963": {
+      "maxRSS": 11912,
+      "systemtime": 11163,
+      "usertime": 137677
+     },
+     "1675336231035998": {
+      "maxRSS": 11912,
+      "systemtime": 11165,
+      "usertime": 137709
+     },
+     "1675336231036030": {
+      "maxRSS": 11912,
+      "systemtime": 11168,
+      "usertime": 137739
+     },
+     "1675336231036069": {
+      "maxRSS": 11912,
+      "systemtime": 11170,
+      "usertime": 137774
+     },
+     "1675336231036103": {
+      "maxRSS": 11912,
+      "systemtime": 11173,
+      "usertime": 137806
+     },
+     "1675336231036138": {
+      "maxRSS": 11912,
+      "systemtime": 11176,
+      "usertime": 137839
+     },
+     "1675336231036174": {
+      "maxRSS": 11912,
+      "systemtime": 11178,
+      "usertime": 137872
+     },
+     "1675336231036207": {
+      "maxRSS": 11912,
+      "systemtime": 11181,
+      "usertime": 137902
+     },
+     "1675336231036240": {
+      "maxRSS": 11912,
+      "systemtime": 11183,
+      "usertime": 137932
+     },
+     "1675336231036278": {
+      "maxRSS": 11912,
+      "systemtime": 11186,
+      "usertime": 137968
+     },
+     "1675336231036313": {
+      "maxRSS": 11912,
+      "systemtime": 11189,
+      "usertime": 138001
+     },
+     "1675336231036349": {
+      "maxRSS": 11912,
+      "systemtime": 11191,
+      "usertime": 138033
+     },
+     "1675336231036383": {
+      "maxRSS": 11912,
+      "systemtime": 11194,
+      "usertime": 138065
+     },
+     "1675336231036419": {
+      "maxRSS": 11912,
+      "systemtime": 11197,
+      "usertime": 138099
+     },
+     "1675336231036453": {
+      "maxRSS": 11912,
+      "systemtime": 11199,
+      "usertime": 138129
+     },
+     "1675336231036492": {
+      "maxRSS": 11912,
+      "systemtime": 11202,
+      "usertime": 138165
+     },
+     "1675336231036537": {
+      "maxRSS": 11912,
+      "systemtime": 11206,
+      "usertime": 138207
+     },
+     "1675336231036679": {
+      "maxRSS": 11912,
+      "systemtime": 11213,
+      "usertime": 138298
+     },
+     "1675336231036701": {
+      "maxRSS": 11912,
+      "systemtime": 11277,
+      "usertime": 139090
+     },
+     "1675336231036768": {
+      "maxRSS": 11912,
+      "systemtime": 11282,
+      "usertime": 139152
+     },
+     "1675336231036914": {
+      "maxRSS": 11912,
+      "systemtime": 11306,
+      "usertime": 139446
+     },
+     "1675336231036930": {
+      "maxRSS": 11912,
+      "systemtime": 11307,
+      "usertime": 139461
+     },
+     "1675336231036980": {
+      "maxRSS": 11912,
+      "systemtime": 11311,
+      "usertime": 139508
+     },
+     "1675336231037108": {
+      "maxRSS": 11912,
+      "systemtime": 11318,
+      "usertime": 139589
+     },
+     "1675336231037129": {
+      "maxRSS": 11912,
+      "systemtime": 11334,
+      "usertime": 139790
+     },
+     "1675336231037173": {
+      "maxRSS": 11912,
+      "systemtime": 11337,
+      "usertime": 139831
+     },
+     "1675336231037227": {
+      "maxRSS": 11912,
+      "systemtime": 11341,
+      "usertime": 139881
+     },
+     "1675336231037241": {
+      "maxRSS": 11912,
+      "systemtime": 11342,
+      "usertime": 139894
+     },
+     "1675336231037288": {
+      "maxRSS": 11912,
+      "systemtime": 11346,
+      "usertime": 139937
+     },
+     "1675336231037328": {
+      "maxRSS": 11912,
+      "systemtime": 11349,
+      "usertime": 139974
+     },
+     "1675336231037377": {
+      "maxRSS": 11912,
+      "systemtime": 11353,
+      "usertime": 140020
+     },
+     "1675336231037402": {
+      "maxRSS": 11912,
+      "systemtime": 11354,
+      "usertime": 140043
+     },
+     "1675336231037418": {
+      "maxRSS": 11912,
+      "systemtime": 11356,
+      "usertime": 140057
+     },
+     "1675336231037456": {
+      "maxRSS": 11912,
+      "systemtime": 11358,
+      "usertime": 140092
+     },
+     "1675336231037491": {
+      "maxRSS": 11912,
+      "systemtime": 11361,
+      "usertime": 140125
+     },
+     "1675336231037535": {
+      "maxRSS": 11912,
+      "systemtime": 11364,
+      "usertime": 140166
+     },
+     "1675336231037671": {
+      "maxRSS": 11912,
+      "systemtime": 11371,
+      "usertime": 140254
+     },
+     "1675336231037696": {
+      "maxRSS": 11912,
+      "systemtime": 11415,
+      "usertime": 140790
+     },
+     "1675336231037746": {
+      "maxRSS": 11912,
+      "systemtime": 11419,
+      "usertime": 140836
+     }
+    }
+   }
+  }
+ }
+}

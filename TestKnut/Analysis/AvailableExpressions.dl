@@ -1,67 +1,62 @@
 .type Var <: symbol
 .type Method <: symbol
 .type Operator <: symbol
-.type Instruction <: symbol
+//.type symbol <: symbol
 .type MethodInv <: symbol
 .type BinExp = [?left : Var, ?op:Operator, ?right:Var]
-.type NodeList = [n:Instruction, next:NodeList]
+.type NodeList = [n:symbol, next:NodeList]
 
-.decl BasicBlockHead(?inst:Instruction, ?ins:Instruction)
+.decl BasicBlockHead(?inst:symbol, ?ins:symbol)
 .input BasicBlockHead(IO="file", filename="BasicBlockHead.csv", delimiter="\t")
 
-.decl AssignUnop(?instruction:Instruction, ?index:number, ?to:Var, ?inmethod:Method)
+.decl AssignUnop(?symbol:symbol, ?index:number, ?to:Var, ?inmethod:Method)
 .input AssignUnop(IO="file", filename="AssignUnop.facts", delimiter="\t")
 
-.decl AssignBinop(?instruction:Instruction, ?index:number, ?to:Var, ?inmethod:Method)
+.decl AssignBinop(?symbol:symbol, ?index:number, ?to:Var, ?inmethod:Method)
 .input AssignBinop(IO="file", filename="AssignBinop.facts", delimiter="\t")
 
-.decl OperatorAt(?assign:Instruction, ?op:Operator)
+.decl OperatorAt(?assign:symbol, ?op:Operator)
 .input OperatorAt(IO="file", filename="OperatorAt.facts", delimter="\t")
 
-.decl If(?ifNode:Instruction, ?lineNr:number, ?jump:number, ?method:Method)
+.decl If(?ifNode:symbol, ?lineNr:number, ?jump:number, ?method:Method)
 .input If(IO="file", filename="If.facts", delimiter="\t")
 
-.decl MayPredecessorBBModuloThrow(?inst:Instruction, ?inst1:Instruction)
+.decl MayPredecessorBBModuloThrow(?inst:symbol, ?inst1:symbol)
 .input MayPredecessorBBModuloThrow(IO="file", filename="MayPredecessorBBModuloThrow.csv", delimiter="\t")
 
-.decl AssignOperFrom(?instruction:Instruction, ?pos: number, ?from:Var)
+.decl AssignOperFrom(?symbol:symbol, ?pos: number, ?from:Var)
 .input AssignOperFrom(IO="file", filename="AssignOperFrom.facts", delimiter="\t")
 
-.decl AssignOperFromConstant(?instruction:Instruction, ?pos: number, ?from:symbol)
+.decl AssignOperFromConstant(?symbol:symbol, ?pos: number, ?from:symbol)
 .input AssignOperFromConstant(IO="file", filename="AssignOperFromConstant.facts", delimiter="\t")
 
-.decl PhiNodeHead(?insn:Instruction, ?headInsn:Instruction)
+.decl PhiNodeHead(?insn:symbol, ?headInsn:symbol)
 .input PhiNodeHead(IO="file", filename="PhiNodeHead.csv", delimiter="\t")
 
 //use hat keine Positionen
-.decl Use(?ins:Instruction, ?var:Var)
+.decl Use(?ins:symbol, ?var:Var)
 .input Use(IO="file", filename="Use.csv", delimiter="\t")
 
-.decl BasicBlockBegin(?ass:Instruction)
+.decl BasicBlockBegin(?ass:symbol)
 .input BasicBlockBegin(IO="file", filename="BasicBlockBegin.csv", delimiter="\t")
 
-.decl BinaryExpression(?assign:Instruction, ?b:BinExp, ?to:Var)
+.decl BinaryExpression(?assign:symbol, ?b:BinExp, ?to:Var)
 .output BinaryExpression
 
-.decl BinaryExpressionBB(?assign:Instruction, ?exp:BinExp,?to:Var)
+.decl BinaryExpressionBB(?assign:symbol, ?exp:BinExp,?to:Var)
 .output BinaryExpressionBB
 
-.decl CommonSubExpression(?exp:BinExp, ?l:NodeList)
+.decl CommonSubExpression(?BB:symbol, ?exp:BinExp, ?BBcat:symbol,?nrJoins:number, ?cse:number)
 .output CommonSubExpression
 
-.decl UnaryExpression(?assign:Instruction, ?left:Var, ?op:Operator, ?to:Var)
-.output UnaryExpression
-
-.decl NrOfPredBB(?BB2:Instruction, ?n:number)
+.decl NrOfPredBB(?BB2:symbol, ?n:number)
 .output NrOfPredBB
 
-.decl AllBB(?BB:Instruction)
+.decl AllBB(?BB:symbol)
 
-.decl NoJoinExpressions(?BB1:Instruction, ?exp:BinExp)
-.output NoJoinExpressions
 
 //without annoying Phi-assigns that are part of a block
-.decl NewMayPredecessorBBModuloThrow(?inst:Instruction, ?inst1:Instruction)
+.decl NewMayPredecessorBBModuloThrow(?inst:symbol, ?inst1:symbol)
 .output NewMayPredecessorBBModuloThrow
 
 NewMayPredecessorBBModuloThrow(?BB1, ?BB2):-
@@ -114,41 +109,63 @@ BinaryExpression(?assign, [to_string(?left), ?op, ?right], ?to):-
     AssignOperFrom(?assign, ?pos2, ?right),
     ?pos1 < ?pos2.
 
+BinaryExpressionBB(?phiHead,?exp,?to):-
+    BinaryExpression(?assign, ?exp, ?to),
+    BasicBlockHead(?assign, ?head),
+    PhiNodeHead(?head, ?phiHead).
+
 BinaryExpressionBB(?head,?exp,?to):-
     BinaryExpression(?assign, ?exp, ?to),
-    BasicBlockHead(?assign, ?head).
+    BasicBlockHead(?assign, ?head),
+    !PhiNodeHead(?head,_).
 
-.decl PotentialExpression(?BB1:Instruction, ?BB2:Instruction, ?exp:BinExp, ?to:Var)
-.output PotentialExpression
+.decl IntersectExpressions(?BB3:symbol, ?exp:BinExp, ?s:symbol,?nrBB:number,?to:Var,?cse:number)
+.output IntersectExpressions
 
-.decl NonIntersectionExpressions(?BB1:Instruction, ?BB2:Instruction, ?exp:BinExp,?to:Var)
-.output NonIntersectionExpressions
+.decl OneRandomPredecessor(?BB1:symbol, ?BB2:symbol) choice-domain ?BB2
+.output OneRandomPredecessor
 
-PotentialExpression(?BB1, ?BB2, ?exp, ?to):-
-    BinaryExpressionBB(?BB1,?exp,?to),
-    NewMayPredecessorBBModuloThrow(?BB1,?BB2).
-
-NonIntersectionExpressions(?BB1,?BB2, ?exp,?to):-
-    PotentialExpression(?BB1, ?BB2, ?exp, ?to),
-    NewMayPredecessorBBModuloThrow(?BB3, ?BB2),
-    ?BB3 != ?BB1,
-    !PotentialExpression(?BB3, ?BB2, ?exp, _),
-    NrOfPredBB(?BB2, ?c),
-    ?c > 1.
+.decl JoinedExpressions(?BB:symbol, ?exp:BinExp,?to:Var)
+.output JoinedExpressions
 
 BinaryExpressionBB(?BB2, ?exp,?to):-
     BinaryExpressionBB(?BB1,?exp,?to),
-    NewMayPredecessorBBModuloThrow(?BB1,?BB2),
+    NewMayPredecessorBBModuloThrow(?BB1, ?BB2),
     NrOfPredBB(?BB2,1).
 
-//would be non-stratified negation
-//BinaryExpressionBB(?BB,?exp, ?to):-
-//    PotentialExpression(?BB1, ?BB2, ?exp, ?to),
-//    !NonIntersectionExpressions(?BB1, ?BB2, ?exp,?to).
+
+OneRandomPredecessor(?BB1, ?BB2):-
+    NewMayPredecessorBBModuloThrow(?BB1, ?BB2).
 
 
+IntersectExpressions(?BB2,?exp,?catBB,1,?to,0):-
+    OneRandomPredecessor(?BB1, ?BB2),
+    NrOfPredBB(?BB2, ?c),
+    ?c > 1,
+    BinaryExpressionBB(?BB1,?exp,?to),
+    ?catBB = ?BB1.
 
+IntersectExpressions(?BB3,?exp,?catBBNew,?nrJoinsNew,?to1,?newCse):-
+    IntersectExpressions(?BB3,?exp,?catBB,?nrJoins,?to1,?cse),
+    //NrOfPredBB(?BB3, ?nrPred),
+    //?nrPred > ?nrJoins,
+    BinaryExpressionBB(?BB2, ?exp, ?to2),
+    NewMayPredecessorBBModuloThrow(?BB2, ?BB3),
+    !contains(?BB2,?catBB),
+    ?catBBNew = cat(?catBB, ?BB2),
+    ?nrJoinsNew = ?nrJoins +1,
+    ((?to1 != ?to2, 
+    ?newCse = ?cse +1);
+    (?to1 = ?to2, 
+    ?newCse = ?cse)).
 
+JoinedExpressions(?BB, ?exp,?to),
+BinaryExpressionBB(?BB, ?exp,?to):-
+    IntersectExpressions(?BB, ?exp, _, ?nrJoins, ?to,_),
+    NrOfPredBB(?BB, ?nrJoins).
 
-
+CommonSubExpression(?BB, ?exp, ?BBcat,?nrJoins, ?cse):-
+    IntersectExpressions(?BB, ?exp, ?BBcat, ?nrJoins, _,?cse),
+    NrOfPredBB(?BB, ?nrJoins),
+    ?cse >= 1.
 

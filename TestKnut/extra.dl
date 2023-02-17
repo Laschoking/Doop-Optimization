@@ -1,13 +1,14 @@
-#!java
-.decl Temp(v: Var, h: Value)
-
-Temp(v, h) :-
-  mainAnalysis.VarPointsTo(_, h, _, v),
-  Var_DeclaringMethod(v, "<Example: void test(int)>").
-
-.output Temp
+.type list = [l:list,n:number]
 
 
-decl. Methods(m : Method)
-Methods(m) :- ApplicationMethod(m).
-.output Methods
+.decl test(a:list)
+.output test
+//test([1,[2,[3,[4,nil]]]]).
+test([[[nil,3],2],1]).
+
+.decl test2(l:list)
+.output test2
+
+//test2(?d):-
+//  test([_, ?c]),
+//  ?c = [3,?d].

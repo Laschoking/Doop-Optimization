@@ -1,0 +1,3279 @@
+{
+ "root": {
+  "program": {
+   "configuration": {
+    "": "ConstPropExtmultiPhi.dl",
+    "fact-dir": "../out/18example_multi_phi/database",
+    "include-dir": " -I.",
+    "jobs": "4",
+    "output-dir": "ConstantPropagationExtension/18",
+    "profile": "profile",
+    "relationCount": "36",
+    "ruleCount": "84",
+    "version": "2.1"
+   },
+   "relation": {
+    "AllIfNodes": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "AllIfNodes(?method,?ifNode,?lineNr) :- \n   IfVar(?ifNode,_,_),\n   If(?ifNode,?lineNr,_,?method).": {
+       "atom-frequency": {
+        "AllIfNodes(?method,?ifNode,?lineNr) :- \n   IfVar(?ifNode,_,_),\n   If(?ifNode,?lineNr,_,?method).": {
+         "If": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 10,
+       "runtime": { "start": 1674754705792948, "end": 1674754705792962},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [408:1-410:36]"
+      }
+     },
+     "num-tuples": 10,
+     "reads": 32,
+     "runtime": { "start": 1674754705792943, "end": 1674754705792979},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [98:7-98:17]"
+    },
+    "AllPhiBeginningsInNewBB": {
+     "maxRSS": {
+      "post": 11944,
+      "pre": 11944
+     },
+     "non-recursive-rule": {
+      "AllPhiBeginningsInNewBB(?phiNode) :- \n   AllPhiNodes(?phiNode,_),\n   BasicBlockBegin(?phiNode),\n   !NextInSamePhiNode(_,?phiNode).": {
+       "atom-frequency": {
+        "AllPhiBeginningsInNewBB(?phiNode) :- \n   AllPhiNodes(?phiNode,_),\n   BasicBlockBegin(?phiNode),\n   !NextInSamePhiNode(_,?phiNode).": {
+         "AllPhiNodes": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11944,
+        "pre": 11944
+       },
+       "num-tuples": 5,
+       "runtime": { "start": 1674754705787842, "end": 1674754705787857},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [368:1-371:36]"
+      }
+     },
+     "num-tuples": 5,
+     "reads": 0,
+     "runtime": { "start": 1674754705787817, "end": 1674754705787877},
+     "savetime": { "start": 1674754705787887, "end": 1674754705788006},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [97:7-97:30]"
+    },
+    "AllPhiNodes": {
+     "maxRSS": {
+      "post": 11944,
+      "pre": 11944
+     },
+     "non-recursive-rule": {
+      "AllPhiNodes(?phiNode,?lineNr) :- \n   AssignLocal(?phiNode,?lineNr,_,_,_),\n   NextInSamePhiNode(?phiNode,_).": {
+       "atom-frequency": {
+        "AllPhiNodes(?phiNode,?lineNr) :- \n   AssignLocal(?phiNode,?lineNr,_,_,_),\n   NextInSamePhiNode(?phiNode,_).": {
+         "AssignLocal": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11944,
+        "pre": 11944
+       },
+       "num-tuples": 8,
+       "runtime": { "start": 1674754705787292, "end": 1674754705787506},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [346:1-349:36]"
+      },
+      "AllPhiNodes(?phiNode,?lineNr) :- \n   AssignLocal(?phiNode,?lineNr,_,_,_),\n   NextInSamePhiNode(_,?phiNode).": {
+       "atom-frequency": {
+        "AllPhiNodes(?phiNode,?lineNr) :- \n   AssignLocal(?phiNode,?lineNr,_,_,_),\n   NextInSamePhiNode(_,?phiNode).": {
+         "AssignLocal": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 11944,
+        "pre": 11944
+       },
+       "num-tuples": 6,
+       "runtime": { "start": 1674754705787529, "end": 1674754705787560},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [346:1-349:36]"
+      }
+     },
+     "num-tuples": 14,
+     "reads": 0,
+     "runtime": { "start": 1674754705787289, "end": 1674754705787575},
+     "savetime": { "start": 1674754705787584, "end": 1674754705787808},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [15:7-15:18]"
+    },
+    "ApplyPhiConstFolding": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "ApplyPhiConstFolding(?ifNode,?nextPhiNode1,?nextPhiNode2) :- \n   PossiblePhiConstFolding(?ifNode,?phiNode,?postPhiNode),\n   MultiPhiNode(?phiNode,?postPhiNode,_),\n   LinkPhiNodesInBB(?postPhiNode,?nextPhiNode2),\n   MultiPhiNodeContainsConstant(?nextPhiNode1,?nextPhiNode2).": {
+       "atom-frequency": {
+        "ApplyPhiConstFolding(?ifNode,?nextPhiNode1,?nextPhiNode2) :- \n   PossiblePhiConstFolding(?ifNode,?phiNode,?postPhiNode),\n   MultiPhiNode(?phiNode,?postPhiNode,_),\n   LinkPhiNodesInBB(?postPhiNode,?nextPhiNode2),\n   MultiPhiNodeContainsConstant(?nextPhiNode1,?nextPhiNode2).": {
+         "LinkPhiNodesInBB": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "MultiPhiNodeContainsConstant": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "PossiblePhiConstFolding": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 5,
+       "runtime": { "start": 1674754705798075, "end": 1674754705798089},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [620:1-624:63]"
+      }
+     },
+     "num-tuples": 5,
+     "reads": 0,
+     "runtime": { "start": 1674754705798057, "end": 1674754705798109},
+     "savetime": { "start": 1674754705798122, "end": 1674754705798288},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [100:7-100:27]"
+    },
+    "AssignLocal": {
+     "loadtime": { "start": 1674754705786819, "end": 1674754705787078},
+     "num-tuples": 43,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [29:7-29:18]"
+    },
+    "BackwardsJoinPhiBranches": {
+     "iteration": {
+      "0": {
+       "copytime": { "start": 1674754705795810, "end": 1674754705795817},
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 4,
+       "recursive-rule": {
+        "BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode,(?count1+?count2)) :- \n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   ?postPhiNode1 != ?postPhiNode2,\n   Instruction_Next(?ifNode,?BB1),\n   JumpTarget(?BB2,?ifNode),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode),\n   AllIfNodes(_,?ifNode,_),\n   NrOfMultiPhiNodes(?phiNode,?nrPhiAss),\n   ?nrPhiAss > (?count1+?count2).": {
+         "0": {
+          "atom-frequency": {
+           "@new_BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode,(?count1+?count2)) :- \n   @delta_BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   ?postPhiNode1 != ?postPhiNode2,\n   Instruction_Next(?ifNode,?BB1),\n   JumpTarget(?BB2,?ifNode),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode),\n   AllIfNodes(_,?ifNode,_),\n   NrOfMultiPhiNodes(?phiNode,?nrPhiAss),\n   ?nrPhiAss > (?count1+?count2).": {
+            "@delta_BackwardsJoinPhiBranches": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "BackwardsJoinPhiBranches": {
+             "level": 1,
+             "num-tuples": 0
+            },
+            "Instruction_Next": {
+             "level": 2,
+             "num-tuples": 0
+            },
+            "MaySuccessorBBModuloThrow": {
+             "level": 4,
+             "num-tuples": 0
+            },
+            "NrOfMultiPhiNodes": {
+             "level": 8,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705795397, "end": 1674754705795416},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [450:1-463:20]"
+         },
+         "1": {
+          "atom-frequency": {
+           "@new_BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode,(?count1+?count2)) :- \n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   @delta_BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   ?postPhiNode1 != ?postPhiNode2,\n   Instruction_Next(?ifNode,?BB1),\n   JumpTarget(?BB2,?ifNode),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode),\n   AllIfNodes(_,?ifNode,_),\n   NrOfMultiPhiNodes(?phiNode,?nrPhiAss),\n   ?nrPhiAss > (?count1+?count2).": {
+            "@delta_BackwardsJoinPhiBranches": {
+             "level": 1,
+             "num-tuples": 0
+            },
+            "BackwardsJoinPhiBranches": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "Instruction_Next": {
+             "level": 2,
+             "num-tuples": 0
+            },
+            "MaySuccessorBBModuloThrow": {
+             "level": 4,
+             "num-tuples": 0
+            },
+            "NrOfMultiPhiNodes": {
+             "level": 8,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 1,
+          "runtime": { "start": 1674754705795439, "end": 1674754705795462},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [450:1-463:20]"
+         }
+        },
+        "BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1,?count1) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_1),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB2,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB2,+underscore_194) },\n    _tmp_1 = (?count1+?count2).": {
+         "0": {
+          "atom-frequency": {
+           "@new_BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1,?count1) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   @delta_BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_1),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB2,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB2,+underscore_194) },\n    _tmp_1 = (?count1+?count2).": {
+            "@delta_BackwardsJoinPhiBranches": {
+             "level": 2,
+             "num-tuples": 0
+            },
+            "AllIfNodes": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "BackwardsJoinPhiBranches": {
+             "level": 4,
+             "num-tuples": 0
+            },
+            "MaySuccessorBBModuloThrow": {
+             "level": 10,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705795646, "end": 1674754705795694},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [502:1-524:47]"
+         },
+         "1": {
+          "atom-frequency": {
+           "@new_BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1,?count1) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   @delta_BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_1),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB2,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB2,+underscore_194) },\n    _tmp_1 = (?count1+?count2).": {
+            "@delta_BackwardsJoinPhiBranches": {
+             "level": 4,
+             "num-tuples": 0
+            },
+            "AllIfNodes": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "BackwardsJoinPhiBranches": {
+             "level": 2,
+             "num-tuples": 0
+            },
+            "MaySuccessorBBModuloThrow": {
+             "level": 10,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 1,
+          "runtime": { "start": 1674754705795720, "end": 1674754705795772},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [502:1-524:47]"
+         }
+        },
+        "BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1,?count2) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_0),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB1,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_191) },\n    _tmp_0 = (?count1+?count2).": {
+         "0": {
+          "atom-frequency": {
+           "@new_BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1,?count2) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   @delta_BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_0),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB1,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_191) },\n    _tmp_0 = (?count1+?count2).": {
+            "@delta_BackwardsJoinPhiBranches": {
+             "level": 2,
+             "num-tuples": 0
+            },
+            "AllIfNodes": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "BackwardsJoinPhiBranches": {
+             "level": 4,
+             "num-tuples": 0
+            },
+            "MaySuccessorBBModuloThrow": {
+             "level": 10,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705795484, "end": 1674754705795535},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [478:1-499:47]"
+         },
+         "1": {
+          "atom-frequency": {
+           "@new_BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1,?count2) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   @delta_BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_0),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB1,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_191) },\n    _tmp_0 = (?count1+?count2).": {
+            "@delta_BackwardsJoinPhiBranches": {
+             "level": 4,
+             "num-tuples": 0
+            },
+            "AllIfNodes": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "BackwardsJoinPhiBranches": {
+             "level": 2,
+             "num-tuples": 0
+            },
+            "MaySuccessorBBModuloThrow": {
+             "level": 10,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 1,
+          "runtime": { "start": 1674754705795563, "end": 1674754705795620},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [478:1-499:47]"
+         }
+        },
+        "BackwardsJoinPhiBranches(?phiNode,?preBB,?postPhiNode1,?count1) :- \n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   BasicBlockTail(?preBB,?preBBTail),\n   !AllIfNodes(_,?preBBTail,_).": {
+         "0": {
+          "atom-frequency": {
+           "@new_BackwardsJoinPhiBranches(?phiNode,?preBB,?postPhiNode1,?count1) :- \n   @delta_BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   BasicBlockTail(?preBB,?preBBTail),\n   !AllIfNodes(_,?preBBTail,_).": {
+            "@delta_BackwardsJoinPhiBranches": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "BasicBlockTail": {
+             "level": 2,
+             "num-tuples": 0
+            },
+            "MaySuccessorBBModuloThrow": {
+             "level": 1,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 1,
+          "runtime": { "start": 1674754705795360, "end": 1674754705795376},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [465:1-469:34]"
+         }
+        }
+       },
+       "runtime": { "start": 1674754705795355, "end": 1674754705795798}
+      },
+      "1": {
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "recursive-rule": {
+        "BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode,(?count1+?count2)) :- \n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   ?postPhiNode1 != ?postPhiNode2,\n   Instruction_Next(?ifNode,?BB1),\n   JumpTarget(?BB2,?ifNode),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode),\n   AllIfNodes(_,?ifNode,_),\n   NrOfMultiPhiNodes(?phiNode,?nrPhiAss),\n   ?nrPhiAss > (?count1+?count2).": {
+         "0": {
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705795865, "end": 1674754705795884},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [450:1-463:20]"
+         },
+         "1": {
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705795905, "end": 1674754705795924},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [450:1-463:20]"
+         }
+        },
+        "BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1,?count1) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_1),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB2,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB2,+underscore_194) },\n    _tmp_1 = (?count1+?count2).": {
+         "0": {
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705796088, "end": 1674754705796134},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [502:1-524:47]"
+         },
+         "1": {
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705796159, "end": 1674754705796213},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [502:1-524:47]"
+         }
+        },
+        "BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1,?count2) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_0),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB1,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_191) },\n    _tmp_0 = (?count1+?count2).": {
+         "0": {
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705795944, "end": 1674754705795972},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [478:1-499:47]"
+         },
+         "1": {
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705795997, "end": 1674754705796062},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [478:1-499:47]"
+         }
+        },
+        "BackwardsJoinPhiBranches(?phiNode,?preBB,?postPhiNode1,?count1) :- \n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   BasicBlockTail(?preBB,?preBBTail),\n   !AllIfNodes(_,?preBBTail,_).": {
+         "0": {
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705795831, "end": 1674754705795848},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [465:1-469:34]"
+         }
+        }
+       },
+       "runtime": { "start": 1674754705795827, "end": 1674754705796238}
+      }
+     },
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "BackwardsJoinPhiBranches(?phiNode,?preBB,?postPhiNode,1) :- \n   OrderPhiBranchesJoinedInformation(?phiNode,?preBB,?postPhiNode).": {
+       "atom-frequency": {
+        "BackwardsJoinPhiBranches(?phiNode,?preBB,?postPhiNode,1) :- \n   OrderPhiBranchesJoinedInformation(?phiNode,?preBB,?postPhiNode).": {
+         "OrderPhiBranchesJoinedInformation": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 9,
+       "runtime": { "start": 1674754705795322, "end": 1674754705795327},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [444:1-445:71]"
+      }
+     },
+     "num-tuples": 9,
+     "reads": 52,
+     "runtime": { "start": 1674754705795317, "end": 1674754705795344},
+     "savetime": { "start": 1674754705796249, "end": 1674754705796432},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [93:7-93:31]"
+    },
+    "BasicBlockBegin": {
+     "loadtime": { "start": 1674754705786580, "end": 1674754705786804},
+     "num-tuples": 45,
+     "reads": 14,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [12:7-12:22]"
+    },
+    "BasicBlockHead": {
+     "loadtime": { "start": 1674754705789632, "end": 1674754705789909},
+     "num-tuples": 123,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [32:7-32:21]"
+    },
+    "BasicBlockTail": {
+     "loadtime": { "start": 1674754705768272, "end": 1674754705786560},
+     "num-tuples": 45,
+     "reads": 240,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [9:7-9:21]"
+    },
+    "BoolConstFolding": {
+     "loadtime": { "start": 1674754705791619, "end": 1674754705791794},
+     "num-tuples": 9,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [70:7-70:23]"
+    },
+    "If": {
+     "loadtime": { "start": 1674754705788042, "end": 1674754705788223},
+     "num-tuples": 10,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [19:7-19:9]"
+    },
+    "IfConstant": {
+     "loadtime": { "start": 1674754705792988, "end": 1674754705793169},
+     "num-tuples": 9,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [77:7-77:17]"
+    },
+    "IfVar": {
+     "loadtime": { "start": 1674754705792754, "end": 1674754705792929},
+     "num-tuples": 11,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [74:7-74:12]"
+    },
+    "Instruction_Next": {
+     "loadtime": { "start": 1674754705790501, "end": 1674754705790763},
+     "num-tuples": 123,
+     "reads": 4932,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [41:7-41:23]"
+    },
+    "IntConstFolding": {
+     "loadtime": { "start": 1674754705791447, "end": 1674754705791606},
+     "num-tuples": 10,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [67:7-67:22]"
+    },
+    "IsConstant": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "IsConstant(?var) :- \n   BoolConstFolding(_,?var,_,_).": {
+       "atom-frequency": {
+        "IsConstant(?var) :- \n   BoolConstFolding(_,?var,_,_).": {
+         "BoolConstFolding": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 9,
+       "runtime": { "start": 1674754705791833, "end": 1674754705791840},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [342:1-344:37]"
+      },
+      "IsConstant(?var) :- \n   IntConstFolding(_,?var,_,_,_).": {
+       "atom-frequency": {
+        "IsConstant(?var) :- \n   IntConstFolding(_,?var,_,_,_).": {
+         "IntConstFolding": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 10,
+       "runtime": { "start": 1674754705791814, "end": 1674754705791818},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [342:1-344:37]"
+      }
+     },
+     "num-tuples": 19,
+     "reads": 16,
+     "runtime": { "start": 1674754705791809, "end": 1674754705791852},
+     "savetime": { "start": 1674754705791861, "end": 1674754705792033},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [102:7-102:17]"
+    },
+    "JumpTarget": {
+     "loadtime": { "start": 1674754705790294, "end": 1674754705790486},
+     "num-tuples": 25,
+     "reads": 363,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [35:7-35:17]"
+    },
+    "LinkPhiNodesInBB": {
+     "iteration": {
+      "0": {
+       "copytime": { "start": 1674754705790047, "end": 1674754705790054},
+       "maxRSS": {
+        "post": 12640,
+        "pre": 12640
+       },
+       "num-tuples": 8,
+       "recursive-rule": {
+        "LinkPhiNodesInBB(?startPhiNode1,?newPhiNode1) :- \n   LinkPhiNodesInBB(?startPhiNode,?newPhiNode),\n   MultiPhiNode(?startPhiNode,?startPhiNode1,_),\n   MultiPhiNode(?newPhiNode,?newPhiNode1,_),\n   OrderPostPhiNodes(?startPhiNode,?startPhiNode1,?order),\n   OrderPostPhiNodes(?newPhiNode,?newPhiNode1,?order).": {
+         "0": {
+          "atom-frequency": {
+           "@new_LinkPhiNodesInBB(?startPhiNode1,?newPhiNode1) :- \n   @delta_LinkPhiNodesInBB(?startPhiNode,?newPhiNode),\n   MultiPhiNode(?startPhiNode,?startPhiNode1,_),\n   MultiPhiNode(?newPhiNode,?newPhiNode1,_),\n   OrderPostPhiNodes(?startPhiNode,?startPhiNode1,?order),\n   OrderPostPhiNodes(?newPhiNode,?newPhiNode1,?order).": {
+            "@delta_LinkPhiNodesInBB": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "MultiPhiNode": {
+             "level": 1,
+             "num-tuples": 0
+            },
+            "OrderPostPhiNodes": {
+             "level": 3,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12640,
+           "pre": 12640
+          },
+          "num-tuples": 8,
+          "runtime": { "start": 1674754705789994, "end": 1674754705790014},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [360:1-365:57]"
+         }
+        }
+       },
+       "runtime": { "start": 1674754705789989, "end": 1674754705790036}
+      },
+      "1": {
+       "maxRSS": {
+        "post": 12640,
+        "pre": 12640
+       },
+       "num-tuples": 0,
+       "recursive-rule": {
+        "LinkPhiNodesInBB(?startPhiNode1,?newPhiNode1) :- \n   LinkPhiNodesInBB(?startPhiNode,?newPhiNode),\n   MultiPhiNode(?startPhiNode,?startPhiNode1,_),\n   MultiPhiNode(?newPhiNode,?newPhiNode1,_),\n   OrderPostPhiNodes(?startPhiNode,?startPhiNode1,?order),\n   OrderPostPhiNodes(?newPhiNode,?newPhiNode1,?order).": {
+         "0": {
+          "maxRSS": {
+           "post": 12640,
+           "pre": 12640
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705790067, "end": 1674754705790081},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [360:1-365:57]"
+         }
+        }
+       },
+       "runtime": { "start": 1674754705790063, "end": 1674754705790100}
+      }
+     },
+     "maxRSS": {
+      "post": 12640,
+      "pre": 12640
+     },
+     "non-recursive-rule": {
+      "LinkPhiNodesInBB(?startPhiNode,?newPhiNode) :- \n   AllPhiBeginningsInNewBB(?startPhiNode),\n   MultiPhiNode(?newPhiNode,?newPhiNode,_),\n   BasicBlockHead(?newPhiNode,?startPhiNode1),\n   MultiPhiNode(?startPhiNode,?startPhiNode1,_),\n   NrOfMultiPhiNodes(?startPhiNode,?c),\n   NrOfMultiPhiNodes(?newPhiNode,?c).": {
+       "atom-frequency": {
+        "LinkPhiNodesInBB(?startPhiNode,?newPhiNode) :- \n   AllPhiBeginningsInNewBB(?startPhiNode),\n   MultiPhiNode(?newPhiNode,?newPhiNode,_),\n   BasicBlockHead(?newPhiNode,?startPhiNode1),\n   MultiPhiNode(?startPhiNode,?startPhiNode1,_),\n   NrOfMultiPhiNodes(?startPhiNode,?c),\n   NrOfMultiPhiNodes(?newPhiNode,?c).": {
+         "AllPhiBeginningsInNewBB": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BasicBlockHead": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "MultiPhiNode": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "NrOfMultiPhiNodes": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12640,
+        "pre": 12640
+       },
+       "num-tuples": 6,
+       "runtime": { "start": 1674754705789930, "end": 1674754705789956},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [352:1-358:39]"
+      }
+     },
+     "num-tuples": 6,
+     "reads": 36,
+     "runtime": { "start": 1674754705789924, "end": 1674754705789978},
+     "savetime": { "start": 1674754705790109, "end": 1674754705790284},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [106:7-106:23]"
+    },
+    "MaySuccessorBBModuloThrow": {
+     "loadtime": { "start": 1674754705790778, "end": 1674754705790993},
+     "num-tuples": 46,
+     "reads": 118,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [47:7-47:32]"
+    },
+    "MultiPhiNode": {
+     "iteration": {
+      "0": {
+       "copytime": { "start": 1674754705788821, "end": 1674754705788830},
+       "maxRSS": {
+        "post": 12640,
+        "pre": 12640
+       },
+       "num-tuples": 8,
+       "recursive-rule": {
+        "MultiPhiNode(?phiNode,?phiNode,?lineNr) :- \n   MultiPhiNode(?phiNode,_,_),\n   OptInstructionFromMethodIndex(_,?lineNr,?phiNode),\n   !NextInSamePhiNode(_,?phiNode).": {
+         "0": {
+          "atom-frequency": {
+           "@new_MultiPhiNode(?phiNode,?phiNode,?lineNr) :- \n   @delta_MultiPhiNode(?phiNode,_,_),\n   OptInstructionFromMethodIndex(_,?lineNr,?phiNode),\n   !NextInSamePhiNode(_,?phiNode).": {
+            "@delta_MultiPhiNode": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "OptInstructionFromMethodIndex": {
+             "level": 1,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12640,
+           "pre": 12640
+          },
+          "num-tuples": 6,
+          "runtime": { "start": 1674754705788779, "end": 1674754705788796},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [396:1-399:36]"
+         }
+        },
+        "MultiPhiNode(?phiNode1,?phiNode3,?lineNr) :- \n   MultiPhiNode(?phiNode1,?phiNode2,_),\n   MultiPhiNode(?phiNode2,?phiNode3,?lineNr).": {
+         "0": {
+          "atom-frequency": {
+           "@new_MultiPhiNode(?phiNode1,?phiNode3,?lineNr) :- \n   @delta_MultiPhiNode(?phiNode1,?phiNode2,_),\n   MultiPhiNode(?phiNode2,?phiNode3,?lineNr).": {
+            "@delta_MultiPhiNode": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "MultiPhiNode": {
+             "level": 1,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12640,
+           "pre": 12640
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705788707, "end": 1674754705788724},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [392:1-394:48]"
+         },
+         "1": {
+          "atom-frequency": {
+           "@new_MultiPhiNode(?phiNode1,?phiNode3,?lineNr) :- \n   MultiPhiNode(?phiNode1,?phiNode2,_),\n   @delta_MultiPhiNode(?phiNode2,?phiNode3,?lineNr).": {
+            "@delta_MultiPhiNode": {
+             "level": 1,
+             "num-tuples": 0
+            },
+            "MultiPhiNode": {
+             "level": 0,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12640,
+           "pre": 12640
+          },
+          "num-tuples": 2,
+          "runtime": { "start": 1674754705788743, "end": 1674754705788765},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [392:1-394:48]"
+         }
+        }
+       },
+       "runtime": { "start": 1674754705788702, "end": 1674754705788811}
+      },
+      "1": {
+       "maxRSS": {
+        "post": 12640,
+        "pre": 12640
+       },
+       "num-tuples": 0,
+       "recursive-rule": {
+        "MultiPhiNode(?phiNode,?phiNode,?lineNr) :- \n   MultiPhiNode(?phiNode,_,_),\n   OptInstructionFromMethodIndex(_,?lineNr,?phiNode),\n   !NextInSamePhiNode(_,?phiNode).": {
+         "0": {
+          "maxRSS": {
+           "post": 12640,
+           "pre": 12640
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705788900, "end": 1674754705788917},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [396:1-399:36]"
+         }
+        },
+        "MultiPhiNode(?phiNode1,?phiNode3,?lineNr) :- \n   MultiPhiNode(?phiNode1,?phiNode2,_),\n   MultiPhiNode(?phiNode2,?phiNode3,?lineNr).": {
+         "0": {
+          "maxRSS": {
+           "post": 12640,
+           "pre": 12640
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705788843, "end": 1674754705788857},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [392:1-394:48]"
+         },
+         "1": {
+          "maxRSS": {
+           "post": 12640,
+           "pre": 12640
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705788870, "end": 1674754705788888},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [392:1-394:48]"
+         }
+        }
+       },
+       "runtime": { "start": 1674754705788838, "end": 1674754705788931}
+      }
+     },
+     "maxRSS": {
+      "post": 12640,
+      "pre": 12640
+     },
+     "non-recursive-rule": {
+      "MultiPhiNode(?phiNode1,?phiNode2,?lineNr) :- \n   NextInSamePhiNode(?phiNode1,?phiNode2),\n   OptInstructionFromMethodIndex(_,?lineNr,?phiNode2).": {
+       "atom-frequency": {
+        "MultiPhiNode(?phiNode1,?phiNode2,?lineNr) :- \n   NextInSamePhiNode(?phiNode1,?phiNode2),\n   OptInstructionFromMethodIndex(_,?lineNr,?phiNode2).": {
+         "NextInSamePhiNode": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "OptInstructionFromMethodIndex": {
+          "level": 1,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12640,
+        "pre": 12640
+       },
+       "num-tuples": 8,
+       "runtime": { "start": 1674754705788653, "end": 1674754705788673},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [388:1-390:56]"
+      }
+     },
+     "num-tuples": 8,
+     "reads": 97,
+     "runtime": { "start": 1674754705788647, "end": 1674754705788691},
+     "savetime": { "start": 1674754705788940, "end": 1674754705789125},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [86:7-86:19]"
+    },
+    "MultiPhiNodeContainsConstant": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "MultiPhiNodeContainsConstant(?phiNode,?phiNode2) :- \n   MultiPhiNode(?phiNode,?phiNode2,_),\n   AssignLocal(?phiNode2,_,?from,_,_),\n   IsConstant(?from).": {
+       "atom-frequency": {
+        "MultiPhiNodeContainsConstant(?phiNode,?phiNode2) :- \n   MultiPhiNode(?phiNode,?phiNode2,_),\n   AssignLocal(?phiNode2,_,?from,_,_),\n   IsConstant(?from).": {
+         "AssignLocal": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "MultiPhiNode": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 14,
+       "runtime": { "start": 1674754705792060, "end": 1674754705792087},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [373:1-376:23]"
+      }
+     },
+     "num-tuples": 14,
+     "reads": 0,
+     "runtime": { "start": 1674754705792042, "end": 1674754705792108},
+     "savetime": { "start": 1674754705792117, "end": 1674754705792284},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [105:7-105:35]"
+    },
+    "NextInSamePhiNode": {
+     "loadtime": { "start": 1674754705787093, "end": 1674754705787273},
+     "num-tuples": 8,
+     "reads": 113,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [54:7-54:24]"
+    },
+    "NrOfMultiPhiNodes": {
+     "maxRSS": {
+      "post": 12640,
+      "pre": 12640
+     },
+     "non-recursive-rule": {
+      "NrOfMultiPhiNodes(?phiNode,@generator_0) :- \n   MultiPhiNode(?phiNode,?phiNode,_),\n   @generator_0 = count : { MultiPhiNode(?phiNode,+underscore_178,+underscore_179) }.": {
+       "atom-frequency": {
+        "NrOfMultiPhiNodes(?phiNode,@generator_0) :- \n   MultiPhiNode(?phiNode,?phiNode,_),\n   @generator_0 = count : { MultiPhiNode(?phiNode,+underscore_178,+underscore_179) }.": {
+         "MultiPhiNode": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12640,
+        "pre": 12640
+       },
+       "num-tuples": 6,
+       "runtime": { "start": 1674754705789153, "end": 1674754705789182},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [403:1-405:48]"
+      }
+     },
+     "num-tuples": 6,
+     "reads": 213,
+     "runtime": { "start": 1674754705789134, "end": 1674754705789201},
+     "savetime": { "start": 1674754705789211, "end": 1674754705789373},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [87:7-87:24]"
+    },
+    "NrOfPhiConstantsInPhiBB": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "NrOfPhiConstantsInPhiBB(?startPhiNode,@generator_0) :- \n   AllPhiBeginningsInNewBB(?startPhiNode),\n   @generator_0 = sum ?nrInPhi : { NrOfPhiConstantsInPhiNode(?startPhiNode,+underscore_243,?nrInPhi) }.": {
+       "atom-frequency": {
+        "NrOfPhiConstantsInPhiBB(?startPhiNode,@generator_0) :- \n   AllPhiBeginningsInNewBB(?startPhiNode),\n   @generator_0 = sum ?nrInPhi : { NrOfPhiConstantsInPhiNode(?startPhiNode,+underscore_243,?nrInPhi) }.": {
+         "AllPhiBeginningsInNewBB": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 5,
+       "runtime": { "start": 1674754705792547, "end": 1674754705792560},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [384:1-386:82]"
+      }
+     },
+     "num-tuples": 5,
+     "reads": 0,
+     "runtime": { "start": 1674754705792530, "end": 1674754705792580},
+     "savetime": { "start": 1674754705792588, "end": 1674754705792745},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [104:7-104:30]"
+    },
+    "NrOfPhiConstantsInPhiNode": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "NrOfPhiConstantsInPhiNode(?startPhiNode,?nextPhiNode,@generator_0) :- \n   AllPhiBeginningsInNewBB(?startPhiNode),\n   LinkPhiNodesInBB(?startPhiNode,?nextPhiNode),\n   MultiPhiNode(?nextPhiNode,?nextPhiNode,_),\n   @generator_0 = count : { MultiPhiNodeContainsConstant(?nextPhiNode,+underscore_242) }.": {
+       "atom-frequency": {
+        "NrOfPhiConstantsInPhiNode(?startPhiNode,?nextPhiNode,@generator_0) :- \n   AllPhiBeginningsInNewBB(?startPhiNode),\n   LinkPhiNodesInBB(?startPhiNode,?nextPhiNode),\n   MultiPhiNode(?nextPhiNode,?nextPhiNode,_),\n   @generator_0 = count : { MultiPhiNodeContainsConstant(?nextPhiNode,+underscore_242) }.": {
+         "AllPhiBeginningsInNewBB": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "LinkPhiNodesInBB": {
+          "level": 1,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 6,
+       "runtime": { "start": 1674754705792312, "end": 1674754705792326},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [378:1-382:65]"
+      }
+     },
+     "num-tuples": 6,
+     "reads": 0,
+     "runtime": { "start": 1674754705792306, "end": 1674754705792351},
+     "savetime": { "start": 1674754705792361, "end": 1674754705792522},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [103:7-103:32]"
+    },
+    "NrOfPredBB": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "NrOfPredBB(?BB1,@generator_0) :- \n   BasicBlockBegin(?BB1),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_252) }.": {
+       "atom-frequency": {
+        "NrOfPredBB(?BB1,@generator_0) :- \n   BasicBlockBegin(?BB1),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_252) }.": {
+         "BasicBlockBegin": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 45,
+       "runtime": { "start": 1674754705791013, "end": 1674754705791037},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [338:1-340:54]"
+      }
+     },
+     "num-tuples": 45,
+     "reads": 11,
+     "runtime": { "start": 1674754705791007, "end": 1674754705791055},
+     "savetime": { "start": 1674754705791068, "end": 1674754705791251},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [107:7-107:17]"
+    },
+    "OperatorAt": {
+     "loadtime": { "start": 1674754705791261, "end": 1674754705791433},
+     "num-tuples": 15,
+     "reads": 360,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [58:7-58:17]"
+    },
+    "OptInstructionFromMethodIndex": {
+     "loadtime": { "start": 1674754705788238, "end": 1674754705788631},
+     "num-tuples": 138,
+     "reads": 0,
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [23:7-23:36]"
+    },
+    "OrderPhiBranchesBB": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "OrderPhiBranchesBB(?phiNode,?preBB,@generator_0) :- \n   OriginalPhiBranches(?phiNode,?preBB,?lineNr1),\n   @generator_0 = count : { OriginalPhiBranches(?phiNode,+underscore_186,?lineNrBB),?lineNr1 < ?lineNrBB }.": {
+       "atom-frequency": {
+        "OrderPhiBranchesBB(?phiNode,?preBB,@generator_0) :- \n   OriginalPhiBranches(?phiNode,?preBB,?lineNr1),\n   @generator_0 = count : { OriginalPhiBranches(?phiNode,+underscore_186,?lineNrBB),?lineNr1 < ?lineNrBB }.": {
+         "OriginalPhiBranches": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 9,
+       "runtime": { "start": 1674754705794859, "end": 1674754705794872},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [427:1-429:54]"
+      }
+     },
+     "num-tuples": 9,
+     "reads": 0,
+     "runtime": { "start": 1674754705794853, "end": 1674754705794892},
+     "savetime": { "start": 1674754705794902, "end": 1674754705795064},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [90:7-90:25]"
+    },
+    "OrderPhiBranchesJoinedInformation": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "OrderPhiBranchesJoinedInformation(?phiNode,?preBB,?postPhiNode) :- \n   OrderPostPhiNodes(?phiNode,?postPhiNode,?l),\n   OrderPhiBranchesBB(?phiNode,?preBB,?l).": {
+       "atom-frequency": {
+        "OrderPhiBranchesJoinedInformation(?phiNode,?preBB,?postPhiNode) :- \n   OrderPostPhiNodes(?phiNode,?postPhiNode,?l),\n   OrderPhiBranchesBB(?phiNode,?preBB,?l).": {
+         "OrderPhiBranchesBB": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "OrderPostPhiNodes": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 9,
+       "runtime": { "start": 1674754705795089, "end": 1674754705795105},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [437:1-439:46]"
+      }
+     },
+     "num-tuples": 9,
+     "reads": 0,
+     "runtime": { "start": 1674754705795085, "end": 1674754705795123},
+     "savetime": { "start": 1674754705795134, "end": 1674754705795295},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [91:7-91:40]"
+    },
+    "OrderPostPhiNodes": {
+     "maxRSS": {
+      "post": 12640,
+      "pre": 12640
+     },
+     "non-recursive-rule": {
+      "OrderPostPhiNodes(?phiNode,?postPhiNode,@generator_0) :- \n   MultiPhiNode(?phiNode,?postPhiNode,?lineNrPhi1),\n   MultiPhiNode(?phiNode,?phiNode,_),\n   @generator_0 = count : { MultiPhiNode(?phiNode,+underscore_214,?lineNrPhi),?lineNrPhi1 < ?lineNrPhi }.": {
+       "atom-frequency": {
+        "OrderPostPhiNodes(?phiNode,?postPhiNode,@generator_0) :- \n   MultiPhiNode(?phiNode,?postPhiNode,?lineNrPhi1),\n   MultiPhiNode(?phiNode,?phiNode,_),\n   @generator_0 = count : { MultiPhiNode(?phiNode,+underscore_214,?lineNrPhi),?lineNrPhi1 < ?lineNrPhi }.": {
+         "MultiPhiNode": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12640,
+        "pre": 12640
+       },
+       "num-tuples": 14,
+       "runtime": { "start": 1674754705789400, "end": 1674754705789420},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [431:1-434:41]"
+      }
+     },
+     "num-tuples": 14,
+     "reads": 28,
+     "runtime": { "start": 1674754705789394, "end": 1674754705789440},
+     "savetime": { "start": 1674754705789449, "end": 1674754705789611},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [99:7-99:24]"
+    },
+    "OriginalPhiBranches": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "OriginalPhiBranches(?phiNode,?preBB,?lineNr) :- \n   AllPhiBeginningsInNewBB(?phiNode),\n   NrOfMultiPhiNodes(?phiNode,?d),\n   NrOfPredBB(?phiNode,?d),\n   MaySuccessorBBModuloThrow(?phiNode,?preBB),\n   OptInstructionFromMethodIndex(_,?lineNr,?preBB),\n   NrOfPhiConstantsInPhiBB(?phiNode,?nrConst),\n   ?nrConst >= 1,\n   AssignLocal(?phiNode,_,_,_,?method),\n   StaticCondition(?method,_,_).": {
+       "atom-frequency": {
+        "OriginalPhiBranches(?phiNode,?preBB,?lineNr) :- \n   AllPhiBeginningsInNewBB(?phiNode),\n   NrOfMultiPhiNodes(?phiNode,?d),\n   NrOfPredBB(?phiNode,?d),\n   MaySuccessorBBModuloThrow(?phiNode,?preBB),\n   OptInstructionFromMethodIndex(_,?lineNr,?preBB),\n   NrOfPhiConstantsInPhiBB(?phiNode,?nrConst),\n   ?nrConst >= 1,\n   AssignLocal(?phiNode,_,_,_,?method),\n   StaticCondition(?method,_,_).": {
+         "AllPhiBeginningsInNewBB": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "AssignLocal": {
+          "level": 6,
+          "num-tuples": 0
+         },
+         "MaySuccessorBBModuloThrow": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "NrOfMultiPhiNodes": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "NrOfPhiConstantsInPhiBB": {
+          "level": 5,
+          "num-tuples": 0
+         },
+         "OptInstructionFromMethodIndex": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 9,
+       "runtime": { "start": 1674754705794611, "end": 1674754705794631},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [414:1-423:36]"
+      }
+     },
+     "num-tuples": 9,
+     "reads": 0,
+     "runtime": { "start": 1674754705794592, "end": 1674754705794654},
+     "savetime": { "start": 1674754705794664, "end": 1674754705794828},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [89:7-89:26]"
+    },
+    "PhiBranchesGetThroughIf": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "PhiBranchesGetThroughIf(?ifNode,?postPhiNode1,?postPhiNode2,?phiNode,(?count1+?count2)) :- \n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   ?postPhiNode1 != ?postPhiNode2,\n   Instruction_Next(?ifNode,?BB1),\n   JumpTarget(?BB2,?ifNode),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode),\n   AllIfNodes(_,?ifNode,_),\n   NrOfMultiPhiNodes(?phiNode,?nrPhiAss),\n   ?nrPhiAss > (?count1+?count2).": {
+       "atom-frequency": {
+        "PhiBranchesGetThroughIf(?ifNode,?postPhiNode1,?postPhiNode2,?phiNode,(?count1+?count2)) :- \n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   ?postPhiNode1 != ?postPhiNode2,\n   Instruction_Next(?ifNode,?BB1),\n   JumpTarget(?BB2,?ifNode),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode),\n   AllIfNodes(_,?ifNode,_),\n   NrOfMultiPhiNodes(?phiNode,?nrPhiAss),\n   ?nrPhiAss > (?count1+?count2).": {
+         "BackwardsJoinPhiBranches": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "Instruction_Next": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "MaySuccessorBBModuloThrow": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "NrOfMultiPhiNodes": {
+          "level": 8,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1674754705796459, "end": 1674754705796486},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [450:1-463:20]"
+      },
+      "PhiBranchesGetThroughIf(?ifNode1,?postPhiNode1,?postPhiNode2,?phiNode,?count1) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_3),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB2,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB2,+underscore_202) },\n    _tmp_3 = (?count1+?count2).": {
+       "atom-frequency": {
+        "PhiBranchesGetThroughIf(?ifNode1,?postPhiNode1,?postPhiNode2,?phiNode,?count1) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_3),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB2,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB2,+underscore_202) },\n    _tmp_3 = (?count1+?count2).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BackwardsJoinPhiBranches": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "MaySuccessorBBModuloThrow": {
+          "level": 10,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1674754705796610, "end": 1674754705796687},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [502:1-524:47]"
+      },
+      "PhiBranchesGetThroughIf(?ifNode1,?postPhiNode1,?postPhiNode2,?phiNode,?count2) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_2),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB1,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_199) },\n    _tmp_2 = (?count1+?count2).": {
+       "atom-frequency": {
+        "PhiBranchesGetThroughIf(?ifNode1,?postPhiNode1,?postPhiNode2,?phiNode,?count2) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_2),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   @generator_0 > 1,\n   ?ifLineNr1 > ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB1,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n   @generator_0 = count : { MaySuccessorBBModuloThrow(?BB1,+underscore_199) },\n    _tmp_2 = (?count1+?count2).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BackwardsJoinPhiBranches": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "MaySuccessorBBModuloThrow": {
+          "level": 10,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1674754705796511, "end": 1674754705796579},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [478:1-499:47]"
+      }
+     },
+     "num-tuples": 3,
+     "reads": 0,
+     "runtime": { "start": 1674754705796442, "end": 1674754705796716},
+     "savetime": { "start": 1674754705796726, "end": 1674754705796898},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [94:7-94:30]"
+    },
+    "PhiBranchesMeetAtIf": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "PhiBranchesMeetAtIf(?ifNode,?postPhiNode1,?postPhiNode2,?phiNode,(?count1+?count2)) :- \n   AllIfNodes(_,?ifNode,_),\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   NrOfPredBB(?BB1,?b),\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_4),\n   JumpTarget(?BB2,?ifNode),\n   NrOfPredBB(?BB2,?b),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode),\n   ?b = 1,\n    _tmp_4 = (?count1+?count2).": {
+       "atom-frequency": {
+        "PhiBranchesMeetAtIf(?ifNode,?postPhiNode1,?postPhiNode2,?phiNode,(?count1+?count2)) :- \n   AllIfNodes(_,?ifNode,_),\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   NrOfPredBB(?BB1,?b),\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_4),\n   JumpTarget(?BB2,?ifNode),\n   NrOfPredBB(?BB2,?b),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode),\n   ?b = 1,\n    _tmp_4 = (?count1+?count2).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BackwardsJoinPhiBranches": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "MaySuccessorBBModuloThrow": {
+          "level": 8,
+          "num-tuples": 0
+         },
+         "NrOfPredBB": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 2,
+       "runtime": { "start": 1674754705796925, "end": 1674754705796953},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [530:1-545:12]"
+      },
+      "PhiBranchesMeetAtIf(?ifNode1,?postPhiNode1,?postPhiNode2,?phiNode,(?count1+?count2)) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_6),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   NrOfPredBB(?BB2,?b),\n   ?b > 1,\n   ?ifLineNr1 < ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB2,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n    _tmp_6 = (?count1+?count2).": {
+       "atom-frequency": {
+        "PhiBranchesMeetAtIf(?ifNode1,?postPhiNode1,?postPhiNode2,?phiNode,(?count1+?count2)) :- \n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   ?ifNode1 != ?ifNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?postPhiNode1 != ?postPhiNode2,\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   NrOfMultiPhiNodes(?phiNode, _tmp_6),\n   JumpTarget(?BB2,?ifNode1),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   NrOfPredBB(?BB2,?b),\n   ?b > 1,\n   ?ifLineNr1 < ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB2,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n    _tmp_6 = (?count1+?count2).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BackwardsJoinPhiBranches": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "MaySuccessorBBModuloThrow": {
+          "level": 11,
+          "num-tuples": 0
+         },
+         "NrOfPredBB": {
+          "level": 10,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 2,
+       "runtime": { "start": 1674754705797038, "end": 1674754705797106},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [571:1-591:47]"
+      },
+      "PhiBranchesMeetAtIf(?ifNode1,?postPhiNode1,?postPhiNode2,?phiNode,(?count1+?count2)) :- \n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   ?postPhiNode1 != ?postPhiNode2,\n   NrOfMultiPhiNodes(?phiNode, _tmp_5),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?ifNode1 != ?ifNode2,\n   JumpTarget(?BB2,?ifNode1),\n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   NrOfPredBB(?BB1,?a),\n   ?a > 1,\n   ?ifLineNr1 < ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB1,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n    _tmp_5 = (?count1+?count2).": {
+       "atom-frequency": {
+        "PhiBranchesMeetAtIf(?ifNode1,?postPhiNode1,?postPhiNode2,?phiNode,(?count1+?count2)) :- \n   BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),\n   BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),\n   ?postPhiNode1 != ?postPhiNode2,\n   NrOfMultiPhiNodes(?phiNode, _tmp_5),\n   MaySuccessorBBModuloThrow(?BB1,?preBB),\n   MaySuccessorBBModuloThrow(?BB2,?preBB),\n   BasicBlockTail(?preBB,?ifNode1),\n   Instruction_Next(?ifNode1,?BB1),\n   ?ifNode1 != ?ifNode2,\n   JumpTarget(?BB2,?ifNode1),\n   AllIfNodes(_,?ifNode1,?ifLineNr1),\n   AllIfNodes(_,?ifNode2,?ifLineNr2),\n   NrOfPredBB(?BB1,?a),\n   ?a > 1,\n   ?ifLineNr1 < ?ifLineNr2,\n   MaySuccessorBBModuloThrow(?BB1,?preMultiJumpBB),\n   BasicBlockTail(?preMultiJumpBB,?ifNode2),\n    _tmp_5 = (?count1+?count2).": {
+         "AllIfNodes": {
+          "level": 8,
+          "num-tuples": 0
+         },
+         "BackwardsJoinPhiBranches": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BasicBlockTail": {
+          "level": 5,
+          "num-tuples": 0
+         },
+         "MaySuccessorBBModuloThrow": {
+          "level": 11,
+          "num-tuples": 0
+         },
+         "NrOfPredBB": {
+          "level": 10,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705796978, "end": 1674754705797008},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [548:1-568:47]"
+      }
+     },
+     "num-tuples": 4,
+     "reads": 0,
+     "runtime": { "start": 1674754705796908, "end": 1674754705797134},
+     "savetime": { "start": 1674754705797144, "end": 1674754705797312},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [96:7-96:26]"
+    },
+    "PossiblePhiConstFolding": {
+     "iteration": {
+      "0": {
+       "copytime": { "start": 1674754705797779, "end": 1674754705797785},
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 1,
+       "recursive-rule": {
+        "PossiblePhiConstFolding(?pathIfNode,?phiNode,?postPhiNode1) :- \n   PossiblePhiConstFolding(_,?phiNode,?pathIfNode),\n   AllIfNodes(_,?pathIfNode,_),\n   StaticCondition(_,?pathIfNode,0),\n   PhiBranchesGetThroughIf(?pathIfNode,?postPhiNode1,_,?phiNode,_).": {
+         "0": {
+          "atom-frequency": {
+           "@new_PossiblePhiConstFolding(?pathIfNode,?phiNode,?postPhiNode1) :- \n   @delta_PossiblePhiConstFolding(_,?phiNode,?pathIfNode),\n   AllIfNodes(_,?pathIfNode,_),\n   StaticCondition(_,?pathIfNode,0),\n   PhiBranchesGetThroughIf(?pathIfNode,?postPhiNode1,_,?phiNode,_).": {
+            "@delta_PossiblePhiConstFolding": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "PhiBranchesGetThroughIf": {
+             "level": 3,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 1,
+          "runtime": { "start": 1674754705797695, "end": 1674754705797709},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [608:1-612:71]"
+         }
+        },
+        "PossiblePhiConstFolding(?pathIfNode,?phiNode,?postPhiNode2) :- \n   PossiblePhiConstFolding(_,?phiNode,?pathIfNode),\n   AllIfNodes(_,?pathIfNode,_),\n   StaticCondition(_,?pathIfNode,1),\n   PhiBranchesGetThroughIf(?pathIfNode,_,?postPhiNode2,?phiNode,_).": {
+         "0": {
+          "atom-frequency": {
+           "@new_PossiblePhiConstFolding(?pathIfNode,?phiNode,?postPhiNode2) :- \n   @delta_PossiblePhiConstFolding(_,?phiNode,?pathIfNode),\n   AllIfNodes(_,?pathIfNode,_),\n   StaticCondition(_,?pathIfNode,1),\n   PhiBranchesGetThroughIf(?pathIfNode,_,?postPhiNode2,?phiNode,_).": {
+            "@delta_PossiblePhiConstFolding": {
+             "level": 0,
+             "num-tuples": 0
+            },
+            "PhiBranchesGetThroughIf": {
+             "level": 3,
+             "num-tuples": 0
+            }
+           }
+          },
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705797730, "end": 1674754705797748},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [614:1-618:71]"
+         }
+        }
+       },
+       "runtime": { "start": 1674754705797690, "end": 1674754705797765}
+      },
+      "1": {
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "recursive-rule": {
+        "PossiblePhiConstFolding(?pathIfNode,?phiNode,?postPhiNode1) :- \n   PossiblePhiConstFolding(_,?phiNode,?pathIfNode),\n   AllIfNodes(_,?pathIfNode,_),\n   StaticCondition(_,?pathIfNode,0),\n   PhiBranchesGetThroughIf(?pathIfNode,?postPhiNode1,_,?phiNode,_).": {
+         "0": {
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705797798, "end": 1674754705797813},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [608:1-612:71]"
+         }
+        },
+        "PossiblePhiConstFolding(?pathIfNode,?phiNode,?postPhiNode2) :- \n   PossiblePhiConstFolding(_,?phiNode,?pathIfNode),\n   AllIfNodes(_,?pathIfNode,_),\n   StaticCondition(_,?pathIfNode,1),\n   PhiBranchesGetThroughIf(?pathIfNode,_,?postPhiNode2,?phiNode,_).": {
+         "0": {
+          "maxRSS": {
+           "post": 12700,
+           "pre": 12700
+          },
+          "num-tuples": 0,
+          "runtime": { "start": 1674754705797829, "end": 1674754705797847},
+          "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [614:1-618:71]"
+         }
+        }
+       },
+       "runtime": { "start": 1674754705797794, "end": 1674754705797862}
+      }
+     },
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "PossiblePhiConstFolding(?ifNode,?phiNode,?postPhiNode1) :- \n   StaticCondition(_,?ifNode,0),\n   PhiBranchesMeetAtIf(?ifNode,?postPhiNode1,_,?phiNode,_).": {
+       "atom-frequency": {
+        "PossiblePhiConstFolding(?ifNode,?phiNode,?postPhiNode1) :- \n   StaticCondition(_,?ifNode,0),\n   PhiBranchesMeetAtIf(?ifNode,?postPhiNode1,_,?phiNode,_).": {
+         "PhiBranchesMeetAtIf": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "StaticCondition": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 3,
+       "runtime": { "start": 1674754705797343, "end": 1674754705797628},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [598:1-600:65]"
+      },
+      "PossiblePhiConstFolding(?ifNode,?phiNode,?postPhiNode2) :- \n   StaticCondition(_,?ifNode,1),\n   PhiBranchesMeetAtIf(?ifNode,_,?postPhiNode2,?phiNode,_).": {
+       "atom-frequency": {
+        "PossiblePhiConstFolding(?ifNode,?phiNode,?postPhiNode2) :- \n   StaticCondition(_,?ifNode,1),\n   PhiBranchesMeetAtIf(?ifNode,_,?postPhiNode2,?phiNode,_).": {
+         "PhiBranchesMeetAtIf": {
+          "level": 1,
+          "num-tuples": 0
+         },
+         "StaticCondition": {
+          "level": 0,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1674754705797646, "end": 1674754705797664},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [602:1-604:63]"
+      }
+     },
+     "num-tuples": 4,
+     "reads": 1,
+     "runtime": { "start": 1674754705797338, "end": 1674754705797679},
+     "savetime": { "start": 1674754705797872, "end": 1674754705798047},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [101:7-101:30]"
+    },
+    "StaticCondition": {
+     "maxRSS": {
+      "post": 12700,
+      "pre": 12700
+     },
+     "non-recursive-rule": {
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfConstant(?ifNode,?pos1,?right),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfConstant(?ifNode,?pos1,?right),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705794295, "end": 1674754705794314},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [310:1-318:36]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfConstant(?ifNode,?pos1,?right),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfConstant(?ifNode,?pos1,?right),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793889, "end": 1674754705793907},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [243:1-251:35]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BoolConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 2,
+       "runtime": { "start": 1674754705794226, "end": 1674754705794246},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [300:1-308:36]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BoolConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705794361, "end": 1674754705794379},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [320:1-329:36]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793956, "end": 1674754705793974},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [253:1-262:35]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1674754705793823, "end": 1674754705793843},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [233:1-241:35]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left > ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left > ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793287, "end": 1674754705793306},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [145:1-153:35]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left > ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left > ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793353, "end": 1674754705793370},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [155:1-164:35]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left > ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left > ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793220, "end": 1674754705793237},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [135:1-143:35]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BoolConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705794092, "end": 1674754705794110},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [276:1-284:37]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793688, "end": 1674754705793706},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [210:1-218:36]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BoolConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 2,
+       "runtime": { "start": 1674754705794022, "end": 1674754705794042},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [266:1-274:37]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BoolConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705794159, "end": 1674754705794177},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [286:1-295:37]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793756, "end": 1674754705793774},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [220:1-229:36]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793619, "end": 1674754705793640},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [200:1-208:36]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left < ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left < ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793486, "end": 1674754705793504},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [178:1-186:35]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left < ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left < ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793550, "end": 1674754705793568},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [188:1-197:35]"
+      },
+      "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left < ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,0) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left < ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793419, "end": 1674754705793436},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [168:1-176:35]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BoolConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705794260, "end": 1674754705794280},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [310:1-318:36]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793857, "end": 1674754705793875},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [243:1-251:35]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BoolConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705794193, "end": 1674754705794211},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [300:1-308:36]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?left,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BoolConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705794327, "end": 1674754705794346},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [320:1-329:36]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793920, "end": 1674754705793941},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [253:1-262:35]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"!=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left != ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793790, "end": 1674754705793808},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [233:1-241:35]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left <= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left <= ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793252, "end": 1674754705793272},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [145:1-153:35]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left <= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left <= ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793319, "end": 1674754705793336},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [155:1-164:35]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left <= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"<=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left <= ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793188, "end": 1674754705793202},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [135:1-143:35]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfConstant(?ifNode,?pos1,?right),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfConstant(?ifNode,?pos1,?right),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705794057, "end": 1674754705794078},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [276:1-284:37]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfConstant(?ifNode,?pos1,?right),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfConstant(?ifNode,?pos1,?right),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793654, "end": 1674754705793674},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [210:1-218:36]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BoolConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1674754705793989, "end": 1674754705794007},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [266:1-274:37]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   BoolConstFolding(_,?var1,?right,_),\n   ?pos1 < ?pos2,\n   BoolConstFolding(_,?var2,?right,_).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "BoolConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705794125, "end": 1674754705794143},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [286:1-295:37]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793720, "end": 1674754705793739},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [220:1-229:36]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\"==\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?right,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right).": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793583, "end": 1674754705793605},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [200:1-208:36]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left >= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfConstant(?ifNode,?pos1,?left),\n   IfVar(?ifNode,?pos2,?var2),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left >= ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 3,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793450, "end": 1674754705793473},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [178:1-186:35]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left >= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IfVar(?ifNode,?pos2,?var2),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IntConstFolding(_,?var2,?right,_,_),\n   ?left >= ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 4,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 0,
+       "runtime": { "start": 1674754705793517, "end": 1674754705793535},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [188:1-197:35]"
+      },
+      "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left >= ?right.": {
+       "atom-frequency": {
+        "StaticCondition(?method,?ifNode,1) :- \n   AllIfNodes(?method,?ifNode,_),\n   OperatorAt(?ifNode,\">=\"),\n   IfVar(?ifNode,?pos1,?var1),\n   IntConstFolding(_,?var1,?left,_,_),\n   ?pos1 < ?pos2,\n   IfConstant(?ifNode,?pos2,?right),\n   ?left >= ?right.": {
+         "AllIfNodes": {
+          "level": 0,
+          "num-tuples": 0
+         },
+         "IfConstant": {
+          "level": 4,
+          "num-tuples": 0
+         },
+         "IfVar": {
+          "level": 2,
+          "num-tuples": 0
+         },
+         "IntConstFolding": {
+          "level": 3,
+          "num-tuples": 0
+         }
+        }
+       },
+       "maxRSS": {
+        "post": 12700,
+        "pre": 12700
+       },
+       "num-tuples": 1,
+       "runtime": { "start": 1674754705793385, "end": 1674754705793405},
+       "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [168:1-176:35]"
+      }
+     },
+     "num-tuples": 7,
+     "reads": 19,
+     "runtime": { "start": 1674754705793183, "end": 1674754705794394},
+     "savetime": { "start": 1674754705794403, "end": 1674754705794582},
+     "source-locator": "/home/kotname/Documents/10_Semester/INF_PM_ANW/doop/master/TestKnut/ConstPropExtmultiPhi.dl [82:7-82:22]"
+    }
+   },
+   "runtime": { "start": 1674754705768267, "end": 1674754705798311},
+   "starttime": { "time": 1674754705767829},
+   "usage": {
+    "timepoint": {
+     "1674754705767871": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 168233
+     },
+     "1674754705768311": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 168731
+     },
+     "1674754705769530": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 168874
+     },
+     "1674754705770751": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 168897
+     },
+     "1674754705771971": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 168925
+     },
+     "1674754705773189": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 168945
+     },
+     "1674754705774409": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 168964
+     },
+     "1674754705775630": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 168987
+     },
+     "1674754705776848": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169007
+     },
+     "1674754705778065": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169026
+     },
+     "1674754705779284": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169046
+     },
+     "1674754705780352": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169064
+     },
+     "1674754705781730": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169105
+     },
+     "1674754705783106": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169144
+     },
+     "1674754705784313": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169184
+     },
+     "1674754705785692": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169224
+     },
+     "1674754705786634": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169411
+     },
+     "1674754705786867": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169577
+     },
+     "1674754705787140": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169826
+     },
+     "1674754705787335": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 169906
+     },
+     "1674754705787540": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 170502
+     },
+     "1674754705787591": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 170608
+     },
+     "1674754705787844": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 171290
+     },
+     "1674754705787893": {
+      "maxRSS": 11944,
+      "systemtime": 8011,
+      "usertime": 171383
+     },
+     "1674754705788050": {
+      "maxRSS": 11944,
+      "systemtime": 8732,
+      "usertime": 171643
+     },
+     "1674754705788246": {
+      "maxRSS": 11944,
+      "systemtime": 9024,
+      "usertime": 171643
+     },
+     "1674754705788656": {
+      "maxRSS": 12640,
+      "systemtime": 9636,
+      "usertime": 171643
+     },
+     "1674754705788709": {
+      "maxRSS": 12640,
+      "systemtime": 9744,
+      "usertime": 171643
+     },
+     "1674754705788750": {
+      "maxRSS": 12640,
+      "systemtime": 9820,
+      "usertime": 171643
+     },
+     "1674754705788785": {
+      "maxRSS": 12640,
+      "systemtime": 9891,
+      "usertime": 171643
+     },
+     "1674754705788828": {
+      "maxRSS": 12640,
+      "systemtime": 9976,
+      "usertime": 171643
+     },
+     "1674754705788845": {
+      "maxRSS": 12640,
+      "systemtime": 10015,
+      "usertime": 171643
+     },
+     "1674754705788877": {
+      "maxRSS": 12640,
+      "systemtime": 10075,
+      "usertime": 171643
+     },
+     "1674754705788907": {
+      "maxRSS": 12640,
+      "systemtime": 10134,
+      "usertime": 171643
+     },
+     "1674754705788947": {
+      "maxRSS": 12640,
+      "systemtime": 10214,
+      "usertime": 171643
+     },
+     "1674754705789146": {
+      "maxRSS": 12640,
+      "systemtime": 10520,
+      "usertime": 171643
+     },
+     "1674754705789159": {
+      "maxRSS": 12640,
+      "systemtime": 10537,
+      "usertime": 171643
+     },
+     "1674754705789218": {
+      "maxRSS": 12640,
+      "systemtime": 10654,
+      "usertime": 171643
+     },
+     "1674754705789401": {
+      "maxRSS": 12640,
+      "systemtime": 10935,
+      "usertime": 171643
+     },
+     "1674754705789456": {
+      "maxRSS": 12640,
+      "systemtime": 11039,
+      "usertime": 171643
+     },
+     "1674754705789640": {
+      "maxRSS": 12640,
+      "systemtime": 11201,
+      "usertime": 171757
+     },
+     "1674754705789932": {
+      "maxRSS": 12640,
+      "systemtime": 11230,
+      "usertime": 172201
+     },
+     "1674754705789996": {
+      "maxRSS": 12640,
+      "systemtime": 11238,
+      "usertime": 172321
+     },
+     "1674754705790054": {
+      "maxRSS": 12640,
+      "systemtime": 11245,
+      "usertime": 172430
+     },
+     "1674754705790069": {
+      "maxRSS": 12640,
+      "systemtime": 11247,
+      "usertime": 172458
+     },
+     "1674754705790116": {
+      "maxRSS": 12640,
+      "systemtime": 11252,
+      "usertime": 172542
+     },
+     "1674754705790315": {
+      "maxRSS": 12640,
+      "systemtime": 11400,
+      "usertime": 174813
+     },
+     "1674754705790508": {
+      "maxRSS": 12700,
+      "systemtime": 11418,
+      "usertime": 175086
+     },
+     "1674754705790786": {
+      "maxRSS": 12700,
+      "systemtime": 11445,
+      "usertime": 175495
+     },
+     "1674754705791015": {
+      "maxRSS": 12700,
+      "systemtime": 11465,
+      "usertime": 175802
+     },
+     "1674754705791075": {
+      "maxRSS": 12700,
+      "systemtime": 11472,
+      "usertime": 175910
+     },
+     "1674754705791280": {
+      "maxRSS": 12700,
+      "systemtime": 11491,
+      "usertime": 176201
+     },
+     "1674754705791454": {
+      "maxRSS": 12700,
+      "systemtime": 11507,
+      "usertime": 176441
+     },
+     "1674754705791626": {
+      "maxRSS": 12700,
+      "systemtime": 11522,
+      "usertime": 176675
+     },
+     "1674754705791816": {
+      "maxRSS": 12700,
+      "systemtime": 11538,
+      "usertime": 176926
+     },
+     "1674754705791840": {
+      "maxRSS": 12700,
+      "systemtime": 11541,
+      "usertime": 176972
+     },
+     "1674754705791867": {
+      "maxRSS": 12700,
+      "systemtime": 11544,
+      "usertime": 177018
+     },
+     "1674754705792054": {
+      "maxRSS": 12700,
+      "systemtime": 14691,
+      "usertime": 179969
+     },
+     "1674754705792124": {
+      "maxRSS": 12700,
+      "systemtime": 14700,
+      "usertime": 180087
+     },
+     "1674754705792314": {
+      "maxRSS": 12700,
+      "systemtime": 14722,
+      "usertime": 180355
+     },
+     "1674754705792367": {
+      "maxRSS": 12700,
+      "systemtime": 14730,
+      "usertime": 180450
+     },
+     "1674754705792549": {
+      "maxRSS": 12700,
+      "systemtime": 14751,
+      "usertime": 180706
+     },
+     "1674754705792595": {
+      "maxRSS": 12700,
+      "systemtime": 14758,
+      "usertime": 180787
+     },
+     "1674754705792773": {
+      "maxRSS": 12700,
+      "systemtime": 14778,
+      "usertime": 181032
+     },
+     "1674754705792950": {
+      "maxRSS": 12700,
+      "systemtime": 14797,
+      "usertime": 181274
+     },
+     "1674754705792995": {
+      "maxRSS": 12700,
+      "systemtime": 14804,
+      "usertime": 181353
+     },
+     "1674754705793190": {
+      "maxRSS": 12700,
+      "systemtime": 14826,
+      "usertime": 181627
+     },
+     "1674754705793227": {
+      "maxRSS": 12700,
+      "systemtime": 14831,
+      "usertime": 181691
+     },
+     "1674754705793259": {
+      "maxRSS": 12700,
+      "systemtime": 14836,
+      "usertime": 181751
+     },
+     "1674754705793293": {
+      "maxRSS": 12700,
+      "systemtime": 14841,
+      "usertime": 181814
+     },
+     "1674754705793326": {
+      "maxRSS": 12700,
+      "systemtime": 14846,
+      "usertime": 181874
+     },
+     "1674754705793359": {
+      "maxRSS": 12700,
+      "systemtime": 14851,
+      "usertime": 181936
+     },
+     "1674754705793392": {
+      "maxRSS": 12700,
+      "systemtime": 14856,
+      "usertime": 181996
+     },
+     "1674754705793426": {
+      "maxRSS": 12700,
+      "systemtime": 14861,
+      "usertime": 182059
+     },
+     "1674754705793457": {
+      "maxRSS": 12700,
+      "systemtime": 14866,
+      "usertime": 182117
+     },
+     "1674754705793493": {
+      "maxRSS": 12700,
+      "systemtime": 14872,
+      "usertime": 182183
+     },
+     "1674754705793524": {
+      "maxRSS": 12700,
+      "systemtime": 14876,
+      "usertime": 182241
+     },
+     "1674754705793557": {
+      "maxRSS": 12700,
+      "systemtime": 14881,
+      "usertime": 182301
+     },
+     "1674754705793589": {
+      "maxRSS": 12700,
+      "systemtime": 14886,
+      "usertime": 182362
+     },
+     "1674754705793626": {
+      "maxRSS": 12700,
+      "systemtime": 14892,
+      "usertime": 182429
+     },
+     "1674754705793660": {
+      "maxRSS": 12700,
+      "systemtime": 14897,
+      "usertime": 182493
+     },
+     "1674754705793695": {
+      "maxRSS": 12700,
+      "systemtime": 14902,
+      "usertime": 182556
+     },
+     "1674754705793728": {
+      "maxRSS": 12700,
+      "systemtime": 14907,
+      "usertime": 182616
+     },
+     "1674754705793763": {
+      "maxRSS": 12700,
+      "systemtime": 14912,
+      "usertime": 182681
+     },
+     "1674754705793797": {
+      "maxRSS": 12700,
+      "systemtime": 14917,
+      "usertime": 182744
+     },
+     "1674754705793829": {
+      "maxRSS": 12700,
+      "systemtime": 14922,
+      "usertime": 182805
+     },
+     "1674754705793864": {
+      "maxRSS": 12700,
+      "systemtime": 14928,
+      "usertime": 182869
+     },
+     "1674754705793896": {
+      "maxRSS": 12700,
+      "systemtime": 14932,
+      "usertime": 182928
+     },
+     "1674754705793927": {
+      "maxRSS": 12700,
+      "systemtime": 14937,
+      "usertime": 182985
+     },
+     "1674754705793963": {
+      "maxRSS": 12700,
+      "systemtime": 14943,
+      "usertime": 183052
+     },
+     "1674754705793996": {
+      "maxRSS": 12700,
+      "systemtime": 14948,
+      "usertime": 183113
+     },
+     "1674754705794028": {
+      "maxRSS": 12700,
+      "systemtime": 14952,
+      "usertime": 183173
+     },
+     "1674754705794064": {
+      "maxRSS": 12700,
+      "systemtime": 14958,
+      "usertime": 183239
+     },
+     "1674754705794099": {
+      "maxRSS": 12700,
+      "systemtime": 14963,
+      "usertime": 183303
+     },
+     "1674754705794131": {
+      "maxRSS": 12700,
+      "systemtime": 14968,
+      "usertime": 183364
+     },
+     "1674754705794165": {
+      "maxRSS": 12700,
+      "systemtime": 14973,
+      "usertime": 183426
+     },
+     "1674754705794200": {
+      "maxRSS": 12700,
+      "systemtime": 14978,
+      "usertime": 183490
+     },
+     "1674754705794232": {
+      "maxRSS": 12700,
+      "systemtime": 14983,
+      "usertime": 183550
+     },
+     "1674754705794267": {
+      "maxRSS": 12700,
+      "systemtime": 14988,
+      "usertime": 183615
+     },
+     "1674754705794302": {
+      "maxRSS": 12700,
+      "systemtime": 14994,
+      "usertime": 183679
+     },
+     "1674754705794334": {
+      "maxRSS": 12700,
+      "systemtime": 14999,
+      "usertime": 183738
+     },
+     "1674754705794368": {
+      "maxRSS": 12700,
+      "systemtime": 15004,
+      "usertime": 183800
+     },
+     "1674754705794410": {
+      "maxRSS": 12700,
+      "systemtime": 15010,
+      "usertime": 183878
+     },
+     "1674754705794600": {
+      "maxRSS": 12700,
+      "systemtime": 15032,
+      "usertime": 184144
+     },
+     "1674754705794618": {
+      "maxRSS": 12700,
+      "systemtime": 15034,
+      "usertime": 184169
+     },
+     "1674754705794670": {
+      "maxRSS": 12700,
+      "systemtime": 15042,
+      "usertime": 184266
+     },
+     "1674754705794861": {
+      "maxRSS": 12700,
+      "systemtime": 15064,
+      "usertime": 184538
+     },
+     "1674754705794908": {
+      "maxRSS": 12700,
+      "systemtime": 15071,
+      "usertime": 184621
+     },
+     "1674754705795092": {
+      "maxRSS": 12700,
+      "systemtime": 15092,
+      "usertime": 184880
+     },
+     "1674754705795140": {
+      "maxRSS": 12700,
+      "systemtime": 15099,
+      "usertime": 184966
+     },
+     "1674754705795324": {
+      "maxRSS": 12700,
+      "systemtime": 15120,
+      "usertime": 185225
+     },
+     "1674754705795362": {
+      "maxRSS": 12700,
+      "systemtime": 15126,
+      "usertime": 185294
+     },
+     "1674754705795404": {
+      "maxRSS": 12700,
+      "systemtime": 15132,
+      "usertime": 185368
+     },
+     "1674754705795446": {
+      "maxRSS": 12700,
+      "systemtime": 15138,
+      "usertime": 185446
+     },
+     "1674754705795490": {
+      "maxRSS": 12700,
+      "systemtime": 15145,
+      "usertime": 185528
+     },
+     "1674754705795569": {
+      "maxRSS": 12700,
+      "systemtime": 15157,
+      "usertime": 185674
+     },
+     "1674754705795652": {
+      "maxRSS": 12700,
+      "systemtime": 15169,
+      "usertime": 185828
+     },
+     "1674754705795726": {
+      "maxRSS": 12700,
+      "systemtime": 15180,
+      "usertime": 185965
+     },
+     "1674754705795817": {
+      "maxRSS": 12700,
+      "systemtime": 15194,
+      "usertime": 186138
+     },
+     "1674754705795833": {
+      "maxRSS": 12700,
+      "systemtime": 15197,
+      "usertime": 186167
+     },
+     "1674754705795871": {
+      "maxRSS": 12700,
+      "systemtime": 15202,
+      "usertime": 186232
+     },
+     "1674754705795911": {
+      "maxRSS": 12700,
+      "systemtime": 15208,
+      "usertime": 186307
+     },
+     "1674754705795950": {
+      "maxRSS": 12700,
+      "systemtime": 15214,
+      "usertime": 186379
+     },
+     "1674754705796004": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 186478
+     },
+     "1674754705796095": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 194655
+     },
+     "1674754705796166": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 194797
+     },
+     "1674754705796256": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 194977
+     },
+     "1674754705796449": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 195273
+     },
+     "1674754705796466": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 195299
+     },
+     "1674754705796518": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 195403
+     },
+     "1674754705796617": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 195601
+     },
+     "1674754705796733": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 195832
+     },
+     "1674754705796919": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 196119
+     },
+     "1674754705796932": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 196135
+     },
+     "1674754705796985": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 196240
+     },
+     "1674754705797045": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 196361
+     },
+     "1674754705797151": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 196571
+     },
+     "1674754705797345": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 196872
+     },
+     "1674754705797653": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 197246
+     },
+     "1674754705797697": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 197338
+     },
+     "1674754705797737": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 197413
+     },
+     "1674754705797786": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 197515
+     },
+     "1674754705797800": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 197545
+     },
+     "1674754705797836": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 197612
+     },
+     "1674754705797879": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 197697
+     },
+     "1674754705798078": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 198005
+     },
+     "1674754705798129": {
+      "maxRSS": 12700,
+      "systemtime": 15222,
+      "usertime": 198102
+     }
+    }
+   }
+  }
+ }
+}
