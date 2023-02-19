@@ -1,20 +1,20 @@
 .type Operator <: symbol
 .type MethodInv <: symbol
 
-.decl AssignUnary(?instr:symbol, ?var:symbol, ?value:number, ?meth:symbol, ?use:number)
-.decl AssignBinary(?instr:symbol, ?var: symbol, ?left:number, ?right:number, ?meth:symbol, ?prev_use1:number, ?prev_use2:number)
+.decl AssignUnary(?instr:Instruction, ?var:Var, ?value:number, ?meth:symbol, ?use:number)
+.decl AssignBinary(?instr:Instruction, ?var: symbol, ?left:number, ?right:number, ?meth:symbol, ?prev_use1:number, ?prev_use2:number)
 
-.decl AssignBinaryNonZeroRight(?instr:symbol, ?var:symbol, ?left:number, ?right:number, ?meth:symbol, ?prev_use1:number, ?prev_use2:number)
+.decl AssignBinaryNonZeroRight(?instr:Instruction, ?var:Var, ?left:number, ?right:number, ?meth:symbol, ?prev_use1:number, ?prev_use2:number)
 
-.decl IntConstFolding(?instruction:symbol, ?variable:symbol, ?value:number, ?meth:symbol, ?use:number)
-.decl IntNonZeroConstFolding(?instruction:symbol, ?variable:symbol, ?value:number, ?meth:symbol, ?use:number)
-.decl BoolConstFolding(?instruction:symbol, ?variable:symbol, ?value:number, ?method:symbol)
+.decl IntConstFolding(?instruction:Instruction, ?variable:Var, ?value:number, ?meth:symbol, ?use:number)
+.decl IntNonZeroConstFolding(?instruction:Instruction, ?variable:Var, ?value:number, ?meth:symbol, ?use:number)
+.decl BoolConstFolding(?instruction:Instruction, ?variable:Var, ?value:number, ?method:symbol)
 
 
-.decl IntConstant(?instr:symbol, ?var:symbol, ?value:number, ?method:symbol, ?type:symbol)
-.decl BoolConstant(?instr:symbol, ?var:symbol, ?value:number, ?meth:symbol)
+.decl IntConstant(?instr:Instruction, ?var:Var, ?value:number, ?method:symbol, ?type:symbol)
+.decl BoolConstant(?instr:Instruction, ?var:Var, ?value:number, ?meth:symbol)
 
-.decl AssignOperFromConstant(?instr:symbol, ?pos:number, ?from:symbol)
+.decl AssignOperFromConstant(?instr:Instruction, ?pos:number, ?from:symbol)
 .input AssignOperFromConstant(IO="file", filename="AssignOperFromConstant.facts", delimiter="\t")
 
 .output IntConstant
@@ -23,6 +23,92 @@
 .output IntNonZeroConstFolding
 .output BoolConstFolding
 .output AssignBinary
+
+
+
+//.decl InstructionInPhiNode(?insn:Instruction, ?headInsn:Instruction)
+//.input InstructionInPhiNode(IO="file", filename="InstructionInPhiNode.csv", delimiter="\t")
+
+//.decl PhiNodeHead(?insn:Instruction, ?headInsn:Instruction)
+//.input PhiNodeHead(IO="file", filename="PhiNodeHead.csv", delimiter="\t")
+
+//.decl Dominates(?dominator:Instruction, ?insn:Instruction)
+//.input Dominates(IO="file", filename="Dominates.csv", delimiter="\t")
+
+//.decl BasicBlockTail(?as:Instruction, ?ass:Instruction)
+//.input BasicBlockTail(IO="file", filename="BasicBlockTail.csv", delimiter="\t")
+
+//.decl BasicBlockBegin(?ass:Instruction)
+//.input BasicBlockBegin(IO="file", filename="BasicBlockBegin.csv", delimiter="\t")
+
+//.decl OptInstructionFromMethodIndex(?method:Method, ?insNr:number, ?varAssign:Instruction)
+//.input OptInstructionFromMethodIndex(IO="file", filename="OptInstructionFromMethodIndex.csv", delimiter="\t")
+
+
+//.decl BasicBlockHead(?inst:Instruction, ?ins:Instruction)
+//.input BasicBlockHead(IO="file", filename="BasicBlockHead.csv", delimiter="\t")
+
+//.decl Instruction_Next(?inst:Instruction,?inst1:Instruction)
+//.input Instruction_Next(IO="file", filename="Instruction_Next.csv", delimiter="\t")
+
+//.decl MaySuccessorBBModuloThrow(?inst:Instruction, ?inst1:Instruction)
+//.input MaySuccessorBBModuloThrow(IO="file", filename="MaySuccessorBBModuloThrow.csv", delimiter="\t")
+
+//.decl MayPredecessorBBModuloThrow(?inst:Instruction, ?inst1:Instruction)
+//.input MayPredecessorBBModuloThrow(IO="file", filename="MayPredecessorBBModuloThrow.csv", delimiter="\t")
+
+//.decl NextInSamePhiNode(?inst:Instruction,?inst1:Instruction)
+//.input NextInSamePhiNode(IO="file", filename="NextInSamePhiNode.csv", delimiter="\t")
+
+.decl IfConstant(?instr:Instruction, ?n:number, ?val:number)
+.input IfConstant(IO="file", filename="IfConstant.facts", delimiter="\t")
+
+
+.decl AllPhiNodes(?phiNode:Instruction) 
+.decl StaticCondition(?instr:Instruction, ?value:number)
+.decl NrOfPhiNodesPerBlock(?phiNode:Instruction, ?n : number)
+.decl OriginalPhiBranches(?phiNode:Instruction, ?preBB:Instruction,?lineNr:number)
+.decl OrderPhiBranchesBB(?phiNode:Instruction, ?preBB :Instruction, ?order:number)
+.decl PhiBeginningBB(?phiNode:Instruction)
+.decl IfNodeIndex(?method:Method, ?ifNode:Instruction,?nr:number)
+.decl IfNode(?ifNode:Instruction)
+.decl OrderPhiBlock(?phiNode:Instruction, ?postPhi:Instruction, ?order:number)
+.decl ApplyPhiConstFolding(?rootIfNode:Instruction, ?phiNode:Instruction)
+.decl PossiblePhiConstFolding(?rootIfNode:Instruction,?BB1:Instruction,?BB2:Instruction)
+.decl IsConstant(?var:Var)
+.decl PhiNodeContainsConstant(?phiNode:Instruction,?phiNode1:Instruction)
+.decl LinkStartPhiToLaterPhiBlocks(?startPhiNode:Instruction, ?otherPhiNode:Instruction)
+.decl LinkConstPhiNodesToOrder(?startPhiNode:Instruction, ?newPhiNode1:Instruction,?order:number)
+.decl NrOfPredBB(?BB:Instruction, ?b:number)
+.decl NrOfSuccBB(?BB2:Instruction, ?n:number)
+.decl PhiBeginningPhiBlock(?phi:Instruction)
+.decl PhiBBHasConst(?phiNode:Instruction)
+.decl PhiNodeIndex(?phiNode:Instruction,?phiNode1:Instruction, ?lineNr:number)
+.decl RootIfNode(?ifNode:Instruction, ?phiNode:Instruction, ?lineNr:number)
+.decl LoopPhiBeginning(?phiNode:Instruction)
+
+.output LoopPhiBeginning
+.output NrOfSuccBB
+.output RootIfNode
+.output LinkConstPhiNodesToOrder
+.output PhiNodeIndex
+.output PhiBBHasConst
+.output PhiBeginningPhiBlock
+.output NrOfPredBB
+.output LinkStartPhiToLaterPhiBlocks
+.output PhiNodeContainsConstant
+.output IsConstant
+.output PossiblePhiConstFolding
+.output ApplyPhiConstFolding
+.output OrderPhiBlock
+.output PhiBeginningBB
+.output OriginalPhiBranches
+.output OrderPhiBranchesBB
+.output AllPhiNodes
+.output NrOfPhiNodesPerBlock
+.output StaticCondition
+.output IfNodeIndex
+
 
 // Constant Folding
 
@@ -96,7 +182,7 @@ IntConstFolding(?instr, ?var, ?value, ?meth, 1) :-
 IntConstFolding(?instr, ?to, ?value, ?meth, ?use) :-
     _AssignLocal(?instr, _, ?from, ?to, ?meth),
     IntConstFolding(_, ?from, ?value, ?meth, ?prev_use),
-    !AllPhiNodes(?instr,_),
+    !AllPhiNodes(?instr),
     ?prev_use < 5, ?use = ?prev_use + 1.
 
 IntConstFolding(?instr, ?var, ?value, ?meth, ?use) :-
@@ -191,7 +277,7 @@ BoolConstFolding(?instr, ?var, ?value, ?meth) :-
 
 BoolConstFolding(?instr, ?to, ?value, ?meth) :-
     _AssignLocal(?instr, _, ?from, ?to, ?meth),
-    !AllPhiNodes(?instr,_),
+    !AllPhiNodes(?instr),
     BoolConstFolding(_, ?from, ?value, ?meth).
 
 
@@ -367,67 +453,12 @@ BoolConstFolding(?instr, ?var, ?value, ?meth) :-
     ?left != ?right,
     ?value = 0.
 
-.decl StaticCondition(?method:Method, ?instr:Instruction, ?value:number)
-
-.decl AllPhiNodes(?phiAssign:symbol,?n:number)
-.output AllPhiNodes
-
-.decl MultiPhiNode(?phiNode1:Instruction, ?phiNode2:Instruction,?n:number)
-.decl NrOfMultiPhiNodes(?phiNode:Instruction, ?n : number)
-
-.decl OriginalPhiBranches(?phiNode:Instruction, ?preBB:Instruction,?lineNr:number)
-.decl OrderPhiBranchesBB(?phiNode:Instruction, ?preBB :Instruction, ?order:number)
-.decl OrderPhiBranchesJoinedInformation(?phiNode:Instruction, ?preBB :Instruction, ?postPhiNode:Instruction)
-
-.decl BackwardsJoinPhiBranches(?phiNode:Instruction,?preBB:Instruction,?postPhiNode:Instruction,?n : number)
-.decl PhiBranchesGetThroughIf(?ifNode:Instruction, ?postPhiNode1:Instruction, ?postPhiNode2:Instruction, ?phiNode:Instruction,?c:number)
-
-.decl PhiBranchesMeetAtIf(?ifNode:Instruction, ?postPhiNode1:Instruction, ?postPhiNode2:Instruction, ?phiNode:Instruction,?c:number)
-.decl AllPhiBeginningsInNewBB(?phiNode:Instruction)
-.decl AllIfNodes(?method:Method, ?ifNode:Instruction,?nr:number)
-.decl OrderPostPhiNodes(?phiNode:Instruction, ?postPhi:Instruction, ?order:number)
-.decl ApplyPhiConstFolding(?ifNode:Instruction, ?phiNode:Instruction, ?postPhiNode:Instruction)
-.decl PossiblePhiConstFolding(?pathIfNode:Instruction,?phiNode:Instruction,?postPhiNode1:Instruction)
-.decl IsConstant(?var:Var)
-.decl NrOfPhiConstantsInPhiNode(?phiNode:Instruction, ?phiNode1:Instruction, ?nr : number)
-.decl NrOfPhiConstantsInPhiBB(?phiNode:Instruction, ?nr : number)
-.decl MultiPhiNodeContainsConstant(?phiNode:Instruction,?phiNode1:Instruction)
-.decl LinkPhiNodesInBB(?phiNode1:Instruction, ?phiNode2:Instruction)
-.decl NrOfPredBB(?BB:Instruction, ?b:number)
-
-
-.output NrOfPredBB
-.output LinkPhiNodesInBB
-.output MultiPhiNodeContainsConstant
-.output NrOfPhiConstantsInPhiBB
-.output NrOfPhiConstantsInPhiNode
-.output IsConstant
-.output PossiblePhiConstFolding
-.output ApplyPhiConstFolding
-.output PhiBranchesGetThroughIf
-.output OrderPostPhiNodes
-.output AllPhiBeginningsInNewBB
-.output OriginalPhiBranches
-.output OrderPhiBranchesBB
-.output BackwardsJoinPhiBranches
-.output PhiBranchesMeetAtIf
-.output OrderPhiBranchesJoinedInformation
-.output AllPhiNodes
-.output MultiPhiNode
-.output NrOfMultiPhiNodes
-.output StaticCondition
-
-AllPhiNodes(?phiAssign,?lineNr):-
-    _AssignLocal(?phiAssign, ?lineNr,_,_,_),
-    (NextInSamePhiNode(?phiAssign, _);
-    NextInSamePhiNode(_,?phiAssign)).
-
 IntConstant(?instr, ?var, to_number(?value), ?meth, ?type) :-
     isAssignNumConstant_Insn(?instr),
     Instruction_Method(?instr, ?meth),    
     AssignInstruction_To(?instr, ?var),
     AssignNumConstant_Id(?instr, ?value),
-    !AllPhiNodes(?instr,_),
+    !AllPhiNodes(?instr),
     _Var_Type(?var, ?type),
     (Type_int(?type) ; Type_byte(?type) ;
      Type_short(?type)).
@@ -437,36 +468,34 @@ BoolConstant(?instr, ?var, to_number(?value), ?meth) :-
     Instruction_Method(?instr, ?meth),    
     AssignInstruction_To(?instr, ?var),
     AssignNumConstant_Id(?instr, ?value),
-    !AllPhiNodes(?instr,_),
+    !AllPhiNodes(?instr),
     _Var_Type(?var, ?type),
     Type_boolean(?type).
 
 
 
+
 //Int Condition <=
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_),
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
-    IntConstFolding(_,?var1, ?left,_, _),
-    _IfConstant(?ifNode, ?pos2, ?right),
+    IntConstFolding(_,?var1,?left,_, _),
+    IfConstant(?ifNode, ?pos2, ?right),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,"<="),
-    ((?value = 1, ?left <= to_number(?right));
-    (?value = 0, ?left > to_number(?right))).
+    ((?value = 1, ?left <= ?right);
+    (?value = 0, ?left > ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_),
-    _IfConstant(?ifNode, ?pos1, ?left),
+StaticCondition(?ifNode,?value) :-
+    IfConstant(?ifNode, ?pos1, ?left),
     _IfVar(?ifNode, ?pos2, ?var2), 
     IntConstFolding(_,?var2,?right,_, _),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,"<="),
-    ((?value = 1, to_number(?left) <= ?right);
-    (?value = 0, to_number(?left) > ?right)).
+    ((?value = 1, ?left <= ?right);
+    (?value = 0, ?left > ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_),
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
     _IfVar(?ifNode, ?pos2, ?var2), 
     IntConstFolding(_,?var1,?left,_, _),
@@ -478,28 +507,25 @@ StaticCondition(?method, ?ifNode,?value) :-
 
 //Int Condition >=
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_),
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
     IntConstFolding(_,?var1,?left,_, _),
-    _IfConstant(?ifNode, ?pos2, ?right),
+    IfConstant(?ifNode, ?pos2, ?right),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,">="),
-    ((?value = 1, ?left >= to_number(?right));
-    (?value = 0, ?left < to_number(?right))).
+    ((?value = 1, ?left >= ?right);
+    (?value = 0, ?left < ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_),
-    _IfConstant(?ifNode, ?pos1, ?left),
+StaticCondition(?ifNode,?value) :- 
+    IfConstant(?ifNode, ?pos1, ?left),
     _IfVar(?ifNode, ?pos2, ?var2), 
     IntConstFolding(_,?var2,?right,_, _),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,">="),
-    ((?value = 1, to_number(?left) >= ?right);
-    (?value = 0, to_number(?left) < ?right)).
+    ((?value = 1, ?left >= ?right);
+    (?value = 0, ?left < ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
     _IfVar(?ifNode, ?pos2, ?var2), 
     IntConstFolding(_,?var1,?left,_, _),
@@ -510,28 +536,25 @@ StaticCondition(?method, ?ifNode,?value) :-
     (?value = 0, ?left < ?right)).
 
 //Int Condition ==
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
     IntConstFolding(_,?var1,?left,_, _),
-    _IfConstant(?ifNode, ?pos2, ?right),
+    IfConstant(?ifNode, ?pos2, ?right),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,"=="),
-    ((?value = 1, ?left = to_number(?right));
-    (?value = 0, ?left != to_number(?right))).
+    ((?value = 1, ?left = ?right);
+    (?value = 0, ?left != ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
-    _IfConstant(?ifNode, ?pos1, ?left),
+StaticCondition(?ifNode,?value) :- 
+    IfConstant(?ifNode, ?pos1, ?left),
     _IfVar(?ifNode, ?pos2, ?var2), 
     IntConstFolding(_,?var2,?right,_, _),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,"=="),
-    ((?value = 1, to_number(?left) = ?right);
-    (?value = 0, to_number(?left) != ?right)).
+    ((?value = 1, ?left = ?right);
+    (?value = 0, ?left != ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
     _IfVar(?ifNode, ?pos2, ?var2), 
     IntConstFolding(_,?var1,?left,_, _),
@@ -543,28 +566,25 @@ StaticCondition(?method, ?ifNode,?value) :-
 
 
 //Int Condition !=
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
     IntConstFolding(_,?var1,?left,_, _),
-    _IfConstant(?ifNode, ?pos2, ?right),
+    IfConstant(?ifNode, ?pos2, ?right),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,"!="),
-    ((?value = 1, ?left != to_number(?right));
-    (?value = 0, ?left = to_number(?right))).
+    ((?value = 1, ?left != ?right);
+    (?value = 0, ?left = ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_),
-    _IfConstant(?ifNode, ?pos1, ?left),
+StaticCondition(?ifNode,?value) :- 
+    IfConstant(?ifNode, ?pos1, ?left),
     _IfVar(?ifNode, ?pos2, ?var2), 
     IntConstFolding(_,?var2,?right,_, _),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,"!="),
-    ((?value = 1, to_number(?left) != ?right);
-    (?value = 0, to_number(?left) = ?right)).
+    ((?value = 1, ?left != ?right);
+    (?value = 0, ?left = ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
     _IfVar(?ifNode, ?pos2, ?var2), 
     IntConstFolding(_,?var1,?left,_, _),
@@ -576,28 +596,25 @@ StaticCondition(?method, ?ifNode,?value) :-
 
 
 //Boolean Condition ==
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
     BoolConstFolding(_,?var1,?left,_),
-    _IfConstant(?ifNode, ?pos2, ?right),
+    IfConstant(?ifNode, ?pos2, ?right),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,"=="),
-    ((?value = 1 , ?left = to_number(?right));
-    (?value = 0 , ?left != to_number(?right))).
+    ((?value = 1 , ?left = ?right);
+    (?value = 0 , ?left != ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
-    _IfConstant(?ifNode, ?pos1, ?left),
+StaticCondition(?ifNode,?value) :- 
+    IfConstant(?ifNode, ?pos1, ?left),
     _IfVar(?ifNode, ?pos2, ?var2), 
     BoolConstFolding(_,?var2,?right,_),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,"=="),
-    ((?value = 1 , to_number(?left) = ?right);
-    (?value = 0 , to_number(?left) != ?right)).
+    ((?value = 1 , ?left = ?right);
+    (?value = 0 , ?left != ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1),
     _IfVar(?ifNode, ?pos2, ?var2),  
     BoolConstFolding(_,?var1,?left,_),
@@ -610,28 +627,25 @@ StaticCondition(?method, ?ifNode,?value) :-
 
     
 //Boolean Condition !=
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
     BoolConstFolding(_,?var1,?left,_),
-    _IfConstant(?ifNode, ?pos2, ?right),
+    IfConstant(?ifNode, ?pos2, ?right),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,"!="),
-    ((?value = 1 , ?left != to_number(?right));
-    (?value = 0 , ?left = to_number(?right))).
+    ((?value = 1 , ?left != ?right);
+    (?value = 0 , ?left = ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
-    _IfConstant(?ifNode, ?pos1, ?left),
+StaticCondition(?ifNode,?value) :- 
+    IfConstant(?ifNode, ?pos1, ?left),
     _IfVar(?ifNode, ?pos2, ?var2), 
     BoolConstFolding(_,?var2,?right,_),
     ?pos1 < ?pos2,
     _OperatorAt(?ifNode,"!="),
-    ((?value = 1 , to_number(?left) != ?right);
-    (?value = 0 , to_number(?left) = ?right)).
+    ((?value = 1 , ?left != ?right);
+    (?value = 0 , ?left = ?right)).
 
-StaticCondition(?method, ?ifNode,?value) :- 
-    AllIfNodes(?method, ?ifNode,_), 
+StaticCondition(?ifNode,?value) :- 
     _IfVar(?ifNode, ?pos1, ?var1), 
     _IfVar(?ifNode, ?pos2, ?var2), 
     BoolConstFolding(_,?var1,?left,_),
@@ -642,295 +656,153 @@ StaticCondition(?method, ?ifNode,?value) :-
     (?value = 0 , ?left = ?right)).
 
 
-
-NrOfPredBB(?BB1,?c):-
-    BasicBlockBegin(?BB1),
-    ?c = count : {MaySuccessorBBModuloThrow(?BB1,_)}.
-
 IsConstant(?var):-
     IntConstFolding(_, ?var, _, _,_);
     BoolConstFolding(_, ?var, _ ,_).
 
-AllPhiNodes(?phiNode,?lineNr):-
-    _AssignLocal(?phiNode, ?lineNr,_,_,_),
-    (NextInSamePhiNode(?phiNode, _);
-    NextInSamePhiNode(_,?phiNode)).
-
-//for different Phi-nodes in same BB
-LinkPhiNodesInBB(?startPhiNode,?newPhiNode):-
-    AllPhiBeginningsInNewBB(?startPhiNode),
-    MultiPhiNode(?newPhiNode,?newPhiNode,_),  //beginning of new Phi-assignments
-    BasicBlockHead(?newPhiNode,?startPhiNode1),
-    MultiPhiNode(?startPhiNode,?startPhiNode1,_),
-    NrOfMultiPhiNodes(?startPhiNode,?c),
-    NrOfMultiPhiNodes(?newPhiNode,?c).
-
-LinkPhiNodesInBB(?startPhiNode1, ?newPhiNode1):-
-    LinkPhiNodesInBB(?startPhiNode,?newPhiNode),
-    MultiPhiNode(?startPhiNode,?startPhiNode1,_),
-    MultiPhiNode(?newPhiNode,?newPhiNode1, _ ),
-    OrderPostPhiNodes(?startPhiNode,?startPhiNode1, ?order),
-    OrderPostPhiNodes(?newPhiNode, ?newPhiNode1,?order).
-
-
-AllPhiBeginningsInNewBB(?phiNode):-
-    AllPhiNodes(?phiNode,_),
-    BasicBlockBegin(?phiNode),
-    !NextInSamePhiNode(_, ?phiNode).
-
-MultiPhiNodeContainsConstant(?phiNode, ?phiNode2):-
-    MultiPhiNode(?phiNode, ?phiNode2,_),
-    _AssignLocal(?phiNode2, _, ?from,_,_),
-    IsConstant(?from).
-
-NrOfPhiConstantsInPhiNode(?startPhiNode, ?nextPhiNode,?nr):-
-    AllPhiBeginningsInNewBB(?startPhiNode),
-    LinkPhiNodesInBB(?startPhiNode,?nextPhiNode),
-    MultiPhiNode(?nextPhiNode, ?nextPhiNode, _),
-    ?nr = count : MultiPhiNodeContainsConstant(?nextPhiNode, _).
-
-NrOfPhiConstantsInPhiBB(?startPhiNode, ?nr):-
-    AllPhiBeginningsInNewBB(?startPhiNode),
-    ?nr = sum ?nrInPhi : {NrOfPhiConstantsInPhiNode(?startPhiNode, _ ,?nrInPhi)}.
-
-MultiPhiNode(?phiNode1, ?phiNode2,?lineNr):-
-    NextInSamePhiNode(?phiNode1, ?phiNode2),
-    OptInstructionFromMethodIndex(_,?lineNr,?phiNode2).
-
-MultiPhiNode(?phiNode1, ?phiNode3,?lineNr):-
-    MultiPhiNode(?phiNode1, ?phiNode2,_),
-    MultiPhiNode(?phiNode2, ?phiNode3,?lineNr).
-
-MultiPhiNode(?phiNode, ?phiNode,?lineNr):-
-    MultiPhiNode(?phiNode,_,_),
-    OptInstructionFromMethodIndex(_, ?lineNr, ?phiNode),
-    !NextInSamePhiNode(_,?phiNode).
-
-
-//adBeginnings beginning phi-node too 
-NrOfMultiPhiNodes(?phiNode, ?n):-
-    MultiPhiNode(?phiNode,?phiNode,_),
-    ?n = count : {MultiPhiNode(?phiNode,_, _)}.
-
-
-AllIfNodes(?method, ?ifNode,?lineNr):-
+IfNode(?ifNode),
+IfNodeIndex(?method, ?ifNode,?lineNr):-
     _IfVar(?ifNode,_,_),
     _If(?ifNode, ?lineNr,_,?method).
 
+PhiBeginningPhiBlock(?phiNode):-
+    PhiNodeHead(?phiNode, ?phiNode).
 
+
+PhiNodeIndex(?phiNode,?phiNode1, ?lineNr),
+AllPhiNodes(?phiNode1):-
+    PhiNodeHead(?phiNode1,?phiNode),
+    _AssignLocal(?phiNode1, ?lineNr, _,_,_).
+
+PhiBeginningBB(?phiNode):-
+    InstructionInPhiNode(?phiNode,?phiNode),
+    !LoopPhiBeginning(?phiNode).
+
+LoopPhiBeginning(?phiNode):-
+    InstructionInPhiNode(?phiNode,?phiNode),
+    Dominates(?phiNode, ?BB),
+    MaySuccessorBBModuloThrow(?phiNode, ?BB).
+
+NrOfPhiNodesPerBlock(?phiNode, ?n):-
+    PhiBeginningPhiBlock(?phiNode),
+    ?n = count : {PhiNodeHead(_, ?phiNode)}.
+
+//ließe sich auch auf PhiBeginningBB runterschrumpfen
+NrOfSuccBB(?BB1, ?b),
+NrOfPredBB(?BB1,?c):-
+    BasicBlockBegin(?BB1),
+    ?c = count : {MaySuccessorBBModuloThrow(?BB1,_)},
+    ?b = count : {MayPredecessorBBModuloThrow(?BB1,_)}.
+
+
+PhiNodeContainsConstant(?phiNode, ?phiNode1):-
+    PhiNodeHead(?phiNode1,?phiNode),
+    _AssignLocal(?phiNode1, _, ?from ,_,_),
+    IsConstant(?from).
+
+PhiBBHasConst(?phiNode):-
+    PhiNodeContainsConstant(?phiNode,_);
+    (LinkStartPhiToLaterPhiBlocks(?phiNode, ?nextPhiNode),
+    PhiNodeContainsConstant(?nextPhiNode,_)).
+
+//for different Phi-nodes in same BB
+LinkStartPhiToLaterPhiBlocks(?startPhiNode, ?startPhiNode):-
+    PhiBeginningBB(?startPhiNode).
+
+LinkStartPhiToLaterPhiBlocks(?startPhiNode,?newPhiNode):-
+    PhiBeginningBB(?startPhiNode),
+    PhiBeginningPhiBlock(?newPhiNode),
+    PhiNodeHead(?startPhiNode1, ?startPhiNode),  
+    BasicBlockHead(?newPhiNode,?startPhiNode1),
+    NrOfPhiNodesPerBlock(?startPhiNode,?c),
+    NrOfPhiNodesPerBlock(?newPhiNode,?c).
+    
+//could also use NextPredecessorToSameBB but unsure how good it works
 //only start if at least one constant in Phi-node
+
 OriginalPhiBranches(?phiNode, ?preBB,?lineNr):-
-    AllPhiBeginningsInNewBB(?phiNode),
-    NrOfMultiPhiNodes(?phiNode,?d),
+    PhiBeginningBB(?phiNode),
+    NrOfPhiNodesPerBlock(?phiNode,?d),
     NrOfPredBB(?phiNode, ?d),
     MaySuccessorBBModuloThrow(?phiNode,?preBB),
     OptInstructionFromMethodIndex(_, ?lineNr,?preBB),
-    NrOfPhiConstantsInPhiBB(?phiNode, ?nrConst),
-    ?nrConst >= 1,
-    _AssignLocal(?phiNode,_,_,_,?method),
-    StaticCondition(?method, ?ifNode, _),
-    AllIfNodes(?method,?ifNode, ?ifLineNr), //check if static if comes BEFORE Phi
-    AllPhiNodes(?phiNode,?phiLineNr),
-    ?ifLineNr < ?phiLineNr.
+    //PhiBBHasConst(?phiNode),
+    _AssignLocal(?phiNode,?lineNr1 ,_,_,?method),
+    IfNodeIndex(?method,?ifNode, ?lineNr2),
+    //StaticCondition(?ifNode, _),
+    ?lineNr2 < ?lineNr1.
 
 
 
-OrderPhiBranchesBB(?phiNode, ?preBB, ?l):-
-    ?l = count : {OriginalPhiBranches(?phiNode, _ , ?lineNrBB), ?lineNr1 < ?lineNrBB},
-    OriginalPhiBranches(?phiNode , ?preBB, ?lineNr1).
-
-OrderPostPhiNodes(?phiNode, ?postPhiNode,?l):-
-    ?l = count : {MultiPhiNode(?phiNode, _ , ?lineNrPhi),  ?lineNrPhi1 < ?lineNrPhi},
-    MultiPhiNode(?phiNode,?postPhiNode, ?lineNrPhi1),
-    MultiPhiNode(?phiNode, ?phiNode, _).
-
-    
-OrderPhiBranchesJoinedInformation(?phiNode, ?preBB, ?postPhiNode):-
-    OrderPostPhiNodes(?phiNode, ?postPhiNode,?l),
-    OrderPhiBranchesBB(?phiNode, ?preBB, ?l).
-
-    
-//gibt es Fälle in denen der ?preBB  schon gleich das If-assign ist?
-BackwardsJoinPhiBranches(?phiNode,?preBB,?postPhiNode,1):-
-    OrderPhiBranchesJoinedInformation(?phiNode, ?preBB, ?postPhiNode).
-
-//if two branches meet before, remember the if-Instruction as reference point
-//if-assign on the (up-) way to start
-
-PhiBranchesGetThroughIf(?ifNode, ?postPhiNode1, ?postPhiNode2,?phiNode,?c),
-BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode,?c):-
-    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
-    ?postPhiNode1 != ?postPhiNode2,
-    Instruction_Next(?ifNode,?BB1),
-    JumpTarget(?BB2,?ifNode),
-    MaySuccessorBBModuloThrow(?BB1, ?preBB),
-    MaySuccessorBBModuloThrow(?BB2, ?preBB),
-    AllIfNodes(_, ?ifNode,_),
-    BasicBlockTail(?preBB, ?ifNode),
-    ?c = ?count1 +?count2,
-    NrOfMultiPhiNodes(?phiNode, ?nrPhiAss),
-    ?nrPhiAss > ?c.
-
-BackwardsJoinPhiBranches(?phiNode,?preBB,?postPhiNode1,?count1):-
-    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
-    MaySuccessorBBModuloThrow(?BB1, ?preBB),
-    BasicBlockTail(?preBB, ?preBBTail),
-    !AllIfNodes(_, ?preBBTail,_).
+OrderPhiBranchesBB(?phiNode, ?BB, ?order):-
+    OriginalPhiBranches(?phiNode , ?BB, ?lineNr1),
+    ?order = count : {OriginalPhiBranches(?phiNode, _ , ?lineNrBB), ?lineNr1 < ?lineNrBB}.
 
 
+OrderPhiBlock(?phiNode, ?phiNode1,?order):-
+    PhiBeginningPhiBlock(?phiNode),
+    PhiNodeIndex(?phiNode,?phiNode1, ?lineNrPhi1),
+    ?order = count : {PhiNodeIndex(?phiNode, _ , ?lineNrPhi),  ?lineNrPhi1 < ?lineNrPhi}.
 
-//handle case that multiple consecutive ifNodes point to same BB (in that case the highest ifNode is chosen as root)
 
-// branches have >1 predeccessor BB 
-//?count indicates how many branches have joined definitely
-//those branches that have multiple predeccessors are not included
-PhiBranchesGetThroughIf(?ifNode1, ?postPhiNode1,  ?postPhiNode2,?phiNode,?count2),
-BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1, ?count2):-
-    AllIfNodes(_,?ifNode1,?ifLineNr1),
-    AllIfNodes(_,?ifNode2,?ifLineNr2),
-    ?ifNode1 != ?ifNode2,
-    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
-    ?postPhiNode1 != ?postPhiNode2,
-    MaySuccessorBBModuloThrow(?BB1, ?preBB),
-    MaySuccessorBBModuloThrow(?BB2, ?preBB),
-    BasicBlockTail(?preBB, ?ifNode1),
-    ?c = ?count1 +?count2,
-    NrOfMultiPhiNodes(?phiNode, ?nrPhiAss),
-    Instruction_Next(?ifNode1,?BB1),
-    JumpTarget(?BB2,?ifNode1),    
-    ?nrPhiAss = ?c,
-    ?a = count : {MaySuccessorBBModuloThrow(?BB1, _)},
+LinkConstPhiNodesToOrder(?startPhiNode, ?newPhiNode1,?order):-
+    LinkStartPhiToLaterPhiBlocks(?startPhiNode,?newPhiNode),
+    PhiNodeContainsConstant(?newPhiNode, ?newPhiNode1),
+    OrderPhiBlock(?newPhiNode, ?newPhiNode1, ?order).
+
+
+RootIfNode(?ifNode, ?phiNode, ?lineNr):-
+    PhiBeginningBB(?phiNode),
+    //PhiBBHasConst(?phiNode),
+    Dominates(?dom, ?phiNode),
+    ?dom != ?phiNode,
+    PhiNodeIndex(?phiNode,?phiNode,?lineNr),
+    BasicBlockTail(?dom, ?ifNode),
+    IfNode(?ifNode).
+
+//each If-Root may dominate multiple Phi-nodes -> choose the one with lowest Index
+
+PossiblePhiConstFolding(?rootIfNode, ?nextBB, ?phiNode):-
+    RootIfNode(?rootIfNode, ?phiNode, ?l),
+    StaticCondition(?rootIfNode, ?value),
+    ((?value = 0,
+    Instruction_Next(?rootIfNode,?nextBB));
+    (?value = 1, 
+    JumpTarget(?nextBB, ?rootIfNode))),
+    ?l = min ?lineNr : {RootIfNode(?rootIfNode,_,?lineNr)}.
+
+PossiblePhiConstFolding(?rootIfNode, ?BB2, ?phiNode):-
+    PossiblePhiConstFolding(?rootIfNode, ?BB1, ?phiNode),
+    !OrderPhiBranchesBB(?phiNode, ?BB1, _),
+    NrOfSuccBB(?BB1,?a),
     ?a > 1, 
-    ?multiJumpBB = ?BB1,
-    ?ifLineNr1 > ?ifLineNr2,
-    MaySuccessorBBModuloThrow(?multiJumpBB, ?preMultiJumpBB),
-    BasicBlockTail(?preMultiJumpBB, ?ifNode2).
+    BasicBlockTail(?BB1, ?tailNode),
+    IfNode(?tailNode),
+    StaticCondition(?tailNode, ?value),
+    ((?value = 0,
+    Instruction_Next(?tailNode,?BB2));
+    (?value = 1, 
+    JumpTarget(?BB2, ?tailNode))).
+
+PossiblePhiConstFolding(?rootIfNode, ?BB2, ?phiNode):-
+    PossiblePhiConstFolding(?rootIfNode, ?BB1, ?phiNode),
+    !OrderPhiBranchesBB(?phiNode,?BB1,_),
+    NrOfSuccBB(?BB1,1),
+    MayPredecessorBBModuloThrow(?BB1, ?BB2).
 
 
-PhiBranchesGetThroughIf(?ifNode1, ?postPhiNode1,  ?postPhiNode2,?phiNode,?count1),
-BackwardsJoinPhiBranches(?phiNode,?preBB,?ifNode1,?count1):-
-    AllIfNodes(_,?ifNode1,?ifLineNr1),
-    AllIfNodes(_,?ifNode2,?ifLineNr2),
-    ?ifNode1 != ?ifNode2,
-    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
-    ?postPhiNode1 != ?postPhiNode2,
-    //?BB1 < ?BB2,
-    MaySuccessorBBModuloThrow(?BB1, ?preBB),
-    MaySuccessorBBModuloThrow(?BB2, ?preBB),
-    BasicBlockTail(?preBB, ?ifNode1),
-    ?c = ?count1 +?count2,
-    NrOfMultiPhiNodes(?phiNode, ?nrPhiAss),
-    Instruction_Next(?ifNode1,?BB1),
-    JumpTarget(?BB2,?ifNode1),    
-    ?nrPhiAss = ?c,
-    ?b = count : {MaySuccessorBBModuloThrow(?BB2, _)},
-    ?b > 1, 
-    ?multiJumpBB = ?BB2,
-    ?ifLineNr1 > ?ifLineNr2,
-    MaySuccessorBBModuloThrow(?multiJumpBB, ?preMultiJumpBB),
-    BasicBlockTail(?preMultiJumpBB, ?ifNode2).
+ApplyPhiConstFolding(?rootIfNode,?phiNode1):-
+    PossiblePhiConstFolding(?rootIfNode, ?BB1, ?phiNode),
+    OrderPhiBranchesBB(?phiNode, ?BB1, ?order),
+    LinkConstPhiNodesToOrder(?phiNode, ?phiNode1,?order).
 
 
-//Instuction_Next(BB) kommt zuerst (?thenBB), ?jumpTarget als zweites (?elseBB)
-//check both paths have only 1 predecessor which is if-case
+BoolConstFolding(?phiNode, ?to, ?value, ?meth) :-
+    ApplyPhiConstFolding(_, ?phiNode),
+    _AssignLocal(?phiNode, _, ?from, ?to, ?meth),
+    BoolConstFolding(_, ?from, ?value ,_).
 
-PhiBranchesMeetAtIf(?ifNode, ?postPhiNode1, ?postPhiNode2, ?phiNode,?c):-
-    AllIfNodes(_,?ifNode,_),
-    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
-    ?postPhiNode1 != ?postPhiNode2,
-    MaySuccessorBBModuloThrow(?BB1, ?preBB),
-    MaySuccessorBBModuloThrow(?BB2, ?preBB),
-    BasicBlockTail(?preBB, ?ifNode),
-    ?c = ?count1 + ?count2,
-    NrOfMultiPhiNodes(?phiNode, ?nrPhiAss),
-    Instruction_Next(?ifNode,?BB1),
-    JumpTarget(?BB2,?ifNode),    
-    ?nrPhiAss = ?c,
-    NrOfPredBB(?BB1, ?b),
-    NrOfPredBB(?BB2, ?b),
-    ?b = 1.
-
-
-PhiBranchesMeetAtIf(?ifNode1, ?postPhiNode1, ?postPhiNode2, ?phiNode,?c):-
-    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
-    ?postPhiNode1 != ?postPhiNode2,
-    MaySuccessorBBModuloThrow(?BB1, ?preBB),
-    MaySuccessorBBModuloThrow(?BB2, ?preBB),
-    BasicBlockTail(?preBB, ?ifNode1),
-    AllIfNodes(_,?ifNode1,?ifLineNr1),
-    AllIfNodes(_,?ifNode2,?ifLineNr2),
-    ?ifNode1 != ?ifNode2,
-    ?c = ?count1 +?count2,
-    NrOfMultiPhiNodes(?phiNode, ?nrPhiAss),
-    Instruction_Next(?ifNode1,?BB1),
-    JumpTarget(?BB2,?ifNode1),    
-    ?nrPhiAss = ?c,
-    NrOfPredBB(?BB1, ?a),
-    ?a > 1, 
-    ?multiJumpBB = ?BB1,
-    ?ifLineNr1 < ?ifLineNr2,
-    MaySuccessorBBModuloThrow(?multiJumpBB, ?preMultiJumpBB),
-    BasicBlockTail(?preMultiJumpBB, ?ifNode2).
-
-
-PhiBranchesMeetAtIf(?ifNode1, ?postPhiNode1, ?postPhiNode2, ?phiNode,?c):-
-    AllIfNodes(_,?ifNode1,?ifLineNr1),
-    AllIfNodes(_,?ifNode2,?ifLineNr2),
-    ?ifNode1 != ?ifNode2,
-    BackwardsJoinPhiBranches(?phiNode,?BB1,?postPhiNode1,?count1),
-    BackwardsJoinPhiBranches(?phiNode,?BB2,?postPhiNode2,?count2),
-    ?postPhiNode1 != ?postPhiNode2,
-    MaySuccessorBBModuloThrow(?BB1, ?preBB),
-    MaySuccessorBBModuloThrow(?BB2, ?preBB),
-    BasicBlockTail(?preBB, ?ifNode1),
-    ?c = ?count1 + ?count2,
-    NrOfMultiPhiNodes(?phiNode, ?nrPhiAss),
-    Instruction_Next(?ifNode1,?BB1),
-    JumpTarget(?BB2,?ifNode1),    
-    ?nrPhiAss = ?c,
-    NrOfPredBB(?BB2, ?b), 
-    ?b > 1, 
-    ?multiJumpBB = ?BB2,
-    ?ifLineNr1 < ?ifLineNr2,
-    MaySuccessorBBModuloThrow(?multiJumpBB, ?preMultiJumpBB),
-    BasicBlockTail(?preMultiJumpBB, ?ifNode2).
-
-
-
-
-
-//initialize down-path with starting if-node
-PossiblePhiConstFolding(?ifNode,?phiNode, ?postPhiNode1):-
-    StaticCondition(_, ?ifNode,0),
-    PhiBranchesMeetAtIf(?ifNode, ?postPhiNode1, _ , ?phiNode,_).
-
-PossiblePhiConstFolding(?ifNode,?phiNode, ?postPhiNode2):-
-    StaticCondition(_, ?ifNode,1),
-    PhiBranchesMeetAtIf(?ifNode, _,?postPhiNode2, ?phiNode,_).
-
-    
-//Annahme dass nur bei IF-Knoten branches verzweigen
-PossiblePhiConstFolding(?pathIfNode,?phiNode,?postPhiNode1):-
-    PossiblePhiConstFolding(_,?phiNode, ?pathIfNode),
-    AllIfNodes(_,?pathIfNode,_),
-    StaticCondition(_, ?pathIfNode,0),
-    PhiBranchesGetThroughIf(?pathIfNode, ?postPhiNode1,  _,?phiNode,_).
-
-PossiblePhiConstFolding(?pathIfNode,?phiNode,?postPhiNode2):-
-    PossiblePhiConstFolding(_,?phiNode, ?pathIfNode),
-    AllIfNodes(_,?pathIfNode,_),
-    StaticCondition(_, ?pathIfNode,1),
-    PhiBranchesGetThroughIf(?pathIfNode, _,  ?postPhiNode2,?phiNode,_).
-
-ApplyPhiConstFolding(?ifNode, ?nextPhiNode1, ?nextPhiNode2):-
-    PossiblePhiConstFolding(?ifNode,?phiNode, ?postPhiNode),
-    MultiPhiNode(?phiNode,?postPhiNode,_),
-    LinkPhiNodesInBB(?postPhiNode, ?nextPhiNode2),
-    MultiPhiNodeContainsConstant(?nextPhiNode1,?nextPhiNode2).
-
-
+IntConstFolding(?phiNode, ?to, ?value, ?meth, ?use+1) :-
+    ApplyPhiConstFolding(_, ?phiNode),
+    _AssignLocal(?phiNode, _, ?from, ?to, ?meth),
+    IntConstFolding(_, ?from, ?value ,_, ?use).

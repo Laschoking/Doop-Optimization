@@ -10,9 +10,9 @@
 
 .decl IntConstant(?instr:symbol, ?var:symbol, ?value:number, ?method:symbol, ?type:symbol)
 .decl BoolConstant(?instr:symbol, ?var:symbol, ?value:number, ?meth:symbol)
-
-.decl AssignOperFromConstant(?instr:symbol, ?pos:number, ?from:symbol)
-.input AssignOperFromConstant(IO="file", filename="AssignOperFromConstant.facts", delimiter="\t")
+//_AssignOperFromConstant(?instruction:AssignOper_Insn, ?pos: number, ?from:NumConstant)
+//.decl AssignOperFromConstant(?instr:symbol, ?pos:number, ?from:symbol)
+//.input AssignOperFromConstant(IO="file", filename="AssignOperFromConstant.facts", delimiter="\t")
 
 .output IntConstant
 .output BoolConstant
@@ -48,29 +48,29 @@ AssignBinary(?instr, ?var, ?left, ?right, ?meth, ?prev_use1, ?prev_use2) :-
     IntConstFolding(_, ?right_oper2, ?right, ?meth, ?prev_use2).
 
 
-AssignBinary(?instr, ?var, ?left, ?right, ?meth, 0,?prev_use2) :-
+AssignBinary(?instr, ?var, to_number(?left), ?right, ?meth, 0,?prev_use2) :-
     _AssignBinop(?instr, _, ?var, ?meth),
-    AssignOperFromConstant(?instr, ?pos1, ?x),
-    ((contains("L", ?x),
-    ?z = strlen(?x),
-    ?s = substr(?x,0,?z-1),
-    ?left = to_number(?s));
-    (!contains("L", ?x),
-    ?left = to_number(?x))),
+    _AssignOperFromConstant(?instr, ?pos1, ?left),
+    //((contains("L", ?x),
+    //?z = strlen(?x),
+    //?s = substr(?x,0,?z-1),
+    //?left = to_number(?s));
+    //(!contains("L", ?x),
+    //?left = to_number(?x))),
     _AssignOperFrom(?instr, ?pos2, ?right_oper2),
     ?pos1 < ?pos2,
     IntConstFolding(_, ?right_oper2, ?right, ?meth, ?prev_use2).  
 
-AssignBinary(?instr, ?var, ?left, ?right, ?meth, ?prev_use1 , 0) :-
+AssignBinary(?instr, ?var, ?left, to_number(?right), ?meth, ?prev_use1 , 0) :-
     _AssignBinop(?instr, _, ?var, ?meth),
     _AssignOperFrom(?instr, ?pos1, ?right_oper1),
-    AssignOperFromConstant(?instr, ?pos2, ?x),
-    ((contains("L", ?x),
-    ?z = strlen(?x),
-    ?s = substr(?x,0,?z-1),
-    ?right = to_number(?s));
-    (!contains("L", ?x),
-    ?right = to_number(?x))),
+    _AssignOperFromConstant(?instr, ?pos2, ?right),
+    //((contains("L", ?x),
+    //?z = strlen(?x),
+    //?s = substr(?x,0,?z-1),
+    //?right = to_number(?s));
+    //(!contains("L", ?x),
+    //?right = to_number(?x))),
     ?pos1 < ?pos2,
     IntConstFolding(_, ?right_oper1, ?left, ?meth, ?prev_use1).
 
