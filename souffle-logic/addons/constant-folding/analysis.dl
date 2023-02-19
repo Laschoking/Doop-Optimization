@@ -726,10 +726,10 @@ OriginalPhiBranches(?phiNode, ?preBB,?lineNr):-
     NrOfPredBB(?phiNode, ?d),
     MaySuccessorBBModuloThrow(?phiNode,?preBB),
     OptInstructionFromMethodIndex(_, ?lineNr,?preBB),
-    //PhiBBHasConst(?phiNode),
+    PhiBBHasConst(?phiNode),
     _AssignLocal(?phiNode,?lineNr1 ,_,_,?method),
     IfNodeIndex(?method,?ifNode, ?lineNr2),
-    //StaticCondition(?ifNode, _),
+    StaticCondition(?ifNode, _),
     ?lineNr2 < ?lineNr1.
 
 
@@ -753,7 +753,7 @@ LinkConstPhiNodesToOrder(?startPhiNode, ?newPhiNode1,?order):-
 
 RootIfNode(?ifNode, ?phiNode, ?lineNr):-
     PhiBeginningBB(?phiNode),
-    //PhiBBHasConst(?phiNode),
+    PhiBBHasConst(?phiNode),
     Dominates(?dom, ?phiNode),
     ?dom != ?phiNode,
     PhiNodeIndex(?phiNode,?phiNode,?lineNr),
@@ -797,12 +797,12 @@ ApplyPhiConstFolding(?rootIfNode,?phiNode1):-
     LinkConstPhiNodesToOrder(?phiNode, ?phiNode1,?order).
 
 
-BoolConstFolding(?phiNode, ?to, ?value, ?meth) :-
-    ApplyPhiConstFolding(_, ?phiNode),
-    _AssignLocal(?phiNode, _, ?from, ?to, ?meth),
-    BoolConstFolding(_, ?from, ?value ,_).
+//BoolConstFolding(?phiNode, ?to, ?value, ?meth) :-
+//    ApplyPhiConstFolding(_, ?phiNode),
+//    _AssignLocal(?phiNode, _, ?from, ?to, ?meth),
+//    BoolConstFolding(_, ?from, ?value ,_).
 
-IntConstFolding(?phiNode, ?to, ?value, ?meth, ?use+1) :-
-    ApplyPhiConstFolding(_, ?phiNode),
-    _AssignLocal(?phiNode, _, ?from, ?to, ?meth),
-    IntConstFolding(_, ?from, ?value ,_, ?use).
+//IntConstFolding(?phiNode, ?to, ?value, ?meth, ?use+1) :-
+//    ApplyPhiConstFolding(_, ?phiNode),
+//    _AssignLocal(?phiNode, _, ?from, ?to, ?meth),
+//    IntConstFolding(_, ?from, ?value ,_, ?use).
