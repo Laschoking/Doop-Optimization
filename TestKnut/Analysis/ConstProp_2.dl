@@ -64,6 +64,7 @@
 .decl VarType(?var:Var, ?type:symbol)
 .input VarType(IO="file", filename="Var-Type.facts", delimiter="\t")
 
+//.decl IntConstFolding(?instruction:symbol, ?variable:symbol, ?value:number, ?meth:symbol, ?use:number)
 
 .decl IntConstFolding(?instruction:Instruction, ?variable:Var, ?value:number, ?meth:symbol, ?use:number)
 .input IntConstFolding(IO="file", filename="IntConstFolding.csv",delimiter="\t")
@@ -304,12 +305,6 @@ StaticCondition(?ifNode,?value) :-
     OperatorAt(?ifNode,"!="),
     ((?value = 1 , ?left != ?right);
     (?value = 0 , ?left = ?right)).
-
-
-
-
-
-
 
 IsConstant(?var):-
     IntConstFolding(_, ?var, _, _,_);

@@ -368,3 +368,10 @@ PreviousNonDomPredecessorToSameBB(?insn, ?nextPred, ?prevPred) :-
 .decl ExistsPreviousNonDomPredecessorToSameBB(?pred:Instruction, ?insn:Instruction)
 ExistsPreviousNonDomPredecessorToSameBB(?pred, ?insn) :-
    NextNonDomPredecessorToSameBB(?insn, _, ?pred).
+
+.output MayPredecessorBBModuloThrow
+.output BasicBlockHead
+.output Method_FirstInstruction
+.output OptInstructionFromMethodIndex
+.output PhiNodeHead
+.output Dominates

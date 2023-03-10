@@ -40,13 +40,13 @@
 .decl AssignNull(?instruction:Instruction, ?index:number, ?to:Var, ?method:Method)
 .input AssignNull(IO="file", filename="AssignNull.facts", delimiter="\t")
 
-.decl AssignNumConstant(?instruction:Instruction, ?index:number, ?const:number, ?to:Var, ?inmethod:Method)
+.decl AssignNumConstant(?instruction:Instruction, ?index:number, ?const:symbol, ?to:Var, ?inmethod:Method)
 .input AssignNumConstant(IO="file", filename="AssignNumConstant.facts", delimiter="\t")
 
 .decl AssignOperFrom(?instruction:Instruction, ?pos: number, ?from:Var)
 .input AssignOperFrom(IO="file", filename="AssignOperFrom.facts", delimiter="\t")
 
-.decl AssignOperFromConstant(?instruction:Instruction, ?pos: number, ?from:number)
+.decl AssignOperFromConstant(?instruction:Instruction, ?pos: number, ?from:symbol)
 .input AssignOperFromConstant(IO="file", filename="AssignOperFromConstant.facts", delimiter="\t")
 
 .decl AssignPhantomInvoke(?instruction:Instruction, ?index:number, ?method:Method)

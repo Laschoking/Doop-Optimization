@@ -1,14 +1,31 @@
-.type list = [l:list,n:number]
+.type Instruction <: symbol
+.type Var <: symbol
+
+.decl Use(?phi:Instruction, ?var:Var)
+.input Use(IO="file", filename="Use.csv", delimiter="\t")
+
+.decl IntConstFolding(?instruction:Instruction, ?variable:Var, ?value:number, ?meth:symbol, ?use:number)
+.input IntConstFolding(IO="file", filename="IntConstFolding.csv", delimiter="\t")
+// Anzahl der USES aller Constanten ermitteln
+
+.decl BoolConstFolding(?instruction:Instruction, ?var:Var, ?value:number, ?meth:symbol)
+.input BoolConstFolding(IO="file", filename="BoolConstFolding.csv",delimiter="\t")
 
 
-.decl test(a:list)
-.output test
-//test([1,[2,[3,[4,nil]]]]).
-test([[[nil,3],2],1]).
+.decl Out(?ins :Instruction,?var:Var)
+.output Out
 
-.decl test2(l:list)
-.output test2
+Out(?assign,?var):-
+    IntConstFolding(_, ?var, _,_,_),
+    Use(?assign, ?var).
 
-//test2(?d):-
-//  test([_, ?c]),
-//  ?c = [3,?d].
+Out(?assign,?var):-
+    BoolConstFolding(?assign, ?var, _,_),
+    Use(?assign, ?var).
+    
+
+.decl OutCount(?n:number)
+.output OutCount(IO=stdout)
+
+OutCount(?n):-
+  ?n = count : {Out(_,_)}.
