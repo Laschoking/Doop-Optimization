@@ -7,6 +7,8 @@
 .decl MayPredecessorBBModuloThrow(?inst:Instruction, ?inst1:Instruction)
 .input MayPredecessorBBModuloThrow(IO="file", filename="MayPredecessorBBModuloThrow.csv", delimiter="\t")
 
+.decl AssignInstanceOf(?ins:Instruction, ?l:number, ?from:Var,?to:Var,?s:symbol, ?meth:MethodInv)
+.input AssignInstanceOf(IO="file", filename="AssignInstanceOf.facts", delimiter="\t")
 
 .decl OptReturnInsn(?ins:Instruction,?meth:Method)
 .input OptReturnInsn(IO="file", filename="OptReturnInsn.csv", delimiter="\t")
@@ -36,6 +38,8 @@
 .decl AssignLocal(?instruction:Instruction, ?index:number, ?from:Var, ?to:Var, ?inmethod:Method)
 .input AssignLocal(IO="file", filename="AssignLocal.facts", delimiter="\t")
 
+.decl ArrayAllocation(?ins:Instruction, ?n:number, ?var:Var)
+.input ArrayAllocation(IO="file", filename="ArrayAllocation.facts", delimiter="\t")
 
 .decl AssignNull(?instruction:Instruction, ?index:number, ?to:Var, ?method:Method)
 .input AssignNull(IO="file", filename="AssignNull.facts", delimiter="\t")
@@ -86,7 +90,32 @@
 .decl StoreInstanceField(?instruction:Instruction, ?index:number, ?from:Var, ?base:Var, ?signature:symbol, ?method:symbol)
 .input StoreInstanceField(IO="file",filename="StoreInstanceField.facts", delimiter="\t")
 
+.decl ArrayInsnIndex(?ins:Instruction, ?var:Var)
+.input ArrayInsnIndex(IO="file",filename="ArrayInsnIndex.facts", delimiter="\t")
 
+.decl ExceptionHandlerFormalParam(?handler:Instruction, ?var:Var)
+.input ExceptionHandlerFormalParam(IO="file", filename="ExceptionHandler-FormalParam.facts", delimiter="\t")
+
+.decl StoreStaticField(?assign:Instruction, ?l:number, ?var:Var, ?to:Var, ?meth:MethodInv)
+.input StoreStaticField(IO="file", filename="StoreStaticField.facts", delimiter="\t")
+
+.decl StoreArrayIndex(?assign:Instruction, ?n:number, ?var:Var, ?to:Var, ?m:MethodInv)
+.input StoreArrayIndex(IO="file", filename="StoreArrayIndex.facts", delimiter="\t")
+
+.decl SpecialMethodInvocation(?ins:Instruction, ?l:number, ?s:symbol, ?var:Var,?m:MethodInv)
+.input SpecialMethodInvocation(IO="file", filename="SpecialMethodInvocation.facts", delimiter="\t")
+
+.decl Throw(?ins:Instruction, ?l:number, ?var:Var,?m:MethodInv)
+.input Throw(IO="file", filename="Throw.facts", delimiter="\t")
+
+.decl ExitMonitor(?ins:Instruction, ?l:number,?var:Var, ?m:MethodInv)
+.input ExitMonitor(IO="file", filename="ExitMonitor.facts", delimiter="\t")
+
+.decl TableSwitch(?ins:Instruction, ?n:number, ?var:Var, ?meth:Method)
+.input TableSwitch(IO="file", filename="TableSwitch.facts", delimiter="\t")
+
+.decl LookupSwitch(?ins:Instruction, ?n:number, ?var:Var, ?meth:Method)
+.input LookupSwitch(IO="file", filename="LookupSwitch.facts", delimiter="\t")
 .decl Use(?assign:Instruction, ?var:Var)
 .decl Def(?assign:Instruction, ?var:Var)
 
@@ -98,6 +127,41 @@
 
 .output UseBB
 .output DefBB
+//ExceptionHandler
+
+Use(?assign,?var):-
+    LookupSwitch(?assign,_, ?var,_).
+
+Use(?assign,?var):-
+    TableSwitch(?assign,_,?var,_).
+
+Use(?assign,?var):-
+    ExitMonitor(?assign,_,?var,_).
+Use(?assign,?var):-
+    Throw(?assign,_,?var,_).
+
+Use(?assign,?var):- 
+    SpecialMethodInvocation(?assign,_,_,?var,_).
+
+Def(?assign, ?to),
+Use(?assign,?from):-
+    StoreArrayIndex(?assign,_, ?from, ?to, _).
+
+
+Use(?assign,?from):-
+    StoreStaticField(?assign,_,?from, _, _).
+
+Def(?assign,?var):-
+    ExceptionHandlerFormalParam(?assign,?var).
+Use(?assign,?from),
+Def(?assign,?to):-
+    AssignInstanceOf(?assign, _,?from, ?to,_, _).
+
+Use(?assign,?var):-
+    ArrayInsnIndex(?assign,?var).
+
+Use(?assign,?var):-
+    ArrayAllocation(?assign,_,?var).
 
 Def(?assign, ?to):-
     AssignBinop(?assign, _, ?to, _).
@@ -184,6 +248,7 @@ Use(?assign,?from):-
 Use(?assign,?from):-
     Return(?assign,_,?from,_).
 
+Use(?assign,?to),
 Def(?assign,?to),
 Use(?assign,?from):-
     StoreInstanceField(?assign,_,?from,?to,_,_).
@@ -210,6 +275,23 @@ LiveVarInBB(?BB1, ?var2):-
     MayPredecessorBBModuloThrow(?BB1, ?BB2).
 
 
+.decl OutRel(?BB:Instruction, ?n:number)
+
+OutRel(?BB, ?n -1):-
+    AllBB(?BB),
+    ?n = count : {LiveVarInBB(?BB, _)}.
+.decl DeadVar(?var:Var)
+
+DeadVar(?var):-
+    !Use(_, ?var),
+    Def(_,?var).
+.output DeadVar
+
+.decl NonInit(?var:Var)
+NonInit(?var):-
+    Use(_,?var),
+    !Def(_,?var).
+.output NonInit
 
 //LiveVarInBB(?BB, ?var):-
 //    OptReturnInsn(?return,_),

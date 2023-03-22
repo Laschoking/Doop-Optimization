@@ -11,7 +11,12 @@
 .decl BoolConstFolding(?instruction:Instruction, ?var:Var, ?value:number, ?meth:symbol)
 .input BoolConstFolding(IO="file", filename="BoolConstFolding.csv",delimiter="\t")
 
+.decl AssignLocal(?inst:Instruction, ?nr:number,?var1:Var, ?var2:Var, ?method:symbol)
+.input AssignLocal(IO="file", filename="AssignLocal.facts", delimiter="\t")
 
+
+.decl StaticPhiFolding(?bb:Instruction, ?v:number)
+.input StaticPhiFolding(IO="file", filename="StaticPhiFolding.csv", delimiter="\t")
 .decl Out(?ins :Instruction,?var:Var)
 .output Out
 
@@ -22,7 +27,11 @@ Out(?assign,?var):-
 Out(?assign,?var):-
     BoolConstFolding(?assign, ?var, _,_),
     Use(?assign, ?var).
-    
+
+Out(?assign,?var):-
+    StaticPhiFolding(?phi, _),
+    AssignLocal(?phi, _ , ?var, _, _),
+    Use(?assign,?var).
 
 .decl OutCount(?n:number)
 .output OutCount(IO=stdout)

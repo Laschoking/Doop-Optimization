@@ -4,7 +4,13 @@
 .type Instruction <: symbol
 .type MethodInv <: symbol
 .type BinExp = [?left : Var, ?op:Operator, ?right:Var]
-.type NodeList = [n:Instruction, next:NodeList]
+
+.decl AssignNumConstant(?inst:Instruction, ?nr:number, ?val:symbol, ?var:Var, ?meth:MethodInv)
+.input AssignNumConstant(filename="AssignNumConstant.facts")
+
+.decl AssignLocal(?inst:Instruction, ?nr:number,?var1:Var, ?var2:Var, ?method:Method)
+.input AssignLocal(IO="file", filename="AssignLocal.facts", delimiter="\t")
+
 
 .decl OptInstructionFromMethodIndex(?method:Method, ?insNr:number, ?varAssign:Instruction)
 .input OptInstructionFromMethodIndex(IO="file", filename="OptInstructionFromMethodIndex.csv", delimiter="\t")
@@ -74,6 +80,11 @@
 .output OrderPredecessorBranches
 .output RecursiveExpressions
 
+.decl testRel(?exp:BinExp,n:number)
+.output testRel
+
+.decl test2(?exp:BinExp , ?to:Var)
+.output test2
 
 //without annoying Phi-assigns that are part of a block
 .decl NewMayPredecessorBBModuloThrow(?inst:Instruction, ?inst1:Instruction)
@@ -129,6 +140,51 @@ BinaryExpression(?assign, [to_string(?left), ?op, ?right], ?to):-
     AssignOperFrom(?assign, ?pos2, ?right),
     ?pos1 < ?pos2.
 
+BinaryExpression(?assign, [?left, ?op, ?right], ?to):-
+    OperatorAt(?assign, ?op),
+    !If(?assign, _, _ ,_ ),
+    AssignUnop(?assign, _ , ?to,_),
+    AssignOperFrom(?assign, _, ?right),
+    ?left = "nop".
+
+BinaryExpression(?assign, [?left, ?op, to_string(?right)], ?to):-
+    OperatorAt(?assign, ?op),
+    !If(?assign, _, _ ,_ ),
+    AssignUnop(?assign, _ , ?to,_),
+    AssignOperFromConstant(?assign, _, ?right),
+    ?left = "nop".
+
+BinaryExpression(?assign, [?left, ?op, ?right], ?to):-
+    !If(?assign, _, _ ,_ ),
+    AssignLocal(?assign, _ , ?left, ?to,_),
+    ?right = "nop",
+    ?op = "nop".
+
+BinaryExpression(?assign, [?left, ?op, ?right], ?to):-
+    OperatorAt(?assign, ?op),
+    !If(?assign, _, _ ,_ ),
+    AssignNumConstant(?assign, _ , ?x, ?to,_),
+    ((contains("L", ?x),
+    ?z = strlen(?x),
+    ?s = substr(?x,0,?z-1),
+    ?left = ?s);
+    (!contains("L", ?x),
+    ?left = ?x)),
+    ?right = "nop",
+    ?op = "nop".
+
+.decl AllExpressions(?exp:BinExp)
+.output AllExpressions
+AllExpressions(?exp),
+test2(?exp,?to):-
+    BinaryExpression(_, ?exp, ?to).
+
+testRel(?exp,?n):-
+    test2(?exp, _),
+    ?n = count : {test2(?exp, _)},
+    ?n > 1.
+
+
 BinaryExpressionBB(?phiHead,?exp,?to):-
     BinaryExpression(?assign, ?exp, ?to),
     BasicBlockHead(?assign, ?head),
@@ -158,8 +214,6 @@ BBIndex(?BB, ?lineNr):-
     NewMayPredecessorBBModuloThrow(?BB, _)),
     OptInstructionFromMethodIndex(_, ?lineNr,?BB).
 
-
-
 PredecessorBranches(?BB, ?preBB,?lineNr):-
     NrOfPredBB(?BB, ?d),
     ?d > 1,
@@ -169,7 +223,6 @@ PredecessorBranches(?BB, ?preBB,?lineNr):-
 OrderPredecessorBranches(?BB, ?preBB, ?order +1):-
     PredecessorBranches(?BB , ?preBB, ?lineNr1),
     ?order = count : {PredecessorBranches(?BB, _ , ?lineNrBB), ?lineNr1 < ?lineNrBB}.
-
 
 RecursiveExpressions(?BB, ?exp, 2, ?to2),
 RecursiveExpressions(?BB, ?exp, 2, ?to1):-
@@ -206,14 +259,13 @@ CommonExpressions(?exp),
 ReducedSubExpressions(?BB, ?exp, ?to, ?l):-
     AllSubExpressions(?BB,?exp,?to,?l),
     ?l = min ?lineNr : {AllSubExpressions(_, ?exp, _ ,?lineNr)}.
-    //?c = count : {AllSubExpressions(?BB, ?exp,_,?l)}.
+    //?c = count : {AllSubExpressions(_, ?exp,_,_)}.
 
 .decl CommonExpressions(?exp:BinExp)
 .output CommonExpressions
 
 .decl CountCommonExpressions(?c:number)
 .output CountCommonExpressions
-
 
 CountCommonExpressions(?c):-
     ?c = count : {CommonExpressions(_)}.

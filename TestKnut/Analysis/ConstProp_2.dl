@@ -91,7 +91,7 @@
 .decl ApplyPhiConstFolding(?rootIfNode:Instruction, ?phiNode:Instruction)
 .decl PossiblePhiConstFolding(?rootIfNode:Instruction,?BB1:Instruction,?BB2:Instruction)
 .decl IsConstant(?var:Var)
-.decl PhiNodeContainsConstant(?phiNode:Instruction,?phiNode1:Instruction)
+.decl PhiNodeContainsConstant(?phiNode:Instruction,?phiNode1:Instruction,?const:number)
 .decl LinkStartPhiToLaterPhiBlocks(?startPhiNode:Instruction, ?otherPhiNode:Instruction)
 .decl LinkConstPhiNodesToOrder(?startPhiNode:Instruction, ?newPhiNode1:Instruction,?order:number)
 .decl NrOfPredBB(?BB:Instruction, ?b:number)
@@ -346,15 +346,16 @@ NrOfPredBB(?BB1,?c):-
     ?b = count : {MayPredecessorBBModuloThrow(?BB1,_)}.
 
 
-PhiNodeContainsConstant(?phiNode, ?phiNode1):-
+PhiNodeContainsConstant(?phiNode, ?phiNode1,?const):-
     PhiNodeHead(?phiNode1,?phiNode),
     AssignLocal(?phiNode1, _, ?from ,_,_),
-    IsConstant(?from).
+    (IntConstFolding(_, ?from, ?const, _,_);
+    BoolConstFolding(_, ?from, ?const ,_)).
 
 PhiBBHasConst(?phiNode):-
-    PhiNodeContainsConstant(?phiNode,_);
+    PhiNodeContainsConstant(?phiNode,_,_);
     (LinkStartPhiToLaterPhiBlocks(?phiNode, ?nextPhiNode),
-    PhiNodeContainsConstant(?nextPhiNode,_)).
+    PhiNodeContainsConstant(?nextPhiNode,_,_)).
 
 //for different Phi-nodes in same BB
 LinkStartPhiToLaterPhiBlocks(?startPhiNode, ?startPhiNode):-
@@ -383,8 +384,6 @@ OriginalPhiBranches(?phiNode, ?preBB,?lineNr):-
     StaticCondition(?ifNode, _),
     ?lineNr2 < ?lineNr1.
 
-
-
 OrderPhiBranchesBB(?phiNode, ?BB, ?order):-
     OriginalPhiBranches(?phiNode , ?BB, ?lineNr1),
     ?order = count : {OriginalPhiBranches(?phiNode, _ , ?lineNrBB), ?lineNr1 < ?lineNrBB}.
@@ -398,12 +397,8 @@ OrderPhiBlock(?phiNode, ?phiNode1,?order):-
 
 LinkConstPhiNodesToOrder(?startPhiNode, ?newPhiNode1,?order):-
     LinkStartPhiToLaterPhiBlocks(?startPhiNode,?newPhiNode),
-    PhiNodeContainsConstant(?newPhiNode, ?newPhiNode1),
+    PhiNodeContainsConstant(?newPhiNode, ?newPhiNode1,_),
     OrderPhiBlock(?newPhiNode, ?newPhiNode1, ?order).
-
-
-
-
 
 RootIfNode(?ifNode, ?phiNode, ?lineNr):-
     PhiBeginningBB(?phiNode),
@@ -450,3 +445,11 @@ ApplyPhiConstFolding(?rootIfNode,?phiNode1):-
     OrderPhiBranchesBB(?phiNode, ?BB1, ?order),
     LinkConstPhiNodesToOrder(?phiNode, ?phiNode1,?order).
 
+
+.decl StaticPhiFolding(?BB:Instruction, ?const:number)
+.output StaticPhiFolding
+
+StaticPhiFolding(?phiBB, ?const):-
+    PhiNodeContainsConstant(?phiBB,_ , ?const),
+    ?n = count : {PhiNodeContainsConstant(?phiBB, _, ?const)},
+    NrOfPhiNodesPerBlock(?phiBB, ?n).
