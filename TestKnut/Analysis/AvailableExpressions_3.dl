@@ -173,16 +173,6 @@ BinaryExpression(?assign, [?left, ?op, ?right], ?to):-
     ?right = "nop",
     ?op = "nop".
 
-.decl AllExpressions(?exp:BinExp)
-.output AllExpressions
-AllExpressions(?exp),
-test2(?exp,?to):-
-    BinaryExpression(_, ?exp, ?to).
-
-testRel(?exp,?n):-
-    test2(?exp, _),
-    ?n = count : {test2(?exp, _)},
-    ?n > 1.
 
 
 BinaryExpressionBB(?phiHead,?exp,?to):-
@@ -269,3 +259,15 @@ ReducedSubExpressions(?BB, ?exp, ?to, ?l):-
 
 CountCommonExpressions(?c):-
     ?c = count : {CommonExpressions(_)}.
+
+
+.decl AllExpressions(?exp:BinExp)
+.output AllExpressions
+AllExpressions(?exp),
+test2(?exp,?to):-
+    BinaryExpression(_, ?exp, ?to).
+
+testRel(?exp,?n):-
+    test2(?exp, _),
+    ?n = count : {test2(?exp, _)},
+    ?n > 1.

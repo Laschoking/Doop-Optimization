@@ -4,23 +4,17 @@
 .type Instruction <: symbol
 .type MethodInv <: symbol
 
-.decl FormalParam(n:number, m:Method, ?param:Var)
-.input FormalParam(IO="file",filename="FormalParam.facts", delimiter="\t")
-
-.decl StaticMethodInvocation(ins:Instruction, n: number, m:Method, c: symbol)
-.input StaticMethodInvocation(IO="file", filename="StaticMethodInvocation.facts", delimiter="\t")
-
 .decl MayPredecessorBBModuloThrow(?inst:Instruction, ?inst1:Instruction)
-.input MayPredecessorBBModuloThrow(IO="file", filename="MayPredecessorBBModuloThrow.csv", delimiter="\t")
+.input MayPredecessorBBModuloThrow(IO="file", filename="MayPredecessorBBModuloThrow.facts", delimiter="\t")
 
 .decl AssignInstanceOf(?ins:Instruction, ?l:number, ?from:Var,?to:Var,?s:symbol, ?meth:MethodInv)
 .input AssignInstanceOf(IO="file", filename="AssignInstanceOf.facts", delimiter="\t")
 
 .decl OptReturnInsn(?ins:Instruction,?meth:Method)
-.input OptReturnInsn(IO="file", filename="OptReturnInsn.csv", delimiter="\t")
+.input OptReturnInsn(IO="file", filename="OptReturnInsn.facts", delimiter="\t")
 
 .decl BasicBlockHead(?inst:Instruction, ?ins:Instruction)
-.input BasicBlockHead(IO="file", filename="BasicBlockHead.csv", delimiter="\t")
+.input BasicBlockHead(IO="file", filename="BasicBlockHead.facts", delimiter="\t")
 
 .decl AssignBinop(?instruction:Instruction, ?index:number, ?to:Var, ?inmethod:Method)
 .input AssignBinop(IO="file", filename="AssignBinop.facts", delimiter="\t")
@@ -75,7 +69,7 @@
 .input LoadStaticField(IO="file", filename="LoadStaticField.facts", delimiter="\t")
 
 .decl Method_FirstInstruction(?method:Method, ?insn:Instruction)
-.input Method_FirstInstruction(IO="file", filename="Method_FirstInstruction.csv", delimiter="\t")
+.input Method_FirstInstruction(IO="file", filename="Method_FirstInstruction.facts", delimiter="\t")
 
 .decl ActualParam(?argPos:number, ?ass:Instruction, ?var:Var)
 .input ActualParam(IO="file", filename="ActualParam.facts", delimiter="\t")
@@ -122,18 +116,21 @@
 
 .decl LookupSwitch(?ins:Instruction, ?n:number, ?var:Var, ?meth:Method)
 .input LookupSwitch(IO="file", filename="LookupSwitch.facts", delimiter="\t")
+
 .decl Use(?assign:Instruction, ?var:Var)
 .decl Def(?assign:Instruction, ?var:Var)
+.decl UseBB(?assign:Instruction, ?var:Var)
+.decl DefBB(?assign:Instruction, ?var:Var)
+.decl LiveVarInBB(?BB:Instruction, ?var:Var)
+.decl AllBB(?BB:Instruction)
 
+.output AllBB
 .output Use
 .output Def
 .output LiveVarInBB
-.decl UseBB(?assign:Instruction, ?var:Var)
-.decl DefBB(?assign:Instruction, ?var:Var)
-
 .output UseBB
 .output DefBB
-//ExceptionHandler
+
 
 Use(?assign,?var):-
     LookupSwitch(?assign,_, ?var,_).
@@ -152,7 +149,6 @@ Use(?assign,?var):-
 Def(?assign, ?to),
 Use(?assign,?from):-
     StoreArrayIndex(?assign,_, ?from, ?to, _).
-
 
 Use(?assign,?from):-
     StoreStaticField(?assign,_,?from, _, _).
@@ -239,13 +235,8 @@ DefBB(?assign,?var):-
 Def(?assign, ?to):-
     LoadStaticField(?assign, _, ?to, _, _).
 
-Use(?call_ins, ?from),
 Use(?assign,?from):-
-    ActualParam(?pos,?assign, ?from),
-    StaticMethodInvocation(?assign, _, ?call_method, _),
-    FormalParam(?pos, ?call_method, ?param),
-    AssignLocal(?call_ins, _, ?param,_ , ?call_method).
-
+    ActualParam(_,?assign, ?from).
 
 Def(?assign, ?to):-
     AssignReturnValue(?assign, ?to).
@@ -264,11 +255,6 @@ Def(?assign,?to),
 Use(?assign,?from):-
     StoreInstanceField(?assign,_,?from,?to,_,_).
 
-.decl LiveVarInBB(?BB:Instruction, ?var:Var)
-//.decl BBHasNoVar(?ins:Instruction)
-.decl AllBB(?BB:Instruction)
-.output AllBB
-
 AllBB(?BB):-
     MayPredecessorBBModuloThrow(?BB, _);
     MayPredecessorBBModuloThrow(_,?BB).
@@ -277,37 +263,9 @@ LiveVarInBB(?BB, ?var):-
     UseBB(?BB, ?var).
 
 LiveVarInBB(?BB, "eps"):-
-    AllBB(?BB),
-    !UseBB(?BB, _).
+    AllBB(?BB).
 
 LiveVarInBB(?BB1, ?var2):-
     LiveVarInBB(?BB2, ?var2),
     !DefBB(?BB2, ?var2),
     MayPredecessorBBModuloThrow(?BB1, ?BB2).
-
-
-.decl OutRel(?BB:Instruction, ?n:number)
-
-OutRel(?BB, ?n -1):-
-    AllBB(?BB),
-    ?n = count : {LiveVarInBB(?BB, _)}.
-.decl DeadVar(?var:Var)
-
-DeadVar(?var):-
-    !Use(_, ?var),
-    Def(_,?var).
-.output DeadVar
-
-.decl NonInit(?var:Var)
-NonInit(?var):-
-    Use(_,?var),
-    !Def(_,?var).
-.output NonInit
-
-//LiveVarInBB(?BB, ?var):-
-//    OptReturnInsn(?return,_),
-//    BasicBlockHead(?return, ?BB),
-//    UseBB(?BB, ?var).
-//BBHasNoVar(?BB):-
-    //MayPredecessorBBModuloThrow(?BB,_),
-    //!UseBB(?BB, _).
