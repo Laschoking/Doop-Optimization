@@ -6,6 +6,9 @@
 .type BasicBlock <: Instruction
 .type InsBB = BasicBlock | Instruction
 
+.decl Method_FirstInstruction(m:Method, ins:Instruction)
+.input Method_FirstInstruction(IO="file", filename="Method_FirstInstruction.csv", delimiter="\t")
+
 .decl OptInstructionFromMethodIndex(?method:Method, ?insNr:number, ?varAssign:Instruction)
 .input OptInstructionFromMethodIndex(IO="file", filename="OptInstructionFromMethodIndex.csv", delimiter="\t")
 
@@ -143,7 +146,6 @@ DoesNotPostDominate(?postDomCandidate, ?BB1) :-
     ?BB1 != ?postDomCandidate.
 
 
-
 /* If we can't prove A does not post-dominate B with the other rules, then A post-dominates B.
  * The definition is such that we always get reflexivity: PostDominates(x,x).
  */
@@ -165,7 +167,6 @@ NonStrictPostDom(?domBB1, ?getDomBB):-
     PostDominates(?domBB2, ?getDomBB),
     ?domBB2 != ?domBB1,
     PostDominates(?domBB1, ?domBB2).
-
 
 
 AllBB(?BB1):-
@@ -210,29 +211,47 @@ ControlDepBB(?method, ?BB1, ?BB3):-
 // in the receiving BB, all Statements are dependent
 ControlDep(?method, ?ins1, ?ins2):-
     ControlDepBB(?method, ?BB1,?BB2),
-    BasicBlockTail(?BB1,?ins1),
+    LinkBBToNew(?BB, ?BB1),
+    BasicBlockTail(?BB,?ins1),
     (BasicBlockHead(?ins2, ?BB2);
     LinkBBToNew(?ins2, ?BB2)).
 
 ControlDep(?method, ?ins1, ?ins3):-
     ControlDepBB(?method, ?BB1,?BB2),
-    BasicBlockTail(?BB1,?ins1),
+    LinkBBToNew(?BB, ?BB1),
+    BasicBlockTail(?BB,?ins1),
     LinkBBToNew(?ins2, ?BB2),
     BasicBlockHead(?ins3, ?ins2).
 
+// if function uses parameter ?ins1 can be first statement
+// then it does NOT appear in BasicBlockHead, but only in MethodFirstInstruction.csv
+// thus find method name via ?ins
+DataDep(?method, ?ins1, ?ins2Head):-
+    Def(?ins1, ?var),
+    Use(?ins2, ?var),
+    //contains("Example", ?ins1),
+    (BasicBlockHead(?ins1, ?head),
+    BBHeadInMethod(?head, ?method);
+    Method_FirstInstruction(?method, ?ins1)),
+    PhiNodeHead(?ins2, ?ins2Head),
+    (PhiNodeHead(?ins1, ?ins1);
+    !PhiNodeHead(?ins1, _)).
 
 DataDep(?method, ?ins1, ?ins2):-
     Def(?ins1, ?var),
     Use(?ins2, ?var),
     //contains("Example", ?ins1),
-    BasicBlockHead(?ins1, ?head),
-    BBHeadInMethod(?head, ?method).
+    (BasicBlockHead(?ins1, ?head),
+    BBHeadInMethod(?head, ?method);
+    Method_FirstInstruction(?method, ?ins1)),
+    !PhiNodeHead(?ins2,_),
+    (PhiNodeHead(?ins1, ?ins1);
+    !PhiNodeHead(?ins1, _)).
+
 
 PDG_Nodes(?method, ?ins, ?ln):-
     (DataDep(?method, ?ins,_);
-    DataDep(?method, _, ?ins);
+    DataDep(_, _, ?ins);
     ControlDep(?method, ?ins,_);
-    ControlDep(?method, _,?ins)),
-    OptInstructionFromMethodIndex(_, ?ln, ?ins).
-
-    //Graph  vereinfachen & control dep ueber mehrere Funktionen
+    ControlDep(_, _,?ins)),
+    OptInstructionFromMethodIndex(?method, ?ln, ?ins).
