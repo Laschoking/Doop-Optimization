@@ -7,41 +7,59 @@
 .type ClassType = ReferenceType
 .type InterfaceType = ReferenceType
 .decl isType(?t:Type)
+// .output isType
 .decl isReferenceType(?t:ReferenceType)
+// .output isReferenceType
 .decl isArrayType(?t:ArrayType)
+// .output isArrayType
 .decl isClassType(?t:ClassType)
+// .output isClassType
 .decl isInterfaceType(?t:InterfaceType)
+// .output isInterfaceType
 .decl DirectSuperclass(?class:ClassType, ?superclass:ClassType)
 .input DirectSuperclass(IO="file", filename="DirectSuperclass.facts", delimiter="\t")
 .decl DirectSuperinterface(?ref:ReferenceType, ?interface:InterfaceType)
 .input DirectSuperinterface(IO="file", filename="DirectSuperinterface.facts", delimiter="\t")
 .decl ApplicationClass(?ref:ReferenceType)
+// .output ApplicationClass
 .decl MainClass(?class:ClassType)
 .input MainClass(IO="file", filename="MainClass.facts", delimiter="\t")
 .type Field = symbol
 .decl Field_DeclaringType(?field:Field, ?declaringClass:ReferenceType)
+// .output Field_DeclaringType
 .type MethodDescriptor = symbol
 .type Method = symbol
 .decl Method_DeclaringType(?method:Method, ?declaringType:ReferenceType)
+// .output Method_DeclaringType
 .decl Method_ReturnType(?method:Method, ?returnType:Type)
+// .output Method_ReturnType
 .decl Method_SimpleName(?method:Method, ?simpleName:symbol)
+// .output Method_SimpleName
 .decl Method_ParamTypes(?method:Method, ?params:symbol)
+// .output Method_ParamTypes
 .decl Method_Descriptor(?method:Method, ?descriptor:MethodDescriptor)
+//.output Method_Descriptor
 .decl Method_Modifier(?mod:Modifier, ?method:Method)
 .input Method_Modifier(IO="file", filename="Method-Modifier.facts", delimiter="\t")
 .decl FormalParam(?index:number, ?method:Method, ?var:Var)
 .input FormalParam(IO="file", filename="FormalParam.facts", delimiter="\t")
 .decl ThisVar(?method:Method, ?var:Var)
+// .output ThisVar
 .type Var = symbol
 .decl Var_Type(?var:Var, ?type:Type)
 .input Var_Type(IO="file", filename="Var-Type.facts", delimiter="\t")
 .decl Var_DeclaringMethod(?var:Var, ?method:Method)
+// .output Var_DeclaringMethod
 .type HeapAllocation = symbol
 .decl HeapAllocation_Type(?heap:HeapAllocation, ?type:Type)
+// .output HeapAllocation_Type
 .decl MainMethodArgArray(?heap:HeapAllocation)
+// .output MainMethodArgArray
 .decl MainMethodArgArrayContent(?heap:HeapAllocation)
+// .output MainMethodArgArrayContent
 .type Instruction = symbol
 .decl Instruction_Method(?insn:Instruction, ?inMethod:Method)
+// .output Instruction_Method
 .type FieldInstruction = Instruction
 .type LoadInstanceField_Insn = FieldInstruction
 .type StoreInstanceField_Insn = FieldInstruction
@@ -60,49 +78,85 @@
 .type VirtualMethodInvocation_Insn = MethodInvocation
 .type StaticMethodInvocation_Insn = MethodInvocation
 .decl isVirtualMethodInvocation_Insn(?insn:VirtualMethodInvocation_Insn)
+// .output isVirtualMethodInvocation_Insn
 .decl isStaticMethodInvocation_Insn(?insn:StaticMethodInvocation_Insn)
+// .output isStaticMethodInvocation_Insn
 .decl FieldInstruction_Signature(?insn:FieldInstruction, ?sign:Field)
+// .output FieldInstruction_Signature
 .decl LoadInstanceField_Base(?insn:LoadInstanceField_Insn, ?var:Var)
+// .output LoadInstanceField_Base
 .decl LoadInstanceField_To(?insn:LoadInstanceField_Insn, ?var:Var)
+// .output LoadInstanceField_To
 .decl StoreInstanceField_From(?insn:StoreInstanceField_Insn, ?var:Var)
+// .output StoreInstanceField_From
 .decl StoreInstanceField_Base(?insn:StoreInstanceField_Insn, ?var:Var)
+// .output StoreInstanceField_Base
 .decl LoadStaticField_To(?insn:LoadStaticField_Insn, ?var:Var)
+// .output LoadStaticField_To
 .decl StoreStaticField_From(?insn:StoreStaticField_Insn, ?var:Var)
+// .output StoreStaticField_From
 .decl ComponentType(?arrayType:ArrayType, ?componentType:Type)
 .input ComponentType(IO="file", filename="ComponentType.facts", delimiter="\t")
 .decl LoadArrayIndex_Base(?insn:LoadArrayIndex_Insn, ?var:Var)
+// .output LoadArrayIndex_Base
 .decl LoadArrayIndex_To(?insn:LoadArrayIndex_Insn, var:Var)
+// .output LoadArrayIndex_To
 .decl StoreArrayIndex_From(?insn:StoreArrayIndex_Insn, ?var:Var)
+// .output StoreArrayIndex_From
 .decl StoreArrayIndex_Base(?insn:StoreArrayIndex_Insn, ?var:Var)
+// .output StoreArrayIndex_Base
 .decl AssignInstruction_To(?insn:AssignInstruction, ?to:Var)
+// .output AssignInstruction_To
 .decl AssignCast_From(?insn:AssignCast_Insn, ?from:Var)
+// .output AssignCast_From
 .decl AssignCast_Type(?insn:AssignCast_Insn, ?type:Type)
+// .output AssignCast_Type
 .decl AssignLocal_From(?insn:AssignLocal_Insn, ?from:Var)
+// .output AssignLocal_From
 .decl AssignHeapAllocation_Heap(?insn:AssignHeapAllocation_Insn, ?heap:HeapAllocation)
+// .output AssignHeapAllocation_Heap
 .decl ReturnNonvoid_Var(?return:ReturnNonvoid_Insn, ?var:Var)
+// .output ReturnNonvoid_Var
 .decl MethodInvocation_Method(?invocation:MethodInvocation, ?signature:Method)
+// .output MethodInvocation_Method
 .decl AssignReturnValue(?invocation:MethodInvocation, ?to:Var)
 .input AssignReturnValue(IO="file", filename="AssignReturnValue.facts", delimiter="\t")
 .decl ActualParam(?index:number, ?invocation:MethodInvocation, ?var:Var)
 .input ActualParam(IO="file", filename="ActualParam.facts", delimiter="\t")
 .decl VirtualMethodInvocation_Base(?invocation:VirtualMethodInvocation_Insn, ?base:Var)
+// .output VirtualMethodInvocation_Base
 .decl VirtualMethodInvocation_SimpleName(?invocation:MethodInvocation, ?simplename:symbol)
+// .output VirtualMethodInvocation_SimpleName
 .decl VirtualMethodInvocation_Descriptor(?invocation:MethodInvocation, ?descriptor:MethodDescriptor)
+// .output VirtualMethodInvocation_Descriptor
 .decl SpecialMethodInvocation_Base(?invocation:MethodInvocation, ?base:Var)
+// .output SpecialMethodInvocation_Base
 .decl MethodInvocation_Base(?invocation:MethodInvocation, ?base:Var)
+// .output MethodInvocation_Base
 
 // Fat schema
 .decl LoadInstanceField(?base:Var, ?sig:Field, ?to:Var, ?inmethod:Method) 
+// .output LoadInstanceField
 .decl StoreInstanceField(?from:Var, ?base:Var, ?signature:Field, ?inmethod:Method) 
+// .output StoreInstanceField
 .decl LoadStaticField(?sig:Field, ?to:Var, ?inmethod:Method) 
+// .output LoadStaticField
 .decl StoreStaticField(?from:Var, ?signature:Field, ?inmethod:Method) 
+// .output StoreStaticField
 .decl LoadArrayIndex(?base:Var, ?to:Var, ?inmethod:Method) 
+// .output LoadArrayIndex
 .decl StoreArrayIndex(?from:Var, ?base:Var, ?inmethod:Method) 
+// .output StoreArrayIndex
 .decl AssignCast(?type:Type, ?from:Var, ?to:Var, ?inmethod:Method) 
+// .output AssignCast
 .decl AssignLocal(?from:Var, ?to:Var, ?inmethod:Method) 
+// .output AssignLocal
 .decl AssignHeapAllocation(?heap:HeapAllocation, ?to:Var, ?inmethod:Method) 
+// .output AssignHeapAllocation
 .decl ReturnVar(?var:Var, ?method:Method) 
+// .output ReturnVar
 .decl StaticMethodInvocation(?invocation:MethodInvocation, ?signature:Method, ?inmethod:Method) 
+// .output StaticMethodInvocation
 
 // imports
 .decl _ClassType(?class:symbol)
@@ -286,6 +340,7 @@ AssignHeapAllocation(?heap, ?to, ?inmethod) :-
   Instruction_Method(?insn, ?inmethod),
   AssignHeapAllocation_Heap(?insn, ?heap),
   AssignInstruction_To(?insn, ?to).
+// .output AssignHeapAllocation
 ReturnVar(?var, ?method) :-
   Instruction_Method(?insn, ?method),
   ReturnNonvoid_Var(?insn, ?var).
@@ -311,27 +366,40 @@ VirtualMethodInvocation_Descriptor(?invocation, ?descriptor) :-
 // Basic (type-based) analysis
 .comp Basic {
 .decl MethodLookup(?simplename:symbol, ?descriptor:MethodDescriptor, ?type:Type, ?method:Method)
+//.output MethodLookup
 .decl MethodImplemented(?simplename:symbol, ?descriptor:MethodDescriptor, ?type:Type, ?method:Method)
+//.output MethodImplemented
 .decl DirectSubclass(?a:Type, ?c:Type)
+//.output DirectSubclass
 .decl Subclass(?c:Type, ?a:Type)
+//.output Subclass
 .decl Superclass(?c:Type, ?a:Type)
+//.output Superclass
 .decl Superinterface(?k:Type, ?c:Type)
+//.output Superinterface
 .decl SubtypeOf(?subtype:Type, ?type:Type)
+//.output SubtypeOf
 .decl SupertypeOf(?supertype:Type, ?type:Type)
+//.output SupertypeOf
 .decl SubtypeOfDifferent(?subtype:Type, ?type:Type)
+//.output SubtypeOfDifferent
 .decl MainMethodDeclaration(?method:Method)
+//.output MainMethodDeclaration
 MethodLookup(?simplename, ?descriptor, ?type, ?method) :-
   MethodImplemented(?simplename, ?descriptor, ?type, ?method).
+
 MethodLookup(?simplename, ?descriptor, ?type, ?method) :-
   (DirectSuperclass(?type, ?supertype) ;
    DirectSuperinterface(?type, ?supertype)),
   MethodLookup(?simplename, ?descriptor, ?supertype, ?method),
   ! MethodImplemented(?simplename, ?descriptor, ?type, _).
+
 MethodImplemented(?simplename, ?descriptor, ?type, ?method) :-
   Method_SimpleName(?method, ?simplename),
   Method_Descriptor(?method, ?descriptor),
   Method_DeclaringType(?method, ?type),
   ! Method_Modifier("abstract", ?method).
+
 DirectSubclass(?a, ?c) :-
   DirectSuperclass(?a, ?c).
 Subclass(?c, ?a) :-
@@ -404,10 +472,16 @@ MainMethodDeclaration(?method) :-
   Method_Modifier("static", ?method).
 }
 .init basic = Basic
-
+// .output MainClass
+// .output Method_DeclaringType
+// .output Method_SimpleName
+// .output Method_Descriptor
+// .output Method_Modifier
 // class initialization
 .decl ClassInitializer(?type:Type, ?method:Method)
+// .output ClassInitializer
 .decl InitializedClass(?classOrInterface:Type)
+// .output InitializedClass
 ClassInitializer(?type, ?method) :-
    basic.MethodImplemented("<clinit>", "void()", ?type, ?method).
 InitializedClass(?superclass) :-
@@ -443,19 +517,19 @@ Reachable(?clinit) :-
 
 // Main (value-based) analysis
 .decl Assign(?to:Var, ?from:Var)
-.output Assign
+ .output Assign
 .decl VarPointsTo(?heap:HeapAllocation, ?var:Var)
-.output VarPointsTo
+ .output VarPointsTo
 .decl InstanceFieldPointsTo(?heap:HeapAllocation , ?fld:Field, ?baseheap:HeapAllocation)
-.output InstanceFieldPointsTo
+ .output InstanceFieldPointsTo
 .decl StaticFieldPointsTo(?heap:HeapAllocation, ?fld:Field)
-.output StaticFieldPointsTo
+ .output StaticFieldPointsTo
 .decl CallGraphEdge(?invocation:MethodInvocation, ?meth:Method)
-.output CallGraphEdge
+ .output CallGraphEdge
 .decl ArrayIndexPointsTo(?baseheap:HeapAllocation, ?heap:HeapAllocation)
-.output ArrayIndexPointsTo
+ .output ArrayIndexPointsTo
 .decl Reachable(?method:Method)
-.output Reachable
+ .output Reachable
 Assign(?actual, ?formal) :-
   CallGraphEdge(?invocation, ?method),
   FormalParam(?index, ?method, ?formal),
@@ -467,6 +541,7 @@ Assign(?return, ?local) :-
 VarPointsTo(?heap, ?var) :-
   AssignHeapAllocation(?heap, ?var, ?inMethod),
   Reachable(?inMethod).
+
 VarPointsTo(?heap, ?to) :-
   Assign(?from, ?to),
   VarPointsTo(?heap, ?from).

@@ -1,3 +1,4 @@
+#include "../../facts/facts.dl"
 .decl Method_FirstInstruction(?method:Method, ?insn:Instruction)
 .decl OptInstructionFromMethodIndex(?method:Method, ?index:number, ?insn:Instruction)
 .decl Instruction_Next(?i:Instruction, ?next:Instruction)
@@ -59,11 +60,14 @@
 .decl NextReturn(?insn1:Instruction, ?insn2:Instruction)
 
 
+//default implementation also includes exeception throws
+// thus creating more thatn one FirstInstruction per Methode
 
 Method_FirstInstruction(?method, ?insn) :-
    Instruction_Method(?insn, ?method),
    !Instruction_Prev(?insn, _),
-   !IsJumpTarget(?insn).
+   !IsJumpTarget(?insn),
+   !_Throw(?insn, _, _, ?method).
 
 OptInstructionFromMethodIndex(?method, ?index, ?insn) :-
    Instruction_Method(?insn, ?method),
@@ -375,3 +379,11 @@ ExistsPreviousNonDomPredecessorToSameBB(?pred, ?insn) :-
 .output OptInstructionFromMethodIndex
 .output PhiNodeHead
 .output Dominates
+.output InstructionInPhiNode
+.output BasicBlockTail
+.output JumpTarget
+.output Instruction_Next
+.output MaySuccessorBBModuloThrow
+.output BasicBlockBegin
+.output DominatesItsPredecessorInstruction
+.output BBHeadInMethod

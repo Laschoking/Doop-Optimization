@@ -170,6 +170,7 @@
 .decl Instruction_Index(?insn:Instruction, ?index:number)
 .decl Instruction_Line(?insn:Instruction, ?index:number)
 .decl Instruction_Method(?insn:Instruction, ?inMethod:Method)
+.output Instruction_Method
 
 .type Throw_Insn                      = Instruction
 .type ThrowNull_Insn                  = Throw_Insn
@@ -525,3 +526,4 @@
 .decl ExercisedEntryPointMethod(?class:Type, ?method:Method)
 .decl MockObjFromOpenProgramEntryPointArg(?value:Value)
 .decl UnmockableFormalOfForcedReachableContext(?formal:Var, ?formalType:Type)
+

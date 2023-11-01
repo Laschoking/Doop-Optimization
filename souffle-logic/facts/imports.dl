@@ -1017,7 +1017,7 @@ isPrimitiveType(?t), Type_boolean(?t) :- ?t = "boolean".
 isPrimitiveType(?t), Type_byte(?t)    :- ?t = "byte".
 isPrimitiveType(?t), Type_char(?t)    :- ?t = "char".
 isPrimitiveType(?t), Type_short(?t)   :- ?t = "short".
-isPrimitiveType(?t), Type_int(?t)     :- ?t = "int".
+isPrimitiveType(?t), Type_int(?t) :- ?t = "int".
 isPrimitiveType(?t), Type_long(?t)    :- ?t = "long".
 isPrimitiveType(?t), Type_float(?t)   :- ?t = "float".
 isPrimitiveType(?t), Type_double(?t)  :- ?t = "double".
@@ -1194,3 +1194,20 @@ MockHeapConsMacro(?heap, ?type) :-
 .input XMLNodeAttribute(filename="XMLNodeAttribute.facts")
 .decl XMLNodeData(?file:symbol, ?nodeId:symbol, ?data:symbol)
 .input XMLNodeData(filename="XMLNodeData.facts")
+
+
+.output Instruction_Method
+.output Goto_Target
+.output If_Target
+.output ExceptionHandler_Index
+.output ExceptionHandler_Method
+.output isIf_Insn
+.output isThrow_Insn
+.output isGoto_Insn
+.output isSwitch_Insn
+.output AssignInstruction_To
+.output isAssignLocal_Insn
+.output isReturnInstruction
+.output isInstruction
+.output Instruction_Index
+

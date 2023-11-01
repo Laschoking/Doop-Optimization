@@ -1,78 +1,97 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Example
 {
-	public static void main(String[] args) throws IOException{
-		(new Example()).test(args.length);
-                BufferedReader buffer = new BufferedReader(
-                       new InputStreamReader(System.in)
-                );
-                String line=buffer.readLine();
-                sanitize(line);
-                String result = args[0] + line;
+    public static void main(final String[] args) throws IOException {
+        new Example().test(args.length);
+        final BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
+        final String line = buffer.readLine();
+        sanitize(line);
+        final String result = args[0] + line;
+        int a = 5;
+        int b = 10;
+        int c;
+        if (b < a) {
+            c = 1;
+            if (b > a) { c =2;}
+            else {c = 3;}
+            return ;
 
-                System.out.println(result);
+        }else{
+		c = 4;
 	}
 
-        static void sanitize(Object o) {
-            
+       c = 5;
+    }
+    
+    static void sanitize(final Object o) {
+    }
+    
+    static int moreTest(final int z, final boolean g) {
+        if (g) {
+            return z - 5;
         }
-
-	void test(int l) {
-		Animal a;
-		if (l == 0)
-			a = new Cat();
-		else
-			a = new Dog();
-
-		a.play();
-
-		Cat c1 = new Cat();
-		Cat c2 = new Cat();		
-		c1.setParent(c2);
-
-		morePlay(c1);
-	}
-
-	void morePlay(Cat c) {
-		Cat p = c.getParent();
-		p.play();
-
-		Animal a1 = p.playWith(c);
-		Animal a2 = c.playWith(p);
-		// otherwise assignment to return variables is ignored
-		if (a1 == a2) return;
-	}
+        return z - 3;
+    }
+    
+    void test(final int l) {
+        Animal a;
+        if (l == 0) {
+            a = new Cat();
+        }
+        else {
+            a = new Dog();
+        }
+        a.play();
+        final Cat c1 = new Cat();
+        final Cat c2 = new Cat();
+        c1.setParent(c2);
+        this.morePlay(c1);
+    }
+    
+    void morePlay(final Cat c) {
+        final Cat p = c.getParent();
+        p.play();
+        final Animal a1 = p.playWith(c);
+        final Animal a2 = c.playWith(p);
+        if (a1 == a2) {
+            return;
+        }
+    }
 }
 
-
-class Animal {
-
-	void play() {}
-
-	Animal playWith(Animal other) {
-		other.play();
-		return other;
-	}
+class Cat extends Animal
+{
+    Cat parent;
+    
+    void setParent(final Cat c) {
+        this.parent = c;
+    }
+    
+    Cat getParent() {
+        return this.parent;
+    }
+    
+    @Override
+    void play() {
+    }
 }
 
-class Cat extends Animal {
-	Cat parent;
-
-	void setParent(Cat c) {
-		this.parent = c;
-	}
-
-	Cat getParent() {
-		return this.parent;
-	}
-
-	void play() {}
+class Animal
+{
+    void play() {
+    }
+    
+    Animal playWith(final Animal other) {
+        other.play();
+        return other;
+    }
 }
 
-class Dog extends Animal {
-
-	void play() {}
+class Dog extends Animal
+{
+    @Override
+    void play() {
+    }
 }
+
