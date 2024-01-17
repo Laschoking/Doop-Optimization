@@ -1,6 +1,7 @@
 import csv
 
-def compareRelations(relation1, relation2, merge_relation, relation, summary):
+
+def compareRelations(relation1, relation2, merge_relation):
     results = {}
     with open(relation1) as f1, open(relation2) as f2, open(merge_relation, 'w', newline='') as merge:
         merge_writer = csv.writer(merge, delimiter=",")
@@ -36,6 +37,5 @@ def compareRelations(relation1, relation2, merge_relation, relation, summary):
         results["correlation1"] = cov1
         results["correlation2"] = cov2
 
-        if (len_rel1 + len_rel2 > 0):
-            summary.writerow([relation, len_rel1, len_rel2, len_merge, cov1, cov2])
+
     return results
