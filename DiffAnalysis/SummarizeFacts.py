@@ -25,15 +25,26 @@ if __name__ == '__main__':
     
     fact_setup = (facts1_dir, facts2_dir, merge_facts_path, summary_facts_path, "Facts")
     pa_setup = (pa1_dir, pa2_dir, merge_pa_path, summary_pa_path, str.upper(PA_NAME))
-    
+    #special_pa_list = [""]
     # initialize variables for Facts (1. run) & PA (2. run)
-    for (relation1_dir, relation2_dir, merge_relation_dir, summary_path, TYPE) in [fact_setup, pa_setup]:
+    for (rel1_dir, rel2_dir, merge_rel_dir, summary_path, TYPE) in [fact_setup, pa_setup]:
         # create some variables for general db-stats
-        count_common = 0
-        db1_nr_entries = 0
-        db2_nr_entries = 0
-        c_db1 = 0
-        c_db2 = 0
+
+        nr_rows_db1 = 0
+        nr_rows_db2 = 0
+        nr_rows_merge = 0
+        nr_common_rows_db = 0
+        nr_entries_db1 = 0
+        nr_entries_db2 = 0
+        nr_entries_merge = 0
+        nr_filled_rel_db1 = 0
+        nr_filled_rel_db2 = 0
+        nr_rel = 0
+        nr_chars_db1 = 0
+        nr_chars_db2 = 0
+        nr_chars_db_merge = 0
+        avg_col_size = 0
+
 
         # Open summary file
         with open(summary_path, 'w+') as summary_csv:
@@ -41,52 +52,77 @@ if __name__ == '__main__':
             summary.writerow(["Relation", "#Facts (1)", "#Facts (2)", "#commonLines", "Coverage(1)%", "Coverage(2)%"])
 
             # based on the path to the first relation, determine path to second relation
-            for relation1_path in relation1_dir.glob("*"):
-                relation_name = PurePosixPath(relation1_path).name
-                relation2_path = PurePath.joinpath(relation2_dir,relation_name)
-                merge_relation_path = PurePath.joinpath(merge_relation_dir, relation_name)
+            for rel1_path in rel1_dir.glob("*"):
+                rel_name = PurePosixPath(rel1_path).name
+                rel2_path = PurePath.joinpath(rel2_dir,rel_name)
+                merge_rel_path = PurePath.joinpath(merge_rel_dir, rel_name)
 
-                stats = compareRelations(relation1_path, relation2_path, merge_relation_path)
-                l1 = stats["len_rel1"]
-                l2 = stats["len_rel2"]
-                l_merge = stats["len_merge"]
-                cov1 = stats["correlation1"]
-                cov2 = stats["correlation2"]
+                stats = compareRelations(rel1_path, rel2_path, merge_rel_path)
+                nr_rows_rel1 = stats["nr_rows_rel1"]
+                nr_rows_rel2 = stats["nr_rows_rel2"]
+                nr_cols = stats["nr_cols_rel"]
+                nr_rows_rel_merge = stats["nr_rows_rel_merge"]
+                perc_common_rel1 = stats["perc_common_rel1"]
+                perc_common_rel2 = stats["perc_common_rel2"]
+                nr_common_rows_db += stats["nr_common_rows"]
+                nr_chars_db1 += stats["nr_chars_rel1"]
+                nr_chars_db2 += stats["nr_chars_rel2"]
+                nr_chars_db_merge += stats["nr_chars_merge"]
 
-                if (l1 + l2 > 0):
-                    summary.writerow([relation_name, l1, l2, l_merge, cov1, cov2])
-                c_db1 = c_db1 + 1 if l1 > 0 else c_db1
-                c_db2 = c_db2 + 1 if l1 > 0 else c_db2
 
-                count_common += l_merge
-                db1_nr_entries += l1
-                db2_nr_entries += l2
+                if nr_rows_rel1 + nr_rows_rel2 > 0:
+                    summary.writerow([rel_name, nr_rows_rel1, nr_rows_rel2, nr_rows_rel_merge, perc_common_rel1, perc_common_rel2])
+                    avg_col_size += nr_cols
+                nr_filled_rel_db1 = nr_filled_rel_db1 + 1 if nr_rows_rel1 > 0 else nr_filled_rel_db1
+                nr_filled_rel_db2 = nr_filled_rel_db2 + 1 if nr_rows_rel2 > 0 else nr_filled_rel_db2
+                nr_rel = nr_rel + 1
+                nr_rows_merge += nr_rows_rel_merge
+                nr_rows_db1 += nr_rows_rel1
+                nr_rows_db2 += nr_rows_rel2
+                nr_entries_db1 += nr_rows_rel1 * nr_cols
+                nr_entries_db2 += nr_rows_rel2 * nr_cols
+                nr_entries_merge += nr_rows_rel_merge * (nr_cols + 1)
 
-        # print fact stats
-        print("-----------" + TYPE + " SUMMARY-----------")
-        print("---database---")
-        print("non-empty relations in DB1: " + str(c_db1))
-        print("non-empty relations in DB2: " + str(c_db2))
-        print("---merge stats---")
-        print("total facts in DB1: " + str(db1_nr_entries) + "  |  common facts with DB2: " + str(
-            count_common) + " (" + str(round(count_common * 100 / db1_nr_entries, 2) if db1_nr_entries > 0 else 0) + "%)")
-        print("total facts in DB2: " + str(db2_nr_entries) + "  |  common facts with DB1: " + str(
-            count_common) + " (" + str(round(count_common * 100 / db2_nr_entries, 2) if db2_nr_entries > 0 else 0) + "%)")
-        print("total facts of merged db: " + str(
-            db1_nr_entries + db2_nr_entries - count_common) + "  |  reduction of facts: " + str(
-            round(count_common * 100 / (db1_nr_entries + db2_nr_entries), 2)) + "%")
+
+
+
 
         # determine paths for memory consumption
         # conversion in Path object is necessary to get memory consumption
-
-        s_db1 = sum(f.stat().st_size for f in relation1_dir.glob('*') if f.is_file())
-        s_db2 = sum(f.stat().st_size for f in relation2_dir.glob('*') if f.is_file())
-        s_merge = sum(f.stat().st_size for f in merge_relation_dir.glob('*') if f.is_file())
+        avg_col_size = avg_col_size / max(nr_filled_rel_db1, nr_filled_rel_db2)
+        size_db1 = sum(f.stat().st_size for f in rel1_dir.glob('*') if f.is_file())
+        size_db2 = sum(f.stat().st_size for f in rel2_dir.glob('*') if f.is_file())
+        size_merge = sum(f.stat().st_size for f in merge_rel_dir.glob('*') if f.is_file())
 
         # print memory consumption
-        print("---footprint---")
-        print("DB1: " + str(round(s_db1 >> 10, 3)) + "kB  | DB2: " + str(
-            round(s_db2 >> 10, 3)) + "kB  | merged db: " + str(
-            round(s_merge >> 10, 3)) + "kB")
-        print("saved memory: " + str(
-            round(100 - s_merge * 100 / (s_db1 + s_db2), 2) if (s_db1 + s_db2 != 0) else 0) + "%\n")
+
+
+                # print fact stats
+        print("-----------" + TYPE + " SUMMARY-----------")
+        print("---database---")
+        print("relations in each DB:       " + str(nr_rel))
+        print("non-empty relations in DB1: " + str(nr_filled_rel_db1))
+        print("non-empty relations in DB2: " + str(nr_filled_rel_db2))
+        print("common rows in DB1 & DB2: " + str(nr_common_rows_db) + "     -> DB-Similarity (" + str(round(2 * nr_common_rows_db * 100 / (nr_rows_db1 + nr_rows_db2),1)) + "%)")
+        print("average column size: " + str(round(avg_col_size,1)))
+
+        print("\n---merge stats---")
+
+        print("DB1   - rows: " + str(nr_rows_db1) + "           entries: " + str(nr_entries_db1) + "            chars: " + str(round(nr_chars_db1 /1000,1)) + "k             size: " +
+        str(round(size_db1 >> 10, 3)) + "kB")
+        #common rows: " + str(nr_common_rows_db) + " (" + str(round(nr_common_rows_db * 100 / nr_rows_db1, 2) if nr_rows_db1 > 0 else 0) + "%)")
+
+        print("DB2   - rows: " + str(nr_rows_db2) + "           entries: " + str(nr_entries_db2) + "            chars: " + str(round(nr_chars_db2/1000,1)) + "k             size: " +
+              str(round(size_db2 >> 10, 3)) + "kB")
+        #common rows: " + str(
+            #nr_common_rows_db) + " (" + str(round(nr_common_rows_db * 100 / nr_rows_db2, 2) if nr_rows_db2 > 0 else 0) + "%)")
+
+        print("Merge - rows: " + str(nr_rows_merge) + " (" + str(
+            round(nr_rows_merge * 100 / (nr_rows_db1 + nr_rows_db2) - 100, 1)) + "%)" +
+            "  entries: " + str(nr_entries_merge) + " (" + str(round(nr_entries_merge * 100 / (nr_entries_db1 + nr_entries_db2) - 100, 1) ) + "%)"
+            + "   chars: " + str(round(nr_chars_db_merge/1000,1)) + "k (" + str(round(nr_chars_db_merge * 100 / (nr_chars_db1 + nr_chars_db2) - 100, 1)) + "%)    size: "
+            + str(round(size_merge >> 10, 3)) + " kB (" + str(round(100 - size_merge * 100 / (size_db1 + size_db2), 1) if (size_db1 + size_db2 != 0) else 0) + ")%\n")
+
+
+
+# die Anzahl der CSV-Spalten hat starken einfluss ob Entries gespart werden oder zusätzliche erzeugt. Je "schmaler" die Tabelle, desto mehr overhead

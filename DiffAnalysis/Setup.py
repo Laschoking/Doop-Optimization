@@ -5,7 +5,8 @@
 CLASS_NAME = "Example"
 DB1_NAME = "Example1"
 DB2_NAME = "Example2"
-PA_NAME = "types-only"
+PA_NAME = "context-insensitive"
+
 # create path to doop base and its output dir
 DOOP_PATH = "/home/kotname/Documents/Diplom/Code/doop/master/"
 DOOP_OUT_PATH = "/home/kotname/Documents/Diplom/Code/doop/master/out/"
