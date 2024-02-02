@@ -125,7 +125,6 @@ if __name__ == '__main__':
             + str(round(size_merge >> 10, 3)) + " kB (" + str(round(size_merge * 100 / (size_db1 + size_db2) - 100, 1) if (size_db1 + size_db2 != 0) else 0) + ")%\n")
 
 
-
 # TODO: Reduktion des Fakten-Merging auf PA-Grösse  bzw. Separierung
 # Das ist schwer, wenn die Analyse durch souffle direkt in DOOP ausgeführt wird, weil dann nicht erkennbar ist, welche Fakten-relationen genutzt werden
 # bei Nemo/ souffle extern waeren das einfach alle importierten Dateien
