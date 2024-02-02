@@ -103,6 +103,7 @@ if __name__ == '__main__':
         print("relations in each DB:       " + str(nr_rel))
         print("non-empty relations in DB1: " + str(nr_filled_rel_db1))
         print("non-empty relations in DB2: " + str(nr_filled_rel_db2))
+        print("sum of rows in DB1 & DB2: " + str(nr_rows_db1 + nr_rows_db2))
         print("common rows in DB1 & DB2: " + str(nr_common_rows_db) + "     -> DB-Similarity (" + str(round(2 * nr_common_rows_db * 100 / (nr_rows_db1 + nr_rows_db2),1)) + "%)")
         print("average column size: " + str(round(avg_col_size,1)))
 
@@ -121,8 +122,11 @@ if __name__ == '__main__':
             round(nr_rows_merge * 100 / (nr_rows_db1 + nr_rows_db2) - 100, 1)) + "%)" +
             "  entries: " + str(nr_entries_merge) + " (" + str(round(nr_entries_merge * 100 / (nr_entries_db1 + nr_entries_db2) - 100, 1) ) + "%)"
             + "   chars: " + str(round(nr_chars_db_merge/1000,1)) + "k (" + str(round(nr_chars_db_merge * 100 / (nr_chars_db1 + nr_chars_db2) - 100, 1)) + "%)    size: "
-            + str(round(size_merge >> 10, 3)) + " kB (" + str(round(100 - size_merge * 100 / (size_db1 + size_db2), 1) if (size_db1 + size_db2 != 0) else 0) + ")%\n")
+            + str(round(size_merge >> 10, 3)) + " kB (" + str(round(size_merge * 100 / (size_db1 + size_db2) - 100, 1) if (size_db1 + size_db2 != 0) else 0) + ")%\n")
 
 
 
-# die Anzahl der CSV-Spalten hat starken einfluss ob Entries gespart werden oder zusätzliche erzeugt. Je "schmaler" die Tabelle, desto mehr overhead
+# TODO: Reduktion des Fakten-Merging auf PA-Grösse  bzw. Separierung
+# Das ist schwer, wenn die Analyse durch souffle direkt in DOOP ausgeführt wird, weil dann nicht erkennbar ist, welche Fakten-relationen genutzt werden
+# bei Nemo/ souffle extern waeren das einfach alle importierten Dateien
+# TODO: Reduzierung der PA-Merging auf Manuell gewählte Ergebnisse (die Aussagekräftig sind)

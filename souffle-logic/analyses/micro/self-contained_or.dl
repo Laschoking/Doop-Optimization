@@ -151,20 +151,20 @@ HeapAllocation_Type(?id, "java.lang.String") :-
 Instruction_Method(?instruction, ?method),
 AssignInstruction_To(?instruction, ?to),
 AssignHeapAllocation_Heap(?instruction, ?heap) :-
-  _AssignHeapAllocation(?instruction, ?index, ?heap, ?to, ?method, ?linenumber).
+  _AssignHeapAllocation(?instruction, _, ?heap, ?to, ?method, _).
 .decl _AssignLocal(?instruction:symbol, ?index:number, ?from:symbol, ?to:symbol, ?inmethod:symbol)
 .input _AssignLocal(IO="file", filename="AssignLocal.facts", delimiter="\t")
 Instruction_Method(?instruction, ?method),
 AssignLocal_From(?instruction, ?from),
 AssignInstruction_To(?instruction, ?to) :-
-  _AssignLocal(?instruction, ?index, ?from, ?to, ?method).
+  _AssignLocal(?instruction, _, ?from, ?to, ?method).
 .decl _AssignCast(?instruction:symbol, ?index:number, ?from:symbol, ?to:symbol, ?type:symbol, ?inmethod:symbol)
 .input _AssignCast(IO="file", filename="AssignCast.facts", delimiter="\t")
 Instruction_Method(?instruction, ?method),
 AssignCast_Type(?instruction, ?type),
 AssignCast_From(?instruction, ?from),
 AssignInstruction_To(?instruction, ?to) :-
-  _AssignCast(?instruction, ?index, ?from, ?to, ?type, ?method).
+  _AssignCast(?instruction, _, ?from, ?to, ?type, ?method).
 .decl _Field(?signature:symbol, ?declaringClass:symbol, ?simplename:symbol, ?type:symbol)
 .input _Field(IO="file", filename="Field.facts", delimiter="\t")
 Field_DeclaringType(?signature, ?declaringType) :-
@@ -177,27 +177,27 @@ MethodInvocation_Base(?invocation, ?base) :-
 Instruction_Method(?instruction, ?method),
 isStaticMethodInvocation_Insn(?instruction),
 MethodInvocation_Method(?instruction, ?signature) :-
-  _StaticMethodInvocation(?instruction, ?index, ?signature, ?method).
+  _StaticMethodInvocation(?instruction, _, ?signature, ?method).
 .decl _SpecialMethodInvocation(?instruction:symbol, ?index:number, ?signature:symbol, ?base:symbol, ?method:symbol)
 .input _SpecialMethodInvocation(IO="file", filename="SpecialMethodInvocation.facts", delimiter="\t")
 Instruction_Method(?instruction, ?method),
 SpecialMethodInvocation_Base(?instruction, ?base),
 MethodInvocation_Method(?instruction, ?signature) :-
-  _SpecialMethodInvocation(?instruction, ?index, ?signature, ?base, ?method).
+  _SpecialMethodInvocation(?instruction, _, ?signature, ?base, ?method).
 .decl _VirtualMethodInvocation(?instruction:symbol, ?index:number, ?signature:symbol, ?base:symbol, ?method:symbol)
 .input _VirtualMethodInvocation(IO="file", filename="VirtualMethodInvocation.facts", delimiter="\t")
 Instruction_Method(?instruction, ?method),
 isVirtualMethodInvocation_Insn(?instruction),
 VirtualMethodInvocation_Base(?instruction, ?base),
 MethodInvocation_Method(?instruction, ?signature) :-
-  _VirtualMethodInvocation(?instruction, ?index, ?signature, ?base, ?method).
+  _VirtualMethodInvocation(?instruction, _, ?signature, ?base, ?method).
 .decl _Method(?method:symbol, ?simplename:symbol, ?descriptor:symbol, ?declaringType:symbol, ?returnType:symbol, ?jvmDescriptor:symbol, ?arity:number)
 .input _Method(IO="file", filename="Method.facts", delimiter="\t")
 Method_SimpleName(?method, ?simplename),
 Method_ParamTypes(?method, ?params),
 Method_DeclaringType(?method, ?declaringType),
 Method_ReturnType(?method, ?returnType) :-
-  _Method(?method, ?simplename, ?params, ?declaringType, ?returnType, ?jvmDescriptor, ?arity).
+  _Method(?method, ?simplename, ?params, ?declaringType, ?returnType, _, _).
 Method_Descriptor(?method, ?descriptor) :-
   Method_ReturnType(?method, ?returnType),
   Method_ParamTypes(?method, ?params),
@@ -208,43 +208,43 @@ Instruction_Method(?instruction, ?method),
 FieldInstruction_Signature(?instruction, ?signature),
 StoreInstanceField_Base(?instruction, ?base),
 StoreInstanceField_From(?instruction, ?from) :-
-  _StoreInstanceField(?instruction, ?index, ?from, ?base, ?signature, ?method).
+  _StoreInstanceField(?instruction, _, ?from, ?base, ?signature, ?method).
 .decl _LoadInstanceField(?instruction:symbol, ?index:number, ?to:symbol, ?base:symbol, ?signature:symbol, ?method:symbol)
 .input _LoadInstanceField(IO="file", filename="LoadInstanceField.facts", delimiter="\t")
 Instruction_Method(?instruction, ?method),
 FieldInstruction_Signature(?instruction, ?signature),
 LoadInstanceField_Base(?instruction, ?base),
 LoadInstanceField_To(?instruction, ?to) :-
-  _LoadInstanceField(?instruction, ?index, ?to, ?base, ?signature, ?method).
+  _LoadInstanceField(?instruction, _, ?to, ?base, ?signature, ?method).
 .decl _StoreStaticField(?instruction:symbol, ?index:number, ?from:symbol, ?signature:symbol, ?method:symbol)
 .input _StoreStaticField(IO="file", filename="StoreStaticField.facts", delimiter="\t")
 Instruction_Method(?instruction, ?method),
 FieldInstruction_Signature(?instruction, ?signature),
 StoreStaticField_From(?instruction, ?from) :-
-  _StoreStaticField(?instruction, ?index, ?from, ?signature, ?method).
+  _StoreStaticField(?instruction, _, ?from, ?signature, ?method).
 .decl _LoadStaticField(?instruction:symbol, ?index:number, ?to:symbol, ?signature:symbol, ?method:symbol)
 .input _LoadStaticField(IO="file", filename="LoadStaticField.facts", delimiter="\t")
 Instruction_Method(?instruction, ?method),
 FieldInstruction_Signature(?instruction, ?signature),
 LoadStaticField_To(?instruction, ?to) :-
-  _LoadStaticField(?instruction, ?index, ?to, ?signature, ?method).
+  _LoadStaticField(?instruction, _, ?to, ?signature, ?method).
 .decl _StoreArrayIndex(?instruction:symbol, ?index:number, ?from:symbol, ?base:symbol, ?method:symbol)
 .input _StoreArrayIndex(IO="file", filename="StoreArrayIndex.facts", delimiter="\t")
 Instruction_Method(?instruction, ?method),
 StoreArrayIndex_Base(?instruction, ?base),
 StoreArrayIndex_From(?instruction, ?from) :-
-  _StoreArrayIndex(?instruction, ?index, ?from, ?base, ?method).
+  _StoreArrayIndex(?instruction, _, ?from, ?base, ?method).
 .decl _LoadArrayIndex(?instruction:symbol, ?index:number, ?to:symbol, ?base:symbol, ?method:symbol)
 .input _LoadArrayIndex(IO="file", filename="LoadArrayIndex.facts", delimiter="\t")
 Instruction_Method(?instruction, ?method),
 LoadArrayIndex_Base(?instruction, ?base),
 LoadArrayIndex_To(?instruction, ?to) :-
-  _LoadArrayIndex(?instruction, ?index, ?to, ?base, ?method).
+  _LoadArrayIndex(?instruction, _, ?to, ?base, ?method).
 .decl _Return(?instruction:symbol, ?index:number, ?var:symbol, ?method:symbol)
 .input _Return(IO="file", filename="Return.facts", delimiter="\t")
 Instruction_Method(?instruction, ?method),
 ReturnNonvoid_Var(?instruction, ?var) :-
-  _Return(?instruction, ?index, ?var, ?method).
+  _Return(?instruction, _, ?var, ?method).
 
 // fat schema population
 LoadInstanceField(?base, ?sig, ?to, ?inmethod) :-
@@ -265,6 +265,14 @@ StoreStaticField(?from, ?sig, ?inmethod) :-
   Instruction_Method(?insn, ?inmethod),
   StoreStaticField_From(?insn, ?from),
   FieldInstruction_Signature(?insn, ?sig).
+LoadArrayIndex(?base, ?to, ?inmethod) :-
+  Instruction_Method(?insn, ?inmethod),
+  LoadArrayIndex_Base(?insn, ?base),
+  LoadArrayIndex_To(?insn, ?to).
+StoreArrayIndex(?from, ?base, ?inmethod) :-
+  Instruction_Method(?insn, ?inmethod),
+  StoreArrayIndex_From(?insn, ?from),
+  StoreArrayIndex_Base(?insn, ?base).
 AssignCast(?type, ?from, ?to, ?inmethod) :-
   Instruction_Method(?insn, ?inmethod),
   AssignCast_From(?insn, ?from),
@@ -312,6 +320,18 @@ VirtualMethodInvocation_Descriptor(?invocation, ?descriptor) :-
 .decl SupertypeOf(?supertype:Type, ?type:Type)
 .decl SubtypeOfDifferent(?subtype:Type, ?type:Type)
 .decl MainMethodDeclaration(?method:Method)
+.output MethodLookup
+.output MethodImplemented
+.output DirectSubclass
+.output Subclass
+.output Superclass
+.output Superinterface
+.output SubtypeOf
+.output SupertypeOf
+.output SubtypeOfDifferent
+.output MainMethodDeclaration
+
+
 MethodLookup(?simplename, ?descriptor, ?type, ?method) :-
   MethodImplemented(?simplename, ?descriptor, ?type, ?method).
 MethodLookup(?simplename, ?descriptor, ?type, ?method) :-
@@ -394,7 +414,18 @@ MainMethodDeclaration(?method) :-
   Method_Descriptor(?method, "void(java.lang.String[])"),
   Method_Modifier("public", ?method),
   Method_Modifier("static", ?method).
+
+
+MainClass(?b):-
+  MainClass(?a),
+  ?l1 = strlen(?a),
+  ?l2 = strlen("Example"),
+  ?b = substr(?a, ?l1 - ?l2, ?l2),
+  match(".*Example",?a).
 }
+//Desx: <Example: void main(java.lang.String[])>        void(java.lang.String[])
+// 
+
 .init basic = Basic
 
 // class initialization
@@ -474,6 +505,25 @@ VarPointsTo(?heap, ?to) :-
   HeapAllocation_Type(?heap, ?heaptype),
   VarPointsTo(?heap, ?from).
  .plan 1:(5,2,1,4,3)
+ArrayIndexPointsTo(?baseheap, ?heap) :-
+  Reachable(?inmethod),
+  StoreArrayIndex(?from, ?base, ?inmethod),
+  VarPointsTo(?baseheap, ?base),
+  VarPointsTo(?heap, ?from),
+  HeapAllocation_Type(?heap, ?heaptype),
+  HeapAllocation_Type(?baseheap, ?baseheaptype),
+  ComponentType(?baseheaptype, ?componenttype),
+  basic.SupertypeOf(?componenttype, ?heaptype).
+VarPointsTo(?heap, ?to) :-
+  Reachable(?inmethod),
+  LoadArrayIndex(?base, ?to, ?inmethod),
+  VarPointsTo(?baseheap, ?base),
+  ArrayIndexPointsTo(?baseheap, ?heap),
+  Var_Type(?to, ?type),
+  HeapAllocation_Type(?baseheap, ?baseheaptype),
+  ComponentType(?baseheaptype, ?basecomponenttype),
+  basic.SupertypeOf(?type, ?basecomponenttype).
+ .plan 1:(3,2,1,4,5,6,7,8), 2:(4,3,2,1,5,6,7,8)
 VarPointsTo(?heap, ?to) :-
   Reachable(?inmethod),
   LoadInstanceField(?base, ?signature, ?to, ?inmethod),
@@ -519,19 +569,7 @@ CallGraphEdge(?invocation, ?toMethod) :-
 Reachable(?tomethod),
 CallGraphEdge(?invocation, ?tomethod) :-
   Reachable(?inmethod),
-  StaticMethodInvocation(?invocation, ?tomethod, ?inmethod),
-/// DESIGN: add some filter so at least some param exists
-  ActualParam(?index, ?invocation, ?actual),
-  VarPointsTo(_, ?actual).
- .plan 1:(4,3,2,1)
-
-Reachable(?tomethod),
-CallGraphEdge(?invocation, ?tomethod) :-
-  Reachable(?inmethod),
-  StaticMethodInvocation(?invocation, ?tomethod, ?inmethod),
-  !ActualParam(_, ?invocation, _).
-// END DESIGN
-
+  StaticMethodInvocation(?invocation, ?tomethod, ?inmethod).
 Reachable(?tomethod),
 CallGraphEdge(?invocation, ?tomethod),
 VarPointsTo(?heap, ?this) :-
@@ -544,3 +582,100 @@ VarPointsTo(?heap, ?this) :-
  .plan 1:(4,3,2,1,5,6)
 Reachable(?method) :-
   basic.MainMethodDeclaration(?method).
+
+
+.output isType
+.output isReferenceType
+.output isArrayType
+.output isClassType
+.output isInterfaceType
+.output DirectSuperclass
+.output DirectSuperinterface
+.output ApplicationClass
+.output MainClass
+.output Field_DeclaringType
+.output Method_DeclaringType
+.output Method_ReturnType
+.output Method_SimpleName
+.output Method_ParamTypes
+.output Method_Descriptor
+.output Method_Modifier
+.output FormalParam
+.output ThisVar
+.output Var_Type
+.output Var_DeclaringMethod
+.output HeapAllocation_Type
+.output MainMethodArgArray
+.output MainMethodArgArrayContent
+.output Instruction_Method
+.output isVirtualMethodInvocation_Insn
+.output isStaticMethodInvocation_Insn
+.output FieldInstruction_Signature
+.output LoadInstanceField_Base
+.output LoadInstanceField_To
+.output StoreInstanceField_From
+.output StoreInstanceField_Base
+.output LoadStaticField_To
+.output StoreStaticField_From
+.output ComponentType
+.output LoadArrayIndex_Base
+.output LoadArrayIndex_To
+.output StoreArrayIndex_From
+.output StoreArrayIndex_Base
+.output AssignInstruction_To
+.output AssignCast_From
+.output AssignCast_Type
+.output AssignLocal_From
+.output AssignHeapAllocation_Heap
+.output ReturnNonvoid_Var
+.output MethodInvocation_Method
+.output AssignReturnValue
+.output ActualParam
+.output VirtualMethodInvocation_Base
+.output VirtualMethodInvocation_SimpleName
+.output VirtualMethodInvocation_Descriptor
+.output SpecialMethodInvocation_Base
+.output MethodInvocation_Base
+.output LoadInstanceField
+.output StoreInstanceField
+.output LoadStaticField
+.output StoreStaticField
+.output LoadArrayIndex
+.output StoreArrayIndex
+.output AssignCast
+.output AssignLocal
+.output AssignHeapAllocation
+.output ReturnVar
+.output StaticMethodInvocation
+//.output _ClassType
+//.output _ArrayType
+//.output _InterfaceType
+//.output _Var_DeclaringMethod
+//.output _ApplicationClass
+//.output _ThisVar
+//.output _NormalHeap
+//.output _StringConstant
+//.output _AssignHeapAllocation
+//.output _AssignLocal
+//.output _AssignCast
+//.output _Field
+//.output _StaticMethodInvocation
+//.output _SpecialMethodInvocation
+//.output _VirtualMethodInvocation
+//.output _Method
+//.output _StoreInstanceField
+//.output _LoadInstanceField
+//.output _StoreStaticField
+//.output _LoadStaticField
+//.output _StoreArrayIndex
+//.output _LoadArrayIndex
+//.output _Return
+.output ClassInitializer
+.output InitializedClass
+.output Assign
+.output VarPointsTo
+.output InstanceFieldPointsTo
+.output StaticFieldPointsTo
+.output CallGraphEdge
+.output ArrayIndexPointsTo
+.output Reachable
