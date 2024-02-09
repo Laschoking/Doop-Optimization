@@ -1,10 +1,14 @@
 import csv
+from Path_Lib import *
 
+
+def divZero(n):
+    return n if n != 0 else 10e9
 
 def compareRelations(relation1, relation2, merge_relation):
     results = {}
     with open(relation1) as f1, open(relation2) as f2, open(merge_relation, 'w', newline='') as merge:
-        merge_writer = csv.writer(merge, delimiter=",")
+        merge_writer = csv.writer(merge, delimiter="\t")
         rel1 = set(map(str.rstrip, f1))
         rel2 = set(map(str.rstrip, f2))
         rel_merged = rel1.intersection(rel2)
@@ -26,7 +30,7 @@ def compareRelations(relation1, relation2, merge_relation):
         for diff_rel2 in rel2.difference(rel_merged):
             nr_chars_rel2 += len(diff_rel2)
             diff_rel2 = diff_rel2.split('\t')
-            diff_rel2.append(2)
+            diff_rel2.append(10)
             nr_rows_rel_merge += 1
             merge_writer.writerow(diff_rel2)
 
@@ -34,7 +38,7 @@ def compareRelations(relation1, relation2, merge_relation):
         for common_entries in rel_merged:
             nr_chars_rel_common += len(common_entries)
             common_entries = common_entries.split('\t')
-            common_entries.append(3)
+            common_entries.append(0)
             nr_rows_rel_merge += 1
             merge_writer.writerow(common_entries)
         nr_rows_rel1 = len(rel1)
