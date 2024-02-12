@@ -19,8 +19,6 @@ def Create_Dirs(analysis) -> Analysis:
 
 
 def DOOP_Create_Facts(analysis) -> Analysis:
-    printMetaInformation(analysis)
-
     os.chdir(DOOP_PATH)
 
     for db in [analysis.db1, analysis.db2]:
@@ -38,6 +36,7 @@ def DOOP_Create_Facts(analysis) -> Analysis:
 
             for file in glob.glob(DOOP_OUT_PATH + db.name + "/database/jimple/*"):
                 shutil.copy(file, db.jimple_path)
+    printMetaInformation(analysis)
 
 def Run_SOUFFLE_INT_PA(analysis) -> Analysis:
     for db in [analysis.db1, analysis.db2]:
@@ -68,5 +67,5 @@ def Run_SOUFFLE_EXT_PA(analysis) -> Analysis:
 def Run_NEMO_PA(analysis) -> Analysis:
     for db in [analysis.db1, analysis.db2]:
         os.chdir(NEMO_ENGINE_PATH)
-        os.system("target/debug/nmo " + str(analysis.pa_config.nemo_pa_path) + " -I " + str(db.facts_path) + " -D " + str(db.pa_path) + " --save-results --overwrite-results")
+        os.system("target/debug/nmo " + str(analysis.pa_config.nemo_pa_path) + " -I " + str(db.facts_path) + " -D " + str(db.pa_path) + " --save-results --overwrite-results -q >/dev/null 2>&1")
         os.chdir(DOOP_PATH)

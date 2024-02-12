@@ -2,7 +2,7 @@ import csv
 import os
 from pathlib import Path, PurePosixPath, PurePath
 from Path_Lib import *
-from Lib_Functions import compareRelations,divZero
+from Lib_Functions import merge_directories,divZero
 import System_Setup
 import glob
 
@@ -16,3 +16,6 @@ if __name__ == '__main__':
             System_Setup.Run_SOUFFLE_EXT_PA(analysis)
         case PA_TYPES.NEMO:
             System_Setup.Run_NEMO_PA(analysis)
+
+    merge_directories(analysis.db1.pa_path, analysis.db2.pa_path, analysis.merge_pa_path, "PA")
+
