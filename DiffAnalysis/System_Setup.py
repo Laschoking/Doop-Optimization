@@ -60,12 +60,21 @@ def Run_SOUFFLE_EXT_PA(analysis) -> Analysis:
             # copy 2 files from souffle pa to facts, so NEMO can use them
             method_descriptor = db.pa_path.joinpath("Method_Descriptor.csv")
             main_class = db.pa_path.joinpath("MainClass.csv")
-            if (method_descriptor.exists() and main_class.exists()):
-                shutil.move(method_descriptor, db.facts_path)
-                shutil.move(main_class, db.facts_path)
+            #if (method_descriptor.is_file() and main_class.is_file()):
+            #    shutil.copy(str(method_descriptor), str(db.facts_path))
+            #    shutil.copy(str(main_class), str(db.facts_path))
+
+
+def Run_NEMO_SINGLE_PA(nemo_pa_path,facts_path,pa_path):
+
+    os.chdir(NEMO_ENGINE_PATH)
+    os.system("target/debug/nmo " + str(nemo_pa_path) + " -I " + str(facts_path) + " -D " + str(
+        pa_path) + " --save-results --overwrite-results -q --write-all-idb-predicates ")  # >/dev/null 2>&1")
+    os.chdir(DOOP_PATH)
+
 
 def Run_NEMO_PA(analysis) -> Analysis:
     for db in [analysis.db1, analysis.db2]:
         os.chdir(NEMO_ENGINE_PATH)
-        os.system("target/debug/nmo " + str(analysis.pa_config.nemo_pa_path) + " -I " + str(db.facts_path) + " -D " + str(db.pa_path) + " --save-results --overwrite-results -q >/dev/null 2>&1")
+        os.system("target/debug/nmo " + str(analysis.pa_config.nemo_pa_path) + " -I " + str(db.facts_path) + " -D " + str(db.pa_path) + " --save-results --overwrite-results -q ") #>/dev/null 2>&1")
         os.chdir(DOOP_PATH)

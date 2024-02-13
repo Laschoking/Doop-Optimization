@@ -36,6 +36,7 @@ DB_Pointer = DB_Config("Pointer", "Pointer1", "Pointer2")
 DB_Example = DB_Config("Example", "Example1", "Example2")
 
 PA_PointerAnalysis = PA_Config("PointerAnalysis", "context-insensitive", "pa-self-contained.dl", "PointerAnalyse.rls")
+PA_Common_Facts_PointerAnalysis = PA_Config("CommonPointerAnalysis", "", "", "PointerAnalyse_merged.rls")
 PA_ConstantPropAnalysis = PA_Config("ConstantPropagation", "", "", "")
 
 class DB:

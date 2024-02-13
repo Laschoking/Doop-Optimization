@@ -68,13 +68,13 @@ def divZero(n):
 
 def merge_relations(rel_class):
     with open(rel_class.rel1.path) as f1, open(rel_class.rel2.path) as f2, open(rel_class.merge.path, 'w', newline='') as merge:
-        merge_writer = csv.writer(merge, delimiter="\t")
+        merge_writer = csv.writer(merge, delimiter="\t", lineterminator='\n')
         nr_cols = 0
         rel_class.rel1.rows = set(map(str.rstrip, f1))
         rel_class.rel2.rows = set(map(str.rstrip, f2))
         rel_class.common.rows = rel_class.rel1.rows.intersection(rel_class.rel2.rows)
         rel_class.common.nr_rows = len(rel_class.common.rows)
-
+        #print(rel_class.rel1.path)
         for rel in [rel_class.rel1,rel_class.rel2]:
             rel.nr_rows = len(rel.rows)
 
@@ -100,6 +100,8 @@ def merge_relations(rel_class):
             common_entries = common_entries.split('\t')
             common_entries.append(rel_class.common.id_nr)
             merge_writer.writerow(common_entries)
+        if nr_cols == 0 and rel_class.common.nr_rows > 0:
+            nr_cols = len(rel_class.common.rows.pop().split('\t'))
         rel_class.rel1.nr_chars += rel_class.common.nr_chars
         rel_class.rel2.nr_chars += rel_class.common.nr_chars
         rel_class.common.nr_entries = rel_class.common.nr_rows * nr_cols
@@ -123,8 +125,8 @@ def merge_directories(dir1_path, dir2_path, merge_dir_path, merge_type):
     for rel1_path in dir1.path.glob("*"):
         rel_name = Path(rel1_path).name
         # dirty fix to avoid counting necessary files for nemo Pointer analysis
-        if rel_name == "Method_Descriptor.csv" or rel_name == "MainClass.csv":
-            continue
+        #if rel_name == "Method_Descriptor.csv" or rel_name == "MainClass.csv":
+        #    continue
         rel2_path = Path.joinpath(dir2.path, rel_name)
         merge_rel_path = Path.joinpath(merge_dir.path, rel_name)
 
@@ -167,13 +169,15 @@ def merge_directories(dir1_path, dir2_path, merge_dir_path, merge_type):
 
     t.add_row(["Merge",merge_dir.nr_rows,  str(round(100 * merge_dir.nr_rows/sum_nr_rows,1) -100) + "%",
                round(merge_dir.nr_entries/1000,1), str(round(100 * merge_dir.nr_entries/sum_nr_entries - 100,1) ) + "%",round(merge_dir.nr_chars/1000,1),
-               str(round(100 * merge_dir.nr_chars / sum_nr_chars, 1) -100)+ "%", round(merge_dir.size >> 10,3),  str(round( 100 * merge_dir.size/sum_size,1) -100) + "%"])
+               str(round(100 * merge_dir.nr_chars / sum_nr_chars -100,1))+ "%", round(merge_dir.size >> 10,3),  str(round( 100 * merge_dir.size/sum_size - 100, 1)) + "%"])
 
     # print fact stats
     print("----------- " + merge_type + " SUMMARY-----------")
     print("---database---")
+    print("dir1: " + str(dir1.path))
     print("relations in each DB:       " + str(len(dir1.relation_list)))
     print("non-empty relations in DB1: " + str(dir1.nr_filled_rel))
+    print("dir2: " + str(dir2.path))
     print("non-empty relations in DB2: " + str(dir2.nr_filled_rel))
     print("average column size: " + str(round(avg_col_size,2)))
     print("Database Similarity: " + str(round(100 * 2 * common_dir.nr_rows / (dir1.nr_rows + dir2.nr_rows),1)) + "%")
