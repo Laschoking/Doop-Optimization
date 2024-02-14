@@ -12,6 +12,8 @@ from Lib_Functions import printMetaInformation
 def Create_Dirs(analysis) -> Analysis:
     os.system("mkdir -p " + str(analysis.merge_facts_path))
     os.system("mkdir -p " + str(analysis.merge_pa_path))
+
+
     for db in [analysis.db1, analysis.db2]:
         os.system("mkdir -p " + str(db.facts_path))
         os.system("mkdir -p " + str(db.pa_path))
@@ -55,19 +57,22 @@ def Run_SOUFFLE_INT_PA(analysis) -> Analysis:
 def Run_SOUFFLE_EXT_PA(analysis) -> Analysis:
     for db in [analysis.db1, analysis.db2]:
         # once DOOP generated facts, run souffle 2.1 externally on given PA
+        shutil.rmtree(str(db.pa_path))
+
         os.system("souffle " + str(SOUFFLE_EXT_BASE.joinpath(analysis.pa_config.souffle_ext_name)) + " -F " + str(db.facts_path) + " -D " + str(db.pa_path) + " -j4")
-        if analysis.pa_config.pa_name == "PointerAnalysis":
-            # copy 2 files from souffle pa to facts, so NEMO can use them
-            method_descriptor = db.pa_path.joinpath("Method_Descriptor.csv")
-            main_class = db.pa_path.joinpath("MainClass.csv")
-            #if (method_descriptor.is_file() and main_class.is_file()):
-            #    shutil.copy(str(method_descriptor), str(db.facts_path))
-            #    shutil.copy(str(main_class), str(db.facts_path))
 
 
 def Run_NEMO_SINGLE_PA(nemo_pa_path,facts_path,pa_path):
 
     os.chdir(NEMO_ENGINE_PATH)
+    Clear_Dir(pa_path)
+
+    method_descriptor = Path("/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/out/Diff_Pointer1_Pointer2/Pointer1/results/SOUFFLE_EXT/PointerAnalysis/Method_Descriptor.csv")
+    main_class = Path("/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/out/Diff_Pointer1_Pointer2/Pointer1/results/SOUFFLE_EXT/PointerAnalysis/MainClass.csv")
+    if (method_descriptor.is_file() and main_class.is_file()):
+        shutil.copy(str(method_descriptor), "/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/out/Diff_Pointer1_Pointer2/merge/facts/Method_Descriptor.tsv")
+        shutil.copy(str(main_class), "/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/out/Diff_Pointer1_Pointer2/merge/facts/MainClass.tsv")
+
     os.system("target/debug/nmo " + str(nemo_pa_path) + " -I " + str(facts_path) + " -D " + str(
         pa_path) + " --save-results --overwrite-results -q --write-all-idb-predicates ")  # >/dev/null 2>&1")
     os.chdir(DOOP_PATH)
@@ -76,5 +81,19 @@ def Run_NEMO_SINGLE_PA(nemo_pa_path,facts_path,pa_path):
 def Run_NEMO_PA(analysis) -> Analysis:
     for db in [analysis.db1, analysis.db2]:
         os.chdir(NEMO_ENGINE_PATH)
-        os.system("target/debug/nmo " + str(analysis.pa_config.nemo_pa_path) + " -I " + str(db.facts_path) + " -D " + str(db.pa_path) + " --save-results --overwrite-results -q ") #>/dev/null 2>&1")
+        Clear_Dir(db.pa_path)
+        if analysis.pa_config.pa_name == "PointerAnalysis":
+            # copy 2 files from souffle pa to facts, so NEMO can use them
+            method_descriptor = Path("/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/out/Diff_Pointer1_Pointer2/Pointer1/results/SOUFFLE_EXT/PointerAnalysis/Method_Descriptor.csv")
+            main_class = Path("/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/out/Diff_Pointer1_Pointer2/Pointer1/results/SOUFFLE_EXT/PointerAnalysis/MainClass.csv")
+            if (method_descriptor.is_file() and main_class.is_file()):
+                shutil.copy(str(method_descriptor), str(db.facts_path.joinpath("Method_Descriptor.tsv")))
+                shutil.copy(str(main_class), str(db.facts_path.joinpath("MainClass.tsv")))
+
+        os.system("target/debug/nmo " + str(analysis.pa_config.nemo_pa_path) + " -I " + str(db.facts_path) + " -D " + str(db.pa_path) + " --save-results --overwrite-results -q  --write-all-idb-predicates") #>/dev/null 2>&1")
         os.chdir(DOOP_PATH)
+
+def Clear_Dir(dir) -> Path:
+    #for file in list(dir.glob('*')):
+    shutil.rmtree(str(dir))
+    os.system("mkdir -p " + str(dir))

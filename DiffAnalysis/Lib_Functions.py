@@ -1,4 +1,6 @@
 import csv
+import shutil
+
 from Path_Lib import *
 from prettytable import PrettyTable
 class Table:
@@ -68,10 +70,25 @@ def divZero(n):
 
 def merge_relations(rel_class):
     with open(rel_class.rel1.path) as f1, open(rel_class.rel2.path) as f2, open(rel_class.merge.path, 'w', newline='') as merge:
-        merge_writer = csv.writer(merge, delimiter="\t", lineterminator='\n')
+        merge_writer = csv.writer(merge, delimiter= '\t', lineterminator='\n')
         nr_cols = 0
-        rel_class.rel1.rows = set(map(str.rstrip, f1))
-        rel_class.rel2.rows = set(map(str.rstrip, f2))
+        r1 = set(map(str.rstrip, f1))
+        s1 = set()
+        for s in r1:
+            sf = "\t"
+            sf = sf.join(s.split('\t')[:])
+            s1.add(sf)
+        rel_class.rel1.rows = s1
+
+        r2 = set(map(str.rstrip, f2))
+        s2 = set()
+        for s in r2:
+            sf = "\t"
+            sf = sf.join(s.split('\t')[:])
+            s2.add(sf)
+        rel_class.rel2.rows = s2
+        #rel_class.rel2.rows = set(map(str.rstrip, f2))
+
         rel_class.common.rows = rel_class.rel1.rows.intersection(rel_class.rel2.rows)
         rel_class.common.nr_rows = len(rel_class.common.rows)
         #print(rel_class.rel1.path)
@@ -82,7 +99,8 @@ def merge_relations(rel_class):
             for diff_rel in rel.rows.difference(rel_class.common.rows):
                 rel.nr_chars += len(diff_rel)
                 rel_class.merge.nr_chars += len(diff_rel) + len(str(rel_class.common.id_nr))  # for additional lenght of id
-
+                print(rel.path)
+                print(diff_rel)
                 diff_rel = diff_rel.split('\t')
                 diff_rel.append(rel.id_nr)
                 rel_class.merge.nr_chars += len(diff_rel)
@@ -102,6 +120,7 @@ def merge_relations(rel_class):
             merge_writer.writerow(common_entries)
         if nr_cols == 0 and rel_class.common.nr_rows > 0:
             nr_cols = len(rel_class.common.rows.pop().split('\t'))
+
         rel_class.rel1.nr_chars += rel_class.common.nr_chars
         rel_class.rel2.nr_chars += rel_class.common.nr_chars
         rel_class.common.nr_entries = rel_class.common.nr_rows * nr_cols
@@ -112,7 +131,7 @@ def merge_relations(rel_class):
     # get file size after merge-file is closed
     rel_class.merge.size = rel_class.merge.path.stat().st_size
 
-def merge_directories(dir1_path, dir2_path, merge_dir_path, merge_type):
+def merge_directories(dir1_path, dir2_path, merge_dir_path, merge_type,write_flag,summary_file):
     # create some variables for general db-stats
     dir1 = Directory(dir1_path)
     dir2 = Directory(dir2_path)
@@ -124,9 +143,8 @@ def merge_directories(dir1_path, dir2_path, merge_dir_path, merge_type):
     # based on the path to the first relation, determine path to second relation
     for rel1_path in dir1.path.glob("*"):
         rel_name = Path(rel1_path).name
-        # dirty fix to avoid counting necessary files for nemo Pointer analysis
-        #if rel_name == "Method_Descriptor.csv" or rel_name == "MainClass.csv":
-        #    continue
+        if rel_name == "Method_Descriptor.tsv" or rel_name == "MainClass.tsv":
+            continue
         rel2_path = Path.joinpath(dir2.path, rel_name)
         merge_rel_path = Path.joinpath(merge_dir.path, rel_name)
 
@@ -145,30 +163,25 @@ def merge_directories(dir1_path, dir2_path, merge_dir_path, merge_type):
     sum_size = dir1.size + dir2.size
     avg_col_size = dir_class.nr_cols / max(dir1.nr_filled_rel, dir2.nr_filled_rel)
 
-    #summary_writer = csv.writer(summary_file, delimiter="\t")
 
-    #summary_writer.write_row("Common lines",common_dir.nr_rows, round(common_dir.nr_entries/1000.1), round(common_dir.nr_chars/1000,1))
-    #summary_writer.write_row("DB1",dir1.nr_rows, dir1.nr_rows )
     t = PrettyTable()
-    t.field_names = ["DB","rows","row save ","entries in k", "entr save", "chars in k", "char save", "size in kb","size save"]
+    t.field_names = ["DB","rows","row save ", "chars in k", "char save", "size in kb","size save"]
     t.add_row(["Common", common_dir.nr_rows,"",
-               round(common_dir.nr_entries/1000.1),"",
                round(common_dir.nr_chars/1000,1),"","",""])
 
-    t.add_row(["Db1", dir1.nr_rows,"",
-               round((dir1.nr_entries)/1000,1),"", round((dir1.nr_chars)/1000,1),
+    t.add_row(["Db1", dir1.nr_rows,"", round((dir1.nr_chars)/1000,1),
                "",round(dir1.size >> 10, 3),""])
 # str(round(100 * common_dir.nr_rows/dir2.nr_rows, 1)) + ")%"
-    t.add_row(["Db2", dir2.nr_rows,"",
-               round((dir2.nr_entries)/1000,1),"", round((dir2.nr_chars)/1000,1),
+    t.add_row(["Db2", dir2.nr_rows,""
+               , round((dir2.nr_chars)/1000,1),
                "",round(dir2.size >> 10, 3),""])
 
     t.add_row(["Sum(DB1,DB2)",sum_nr_rows,"",
-               round((sum_nr_entries)/1000,1),"", round(sum_nr_chars /1000,1),
+               round(sum_nr_chars /1000,1),
                "",round(sum_size >> 10, 3),""])
 
-    t.add_row(["Merge",merge_dir.nr_rows,  str(round(100 * merge_dir.nr_rows/sum_nr_rows,1) -100) + "%",
-               round(merge_dir.nr_entries/1000,1), str(round(100 * merge_dir.nr_entries/sum_nr_entries - 100,1) ) + "%",round(merge_dir.nr_chars/1000,1),
+    t.add_row(["Merge",merge_dir.nr_rows,  str(round(100 * merge_dir.nr_rows/sum_nr_rows -100,1)) + "%",
+               round(merge_dir.nr_chars/1000,1),
                str(round(100 * merge_dir.nr_chars / sum_nr_chars -100,1))+ "%", round(merge_dir.size >> 10,3),  str(round( 100 * merge_dir.size/sum_size - 100, 1)) + "%"])
 
     # print fact stats

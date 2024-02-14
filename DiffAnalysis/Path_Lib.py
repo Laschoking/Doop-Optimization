@@ -18,6 +18,7 @@ NEMO_BASE = Path("/home/kotname/Documents/Diplom/Code/ex_nemo/Analysis")
 
 PA_TYPES = Enum('PA_TYPE', ["SOUFFLE_INT","SOUFFLE_EXT","NEMO"])
 
+
 class DB_Config:
     def __init__(self,class_name,db1_name,db2_name):
         self.class_name = class_name

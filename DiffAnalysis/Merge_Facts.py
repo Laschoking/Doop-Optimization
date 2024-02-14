@@ -13,11 +13,13 @@ import glob
 
 
 if __name__ == '__main__':
+    write_flag = True
+
     analysis = Analysis(DB_Pointer,PA_PointerAnalysis,PA_TYPES.NEMO)
     System_Setup.Create_Dirs(analysis)
     System_Setup.DOOP_Create_Facts(analysis)
-    #summary_writer = open(Analysis.summary_facts_path, "w")
-    '''merge_directories(analysis.db1.facts_path, analysis.db2.facts_path, analysis.merge_facts_path, "FACTS")
+    summary_writer = open(Analysis.summary_facts_path, "w")
+    merge_directories(analysis.db1.facts_path, analysis.db2.facts_path, analysis.merge_facts_path, "FACTS",write_flag = True, summary_writer)
 
     if analysis.engine == PA_TYPES.SOUFFLE_INT:
         System_Setup.SOUFFLE_INT(analysis)
@@ -30,7 +32,6 @@ if __name__ == '__main__':
 
     merge_directories(analysis.db1.pa_path, analysis.db2.pa_path, analysis.merge_pa_path, "PA")
     #common_analysis = Analysis(DB_Pointer,PA_Common_Facts_PointerAnalysis,PA_TYPES.NEMO)
-    #merge_directories(Path(), common_analysis.db2.pa_path, common_analysis.merge_pa_path, "Common PA")
-    '''
-    #System_Setup.Run_NEMO_SINGLE_PA(NEMO_BASE.joinpath("PointerAnalyse_merge.rls"),analysis.merge_facts_path, analysis.base_path.joinpath("merge_facts_common_pa"))
-    merge_directories(analysis.merge_pa_path ,analysis.base_path.joinpath("merge_facts_common_pa"),analysis.base_path.joinpath("CompareSeparatePA_CommonPA"),"Comparison of Common PA & separate PA")
+
+    System_Setup.Run_NEMO_SINGLE_PA(NEMO_BASE.joinpath("PointerAnalyse_merge.rls"),analysis.merge_facts_path, analysis.base_path.joinpath("merge_facts_common_pa"))
+    merge_directories(analysis.merge_pa_path ,analysis.base_path.joinpath("merge_facts_common_pa"),analysis.base_path.joinpath("CompareSeparatePA_CommonPA"), "Comparison of Common PA & separate PA")
