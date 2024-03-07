@@ -11,10 +11,16 @@ def div_zero(n):
 def merge_relations(rel_class, write_flag, split_flag):
     with open(rel_class.rel1.path) as f1, open(rel_class.rel2.path) as f2, open(rel_class.merge.path, 'w',
                                                                                 newline='') as merge:
+
         merge_writer = csv.writer(merge, delimiter='\t', lineterminator='\n')
         nr_cols = 0
-        r1 = set(map(str.rstrip, f1))
-        r2 = set(map(str.rstrip, f2))
+        f1_tsv = csv.reader(f1, delimiter='\n', quotechar='"')
+        f2_tsv = csv.reader(f2, delimiter='\n', quotechar='"')
+        r1 = set()
+        r2 = set()
+        for file,r in [f1_tsv,r1],[f2_tsv,r2]:
+            for row in file:
+                r.add(''.join(row))
 
         # remove the last line of each entry -> allows to compare the results without the decuted side (0,1,10)
         if split_flag:
@@ -28,18 +34,19 @@ def merge_relations(rel_class, write_flag, split_flag):
         rel_class.common.rows = rel_class.rel1.rows.intersection(rel_class.rel2.rows)
         rel_class.common.nr_rows = len(rel_class.common.rows)
 
+        if str(rel_class.rel1.path).__contains__("Method_ParamTypes"):
+            print(rel_class.rel1.path)
+
         for rel in [rel_class.rel1, rel_class.rel2]:
             rel.nr_rows = len(rel.rows)
-
+            intersection = rel.rows.difference(rel_class.common.rows)
             # find relations, that are only in one file and add specific id
-            for diff_rel in rel.rows.difference(rel_class.common.rows):
-                # if str(rel.path).__contains__("Method_ParamTypes"):
-                #    print("t")
+            if len(intersection) > 0: print(rel.path)
+            for diff_rel in intersection:
                 rel.nr_chars += len(diff_rel)
                 rel_class.merge.nr_chars += len(diff_rel) + len(
                     str(rel_class.common.id_nr))  # for additional lenght of id
-                # print(rel.path)
-                # print(diff_rel)
+                print(diff_rel)
                 diff_rel = diff_rel.split('\t')
                 diff_rel.append(rel.id_nr)
                 rel_class.merge.nr_chars += len(diff_rel)
@@ -143,3 +150,15 @@ def print_merge_stats(merge_class, merge_type):
     print("--- ---")
 
     print(t)
+
+    '''
+            merge_writer = csv.writer(merge, delimiter='\t', lineterminator='\n')
+        nr_cols = 0
+        f1_tsv = csv.reader(f1, delimiter="\t", quotechar='"')
+        f2_tsv = csv.reader(f1, delimiter="\t", quotechar='"')
+        r1 = set()
+        r2 = set()
+        for file,r in [f1_tsv,r1],[f2_tsv,r2]:
+            for row in file:
+                r.add(map(str.rstrip(),row))
+'''

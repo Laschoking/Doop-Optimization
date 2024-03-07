@@ -54,10 +54,9 @@ if __name__ == "__main__":
     create_facts(pa_config, fact_merge)
 
     fact_merge = merge_directories(fact_merge, write_flag=True, split_flag=False)
-    print_merge_stats(fact_merge, "FACTS")
+    print_merge_stats(fact_merge, "FACT Comparison")
 
     # Separate Program Analysis Creation & Merge
-
     pa1_result_path = pa_config.db1_path.joinpath("results").joinpath(engine.name)
     pa2_result_path = pa_config.db2_path.joinpath("results").joinpath(engine.name)
     sep_pa_merge_path = python_merge_path.joinpath("results").joinpath(engine.name)
@@ -71,8 +70,6 @@ if __name__ == "__main__":
     common_result_path = pa_config.base_output_path.joinpath("common_pa")
     # here we run only 1 PA -> so just pass the paths directly
     run_common_pa(pa_config, fact_merge.merge_dir.path, common_result_path, engine)
-
     common_pa_merge = MergeClass(sep_pa_merge.merge_dir.path, common_result_path, python_merge_path.joinpath("common_merge"), summary_writer)
     common_pa_merge = merge_directories(common_pa_merge, write_flag=True, split_flag=False)
-    print_merge_stats(common_pa_merge, "Common PA vs. separate PA")
-    # Compare_Separate_With_Common_PA(NEMO_BASE.joinpath("PointerAnalyse_merge.rls"),
+    print_merge_stats(common_pa_merge, "Merged PA vs. separate PA")
