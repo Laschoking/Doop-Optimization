@@ -19,7 +19,9 @@ SOUFFLE_BASE = Path("/home/kotname/Documents/Diplom/Code/ex_souffle/Analysis")
 NEMO_BASE = Path("/home/kotname/Documents/Diplom/Code/ex_nemo/Analysis")
 
 Engine = Enum("Engine",["SOUFFLE", "NEMO"])
-
+NR_LEFT = 1
+NR_RIGHT = 10
+NR_TARGET = 0
 
 class Config:
     def __init__(self, class_name, db1_name, db2_name, pa_name, souffle_sep_name, souffle_merge_name, nemo_sep_name,
@@ -64,7 +66,7 @@ class Relation:
 
 
 class RelationClass:
-    def __init__(self, merge_path, rel1, id_1, rel2, id_2, common_nr):
+    def __init__(self, merge_path, rel1,rel2, id_1, id_2, common_nr):
         self.rel1 = Relation(rel1, id_1)
         self.rel2 = Relation(rel2, id_2)
         self.merge = Relation(merge_path, -1)

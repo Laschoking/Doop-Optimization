@@ -34,8 +34,8 @@ def merge_relations(rel_class, write_flag, split_flag):
         rel_class.common.rows = rel_class.rel1.rows.intersection(rel_class.rel2.rows)
         rel_class.common.nr_rows = len(rel_class.common.rows)
 
-        if str(rel_class.rel1.path).__contains__("Method_ParamTypes"):
-            print(rel_class.rel1.path)
+        #if str(rel_class.rel1.path).__contains__("Method_ParamTypes"):
+            #print(rel_class.rel1.path)
 
         for rel in [rel_class.rel1, rel_class.rel2]:
             rel.nr_rows = len(rel.rows)
@@ -89,13 +89,19 @@ def merge_directories(merge_class, write_flag, split_flag):
 
     # based on the path to the first relation, determine path to second relation
     for rel1_path in dir1.path.glob("*"):
-        rel_name = Path(rel1_path).name
-        if rel_name == "Method_Descriptor.tsv" or rel_name == "MainClass.tsv":
+        rel_name = rel1_path.name
+        if "Method_Descriptor" in rel_name or "MainClass" in rel_name:
             continue
-        rel2_path = Path.joinpath(dir2.path, rel_name)
+        rel2_path = dir2.path.joinpath(rel_name)
+        if not rel2_path.exists():
+            new_suffix = '.csv' if rel1_path.suffix == ".tsv" else '.tsv'
+            rel2_path = rel2_path.with_suffix(new_suffix)
+            if not rel2_path.exists():
+                print(FileNotFoundError("Skipped file: " + str(rel2_path.stem)))
+                continue
         merge_rel_path = Path.joinpath(merge_dir.path, rel_name)
 
-        rel_class = RelationClass(merge_rel_path, rel1_path, 1, rel2_path, 10, 0)
+        rel_class = RelationClass(merge_rel_path, rel1_path, rel2_path, NR_LEFT, NR_RIGHT, NR_TARGET)
         merge_class.add_relation(rel_class)
         merge_relations(rel_class, write_flag, split_flag)
         dir1.update(rel_class.rel1)
@@ -106,8 +112,15 @@ def merge_directories(merge_class, write_flag, split_flag):
 
     return merge_class
 
+def print_nemo_runtime(runtime,PA_name):
+    t = PrettyTable()
+    t.field_names = ["Program Analysis","DB", "Total Reasoning", "Loading Input","Reasoning","Saving Output"]
+    for r in runtime:
+        t.add_row([PA_name] + r)
+    print(t)
 
-def print_merge_stats(merge_class, merge_type):
+
+def print_merge_stats(merge_class,db1_name, db2_name, merge_type):
     dir1 = merge_class.dir1
     dir2 = merge_class.dir2
     common_dir = merge_class.common_dir
@@ -121,10 +134,9 @@ def print_merge_stats(merge_class, merge_type):
     t.add_row(["Common", common_dir.nr_rows, "",
                round(common_dir.nr_chars / 1000, 1), "", "", ""])
 
-    t.add_row(["Db1", dir1.nr_rows, "", round(dir1.nr_chars / 1000, 1),
+    t.add_row([db1_name, dir1.nr_rows, "", round(dir1.nr_chars / 1000, 1),
                "", round(dir1.size >> 10, 3), ""])
-    # str(round(100 * common_dir.nr_rows/dir2.nr_rows, 1)) + ")%"
-    t.add_row(["Db2", dir2.nr_rows, ""
+    t.add_row([db2_name, dir2.nr_rows, ""
                   , round(dir2.nr_chars / 1000, 1),
                "", round(dir2.size >> 10, 3), ""])
 
@@ -137,28 +149,16 @@ def print_merge_stats(merge_class, merge_type):
                str(round(100 * merge_dir.nr_chars / sum_nr_chars - 100, 1)) + "%", round(merge_dir.size >> 10, 3),
                str(round(100 * merge_dir.size / sum_size - 100, 1)) + "%"])
 
+    base_dir = "/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/out/"
     # print fact stats
-    print("----------- " + merge_type + " SUMMARY-----------")
-    print("---database---")
-    print("dir1: " + str(dir1.path))
-    print("relations in each DB:       " + str(len(dir1.relation_list)))
+    print("----------- " + merge_type + " -----------")
+    print("dir1: " + str(dir1.path)[len(base_dir):])
     print("non-empty relations in DB1: " + str(dir1.nr_filled_rel))
-    print("dir2: " + str(dir2.path))
+    print("dir2: " + str(dir2.path)[len(base_dir):])
     print("non-empty relations in DB2: " + str(dir2.nr_filled_rel))
+    print("compared relations:       " + str(len(dir2.relation_list)))
     print("average column size: " + str(round(avg_col_size, 2)))
     print("Database Similarity: " + str(round(100 * 2 * common_dir.nr_rows / (dir1.nr_rows + dir2.nr_rows), 1)) + "%")
-    print("--- ---")
 
     print(t)
 
-    '''
-            merge_writer = csv.writer(merge, delimiter='\t', lineterminator='\n')
-        nr_cols = 0
-        f1_tsv = csv.reader(f1, delimiter="\t", quotechar='"')
-        f2_tsv = csv.reader(f1, delimiter="\t", quotechar='"')
-        r1 = set()
-        r2 = set()
-        for file,r in [f1_tsv,r1],[f2_tsv,r2]:
-            for row in file:
-                r.add(map(str.rstrip(),row))
-'''

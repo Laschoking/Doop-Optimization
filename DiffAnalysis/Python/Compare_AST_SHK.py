@@ -1,43 +1,7 @@
 from Python.Classes import *
 from Python.Merge_Lib import merge_directories, print_merge_stats
 from Python import Shell_Lib
-
-
-def create_facts(pa_config, fact_merge):
-    Shell_Lib.clear_directory(fact_merge.merge_path)
-
-    for fact_path, db_name in [fact_merge.db1_path, pa_config.db1_name], [
-        fact_merge.db2_path, pa_config.db2_name]:
-        Shell_Lib.clear_directory(fact_path)
-        Shell_Lib.doop_create_facts(pa_config, db_name, fact_path)
-
-
-# pa_config, facts1_path, result_path1, facts2_path, result_path2, merge_path, pa_config, engine
-def run_separate_pa(pa_config, fact_merge, sep_pa_merge, engine):
-    for fact_path, result_path in [fact_merge.dir1.path, sep_pa_merge.db1_path], [fact_merge.dir2.path, sep_pa_merge.db2_path]:
-        Shell_Lib.clear_directory(result_path)
-        if engine == Engine.SOUFFLE:
-            Shell_Lib.run_souffle_pa(fact_path, result_path, pa_config.souffle_sep_path)
-
-        if engine == Engine.NEMO:
-            Shell_Lib.run_nemo_pa(fact_path, result_path, pa_config.nemo_sep_path)
-
-    # (separate_pa_analysis, "PA",summary_writer, write_flag = True, split_flag = False)
-
-
-def run_common_pa(pa_config, fact_path, result_path, engine):
-    Shell_Lib.clear_directory(result_path)
-
-    if engine == Engine.SOUFFLE:
-        Shell_Lib.run_souffle_pa(fact_path, result_path, pa_config.souffle_merge_path)
-
-    if engine == Engine.NEMO:
-        Shell_Lib.run_nemo_pa(fact_path, result_path, pa_config.nemo_merge_path)
-
-
-PointerAnalysis_Config = Config("Pointer", "Pointer1", "Pointer2", pa_name="PointerAnalysis",
-                                souffle_sep_name="pa-self-contained.dl", souffle_merge_name="",
-                                nemo_sep_name="PointerAnalyse.rls", nemo_merge_name="PointerAnalyse_merge.rls")
+from Merge_Facts import *
 
 if __name__ == "__main__":
     # compare CFG results from AST tree (merged before computation vs merged after separate computation)

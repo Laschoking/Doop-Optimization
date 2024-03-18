@@ -3,25 +3,28 @@ import java.io.*;
 public class Example
 {
     public static void main(final String[] args) throws IOException {
-        int i;
-        int sum = 0;
-        int count = 5;
-        for (i = 0; i < count; i++){
+    int a, b, c, d, e, f, g, h, i, j;
+	a = 1;
+	// constant propagation
+	b = a; 		// -> b = 1
+	
+	// unary propagation
+	c = -a; 	// -> c = -1
+	
+	// addition
+	d = 4 + a;	// -> d = 5
 
-	sum = add(sum, i);
+	// subtraction
+	e = d - c;	// -> e = 6 
+	
+	// multiplication
+	g =  e * d; 	// -> g = 30
+	h = g * -1; 	// -> h = -30
+	
+	// division
+	
+	i = h / -2; 	// -> i = 15
+	j = e / g; 	// -> j = 0
     }
-   i = sum;
-   return ;
-   
-   }
-    static int add(int a, int b){
-        if (a < b) {
-        	return a + b;}
-        else{
-        	return a - b;
-        	
-    	}
- 	}
- }
-    
-  
+}
+ 
