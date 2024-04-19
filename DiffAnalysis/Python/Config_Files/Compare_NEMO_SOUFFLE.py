@@ -1,15 +1,7 @@
-from Python.Classes import *
-from Python.Merge_Lib import merge_directories, print_merge_stats
-from Python import Shell_Lib
-from Merge_Facts import *
+from Python.Libraries.Shell_Lib import *
+from Python.Libraries.Merge_Lib import merge_directories, print_merge_stats, print_nemo_runtime
+from Analysis_Configs import *
 
-PointerAnalysis_Config_NEMO_SOUFFLE = Config("Pointer", "Pointer1", "Pointer1", pa_name="PointerAnalysis",
-                                souffle_sep_name="pa-self-contained.dl", souffle_merge_name="",
-                                nemo_sep_name="PointerAnalyse_separate.rls", nemo_merge_name="PointerAnalyse_merge.rls")
-
-ConstantPropagation_Config_NEMO_SOUFFLE = Config("Example", "Example1", "Example1", pa_name="ConstantPropagation",
-                                souffle_sep_name="ConstantPropagation_nemo_copy.dl", souffle_merge_name="",
-                                nemo_sep_name="ConstantPropagation_separate.rls", nemo_merge_name="")
 
 if __name__ == "__main__":
     pa_config = ConstantPropagation_Config_NEMO_SOUFFLE
@@ -22,7 +14,7 @@ if __name__ == "__main__":
     facts1_path = pa_config.db1_path.joinpath("facts")
     facts2_path = pa_config.db2_path.joinpath("facts")
     facts_merge_path = python_merge_path.joinpath("facts")
-    summary_writer = open("summary.txt", "w")
+    summary_writer = open("../summary.txt", "w")
 
     fact_merge = MergeClass(facts1_path, facts2_path, facts_merge_path, summary_writer)
     create_facts(pa_config, fact_merge)

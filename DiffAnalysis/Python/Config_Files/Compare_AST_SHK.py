@@ -1,7 +1,7 @@
-from Python.Classes import *
-from Python.Merge_Lib import merge_directories, print_merge_stats
-from Python import Shell_Lib
-from Merge_Facts import *
+
+from Python.Libraries.Shell_Lib import *
+from Python.Libraries.Merge_Lib import *
+
 
 if __name__ == "__main__":
     # compare CFG results from AST tree (merged before computation vs merged after separate computation)
@@ -11,7 +11,7 @@ if __name__ == "__main__":
     summary_writer = ""
     compare_sep_merge_AST = MergeClass(pa1_result_path, pa2_result_path, compare_path, summary_writer)
 
-    compare_sep_merge_AST = merge_directories(compare_sep_merge_AST, write_flag=False, split_flag=False)
+    compare_sep_merge_AST = merge_directories(compare_sep_merge_AST, write_flag=False, debug_flag=False)
     print_merge_stats(compare_sep_merge_AST, "AST: separate computation vs merged computation")
 
 
@@ -23,5 +23,5 @@ if __name__ == "__main__":
     summary_writer = ""
     compare_sep_merge_AST = MergeClass(pa1_result_path, pa2_result_path, compare_path, summary_writer)
 
-    compare_sep_merge_AST = merge_directories(compare_sep_merge_AST, write_flag=False, split_flag=False)
+    compare_sep_merge_AST = merge_directories(compare_sep_merge_AST, write_flag=False, debug_flag=False)
     print_merge_stats(compare_sep_merge_AST, "AST: separate computation vs merged computation")

@@ -1,31 +1,9 @@
 from enum import Enum
 from pathlib import Path
-
-# This file defines all necessary paths for the comparison pipeline
-
-# create path to doop base and its output dir
-DOOP_PATH = "/home/kotname/Documents/Diplom/Code/doop/master/"
-DOOP_OUT_PATH = "/home/kotname/Documents/Diplom/Code/doop/master/out/"
-NEMO_ENGINE_PATH = "/home/kotname/Documents/Diplom/Code/nemo/nemo"
-
-#
-
-# this path will be the base for all of our file manipulation
-base_diff_path = Path("/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis")
-base_out_path = base_diff_path.joinpath("out")
-java_source_dir = base_diff_path.joinpath("Java")
-
-SOUFFLE_BASE = Path("/home/kotname/Documents/Diplom/Code/ex_souffle/Analysis")
-NEMO_BASE = Path("/home/kotname/Documents/Diplom/Code/ex_nemo/Analysis")
-
-Engine = Enum("Engine",["SOUFFLE", "NEMO"])
-NR_LEFT = 1
-NR_RIGHT = 10
-NR_TARGET = 0
+from Python.Libraries.Path_Lib import *
 
 class Config:
-    def __init__(self, class_name, db1_name, db2_name, pa_name, souffle_sep_name, souffle_merge_name, nemo_sep_name,
-                 nemo_merge_name):
+    def __init__(self, class_name, db1_name, db2_name, pa_name):
         self.class_name = class_name
         self.base_output_path = base_out_path.joinpath(pa_name + "_" + db1_name + "_" + db2_name)
         self.db1_name = db1_name
@@ -33,17 +11,6 @@ class Config:
         self.db1_path = self.base_output_path.joinpath(db1_name)
         self.db2_path = self.base_output_path.joinpath(db2_name)
         self.pa_name = pa_name
-
-        self.souffle_sep_name = souffle_sep_name
-        self.souffle_merge_name = souffle_merge_name
-        self.souffle_sep_path = Path.joinpath(SOUFFLE_BASE, souffle_sep_name)
-        self.souffle_merge_path = Path.joinpath(SOUFFLE_BASE, souffle_merge_name)
-
-        self.nemo_sep_name = nemo_sep_name
-        self.nemo_merge_name = nemo_merge_name
-        self.nemo_sep_path = Path.joinpath(NEMO_BASE, nemo_sep_name)
-        self.nemo_merge_path = Path.joinpath(NEMO_BASE, nemo_merge_name)
-
 
 class Table:
     def __init__(self, nr):
