@@ -1,3 +1,4 @@
+import numpy as np
 import csv
 from prettytable import PrettyTable
 from Python.Libraries.Classes import *
@@ -75,15 +76,63 @@ def merge_relations(rel_class, write_flag, debug_flag):
 
     # get file size after merge-file is closed
     rel_class.merge.size = rel_class.merge.path.stat().st_size
+
+
+def find_best_bijection(sim_matrix_ma,from_terms,to_terms):
+    shape = sim_matrix_ma.shape
+    from_side = 0
+    to_side = 1
+    bijection = {}
+    it = 0
+    while(sim_matrix_ma.mask.all() == False and it < 5):
+        max_ind_to_side = sim_matrix_ma.argmax(axis=to_side) # list comprehension along the axis (col = 0)
+        max_val_to_side = sim_matrix_ma.max(axis=to_side)
+        remove_from_side = set()
+        remove_to_side = set()
+        from_iterator = 0
+        for to_range in range(len(max_ind_to_side)):
+            to_index = max_ind_to_side[to_range]
+            if max_val_to_side[to_range] > 0:
+                to_index_list = np.where(max_ind_to_side == to_index)[0]
+                if len(to_index_list) > 1:
+                    vals = [max_val_to_side[a] for a in to_index_list]
+                    from_index = to_index_list[np.argmax(vals)] # change index to max similarity cell (possibly further in the list)
+                    print(from_index)
+                    print(to_index_list)
+                    print(vals)
+                else:
+                    from_index = from_iterator
+                from_term = from_terms[from_index]
+                to_term = to_terms[to_index]
+                #print(from_term,to_term)
+                bijection[from_term] = to_term
+                remove_from_side.add(from_index)
+                remove_to_side.add(to_index)
+            from_iterator += 1
+
+        it += 1
+        # instead of deleting rows and columns we set them to 0, thus we dont have changing indices
+        for i in remove_from_side : sim_matrix_ma[i,:] = np.ma.masked
+        for i in remove_to_side : sim_matrix_ma[:,i] = np.ma.masked
+
+
+        print("current length of bijection: " + str(len(bijection)))
+    #print(bijection)
+
+        #rm entries
+            # handle multiple
+
+
 def find_bijection(merge_class):
     dir1 = merge_class.dir1
     dir2 = merge_class.dir2
     common_dir = merge_class.common_dir
     merge_dir = merge_class.merge_dir
     Shell_Lib.clear_directory(merge_dir.path)
-    bijection = {}
+    terms1 = set()
+    terms2 = set()
+
     similarity_dict = {}
-    related_dict = {}
     # based on the path to the first relation, determine path to second relation
     for rel1_path in dir1.path.glob("*"):
         rel_name = rel1_path.name
@@ -97,35 +146,48 @@ def find_bijection(merge_class):
         with open(rel1_path, newline='') as f1, open(rel2_path, newline='') as f2:
             f1_tsv = csv.reader(f1, delimiter='\t', quotechar='"')
             f2_tsv = csv.reader(f2, delimiter='\t', quotechar='"')
-
+            f2_list = list(f2_tsv)
             for row1 in f1_tsv:
-                i = 0
-                for term1 in row1:
-                    if term1 not in bijection:
-                        for row2 in f2_tsv:
-                            term2 = row2[i]
-                            sim = SequenceMatcher(None,term1,term2).ratio()
-                            if sim == 1:
-                                bijection[term1] = term2
-                            else:
-                                if term1.isdigit() and term2.isdigit():
-                                    sim = abs(int(term1) - int(term2)) / max(int(term1), int(term2))
-                                if term1 in similarity_dict:
-                                    similarity_dict[term1].append(sim)
-                                    related_dict[term1].append(term2)
+                for ind2 in range(len(f2_list)):
+                    row2 = f2_list[ind2]
+                    for i in range(len(row1)):
+                        term1 = row1[i]
+                        term2 = row2[i]
+                        terms1.add(term1)
+                        terms2.add(term2)
+                        sim = 0
+                        if (term1, term2) not in similarity_dict:
+                            #currently only accepts positive integers due to isdigit()
+                            if term1.lstrip("-").isdigit() and term2.lstrip("-").isdigit():
+                                max_int = max(int(term1), int(term2))
+                                if max_int > 0:
+                                    sim = 1 - abs(int(term1) - int(term2)) / max_int
                                 else:
-                                    similarity_dict[term1] =[sim]
-                                    related_dict[term1] = [term2]
-                    i += 1
+                                    sim = 1
+                            else:
+                                sim = SequenceMatcher(None, term1, term2).ratio()
 
-    for term1 in similarity_dict.keys():
-        if term1 not in bijection:
-            sim_list = similarity_dict[term1]
-            max_sim = max(sim_list)
-            max_ind = sim_list.index(max_sim)
-            bijection[term1] = related_dict[term1][max_ind]
-    print(bijection)
-    print("hello")
+                            similarity_dict[(term1,term2)] = sim
+    term1_list = []
+    term2_list = []
+    for (term1,term2) in similarity_dict:
+        if term1 not in term1_list: term1_list.append(term1)
+        if term2 not in term2_list: term2_list.append(term2)
+
+    # the smaller from_db will be projected to the to_bigger one ->
+    # make sure, that smalled from_db is y-axis (rows) & bigger to_db is x-axis
+    sim_matrix = np.zeros(shape=(len(term1_list) ,len(term2_list)))
+    for (term1,term2) in similarity_dict:
+        term1_ind = term1_list.index(term1)
+        term2_ind = term2_list.index(term2)
+        sim_matrix[term1_ind][term2_ind] = similarity_dict[term1, term2]
+    if len(term1_list) > len(term2_list):
+        sim_matrix = sim_matrix.transpose()
+        tmp = term1_list
+        term1_list = term2_list
+        term2_list = tmp
+    sim_matrix_ma = np.ma.masked_equal(sim_matrix,0)
+    bijection = find_best_bijection(sim_matrix_ma,term1_list,term2_list)
 
 
 
