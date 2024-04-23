@@ -19,7 +19,7 @@ if __name__ == "__main__":
     fact_merge = MergeClass(facts1_path, facts2_path, facts_merge_path, summary_writer)
     create_facts(pa_config, fact_merge)
 
-    fact_merge = merge_directories(fact_merge, write_flag=True, debug_flag=False)
+    fact_merge = forward_bijection(fact_merge, write_flag=True, debug_flag=False)
     print_merge_stats(fact_merge,pa_config.db1_name, pa_config.db2_name, "FACT MERGE")
 
 
@@ -32,6 +32,6 @@ if __name__ == "__main__":
     common_pa_runtime = run_single_pa(pa_config, fact_merge.merge_dir.path, common_result_path, engine)
 
     common_pa_merge = MergeClass(sep_pa_merge.merge_dir.path, common_result_path, python_merge_path.joinpath("common_merge"), summary_writer)
-    common_pa_merge = merge_directories(common_pa_merge, write_flag=True, debug_flag=True)
+    common_pa_merge = forward_bijection(common_pa_merge, write_flag=True, debug_flag=True)
     print_merge_stats(common_pa_merge,sep_pa_merge.merge_dir.path.parts[-3], common_result_path.parts[-1],"Comparison: Merged PA vs. separate PA")
     print_nemo_runtime(common_pa_runtime,pa_config.nemo_merge_name)

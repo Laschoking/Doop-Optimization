@@ -1,3 +1,5 @@
+import os.path
+
 import numpy as np
 import csv
 from prettytable import PrettyTable
@@ -10,130 +12,55 @@ from difflib import SequenceMatcher
 def div_zero(n):
     return n if n != 0 else 10e9
 
-
-def merge_relations(rel_class, write_flag, debug_flag):
-    with open(rel_class.rel1.path, newline='') as f1, open(rel_class.rel2.path, newline='') as f2, open(rel_class.merge.path, 'w',
-                                                                                newline='') as merge:
-
-        merge_writer = csv.writer(merge, delimiter='\t',quoting=csv.QUOTE_NONE )# lineterminator='\n')
-        nr_cols = 0
-        f1_tsv = csv.reader(f1, delimiter='\t', quotechar='"')
-        f2_tsv = csv.reader(f2, delimiter='\t', quotechar='"')
-        r1 = set()
-        r2 = set()
-        for file,r in [f1_tsv,r1],[f2_tsv,r2]:
-            for row in file:
-                r.add(tuple(row))
-
-        rel_class.rel1.rows = r1
-        rel_class.rel2.rows = r2
-
-        rel_class.common.rows = rel_class.rel1.rows.intersection(rel_class.rel2.rows)
-        rel_class.common.nr_rows = len(rel_class.common.rows)
-
-        for rel in [rel_class.rel1, rel_class.rel2]:
-            rel.nr_rows = len(rel.rows)
-            intersection = rel.rows.difference(rel_class.common.rows)
-            # find relations, that are only in one file and add specific id
-            if len(intersection) > 0 and debug_flag: print(rel.path)
-            for diff_rel in intersection:
-                rel.nr_chars += len(diff_rel)
-                rel_class.merge.nr_chars += len(diff_rel) + len(
-                    str(rel_class.common.id_nr))  # for additional lenght of id
-                if debug_flag: print('\t'.join(diff_rel))
-                diff_rel = diff_rel + tuple([rel.id_nr])
-                rel_class.merge.nr_chars += len(diff_rel)
-                if write_flag:
-                    merge_writer.writerow(diff_rel)
-
-            if nr_cols == 0 and rel.nr_rows > 0:
-                test_row = rel.rows.pop()
-                nr_cols = len(test_row)
-                rel.rows.add(test_row)
-            rel.nr_entries = rel.nr_rows * nr_cols
-            rel.size = rel.path.stat().st_size
-
-        # find facts, that are in both files & add with specific id
-        for common_entries in rel_class.common.rows:
-            rel_class.common.nr_chars += len(common_entries)
-            rel_class.merge.nr_chars += len(common_entries) + len(
-                str(rel_class.common.id_nr))  # for additional lenght of id
-            common_entries = common_entries + tuple([rel_class.common.id_nr])
-            if write_flag:
-                merge_writer.writerow(common_entries)
-
-        if nr_cols == 0 and rel_class.common.nr_rows > 0:
-            test_row = rel_class.common.rows.pop()
-            nr_cols = len(test_row)
-            rel_class.common.rows.add(test_row)
-
-        rel_class.rel1.nr_chars += rel_class.common.nr_chars
-        rel_class.rel2.nr_chars += rel_class.common.nr_chars
-        rel_class.common.nr_entries = rel_class.common.nr_rows * nr_cols
-        rel_class.nr_cols = nr_cols
-    rel_class.merge.nr_rows = rel_class.rel1.nr_rows + rel_class.rel2.nr_rows - rel_class.common.nr_rows
-    rel_class.merge.nr_entries = rel_class.merge.nr_rows * (nr_cols + 1)
-
-    # get file size after merge-file is closed
-    rel_class.merge.size = rel_class.merge.path.stat().st_size
-
-
-def find_best_bijection(sim_matrix_ma,from_terms,to_terms):
-    shape = sim_matrix_ma.shape
-    from_side = 0
-    to_side = 1
+'''
+     - Assign the maximum value to each row_term if there are no conflicts 
+     - a conflict (two row_terms have the same col_term target) is resolved by assigning the higher value (or if equal the first value)
+     - iterating to resolve other conflict terms that did not get assigned yet
+     - for each assignment (row_term, col_term) the corresponding column & row is masked 
+'''
+def find_best_bijection(ma_sim_matrix,row_terms,col_terms):
     bijection = {}
-    it = 0
-    while(sim_matrix_ma.mask.all() == False and it < 5):
-        max_ind_to_side = sim_matrix_ma.argmax(axis=to_side) # list comprehension along the axis (col = 0)
-        max_val_to_side = sim_matrix_ma.max(axis=to_side)
-        remove_from_side = set()
-        remove_to_side = set()
-        from_iterator = 0
-        for to_range in range(len(max_ind_to_side)):
-            to_index = max_ind_to_side[to_range]
-            if max_val_to_side[to_range] > 0:
-                to_index_list = np.where(max_ind_to_side == to_index)[0]
-                if len(to_index_list) > 1:
-                    vals = [max_val_to_side[a] for a in to_index_list]
-                    from_index = to_index_list[np.argmax(vals)] # change index to max similarity cell (possibly further in the list)
-                    print(from_index)
-                    print(to_index_list)
-                    print(vals)
-                else:
-                    from_index = from_iterator
-                from_term = from_terms[from_index]
-                to_term = to_terms[to_index]
-                #print(from_term,to_term)
-                bijection[from_term] = to_term
-                remove_from_side.add(from_index)
-                remove_to_side.add(to_index)
-            from_iterator += 1
+    conflict_table = PrettyTable()
+    conflict_table.field_names = ["target_term", "possible source terms","similarity with target", "chosen source term"]
+    count_iter = 0
+    while(ma_sim_matrix.mask.all() == False and count_iter < 5):
+        # find maximum value & index for each row
+        max_each_row = ma_sim_matrix.argmax(axis=1)
+        max_val_each_row = ma_sim_matrix.max(axis=1)
 
-        it += 1
-        # instead of deleting rows and columns we set them to 0, thus we dont have changing indices
-        for i in remove_from_side : sim_matrix_ma[i,:] = np.ma.masked
-        for i in remove_to_side : sim_matrix_ma[:,i] = np.ma.masked
+        row_it = 0
+        conflict_table.clear_rows()
+        conflict_rows = set()
+        for row_nr in range(len(max_each_row)):
+            max_col = max_each_row[row_nr]
+            if max_val_each_row[row_nr] > 0 and row_it not in conflict_rows: # masked entries will be evaluated to 0 by default
+                find_conflict_rows = np.where(max_each_row == max_col)[0]
+                if len(find_conflict_rows) > 1:                              # conflicting assignments
+                    vals = [max_val_each_row[a] for a in find_conflict_rows]  # all row_terms whose maximum is col_term
+                    for a in find_conflict_rows: conflict_rows.add(a)       # record conflict (to avoid duplicate entries)
+                    row = find_conflict_rows[np.argmax(vals)]         # choose row_term to max similarity cell (possibly further in the list)
+                    conflict_table.add_row([col_terms[max_col],[row_terms[a] for a in find_conflict_rows],vals, row_terms[row]])
+                    for a in find_conflict_rows: conflict_rows.add(a)
+                else:                   # no conflicts, use current row_term
+                    row = row_it
+                row_term = row_terms[row]
+                col_term = col_terms[max_col]
+                bijection[row_term] = col_term
 
+                # mask corresponding column & row (preserves indices for look up of term name)
+                ma_sim_matrix[row, :] = np.ma.masked
+                ma_sim_matrix[:,max_col] = np.ma.masked
+            row_it += 1
+        print(conflict_table)
+        count_iter += 1
 
         print("current length of bijection: " + str(len(bijection)))
-    #print(bijection)
+    return bijection
 
-        #rm entries
-            # handle multiple
-
-
-def find_bijection(merge_class):
-    dir1 = merge_class.dir1
-    dir2 = merge_class.dir2
-    common_dir = merge_class.common_dir
-    merge_dir = merge_class.merge_dir
-    Shell_Lib.clear_directory(merge_dir.path)
-    terms1 = set()
-    terms2 = set()
-
-    similarity_dict = {}
-    # based on the path to the first relation, determine path to second relation
+def similar_files_in_2dirs(dir1,dir2,target):
+    file_pairs = []
+    s_db1 = 0
+    s_db2 = 0
     for rel1_path in dir1.path.glob("*"):
         rel_name = rel1_path.name
         rel2_path = dir2.path.joinpath(rel_name)
@@ -143,6 +70,64 @@ def find_bijection(merge_class):
             if not rel2_path.exists():
                 print(FileNotFoundError("Skipped file: " + str(rel2_path.stem)))
                 continue
+        s_rel1 = os.path.getsize(rel1_path)
+        s_rel2 = os.path.getsize(rel2_path)
+
+        if s_rel1 > 0 or s_rel2 > 0:
+            s_db1 += s_rel1
+            s_db2 += s_rel2
+            file_pairs.append((rel1_path,rel2_path,target.joinpath(rel_name),rel_name))
+    if s_db1 < s_db2:
+        return file_pairs
+    else:
+        print("changed order of db1 and db2!")
+        return [(rel2_path,rel1_path,merge_path,rel_name) for rel1_path,rel2_path,merge_path,rel_name in file_pairs]
+
+
+def apply_bijection(file_pairs,bijection):
+    merge_table = PrettyTable()
+    merge_table.field_names = ["relation name","single rows from_terms","single rows to_terms","rows in common","percentage of common"]
+    for from_path,to_path,merge_path,rel_name in file_pairs:
+        with open(from_path, newline='') as f1, open(to_path, newline='') as f2, open(merge_path, 'w',
+                                                                                newline='') as merge:
+            merge_writer = csv.writer(merge, delimiter='\t',quoting=csv.QUOTE_NONE )# lineterminator='\n')
+            f1_tsv = csv.reader(f1, delimiter='\t', quotechar='"')
+            f2_tsv = csv.reader(f2, delimiter='\t', quotechar='"') # maybe read as string directly?
+            bijected_db = set()
+            old_db = set()
+            target_db = set()
+            target_db.update([tuple(row) for row in f2_tsv])
+            for row in f1_tsv:
+                bijected_row = []
+                for term in row:
+                    if term in bijection:
+                        bijected_row.append(bijection[term])
+                    else:
+                        print("error no bijection found: " + term )
+                        bijected_row.append(term)
+                bijected_db.add(tuple(bijected_row))
+            common_rows = bijected_db.intersection(target_db)
+            target_db = target_db.difference(common_rows)
+            bijected_db = bijected_db.difference(common_rows)
+            for common_row in common_rows: merge_writer.writerow(common_row + (0,))
+            for bijected_row in bijected_db: merge_writer.writerow(bijected_row + (1,))
+            for target_row in target_db: merge_writer.writerow(target_row + (2,))
+            l_bij = len(bijected_db)
+            l_tar = len(target_db)
+            l_comm = len(common_row)
+            merge_table.add_row([rel_name,l_bij,l_tar,l_comm,str(round(100*l_comm/(l_bij+l_tar+l_comm),1)) + "%"])
+    print(merge_table)
+
+def revert_bijection(pa_dir,bijection):
+    return
+
+def calculate_pairwise_similarity(file_pairs):
+
+    terms1 = set()
+    terms2 = set()
+    similarity_dict = {}
+    # based on the path to the first relation, determine path to second relation
+    for rel1_path,rel2_path,merge_path,rel_name in file_pairs:
         with open(rel1_path, newline='') as f1, open(rel2_path, newline='') as f2:
             f1_tsv = csv.reader(f1, delimiter='\t', quotechar='"')
             f2_tsv = csv.reader(f2, delimiter='\t', quotechar='"')
@@ -155,7 +140,6 @@ def find_bijection(merge_class):
                         term2 = row2[i]
                         terms1.add(term1)
                         terms2.add(term2)
-                        sim = 0
                         if (term1, term2) not in similarity_dict:
                             #currently only accepts positive integers due to isdigit()
                             if term1.lstrip("-").isdigit() and term2.lstrip("-").isdigit():
@@ -168,64 +152,45 @@ def find_bijection(merge_class):
                                 sim = SequenceMatcher(None, term1, term2).ratio()
 
                             similarity_dict[(term1,term2)] = sim
+    return similarity_dict
+
+def create_sim_matrix(similarity_dict):
+    # the lists are link the sim_matrix indices to the names of the terms
     term1_list = []
     term2_list = []
     for (term1,term2) in similarity_dict:
         if term1 not in term1_list: term1_list.append(term1)
         if term2 not in term2_list: term2_list.append(term2)
 
-    # the smaller from_db will be projected to the to_bigger one ->
-    # make sure, that smalled from_db is y-axis (rows) & bigger to_db is x-axis
+
     sim_matrix = np.zeros(shape=(len(term1_list) ,len(term2_list)))
     for (term1,term2) in similarity_dict:
         term1_ind = term1_list.index(term1)
         term2_ind = term2_list.index(term2)
         sim_matrix[term1_ind][term2_ind] = similarity_dict[term1, term2]
-    if len(term1_list) > len(term2_list):
-        sim_matrix = sim_matrix.transpose()
-        tmp = term1_list
-        term1_list = term2_list
-        term2_list = tmp
-    sim_matrix_ma = np.ma.masked_equal(sim_matrix,0)
-    bijection = find_best_bijection(sim_matrix_ma,term1_list,term2_list)
+    # mask all combinations that have not been calculated (they did never appear in the same column of an atom)
+    ma_sim_matrix = np.ma.masked_equal(sim_matrix,0)
+    return ma_sim_matrix,term1_list,term2_list
 
 
 
-
-
-
-def merge_directories(merge_class, write_flag, debug_flag):
+def forward_bijection(merge_class, write_flag, debug_flag):
     # create some variables for general db-stats
     dir1 = merge_class.dir1
     dir2 = merge_class.dir2
-    common_dir = merge_class.common_dir
-    find_bijection(merge_class)
-    '''
-    merge_dir = merge_class.merge_dir
-    Shell_Lib.clear_directory(merge_dir.path)
+    # similar_files will swap the order of both directories, if db1 > db2
+    # we want the smaller db to be at the y-axis (rows) and bigger db ath x-axis (columns)
+    # because we biject fromt the smaller db to the bigger db
+    file_pairs = similar_files_in_2dirs(dir1,dir2,merge_class.merge_dir.path)
+    sim_dictionary = calculate_pairwise_similarity(file_pairs)
+    ma_sim_matrix,term1_list,term2_list = create_sim_matrix(sim_dictionary)
+    
+    bijection = find_best_bijection(ma_sim_matrix, term1_list, term2_list)
+    apply_bijection(file_pairs, bijection)
 
-    # based on the path to the first relation, determine path to second relation
-    for rel1_path in dir1.path.glob("*"):
-        rel_name = rel1_path.name
-        rel2_path = dir2.path.joinpath(rel_name)
-        if not rel2_path.exists():
-            new_suffix = '.csv' if rel1_path.suffix == ".tsv" else '.tsv'
-            rel2_path = rel2_path.with_suffix(new_suffix)
-            if not rel2_path.exists():
-                print(FileNotFoundError("Skipped file: " + str(rel2_path.stem)))
-                continue
-        merge_rel_path = Path.joinpath(merge_dir.path, rel_name)
+    return file_pairs,bijection
 
-        rel_class = RelationClass(merge_rel_path, rel1_path, rel2_path, NR_LEFT, NR_RIGHT, NR_TARGET)
-        merge_class.add_relation(rel_class)
-        merge_relations(rel_class, write_flag, debug_flag)
-        dir1.update(rel_class.rel1)
-        dir2.update(rel_class.rel2)
-        common_dir.update(rel_class.common)
-        merge_dir.update(rel_class.merge)
-        merge_class.nr_cols += rel_class.nr_cols
-    '''
-    return merge_class
+
 
 def print_nemo_runtime(runtime,PA_name):
     t = PrettyTable()
