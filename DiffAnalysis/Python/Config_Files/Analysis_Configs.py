@@ -17,7 +17,12 @@ ConstantPropagation_Config_NEMO_SOUFFLE = Config("Example", "Example1", "Example
 
 PointerAnalysis12_Config = Config("Pointer", "Pointer1", "Pointer2", pa_name="PointerAnalysis")
 
+PointerAnalysis21_Config = Config("Pointer", "Pointer2", "Pointer1", pa_name="PointerAnalysis")
+
+
 PointerAnalysis12_Config_merge_vs_end_fold_merge = Config("Pointer", "Pointer1", "Pointer2", pa_name="PointerAnalysis")
+
+
 
 PointerAnalysis34_Config = Config("Pointer", "Pointer3", "Pointer4", pa_name="PointerAnalysis")
 

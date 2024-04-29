@@ -1,6 +1,8 @@
 from enum import Enum
 from pathlib import Path
 from Python.Libraries.Path_Lib import *
+from Python.Libraries import Shell_Lib
+import csv
 
 class Config:
     def __init__(self, class_name, db1_name, db2_name, pa_name):
@@ -12,75 +14,50 @@ class Config:
         self.db2_path = self.base_output_path.joinpath(db2_name)
         self.pa_name = pa_name
 
-class Table:
-    def __init__(self, nr):
-        self.id_nr = nr
-        self.nr_rows = 0
-        self.nr_entries = 0
-        self.nr_chars = 0
-        self.size = 0
+class DB_Instance:
+    def __init__(self,db_base_path,sub_dir):
+        self.db_base_path = db_base_path
+        self.name = db_base_path.stem + "-" + sub_dir
+        self.db_path = db_base_path.joinpath(sub_dir)
+        self.data = dict()
+        Shell_Lib.clear_directory(self.db_path)
 
 
-class Relation:
-    def __init__(self, path, nr):
-        self.path = path
-        self.id_nr = nr
-        self.nr_rows = 0
-        self.nr_entries = 0
-        self.nr_chars = 0
-        self.size = 0
-        self.rows = set()
+    def read_directory(self):
+        for rel_path in self.db_path.glob("*"):
+            file = rel_path.stem
+            rows = []
+            with open(rel_path, newline='') as db_file:
+                tsv_file = csv.reader(db_file, delimiter='\t', quotechar='"')
+                for row in tsv_file:
+                    rows.append(tuple(row))
+            self.insert_data(file, rows)
+
+    def insert_data(self, file, rows):
+        self.data[file] = [tuple(r) for r in rows]
+
+    def write_data_to_file(self):
+        for file in self.data:
+            with open(self.db_path.joinpath(file).with_suffix('.tsv'),'w',newline='') as file_path:
+                tsv_writer = csv.writer(file_path, delimiter='\t', lineterminator='\n')
+                for row in self.data[file]:
+                    tsv_writer.writerow(row)
+class Data:
+    def __init__(self, db1_base_path, db2_base_path):
+        self.db1_facts =  DB_Instance(db1_base_path,"facts")
+        self.db2_facts =  DB_Instance(db2_base_path,"facts")
+        self.db2_merge_facts = DB_Instance(db2_base_path,"merge_facts")
+
+        self.db2_merge_path = db2_base_path.joinpath("merge_facts")
+
+        self.db1_pa = DB_Instance(db1_base_path,"pa_results")
+        self.db2_pa = DB_Instance(db2_base_path,"pa_results")
+        self.db1_pa_bijected = DB_Instance(db1_base_path,"bijected_results")
+        self.bijection = dict()
 
 
-class RelationClass:
-    def __init__(self, merge_path, rel1,rel2, id_1, id_2, common_nr):
-        self.rel1 = Relation(rel1, id_1)
-        self.rel2 = Relation(rel2, id_2)
-        self.merge = Relation(merge_path, -1)
-        self.common = Table(common_nr)
-        self.nr_cols = 0
-
-
-class Directory:
-    def __init__(self, dir_path):
-        self.path = dir_path
-        self.nr_filled_rel = 0
-        self.nr_rows = 0
-        self.nr_entries = 0
-        self.nr_chars = 0
-        self.size = 0
-        self.relation_list = []
-
-    def update(self, rel):
-        self.nr_rows += rel.nr_rows
-        self.nr_entries += rel.nr_entries
-        self.nr_chars += rel.nr_chars
-        self.size += rel.size
-        self.nr_filled_rel += 1 if rel.nr_rows > 0 else 0
-
-    def add_relation(self, relation):
-        self.relation_list.append(relation)
-
-
-class MergeClass:
-    def __init__(self, db1_path, db2_path, merge_path, summary_path):
-        self.db1_path = db1_path
-        self.db2_path = db2_path
-        self.merge_path = merge_path
-        self.summary_path = summary_path
-
-        self.dir1 = Directory(db1_path)
-        self.dir2 = Directory(db2_path)
-        self.common_dir = Directory("")
-        self.merge_dir = Directory(merge_path)
-        self.nr_cols = 0
-
-    def add_relation(self, rel_class):
-        self.dir1.add_relation(rel_class.rel1)
-        self.dir2.add_relation(rel_class.rel2)
-        self.common_dir.add_relation(rel_class.common)
-
-
+    def update_bijection(self,bijection):
+        self.bijection = bijection
 def print_merge_information(analysis):
     print("----------- META INFORMATION -----------")
     print("Compared databases: " + analysis.db1.name + " , " + analysis.db2.name)

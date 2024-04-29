@@ -7,15 +7,12 @@ import shutil
 import subprocess
 
 # Intermediate Functions
-def create_facts(pa_config, fact_merge):
-    clear_directory(fact_merge.merge_path)
-
-    for fact_path, db_name in [fact_merge.db1_path, pa_config.db1_name], [fact_merge.db2_path, pa_config.db2_name]:
-        clear_directory(fact_path)
-        doop_create_facts(pa_config, db_name, fact_path)
+def create_facts(db_config,db1_path, db2_path):
+    doop_create_facts(db_config, db_config.db1_name, db1_path)
+    doop_create_facts(db_config, db_config.db2_name, db2_path)
 
 def run_single_pa(pa_config, fact_path, result_path):
-    clear_directory(result_path)
+    #clear_directory(result_path)
     runtime = {}
 
     if pa_config["engine"] == Engine.SOUFFLE:
@@ -27,13 +24,13 @@ def run_single_pa(pa_config, fact_path, result_path):
 
 # Shell commands
 def clear_directory(directory):
-    # for file in list(dir.glob('*')):
     if directory.exists():
         shutil.rmtree(str(directory))
     os.system("mkdir -p " + str(directory))
 
 def doop_create_facts(db_config, db_name, fact_path):
     os.chdir(DOOP_BASE)
+    #clear_directory(fact_path)
 
     java_path = Path.joinpath(java_source_dir, db_name).joinpath(db_config.class_name + ".java")
     jar_path = Path.joinpath(java_source_dir, db_name).joinpath(db_config.class_name + ".jar")
@@ -59,7 +56,7 @@ def run_souffle_pa(pa_path,fact_path, result_path):
 
 def run_nemo_pa(pa_path,fact_path, result_path):
     #os.chdir(NEMO_ENGINE)
-    clear_directory(result_path)
+    #clear_directory(result_path)
     command = [str(NEMO_ENGINE.joinpath("target/release/nmo")), str(pa_path), "-I", str(fact_path), "-D", str(result_path), "--overwrite-results", "-e", "keep"]
     p = subprocess.run(command,capture_output=True)
     if p.returncode != 0:
