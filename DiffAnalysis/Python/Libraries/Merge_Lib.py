@@ -54,6 +54,10 @@ def create_sim_matrix(similarity_dict):
     term1_list = []
     term2_list = []
     for (term1,term2) in similarity_dict:
+        #if "assign/10" in term1:
+        #    print(term1,term2,similarity_dict[term1,term2])
+        #if "assign/10" in term2:
+        #    print(term1, term2, similarity_dict[term1, term2])
         if term1 not in term1_list: term1_list.append(term1)
         if term2 not in term2_list: term2_list.append(term2)
 
@@ -106,41 +110,45 @@ def find_best_bijection(ma_sim_matrix,row_terms,col_terms):
         print(conflict_table)
         count_iter += 1
 
-        print("current length of bijection: " + str(len(bijection)))
+        #print("current length of bijection: " + str(len(bijection)))
     return bijection
 
 
 def apply_bijection(data):
-    merge_table = PrettyTable()
-    merge_table.field_names = ["relation name","single rows from_terms","single rows to_terms","rows in common","percentage of common"]
+    new_var_counter = 0
     for file in data.db1_facts.data:
         rows1 = data.db1_facts.data[file]
         rows2 = data.db2_facts.data[file]
         bijected_db = set()
         target_db = set()
         target_db.update([tuple(row) for row in rows2])
-        for row in rows1:
+        for row1 in rows1:
             bijected_row = []
-            for term in row:
+            for term in row1:
                 if term in data.bijection:
                     bijected_row.append(data.bijection[term])
                 else:
-                    print("error no bijection found: " + term )
-                    bijected_row.append(term)
+                    #if term == "<Pointer: void test(int)>/r5#_33":
+                     #   print(term)
+                    #print("no bijection found: " + term)
+                    #print("add identity entry in bijection")
+                    new_term = "new_var_" + str(new_var_counter)
+                    data.bijection[term] = new_term # introduce new variables
+                    new_var_counter += 1
+                    bijected_row.append(new_term)
             bijected_db.add(tuple(bijected_row))
-        merged_rows = bijected_db | target_db
-        #target_db = target_db.difference(common_rows)
-        #bijected_db = bijected_db.difference(common_rows)
+        merged_rows = []
+        common_rows = bijected_db.intersection(target_db)
+        target_db = target_db.difference(common_rows)
+        bijected_db = bijected_db.difference(common_rows)
+        for row in common_rows:
+            merged_rows.append(row + ('0',))
+        for row in bijected_db:
+            merged_rows.append(row + ('1',))
+        for row in target_db:
+            merged_rows.append(row + ('10',))
         data.db2_merge_facts.insert_data(file,merged_rows)
-        #data.db2_merge_facts.insert_data(common_rows)
 
-        #for bijected_row in bijected_db: merge_writer.writerow(bijected_row + (1,))
-        #for target_row in target_db: merge_writer.writerow(target_row + (2,))
-        #l_bij = len(bijected_db)
-        #l_tar = len(target_db)
-        #l_comm = len(common_row)
-        #merge_table.add_row([rel_name,l_bij,l_tar,l_comm,str(round(100*l_comm/(l_bij+l_tar+l_comm),1)) + "%"])
-    #print(merge_table)
 
 
 
@@ -160,36 +168,53 @@ def forward_bijection(data):
     return data
 
 
-def reverse_bijection_on_pa(data):
-    inv_bijection = dict((term2,term1) for term1, term2 in data.bijection.items())
-    for file in data.db2_pa.data:
+def reverse_bijection_on_pa(from_merged_db, to_bijected_db,bijection,from_identifier):
+    inv_bijection = dict((term2,term1) for term1, term2 in bijection.items())
+    for file in from_merged_db.data:
         db1_bij_rows = []
-        for row2 in data.db2_pa.data[file]:
-            db1_bij_row = []
-            matching_flag = True
-            for term2 in row2:
-                if term2 in inv_bijection:
-                    db1_bij_row.append(inv_bijection[term2])
-                else:
-                    #print(term2)
-                    matching_flag = False
-                    break
-            if matching_flag :
-                db1_bij_rows.append(db1_bij_row)
-        data.db1_pa_bijected.insert_data(file,db1_bij_rows)
-    return data
+        for row2 in from_merged_db.data[file]:
+            # only reverse rows that have the common_identifier (0) or the from_identifier (1/2)
+            if row2[-1] == '0' or row2[-1] == str(from_identifier):
+                db1_bij_row = []
+                matching_flag = True
+                for term2 in row2[0:-1]:
+                    if term2 in inv_bijection:
+                        db1_bij_row.append(inv_bijection[term2])
+                        #neuen eintrag
+                    else:
+                        # since there is no matching, but the term belongs to db1 its value was copied directly
+                        # this happens if constants have been introduced in the PA
+                        #print("no inverse bijection found for this term: " + term2 )
+                        db1_bij_row.append(term2)
+                        #matching_flag = False
+                if matching_flag :
+                    db1_bij_rows.append(db1_bij_row)
+        to_bijected_db.insert_data(file, db1_bij_rows)
+    return to_bijected_db
 
 
-def diff_two_dirs(db_inst1,db_inst2):
+def diff_two_dirs(db_inst1,db_inst2,rm_identifier=3):
     t = PrettyTable()
-    t.field_names = ["file name", "unique rows: " + db_inst1.name, "", "unique rows: " + db_inst2.name, " ", "intersection rows" , "%"]
-    t.sortby = "intersection rows"
+    t.field_names = ["file name", db_inst1.name, db_inst2.name, "common rows" , "%"]
+    t.sortby = "common rows"
     l_inters_files = 0
     l_rows1_files = 0
     l_rows2_files = 0
     for file in db_inst1.data:
+        if file not in db_inst2.data:
+            print("file was not compared: " + file)
+            continue
         rows1 = set(db_inst1.data[file])
-        rows2 = set(db_inst2.data[file])
+        rows2 = set()
+        # in case, one db still has identifiers appended (like ["a","b", 0], remove
+        if rm_identifier != 3:
+            for x in db_inst2.data[file]:
+                #remove only common identifier & from correct side (dont consider rows that come from the other db)
+                if x[-1] == str(rm_identifier) or x[-1] == '0':
+                    rows2.add(x[:-1])
+        else:
+             rows2 = set(db_inst2.data[file])
+
         inters = rows1.intersection(rows2)
         unique_rows1 = rows1.difference(rows2)
         unique_rows2 = rows2.difference(rows1)
@@ -200,19 +225,17 @@ def diff_two_dirs(db_inst1,db_inst2):
         l_rows1_files += l_rows1
         l_rows2_files += l_rows2
         l_inters_files += l_inters
-        #if l_rows2 > 0 :
-        #    print(rows2.difference(rows1))
-        r = [file, l_rows1, str(round(100 * l_rows1 / (l_rows1 + l_rows2 + l_inters),1)) + "%",l_rows2,str(round(100 * l_rows2 / (l_rows1 + l_rows2 + l_inters))) + "%",l_inters, str(round(100 * l_inters / (l_rows1 + l_rows2 + l_inters))) + "%"]
-        t.add_row(r)
+
+
+        #if file == "AssignLocal_From":
+        #    print(unique_rows2.difference(inters))
+        cov = round(100 * l_inters / (l_rows1 + l_rows2 + l_inters))
+        if cov != 100:
+            print(file)
+            print(unique_rows1.difference(inters))
+            r = [file, l_rows1 + l_inters, l_rows2 + l_inters,l_inters, str(cov) + "%"]
+            t.add_row(r)
     #t.add_row(['','','','','','',''],divider=True)
-    t.add_row(["SUMMARY", l_rows1_files, str(round(100 * l_rows1_files / (l_rows1_files + l_rows2_files + l_inters_files),1)) + "%",l_rows2_files,str(round(100 * l_rows2_files / (l_rows1_files + l_rows2_files + l_inters_files))) + "%",l_inters_files, str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files))) + "%"])
+    t.add_row(["SUMMARY", l_rows1_files + l_inters_files, l_rows2_files + l_inters_files,l_inters_files, str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files))) + "%"])
     print(t)
-
-def print_nemo_runtime(runtime,PA_name):
-    t = PrettyTable()
-    t.field_names = ["Program Analysis","DB", "Total Reasoning", "Loading Input","Reasoning","Saving Output"]
-    for r in runtime:
-        t.add_row([PA_name] + r)
-    print(t)
-
 

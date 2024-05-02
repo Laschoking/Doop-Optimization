@@ -5,6 +5,7 @@ from Python.Libraries.Classes import *
 from pathlib import Path
 import shutil
 import subprocess
+from prettytable import PrettyTable
 
 # Intermediate Functions
 def create_facts(db_config,db1_path, db2_path):
@@ -42,7 +43,9 @@ def doop_create_facts(db_config, db_name, fact_path):
     #os.system("./doop -a context-insensitive -i " + str(jar_path) + " --id " + str(db_name) + " --facts-only --Xfacts-subset APP --cache --generate-jimple")
 
     for file in DOOP_OUT.joinpath(db_name).joinpath("database").glob("*.facts"):
-        shutil.copy(file, fact_path)
+        new_file_name = file.with_suffix('.tsv').name
+        target_file = fact_path.joinpath(new_file_name)
+        shutil.copy(file, target_file)
 
 def run_souffle_pa(pa_path,fact_path, result_path):
     clear_directory(result_path)
@@ -76,3 +79,12 @@ def split_nemo_stdout(stdout):
     D.append(re.search('[0-9m]*ms',stdout[2]).group(0))
     D.append(re.search('[0-9m]*ms',stdout[3]).group(0))
     return D
+
+
+def print_nemo_runtime(runtime,PA_name):
+    t = PrettyTable()
+    t.field_names = ["Program Analysis","DB", "Total Reasoning", "Loading Input","Reasoning","Saving Output"]
+    for r in runtime:
+        t.add_row([PA_name] + r)
+    print(t)
+

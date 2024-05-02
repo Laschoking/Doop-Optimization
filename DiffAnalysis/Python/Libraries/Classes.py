@@ -18,13 +18,13 @@ class DB_Instance:
     def __init__(self,db_base_path,sub_dir):
         self.db_base_path = db_base_path
         self.name = db_base_path.stem + "-" + sub_dir
-        self.db_path = db_base_path.joinpath(sub_dir)
+        self.path = db_base_path.joinpath(sub_dir)
         self.data = dict()
-        Shell_Lib.clear_directory(self.db_path)
+        Shell_Lib.clear_directory(self.path)
 
 
     def read_directory(self):
-        for rel_path in self.db_path.glob("*"):
+        for rel_path in self.path.glob("*"):
             file = rel_path.stem
             rows = []
             with open(rel_path, newline='') as db_file:
@@ -38,7 +38,7 @@ class DB_Instance:
 
     def write_data_to_file(self):
         for file in self.data:
-            with open(self.db_path.joinpath(file).with_suffix('.tsv'),'w',newline='') as file_path:
+            with open(self.path.joinpath(file).with_suffix('.tsv'), 'w', newline='') as file_path:
                 tsv_writer = csv.writer(file_path, delimiter='\t', lineterminator='\n')
                 for row in self.data[file]:
                     tsv_writer.writerow(row)
@@ -46,13 +46,16 @@ class Data:
     def __init__(self, db1_base_path, db2_base_path):
         self.db1_facts =  DB_Instance(db1_base_path,"facts")
         self.db2_facts =  DB_Instance(db2_base_path,"facts")
+        self.db1_pa = DB_Instance(db1_base_path,"pa_results")
+        self.db2_pa = DB_Instance(db2_base_path,"pa_results")
+
         self.db2_merge_facts = DB_Instance(db2_base_path,"merge_facts")
+        self.db2_merge_pa = DB_Instance(db2_base_path,"merge_pa_results")
 
         self.db2_merge_path = db2_base_path.joinpath("merge_facts")
 
-        self.db1_pa = DB_Instance(db1_base_path,"pa_results")
-        self.db2_pa = DB_Instance(db2_base_path,"pa_results")
-        self.db1_pa_bijected = DB_Instance(db1_base_path,"bijected_results")
+
+        self.db1_bijected_pa = DB_Instance(db1_base_path, "bijected_pa_results")
         self.bijection = dict()
 
 

@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class Example
+public class Constants
 {
     public static void main(final String[] args) throws IOException {
     int a, b, c, d, e, f, g, h, i, j;
@@ -22,7 +22,6 @@ public class Example
 	h = g * -1; 	// -> h = -30
 	
 	// division
-	
 	i = h / -2; 	// -> i = 15
 	j = e / g; 	// -> j = 0
     }

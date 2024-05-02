@@ -11,9 +11,9 @@ analyses = {"nemo_CP_sep":{"engine" : Engine.NEMO,"pa": "ConstantPropagation_sep
             }
 
 
-ConstantPropagation_Config = Config("Example","Example1","Example2", pa_name="ConstantPropagation")
+ConstantPropagation12_Config = Config("Constants","Constants1","Constants2", pa_name="ConstantPropagation")
 
-ConstantPropagation_Config_NEMO_SOUFFLE = Config("Example", "Example1", "Example1", pa_name="ConstantPropagation")
+ConstantPropagation_Config_NEMO_SOUFFLE = Config("Constants", "Constants1", "Constants1", pa_name="ConstantPropagation")
 
 PointerAnalysis12_Config = Config("Pointer", "Pointer1", "Pointer2", pa_name="PointerAnalysis")
 

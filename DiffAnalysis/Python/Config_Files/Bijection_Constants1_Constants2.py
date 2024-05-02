@@ -3,9 +3,9 @@ from Python.Libraries.Merge_Lib import *
 from Python.Config_Files.Analysis_Configs import *
 
 if __name__ == "__main__":
-    db_config = PointerAnalysis12_Config
-    pa_sep = analyses["nemo_PA_sep"]
-    pa_merge = analyses["nemo_PA_merge_end_fold"]
+    db_config = ConstantPropagation12_Config
+    pa_sep = analyses["nemo_CP_sep"]
+    pa_merge = analyses["nemo_CP_merge"]
     # Fact Creation & read into data
     data = Data(db_config.db1_path,db_config.db2_path)
     create_facts(db_config, data.db1_facts.path, data.db2_facts.path)
@@ -35,8 +35,11 @@ if __name__ == "__main__":
     data.db1_bijected_pa = to_bijected_db
 
     data.db1_bijected_pa.write_data_to_file()
+    print(data.bijection)
+    print(data.db1_bijected_pa.data)
+    print(data.db1_pa.data)
+
     # compare bijected results with correct results from pa1
     diff_two_dirs(data.db1_pa, data.db1_bijected_pa)
-    #diff_two_dirs(data.db2_pa, data.db2_merge_pa,rm_identifier=10)
-    print(data.bijection)
+    diff_two_dirs(data.db2_pa, data.db2_merge_pa,rm_identifier=10)
 
