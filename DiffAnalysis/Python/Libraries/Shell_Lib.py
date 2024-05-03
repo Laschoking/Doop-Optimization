@@ -21,7 +21,7 @@ def run_single_pa(pa_config, fact_path, result_path):
 
     if pa_config["engine"] == Engine.NEMO:
         runtime = run_nemo_pa(NEMO_ANALYSIS_BASE.joinpath(pa_config["pa"]), fact_path, result_path)
-    return [[fact_path.parts[-2]] + runtime]
+    return [pa_config["pa"]] + [fact_path.parts[-2:]] + runtime
 
 # Shell commands
 def clear_directory(directory):
@@ -37,7 +37,7 @@ def doop_create_facts(db_config, db_name, fact_path):
     jar_path = Path.joinpath(java_source_dir, db_name).joinpath(db_config.class_name + ".jar")
     if os.path.isfile(java_path):
         os.system("bin/mkjar " + str(java_path)
-                  + " 1.8 " + str(jar_path.parents[0]) )#+ ">/dev/null 2>&1")
+                  + " 1.8 " + str(jar_path.parents[0]))#+ ">/dev/null 2>&1")
     else:
         raise FileNotFoundError("The input file does not exist " + str(java_path))
     #os.system("./doop -a context-insensitive -i " + str(jar_path) + " --id " + str(db_name) + " --facts-only --Xfacts-subset APP --cache --generate-jimple")
@@ -81,10 +81,9 @@ def split_nemo_stdout(stdout):
     return D
 
 
-def print_nemo_runtime(runtime,PA_name):
+def print_nemo_runtime(runtime):
     t = PrettyTable()
     t.field_names = ["Program Analysis","DB", "Total Reasoning", "Loading Input","Reasoning","Saving Output"]
-    for r in runtime:
-        t.add_row([PA_name] + r)
+    t.add_rows(runtime)
     print(t)
 

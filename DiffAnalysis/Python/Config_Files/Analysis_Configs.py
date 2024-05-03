@@ -7,7 +7,8 @@ analyses = {"nemo_CP_sep":{"engine" : Engine.NEMO,"pa": "ConstantPropagation_sep
             "nemo_PA_sep_v4": {"engine": Engine.NEMO, "pa": "PointerAnalyse_separate_v4.rls"},
             "souffle_PA_sep": {"engine" : Engine.SOUFFLE, "pa":"PointerAnalysis_or_self_contained.dl"},
             "nemo_PA_merge": {"engine" : Engine.NEMO, "pa":"PointerAnalyse_merge.rls"},
-            "nemo_PA_merge_end_fold" : {"engine" : Engine.NEMO, "pa": "PointerAnalyse_merge_end_fold.rls"}
+            "nemo_PA_merge_end_fold" : {"engine" : Engine.NEMO, "pa": "PointerAnalyse_merge_end_fold.rls"},
+            "nemo_PA_merge_no_fold": {"engine": Engine.NEMO, "pa": "PointerAnalyse_merge_no_fold.rls"}
             }
 
 

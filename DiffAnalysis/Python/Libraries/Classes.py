@@ -46,19 +46,19 @@ class Data:
     def __init__(self, db1_base_path, db2_base_path):
         self.db1_facts =  DB_Instance(db1_base_path,"facts")
         self.db2_facts =  DB_Instance(db2_base_path,"facts")
-        self.db1_pa = DB_Instance(db1_base_path,"pa_results")
-        self.db2_pa = DB_Instance(db2_base_path,"pa_results")
+        self.db1_pa_base = DB_Instance(db1_base_path, "pa_sep_base")
+        self.db2_pa_base = DB_Instance(db2_base_path, "pa_sep_base")
 
-        self.db2_merge_facts = DB_Instance(db2_base_path,"merge_facts")
-        self.db2_merge_pa = DB_Instance(db2_base_path,"merge_pa_results")
+        self.db2_merge_facts_bij = DB_Instance(db2_base_path, "merge_facts_bij")
+        self.db2_merge_pa_bij = DB_Instance(db2_base_path, "merge_pa_bij")
+        self.db2_merge_path_bij = db2_base_path.joinpath("merge_facts_bij")
 
-        self.db2_merge_path = db2_base_path.joinpath("merge_facts")
-
-
-        self.db1_bijected_pa = DB_Instance(db1_base_path, "bijected_pa_results")
+        self.db1_pa_inv_bij = DB_Instance(db1_base_path, "bijected_pa_results")
         self.bijection = dict()
-
-
+        #Base line case, that we only consider equal rows
+        self.db2_merge_facts_base = DB_Instance(db2_base_path, "merge_facts_base")
+        self.db2_merge_pa_base = DB_Instance(db2_base_path, "merge_pa_base")
+        self.db2_merge_path_base = db2_base_path.joinpath("merge_facts_base")
     def update_bijection(self,bijection):
         self.bijection = bijection
 def print_merge_information(analysis):

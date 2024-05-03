@@ -54,10 +54,6 @@ def create_sim_matrix(similarity_dict):
     term1_list = []
     term2_list = []
     for (term1,term2) in similarity_dict:
-        #if "assign/10" in term1:
-        #    print(term1,term2,similarity_dict[term1,term2])
-        #if "assign/10" in term2:
-        #    print(term1, term2, similarity_dict[term1, term2])
         if term1 not in term1_list: term1_list.append(term1)
         if term2 not in term2_list: term2_list.append(term2)
 
@@ -107,10 +103,9 @@ def find_best_bijection(ma_sim_matrix,row_terms,col_terms):
                 ma_sim_matrix[row, :] = np.ma.masked
                 ma_sim_matrix[:,max_col] = np.ma.masked
             row_it += 1
-        print(conflict_table)
+        #print(conflict_table)
         count_iter += 1
 
-        #print("current length of bijection: " + str(len(bijection)))
     return bijection
 
 
@@ -128,10 +123,6 @@ def apply_bijection(data):
                 if term in data.bijection:
                     bijected_row.append(data.bijection[term])
                 else:
-                    #if term == "<Pointer: void test(int)>/r5#_33":
-                     #   print(term)
-                    #print("no bijection found: " + term)
-                    #print("add identity entry in bijection")
                     new_term = "new_var_" + str(new_var_counter)
                     data.bijection[term] = new_term # introduce new variables
                     new_var_counter += 1
@@ -147,10 +138,7 @@ def apply_bijection(data):
             merged_rows.append(row + ('1',))
         for row in target_db:
             merged_rows.append(row + ('10',))
-        data.db2_merge_facts.insert_data(file,merged_rows)
-
-
-
+        data.db2_merge_facts_bij.insert_data(file, merged_rows)
 
 def forward_bijection(data):
 
@@ -163,8 +151,6 @@ def forward_bijection(data):
     bijection = find_best_bijection(ma_sim_matrix, term1_list, term2_list)
     data.update_bijection(bijection)
     apply_bijection(data)
-
-
     return data
 
 
@@ -176,7 +162,6 @@ def reverse_bijection_on_pa(from_merged_db, to_bijected_db,bijection,from_identi
             # only reverse rows that have the common_identifier (0) or the from_identifier (1/2)
             if row2[-1] == '0' or row2[-1] == str(from_identifier):
                 db1_bij_row = []
-                matching_flag = True
                 for term2 in row2[0:-1]:
                     if term2 in inv_bijection:
                         db1_bij_row.append(inv_bijection[term2])
@@ -186,14 +171,12 @@ def reverse_bijection_on_pa(from_merged_db, to_bijected_db,bijection,from_identi
                         # this happens if constants have been introduced in the PA
                         #print("no inverse bijection found for this term: " + term2 )
                         db1_bij_row.append(term2)
-                        #matching_flag = False
-                if matching_flag :
-                    db1_bij_rows.append(db1_bij_row)
+                db1_bij_rows.append(db1_bij_row)
         to_bijected_db.insert_data(file, db1_bij_rows)
-    return to_bijected_db
+    #return to_bijected_db
 
 
-def diff_two_dirs(db_inst1,db_inst2,rm_identifier=3):
+def diff_two_dirs(db_inst1,db_inst2,rm_identifier='',print_flag=False):
     t = PrettyTable()
     t.field_names = ["file name", db_inst1.name, db_inst2.name, "common rows" , "%"]
     t.sortby = "common rows"
@@ -207,7 +190,7 @@ def diff_two_dirs(db_inst1,db_inst2,rm_identifier=3):
         rows1 = set(db_inst1.data[file])
         rows2 = set()
         # in case, one db still has identifiers appended (like ["a","b", 0], remove
-        if rm_identifier != 3:
+        if rm_identifier != '':
             for x in db_inst2.data[file]:
                 #remove only common identifier & from correct side (dont consider rows that come from the other db)
                 if x[-1] == str(rm_identifier) or x[-1] == '0':
@@ -225,17 +208,96 @@ def diff_two_dirs(db_inst1,db_inst2,rm_identifier=3):
         l_rows1_files += l_rows1
         l_rows2_files += l_rows2
         l_inters_files += l_inters
-
-
-        #if file == "AssignLocal_From":
-        #    print(unique_rows2.difference(inters))
         cov = round(100 * l_inters / (l_rows1 + l_rows2 + l_inters))
         if cov != 100:
-            print(file)
-            print(unique_rows1.difference(inters))
             r = [file, l_rows1 + l_inters, l_rows2 + l_inters,l_inters, str(cov) + "%"]
             t.add_row(r)
     #t.add_row(['','','','','','',''],divider=True)
-    t.add_row(["SUMMARY", l_rows1_files + l_inters_files, l_rows2_files + l_inters_files,l_inters_files, str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files))) + "%"])
-    print(t)
+    t.add_row(["SUMMARY", l_rows1_files, l_rows2_files ,l_inters_files, str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files))) + "%"])
+    if (l_rows1_files > 0 or l_rows2_files > 0) and print_flag:
+        print(t)
+    # we return the nr. of rows for db1, db2, their intersection, and the overlap (inters/ (sum))
+    return [l_rows1_files,l_rows2_files ,l_inters_files,str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files),1))]
 
+
+
+def check_data_correctness(data):
+    t = PrettyTable()
+    # Color
+    R = "\033[0;31;40m"  # RED
+    N = "\033[0m"  # Reset
+
+    t.field_names = ["1. DB", "rows of 1.", "2. DB", "rows of 2.", "common rows","Similarity"]
+
+    # Pointer2-facts == Pointer2_merge_facts_bij (split 10)
+    diff = diff_two_dirs(data.db2_facts, data.db2_merge_facts_bij, rm_identifier=10,print_flag=True)
+    if (diff[0] > 0 or diff[1] > 0 ):
+        t.add_row([R + data.db2_facts.name, diff[0], data.db2_merge_facts_bij.name, diff[1],diff[2], diff[3] + "%" + N])
+
+    # Pointer2-pa-base == Pointer2_merge_pa_bij (split 10)
+    diff = diff_two_dirs(data.db2_pa_base, data.db2_merge_pa_bij, rm_identifier=10,print_flag=True)
+    if (diff[0] > 0 or diff[1] > 0 ):
+        t.add_row([R + data.db2_pa_base.name, diff[0], data.db2_merge_pa_bij.name, diff[1], diff[2], diff[3] + "%" + N])
+
+    # Pointer2-pa-base == Pointer2_merge_pa_base (split 10)
+    diff = diff_two_dirs(data.db2_pa_base, data.db2_merge_pa_base, rm_identifier=10,print_flag=True)
+    if (diff[0] > 0 or diff[1] > 0 ):
+        t.add_row([R + data.db2_pa_base.name, diff[0], data.db2_merge_pa_base.name, diff[1], diff[2], diff[3] + "%" + N])
+
+    # Pointer1_pa_base == Pointer1_pa_inv_bij
+    diff = diff_two_dirs(data.db1_pa_base, data.db1_pa_inv_bij,rm_identifier='',print_flag=True)
+    if (diff[0] > 0 or diff[1] > 0 ):
+        t.add_row([R + data.db1_pa_base.name, diff[0], data.db1_pa_inv_bij.name, diff[1], diff[2], diff[3] + "%" + N])
+
+    # Pointer1-pa-base == Pointer2_merge_pa_base (split 1)
+    diff = diff_two_dirs(data.db1_pa_base, data.db2_merge_pa_base, rm_identifier=1,print_flag=True)
+    if (diff[0] > 0 or diff[1] > 0 ):
+        t.add_row([R + data.db1_pa_base.name, diff[0], data.db2_merge_pa_base.name, diff[1], diff[2], diff[3] + "%" + N])
+    if len(t.rows) > 0:
+        print(t)
+
+def db_overlap(db):
+    split_db = {'1': 0, '10': 0, '0' : 0}
+    for file in db.data:
+        for row in db.data[file]:
+            split_db[row[-1]] += 1
+    return split_db, str(round(100 * split_db['0']/(split_db['1']  + split_db['10'] + split_db['0']),1))
+
+def evaluate_bijection_overlap(data):
+    t = PrettyTable()
+    t.field_names = ["DB", "unique rows DB1", "unique rows DB2","Common Rows","Total Rows","Similarity"]
+
+    split, sim = db_overlap(data.db2_merge_facts_base)
+    t.add_row(["merged-facts-baseline", split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'], sim + "%"])
+
+    split,sim = db_overlap(data.db2_merge_facts_bij)
+    t.add_row(["merged-facts-bijected",  split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'], sim + "%"],divider=True)
+
+    diff = diff_two_dirs(data.db1_pa_base, data.db2_pa_base,rm_identifier='',print_flag=False)
+    t.add_row(["DB1/DB2 separate PA ",diff[0], diff[1],diff[2],diff[0]+diff[1]+diff[2], diff[3] + "%"])
+
+    split,sim = db_overlap(data.db2_merge_pa_base)
+    t.add_row(["merged-pa-baseline", split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'], sim + "%"])
+
+    split,sim = db_overlap(data.db2_merge_pa_bij)
+    t.add_row(["merged-pa-bijected",  split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'], sim + "%"])
+
+    # dont print unique rows from each DB
+    print(t.get_string(fields=["DB", "Common Rows","Total Rows","Similarity"]))
+
+
+def merge_baseline_facts(data):
+    # merge facts where lines are equal
+    for file in data.db1_facts.data:
+        rows = set()
+        rows1 = set(data.db1_facts.data[file])
+        rows2 = set(data.db2_facts.data[file])
+        inters = rows1.intersection(rows2)
+        for row in inters:
+            rows.add(row + ('0',))
+        for row in rows1.difference(rows2):
+            rows.add(row + ('1',))
+        for row in rows2.difference(rows1):
+            rows.add(row + ('10',))
+        data.db2_merge_facts_base.data[file] = rows
+    data.db2_merge_facts_base.write_data_to_file()
