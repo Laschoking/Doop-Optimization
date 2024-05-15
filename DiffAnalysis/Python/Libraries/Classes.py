@@ -19,7 +19,9 @@ class DB_Instance:
         self.db_base_path = db_base_path
         self.name = db_base_path.stem + "-" + sub_dir
         self.path = db_base_path.joinpath(sub_dir)
-        self.data = dict()
+        self.data_rows = dict()
+        self.data_cols = dict()
+
         Shell_Lib.clear_directory(self.path)
 
 
@@ -34,13 +36,19 @@ class DB_Instance:
             self.insert_data(file, rows)
 
     def insert_data(self, file, rows):
-        self.data[file] = [tuple(r) for r in rows]
+        self.data_rows[file] = [tuple(r) for r in rows]
+        if not self.data_cols:
+            for i in len(rows[0]):
+                self.data_cols.append(dict{})
+
+
+        self.data_cols.append()
 
     def write_data_to_file(self):
-        for file in self.data:
+        for file in self.data_rows:
             with open(self.path.joinpath(file).with_suffix('.tsv'), 'w', newline='') as file_path:
                 tsv_writer = csv.writer(file_path, delimiter='\t', lineterminator='\n')
-                for row in self.data[file]:
+                for row in self.data_rows[file]:
                     tsv_writer.writerow(row)
 class Data:
     def __init__(self, db1_base_path, db2_base_path):
@@ -49,16 +57,15 @@ class Data:
         self.db1_pa_base = DB_Instance(db1_base_path, "pa_sep_base")
         self.db2_pa_base = DB_Instance(db2_base_path, "pa_sep_base")
 
-        self.db2_merge_facts_bij = DB_Instance(db2_base_path, "merge_facts_bij")
-        self.db2_merge_pa_bij = DB_Instance(db2_base_path, "merge_pa_bij")
-        self.db2_merge_path_bij = db2_base_path.joinpath("merge_facts_bij")
+        self.db2_merge_facts_bij = DB_Instance(db2_base_path, "facts_merge_bij")
+        self.db2_merge_pa_bij = DB_Instance(db2_base_path, "pa_merge_bij")
 
-        self.db1_pa_inv_bij = DB_Instance(db1_base_path, "bijected_pa_results")
+        self.db1_pa_inv_bij = DB_Instance(db1_base_path, "pa_inv_bij")
         self.bijection = dict()
         #Base line case, that we only consider equal rows
-        self.db2_merge_facts_base = DB_Instance(db2_base_path, "merge_facts_base")
-        self.db2_merge_pa_base = DB_Instance(db2_base_path, "merge_pa_base")
-        self.db2_merge_path_base = db2_base_path.joinpath("merge_facts_base")
+        self.db2_merge_facts_base = DB_Instance(db2_base_path, "facts_merge_base")
+        self.db2_merge_pa_base = DB_Instance(db2_base_path, "pa_merge_base")
+
     def update_bijection(self,bijection):
         self.bijection = bijection
 def print_merge_information(analysis):

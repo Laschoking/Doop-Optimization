@@ -36,8 +36,8 @@ if __name__ == "__main__":
 
     data.db1_pa_inv_bij.write_data_to_file()
     print(data.bijection)
-    print(data.db1_pa_inv_bij.data)
-    print(data.db1_pa_base.data)
+    print(data.db1_pa_inv_bij.data_rows)
+    print(data.db1_pa_base.data_rows)
 
     # compare bijected results with correct results from pa1
     diff_two_dirs(data.db1_pa_base, data.db1_pa_inv_bij)

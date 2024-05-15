@@ -29,3 +29,5 @@ PointerAnalysis34_Config = Config("Pointer", "Pointer3", "Pointer4", pa_name="Po
 
 
 PointerAnalysis_Config_NEMO_SOUFFLE = Config("Pointer", "Pointer1", "Pointer1", pa_name="PointerAnalysis")
+
+PointerAnalysis_Calc_old_new = Config("SimpleJavaCalculator", "Simple-Java-Calculator_old", "Simple-Java-Calculator_new", pa_name="PointerAnalysis")
