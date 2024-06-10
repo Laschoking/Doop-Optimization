@@ -13,19 +13,21 @@ def div_zero(n):
     return n if n != 0 else 10e9
 
 def merge_baseline_facts(data):
-    # merge facts where lines are equal
-    for file in data.db1_facts.data_rows:
-        rows = set()
+    # merge atoms that are equal
+    # TODO: ist doch super weird zeilenweise zu mergen, d.h. manchmal wird Term1 auf T2 abgebildet & manchmal nicht
+
+    for file in data.db1_facts.files:
+        rows = []
         rows1 = set(data.db1_facts.data_rows[file])
         rows2 = set(data.db2_facts.data_rows[file])
         inters = rows1.intersection(rows2)
         for row in inters:
-            rows.add(row + ('0',))
+            rows.append(row + ('0',))
         for row in rows1.difference(rows2):
-            rows.add(row + ('1',))
+            rows.append(row + ('1',))
         for row in rows2.difference(rows1):
-            rows.add(row + ('10',))
-        data.db2_merge_facts_base.data_rows[file] = rows
+            rows.append(row + ('10',))
+        data.db2_merge_facts_base.insert_data(file,rows)
     data.db2_merge_facts_base.write_data_to_file()
 
 
@@ -36,21 +38,15 @@ def merge_baseline_facts(data):
      - for each assignment (row_term, col_term) the corresponding column & row is masked 
 '''
 def calculate_pairwise_similarity(data):
-    terms1 = set()
-    terms2 = set()
     similarity_dict = {}
     # based on the path to the first relation, determine path to second relation
-    for file in data.db1_facts.data_rows:
-        rows1 = data.db1_facts.data_rows[file]
-        rows2 = data.db2_facts.data_rows[file]
-        for row1 in rows1:
-            for ind2 in range(len(rows2)):
-                row2 = rows2[ind2]
-                for i in range(len(row1)):
-                    term1 = row1[i]
-                    term2 = row2[i]
-                    terms1.add(term1)
-                    terms2.add(term2)
+    for file in data.db1_facts.files:
+        col_len = data.db1_facts.files[file]
+        cols1 = data.db1_facts.data_cols[file]
+        cols2 = data.db2_facts.data_cols[file]
+        for col_nr in range(col_len):
+            for term1 in cols1[col_nr]:
+                for term2 in cols2[col_nr]:
                     if (term1, term2) not in similarity_dict:
                         # currently only accepts positive integers due to isdigit()
                         if term1.lstrip("-").isdigit() and term2.lstrip("-").isdigit():
@@ -58,6 +54,7 @@ def calculate_pairwise_similarity(data):
                             if max_int > 0:
                                 sim = 1 - abs(int(term1) - int(term2)) / max_int
                             else:
+                                # if both values are 0, have to set sim to 1
                                 sim = 1
                         else:
                             sim = SequenceMatcher(None, term1, term2).ratio()
@@ -67,20 +64,29 @@ def calculate_pairwise_similarity(data):
 '''
 set von columns statt liste von rows
 vereinfacht berechnungen, da keine Dopplungen
-
 '''
 def calculate_occurance_similarity(data):
-    terms1 = set()
-    terms2 = set()
     similarity_dict = {}
     # based on the path to the first relation, determine path to second relation
-    for file in data.db1_facts.data_rows:
-        rows1 = data.db1_facts.data_rows[file]
-        rows2 = data.db2_facts.data_rows[file]
-        for col in range(len(rows1[0])):
-            break
-
-
+    for file in data.db1_facts.files:
+        nr_cols = data.db1_facts.files[file]
+        cols1 = data.db1_facts.data_cols[file]
+        cols2 = data.db2_facts.data_cols[file]
+        for ind in range(nr_cols):
+            for term1 in cols1[ind]:
+                for term2 in cols2[ind]:
+                    if (term1, term2) not in similarity_dict:
+                        if term1.lstrip("-").isdigit() and term2.lstrip("-").isdigit():
+                            max_int = max(int(term1), int(term2))
+                            if max_int > 0:
+                                sim = 1 - abs(int(term1) - int(term2)) / max_int
+                            else:
+                                sim = 1
+                        else:
+                            sim = SequenceMatcher(None, term1, term2).ratio()
+                        similarity_dict[(term1, term2)] = sim + 1
+                    else:
+                        similarity_dict[(term1, term2)] += 1
     return similarity_dict
 
 
@@ -153,7 +159,7 @@ def find_best_bijection(ma_sim_matrix, row_terms, col_terms):
 
 def apply_bijection(data):
     new_var_counter = 0
-    for file in data.db1_facts.data_rows:
+    for file in data.db1_facts.files:
         rows1 = data.db1_facts.data_rows[file]
         rows2 = data.db2_facts.data_rows[file]
         bijected_db = set()
@@ -187,6 +193,7 @@ def forward_bijection(data):
     # similar_files will swap the order of both directories, if db1 > db2
     # we want the smaller db to be at the y-axis (rows) and bigger db ath x-axis (columns)
     # because we biject fromt the smaller db to the bigger db
+    #sim_dictionary = calculate_occurance_similarity(data)
     sim_dictionary = calculate_pairwise_similarity(data)
     ma_sim_matrix, term1_list, term2_list = create_sim_matrix(sim_dictionary)
 
@@ -198,7 +205,7 @@ def forward_bijection(data):
 
 def reverse_bijection_on_pa(from_merged_db, to_bijected_db, bijection, from_identifier):
     inv_bijection = dict((term2, term1) for term1, term2 in bijection.items())
-    for file in from_merged_db.data_rows:
+    for file in from_merged_db.files:
         db1_bij_rows = []
         for row2 in from_merged_db.data_rows[file]:
             # only reverse rows that have the common_identifier (0) or the from_identifier (1/2)
@@ -225,8 +232,8 @@ def diff_two_dirs(db_inst1, db_inst2, rm_identifier='', print_flag=False):
     l_inters_files = 0
     l_rows1_files = 0
     l_rows2_files = 0
-    for file in db_inst1.data_rows:
-        if file not in db_inst2.data_rows:
+    for file in db_inst1.files:
+        if file not in db_inst2.files:
             print("file was not compared: " + file)
             continue
         rows1 = set(db_inst1.data_rows[file])
@@ -305,7 +312,7 @@ def check_data_correctness(data):
 
 def db_overlap(db):
     split_db = {'1': 0, '10': 0, '0': 0}
-    for file in db.data_rows:
+    for file in db.files:
         for row in db.data_rows[file]:
             split_db[row[-1]] += 1
     return split_db, str(round(100 * split_db['0'] / (split_db['1'] + split_db['10'] + split_db['0']), 1))

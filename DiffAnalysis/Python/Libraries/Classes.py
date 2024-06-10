@@ -21,6 +21,7 @@ class DB_Instance:
         self.path = db_base_path.joinpath(sub_dir)
         self.data_rows = dict()
         self.data_cols = dict()
+        self.files = dict() # returns file and column count
 
         Shell_Lib.clear_directory(self.path)
 
@@ -36,13 +37,19 @@ class DB_Instance:
             self.insert_data(file, rows)
 
     def insert_data(self, file, rows):
-        self.data_rows[file] = [tuple(r) for r in rows]
-        if not self.data_cols:
-            for i in len(rows[0]):
-                self.data_cols.append(dict{})
+        if file not in self.files:
+            l_cols = len(rows[0]) if rows else 0
+            self.files[file] = l_cols
+            self.data_cols[file] = [set() for i in range(l_cols)]
+            self.data_rows[file] = set()
 
+        #create a list of sets (one for each column)
+        for row in rows:
+            self.data_rows[file].add(tuple(row))
 
-        self.data_cols.append()
+            for ind in range(l_cols):
+                self.data_cols[file][ind].add(row[ind])
+
 
     def write_data_to_file(self):
         for file in self.data_rows:

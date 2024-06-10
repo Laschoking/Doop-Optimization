@@ -42,7 +42,7 @@ def doop_create_facts(db_config, db_name, fact_path):
         print("No Java-file found, use .jar ")
     if not os.path.isfile(jar_path):
         raise FileNotFoundError("Java & Jar File do not exist: " + str(java_path))
-    os.system("./doop -a context-insensitive -i " + str(jar_path) + " --id " + str(db_name) + " --facts-only --Xfacts-subset APP --cache --generate-jimple")
+    #os.system("./doop -a context-insensitive -i " + str(jar_path) + " --id " + str(db_name) + " --facts-only --Xfacts-subset APP --cache --generate-jimple")
 
     for file in DOOP_OUT.joinpath(db_name).joinpath("database").glob("*.facts"):
         new_file_name = file.with_suffix('.tsv').name
