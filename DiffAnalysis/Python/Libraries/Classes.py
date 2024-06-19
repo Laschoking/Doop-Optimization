@@ -1,8 +1,9 @@
 from enum import Enum
 from pathlib import Path
-from Python.Libraries.Path_Lib import *
-from Python.Libraries import Shell_Lib
+from Python.Libraries.PathLib import *
+from Python.Libraries import ShellLib
 import csv
+
 
 class Config:
     def __init__(self, class_name, db1_name, db2_name, pa_name):
@@ -15,15 +16,16 @@ class Config:
         self.pa_name = pa_name
 
 class DB_Instance:
-    def __init__(self,db_base_path,sub_dir):
+    def __init__(self,db_base_path, sub_dir):
         self.db_base_path = db_base_path
         self.name = db_base_path.stem + "-" + sub_dir
         self.path = db_base_path.joinpath(sub_dir)
         self.data_rows = dict()
         self.data_cols = dict()
-        self.files = dict() # returns file and column count
+        self.files = dict()
 
-        Shell_Lib.clear_directory(self.path)
+        # delete existing files in sub_dir
+        ShellLib.clear_directory(self.path)
 
 
     def read_directory(self):
@@ -34,9 +36,9 @@ class DB_Instance:
                 tsv_file = csv.reader(db_file, delimiter='\t', quotechar='"')
                 for row in tsv_file:
                     rows.append(tuple(row))
-            self.insert_data(file, rows)
+            self.insert_records(file, rows)
 
-    def insert_data(self, file, rows):
+    def insert_records(self, file, rows):
         if file not in self.files:
             l_cols = len(rows[0]) if rows else 0
             self.files[file] = l_cols
@@ -57,24 +59,44 @@ class DB_Instance:
                 tsv_writer = csv.writer(file_path, delimiter='\t', lineterminator='\n')
                 for row in self.data_rows[file]:
                     tsv_writer.writerow(row)
-class Data:
+
+
+class Bijection:
+    def __init__(self, paths,name):
+        self.name = name
+        self.db2_merged_facts = DB_Instance(paths.db2_facts, name)
+        self.db2_nemo_merged_results = DB_Instance(paths.db2_results, name)
+
+        self.db1_inv_bij_results = DB_Instance(paths.db1_results, name)
+        self.similarity_dict = dict()
+        self.mapping = dict()
+
+    def set_mapping(self, mapping):
+        self.mapping = mapping
+
+class BasePaths:
+    def __init__(self,db1_base_path, db2_base_path):
+        self.db1_facts = db1_base_path.joinpath("facts")
+        self.db2_facts = db2_base_path.joinpath("facts")
+        self.db1_results = db1_base_path.joinpath("results")
+        self.db2_results = db2_base_path.joinpath("results")
+
+
+class DataFrame:
     def __init__(self, db1_base_path, db2_base_path):
-        self.db1_facts =  DB_Instance(db1_base_path,"facts")
-        self.db2_facts =  DB_Instance(db2_base_path,"facts")
-        self.db1_pa_base = DB_Instance(db1_base_path, "pa_sep_base")
-        self.db2_pa_base = DB_Instance(db2_base_path, "pa_sep_base")
+        self.paths = BasePaths(db1_base_path, db2_base_path)
+        # origin of the facts for both databases
 
-        self.db2_merge_facts_bij = DB_Instance(db2_base_path, "facts_merge_bij")
-        self.db2_merge_pa_bij = DB_Instance(db2_base_path, "pa_merge_bij")
+        self.db1_original_facts = DB_Instance(self.paths.db1_facts, "db1-original")
+        self.db2_original_facts = DB_Instance(self.paths.db2_facts, "db2-original")
 
-        self.db1_pa_inv_bij = DB_Instance(db1_base_path, "pa_inv_bij")
-        self.bijection = dict()
-        #Base line case, that we only consider equal rows
-        self.db2_merge_facts_base = DB_Instance(db2_base_path, "facts_merge_base")
-        self.db2_merge_pa_base = DB_Instance(db2_base_path, "pa_merge_base")
+        # origin for separate Program Analysis without Bijection
+        self.db1_original_results = DB_Instance(self.paths.db1_results, "db1-original")
+        self.db2_original_results = DB_Instance(self.paths.db2_results, "db2-original")
 
-    def update_bijection(self,bijection):
-        self.bijection = bijection
+        self.bijections = []
+    def add_bijection(self, bijection):
+        self.bijections.append(bijection)
 def print_merge_information(analysis):
     print("----------- META INFORMATION -----------")
     print("Compared databases: " + analysis.db1.name + " , " + analysis.db2.name)

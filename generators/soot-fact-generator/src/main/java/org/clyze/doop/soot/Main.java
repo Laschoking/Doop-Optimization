@@ -64,8 +64,7 @@ public class Main {
 
         Options.v().set_output_dir(outDir);
         // Use-original-names may cause crashes on Android (Soot issue 1256).
-        if (!sootParameters._android)
-            Options.v().setPhaseOption("jb", "use-original-names:false");
+        //Options.v().setPhaseOption("jb", "use-original-names:true");
         Options.v().setPhaseOption("jb", "model-lambdametafactory:false");
         //Options.v().setPhaseOption("jb.dtr", "enabled:false");
         //Options.v().setPhaseOption("jb.ese", "enabled:false");

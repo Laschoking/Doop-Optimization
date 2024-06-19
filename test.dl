@@ -1,0 +1,10 @@
+.decl MainClass(s:symbol)
+.output MainClass(io=stdout)
+MainClass("docs/doop-101-examples/Pointer/Example").
+
+MainClass(?b):-
+  MainClass(?a),
+  ?l1 = strlen(?a),
+  ?l2 = strlen("Example"),
+  ?b = substr(?a, ?l1 - ?l2, ?l2),
+  match(".*Example",?a).

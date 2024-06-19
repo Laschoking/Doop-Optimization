@@ -23,5 +23,5 @@ fi
 jar cvfe $filenameJar $filename -C $tmpDir .
 rm -rf $tmpDir
 
-echo "Moving generated jar file into $outDir"
-mv $filenameJar $outDir
+#echo "Moving generated jar file into $outDir"
+#mv $filenameJar $outDir
