@@ -22,8 +22,8 @@ class DB_Instance:
         self.path = db_base_path.joinpath(sub_dir)
         self.data_rows = dict()
         self.data_cols = dict()
+        self.terms = dict()
         self.files = dict()
-
         # delete existing files in sub_dir
         ShellLib.clear_directory(self.path)
 
@@ -35,22 +35,31 @@ class DB_Instance:
             with open(rel_path, newline='') as db_file:
                 tsv_file = csv.reader(db_file, delimiter='\t', quotechar='"')
                 for row in tsv_file:
-                    rows.append(tuple(row))
+                    rows.append(row)
             self.insert_records(file, rows)
 
     def insert_records(self, file, rows):
         if file not in self.files:
-            l_cols = len(rows[0]) if rows else 0
+            l_cols = len(rows[0]) if len(rows) > 0 else 0
             self.files[file] = l_cols
             self.data_cols[file] = [set() for i in range(l_cols)]
-            self.data_rows[file] = set()
+            self.data_rows[file] = []
 
+        row_nr = len(self.data_rows[file])
+
+        # TODO: aktuell werden Terme für alle DB-Instanzen gespeichert, obwohl
+        # nur für db1-facts & db2-facts benötigt
         #create a list of sets (one for each column)
         for row in rows:
-            self.data_rows[file].add(tuple(row))
-
-            for ind in range(l_cols):
-                self.data_cols[file][ind].add(row[ind])
+            self.data_rows[file].append(row)
+            for col_nr in range(l_cols):
+                term = row[col_nr]
+                if term in self.terms:
+                    self.terms[term][(file,col_nr)] = row_nr
+                else:
+                    self.terms[term] = {(file, col_nr) :  row_nr }
+                self.data_cols[file][col_nr].add(row[col_nr])
+            row_nr += 1
 
 
     def write_data_to_file(self):
@@ -60,19 +69,6 @@ class DB_Instance:
                 for row in self.data_rows[file]:
                     tsv_writer.writerow(row)
 
-
-class Bijection:
-    def __init__(self, paths,name):
-        self.name = name
-        self.db2_merged_facts = DB_Instance(paths.db2_facts, name)
-        self.db2_nemo_merged_results = DB_Instance(paths.db2_results, name)
-
-        self.db1_inv_bij_results = DB_Instance(paths.db1_results, name)
-        self.similarity_dict = dict()
-        self.mapping = dict()
-
-    def set_mapping(self, mapping):
-        self.mapping = mapping
 
 class BasePaths:
     def __init__(self,db1_base_path, db2_base_path):
@@ -94,9 +90,13 @@ class DataFrame:
         self.db1_original_results = DB_Instance(self.paths.db1_results, "db1-original")
         self.db2_original_results = DB_Instance(self.paths.db2_results, "db2-original")
 
-        self.bijections = []
-    def add_bijection(self, bijection):
-        self.bijections.append(bijection)
+
+        self.terms1 = dict()
+        self.terms2 = dict()
+        self.mappings = []
+
+    def add_mapping(self, mapping):
+        self.mappings.append(mapping)
 def print_merge_information(analysis):
     print("----------- META INFORMATION -----------")
     print("Compared databases: " + analysis.db1.name + " , " + analysis.db2.name)

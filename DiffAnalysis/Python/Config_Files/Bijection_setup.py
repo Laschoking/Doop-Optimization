@@ -1,11 +1,10 @@
-from Python.Libraries import ShellLib
-from Python.Libraries.MergeLib import *
+from Python.Libraries.EvaluateMappings import *
 from Python.Config_Files.Analysis_Configs import *
-from Python.Libraries.DBEvaluation import DBMetaData
-from Python.Libraries.LexicalBijections.StringEqualityBaseline import *
-from Python.Libraries.StructuralBijections.SequenceMatcherPairOccurance import *
-from Python.Libraries.LexicalBijections.SequenceMatcher import *
-
+from Python.Libraries.PairwiseMetrics.StringEquality import *
+from Python.Libraries.PairwiseMetrics.SequenceMatcherPairOccurance import *
+from Python.Libraries.PairwiseMetrics.SequenceMatcher import *
+from Python.Libraries.PairwiseMetrics.TermOccuranceIterative import *
+import time
 
 if __name__ == "__main__":
 
@@ -32,7 +31,7 @@ if __name__ == "__main__":
     DBMetaData.calculate_pairwise_occurance_within_DB(data_frame.db2_facts)
     '''
     pa_runtime = []
-    eval_bijections = []
+    eval_mappings = []
 
     # compute & evaluate equality base line
     pa_runtime.append(ShellLib.chase_nemo(pa_sep, data_frame.db1_original_facts.path, data_frame.db1_original_results.path))
@@ -41,40 +40,48 @@ if __name__ == "__main__":
     data_frame.db1_original_results.read_directory()
     data_frame.db2_original_results.read_directory()
 
-    # add bijections to data_frame
-    data_frame.add_bijection(StringEqualityBaseline(data_frame.paths))
-    data_frame.add_bijection(SequenceMatcher(data_frame.paths))
-    data_frame.add_bijection(SequenceMatcherPairOccurance(data_frame.paths))
 
-    # iterate through all selected bijection functions
-    for bijection in data_frame.bijections:
+
+
+    # add mappings to data_frame
+    db1 = data_frame.db1_original_facts
+    db2 = data_frame.db2_original_facts
+    #data_frame.add_mapping(StringEquality(data_frame.paths))
+    #data_frame.add_mapping(SequenceMatcher(data_frame.paths))
+    #data_frame.add_mapping(SequenceMatcherPairOccurance(data_frame.paths))
+    data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
+
+    # iterate through all selected mapping functions
+    for mapping in data_frame.mappings:
+        t0 = time.time()
         # calculate similarity_matrix & compute maximal mapping from db1 to db2
-        bijection.compute_similarity(data_frame)
-        ma_sim_matrix, term1_list, term2_list = create_sim_matrix(bijection.similarity_dict)
-        mapping = compute_optimal_mapping(ma_sim_matrix, term1_list, term2_list)
-        bijection.set_mapping(mapping)
+        mapping.compute_mapping(db1,db2)
+
 
         # execute best mapping and create merged database: merge(map(db1), db2) -> merge_db2
-        apply_mapping_and_merge_dbs(data_frame,bijection)
-        bijection.db2_merged_facts.write_data_to_file()
+        mapping.merge_dbs(db1,db2)
+        mapping.db2_merged_facts.write_data_to_file()
 
         # run Nemo-Rules on merged facts (merge_db2 )
-        #pa_runtime.append(ShellLib.chase_nemo(pa_merge, bijection.db2_merge_facts_base.path, bijection.db2_merge_pa_base.path))
-        pa_runtime.append(ShellLib.chase_nemo(pa_merge, bijection.db2_merged_facts.path, bijection.db2_nemo_merged_results.path))
+        #pa_runtime.append(ShellLib.chase_nemo(pa_merge, mapping.db2_merge_facts_base.path, mapping.db2_merge_pa_base.path))
+        pa_runtime.append(ShellLib.chase_nemo(pa_merge, mapping.db2_merged_facts.path, mapping.db2_nemo_merged_results.path))
 
         # Read PA-results
-        bijection.db2_nemo_merged_results.read_directory()
+        mapping.db2_nemo_merged_results.read_directory()
 
-        # Apply bijection to merged-result (from db2)
-        inverse_bijection(bijection.db2_nemo_merged_results, bijection.db1_inv_bij_results, bijection.mapping, 1)
-        bijection.db1_inv_bij_results.write_data_to_file()
+        # Apply mapping to merged-result (from db2)
+        mapping.inverse_mapping(1)
+
 
         # check if bijected results correspond to correct results from base
-        check_data_correctness(data_frame,bijection)
+        check_data_correctness(data_frame,mapping)
+        t1 = time.time()
+        print(mapping.name)
+        print("Time taken to compute: " + str(t1 - t0))
 
-        # Evaluation function to analyse if the bijection reduces storage
+        # Evaluation function to analyse if the mapping reduces storage
 
-    print(evaluate_bijection_overlap(data_frame))
+    print(evaluate_mapping_overlap(data_frame))
 
 # eine Tabelle mit allen PA
 
