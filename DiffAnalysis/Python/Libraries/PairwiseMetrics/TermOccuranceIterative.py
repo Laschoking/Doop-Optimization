@@ -15,7 +15,6 @@ class TermOccuranceIterative(Iterative_Anchor_Mapping):
         structural_sim = -2 * intersection.total() / (counter1.total() + counter2.total())
         # eventually integrate lexical similarity
         # TODO: currently priority queue works with minimal value first
-        # file, t1_row, t2_row
         join_atoms = []
         for overlap in intersection:
             join_atoms.append(overlap + (term1_occ[overlap],term2_occ[overlap]))

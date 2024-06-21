@@ -2,7 +2,6 @@ import copy
 import itertools
 import queue
 from collections import Counter
-from sortedcontainers import SortedList
 import numpy as np
 from Python.Libraries.MappingStrategies.Mapping import *
 import matplotlib.pyplot as plt
@@ -20,7 +19,7 @@ class Iterative_Anchor_Mapping(Mapping):
         hubs2 = self.find_hubs(db2.terms)
         db1_data_rows_copy = copy.deepcopy(db1.data_rows)
         db2_data_rows_copy = copy.deepcopy(db2.data_rows)
-        pq_watch = set()
+        pq_watch = SortedList()
         expanded_sim = []
         queue_len = []
         mapped_sim = []
@@ -38,34 +37,25 @@ class Iterative_Anchor_Mapping(Mapping):
             if term1 in free_terms1 and term2 in free_terms2:
                 self.mapping[term1] = term2
                 mapped_sim.append(sim)
-
                 free_terms1.discard(term1)
                 free_terms2.discard(term2)
-
-                # delete occurances of term1 and term2
-                # for file, col, row in db1.terms[term1]:
-                for (file, col), row in db1.terms[term1].items():
-                    db1_data_rows_copy[file][row][col] = None
-                for (file, col), row in db2.terms[term2].items():
-                    db2_data_rows_copy[file][row][col] = None
 
                 # expand possible mappings:
                 # column is irrelevant since we want to match things
                 for file, col, t1_row, t2_row in join:
                     # this excludes the old column of term1 & term2
                     for ind in itertools.chain(range(col), range(col + 1,db1.files[file])):
-                        new_t1 = db1_data_rows_copy[file][t1_row][ind]
-                        new_t2 = db2_data_rows_copy[file][t2_row][ind]
-                    # if one of the terms has been set to None,
-                    # we know that the term has been mapped already
-                        if new_t1 == None or new_t2 == None:
-                            continue
-                        sim, join = self.similarity(term1, db1.terms[new_t1], term2, db2.terms[new_t2])
-                        t = (sim, (new_t1, new_t2, join))
-                        if sim != 0 and (new_t1,new_t2) not in pq_watch:
-                            expanded_sim.append(sim)
-                            pq.put(t)
-                            pq_watch.add((new_t1,new_t2))
+                        new_t1 = db1.data_rows[file][t1_row][ind]
+                        new_t2 = db2.data_rows[file][t2_row][ind]
+
+                    # check if both terms are free to use
+                        if new_t1 in free_terms1 and new_t2 in free_terms2 and (new_t1,new_t2) not in pq_watch:
+                            sim, join = self.similarity(term1, db1.terms[new_t1], term2, db2.terms[new_t2])
+                            t = (sim, (new_t1, new_t2, join))
+                            if sim > 0 :
+                                expanded_sim.append(sim)
+                                pq.put(t)
+                                pq_watch.add((new_t1,new_t2))
                 queue_len.append(pq.qsize())
 
         print(len(self.mapping))
