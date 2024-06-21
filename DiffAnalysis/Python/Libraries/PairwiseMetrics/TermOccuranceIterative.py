@@ -2,6 +2,7 @@ from collections import Counter
 from Python.Libraries import Classes
 from Python.Libraries.MappingStrategies.Iterative_Anchor_Mapping import *
 
+
 class TermOccuranceIterative(Iterative_Anchor_Mapping):
     def __init__(self,paths):
         super().__init__(paths,"TermOccuranceIterative")

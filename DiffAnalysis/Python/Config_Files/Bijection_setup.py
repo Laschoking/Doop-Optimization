@@ -1,8 +1,10 @@
 from Python.Libraries.EvaluateMappings import *
 from Python.Config_Files.Analysis_Configs import *
-from Python.Libraries.PairwiseMetrics.StringEquality import *
-from Python.Libraries.PairwiseMetrics.SequenceMatcherPairOccurance import *
+
+from Python.Libraries.PairwiseMetrics.ISUBStringMetric import *
+from Python.Libraries.PairwiseMetrics.ISUBSequenceMatcher import *
 from Python.Libraries.PairwiseMetrics.SequenceMatcher import *
+from Python.Libraries.PairwiseMetrics.SequenceMatcherPairOccurance import *
 from Python.Libraries.PairwiseMetrics.TermOccuranceIterative import *
 import time
 
@@ -49,6 +51,9 @@ if __name__ == "__main__":
     #data_frame.add_mapping(StringEquality(data_frame.paths))
     #data_frame.add_mapping(SequenceMatcher(data_frame.paths))
     #data_frame.add_mapping(SequenceMatcherPairOccurance(data_frame.paths))
+    #data_frame.add_mapping(ISUBSequenceMatcher(data_frame.paths))
+    #data_frame.add_mapping(ISUBStringMetric(data_frame.paths))
+
     data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
 
     # iterate through all selected mapping functions

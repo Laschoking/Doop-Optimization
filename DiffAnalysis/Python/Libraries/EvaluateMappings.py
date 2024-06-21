@@ -85,7 +85,7 @@ def db_overlap(db):
     for file in db.files:
         for row in db.data_rows[file]:
             split_db[row[-1]] += 1
-        print(file + ": " +  str(split_db['1']) + "  " + str(split_db['10']) + "  " + str(split_db['0']))
+        #print(file + ": " +  str(split_db['1']) + "  " + str(split_db['10']) + "  " + str(split_db['0']))
     return split_db, str(round(100 * split_db['0'] / (split_db['1'] + split_db['10'] + split_db['0']), 1))
 
 

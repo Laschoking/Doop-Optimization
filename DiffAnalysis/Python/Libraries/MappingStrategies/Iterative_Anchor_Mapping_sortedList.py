@@ -1,46 +1,42 @@
 import copy
-import itertools
-import queue
-from collections import Counter
 from sortedcontainers import SortedList
+# pro unique wert liste von tupeln wäre möglich
+import itertools
+from collections import Counter
 import numpy as np
 from Python.Libraries.MappingStrategies.Mapping import *
 import matplotlib.pyplot as plt
-from sortedcontainers import SortedList
 class Iterative_Anchor_Mapping(Mapping):
     def __init__(self,paths,name):
         super().__init__(paths,name)
 
     def compute_mapping(self, db1,db2):
-        pq = queue.PriorityQueue()
-        free_terms1 = SortedList(list(db1.terms.keys()))
-        free_terms2 = SortedList(list(db2.terms.keys()))
-
+        sl = SortedList()
+        used1 = set()
+        used2 = set()
         hubs1 = self.find_hubs(db1.terms)
         hubs2 = self.find_hubs(db2.terms)
         db1_data_rows_copy = copy.deepcopy(db1.data_rows)
         db2_data_rows_copy = copy.deepcopy(db2.data_rows)
-        pq_watch = set()
+        sl_watch = set()
         expanded_sim = []
-        queue_len = []
         mapped_sim = []
         for term1 in hubs1:
             for term2 in hubs2:
                 sim, join = self.similarity(term1, db1.terms[term1], term2, db2.terms[term2])
                 if sim != 0:
-                    pq.put((sim, (term1, term2, join)))
-                    pq_watch.add((term1,term2))
+                    sl.add((sim, (term1, term2, join)))
+                    sl_watch.add((term1,term2))
                     expanded_sim.append(sim)
 
-        queue_len.append(pq.qsize())
-        while not pq.empty():
-            sim, (term1, term2, join) = pq.get()
-            if term1 in free_terms1 and term2 in free_terms2:
+        while not sl.empty():
+            sim, (term1, term2, join) = sl.get()
+            if term1 not in used1 and term2 not in used2:
                 self.mapping[term1] = term2
                 mapped_sim.append(sim)
 
-                free_terms1.discard(term1)
-                free_terms2.discard(term2)
+                used1.add(term1)
+                used2.add(term2)
 
                 # delete occurances of term1 and term2
                 # for file, col, row in db1.terms[term1]:
@@ -62,17 +58,14 @@ class Iterative_Anchor_Mapping(Mapping):
                             continue
                         sim, join = self.similarity(term1, db1.terms[new_t1], term2, db2.terms[new_t2])
                         t = (sim, (new_t1, new_t2, join))
-                        if sim != 0 and (new_t1,new_t2) not in pq_watch:
+                        if sim != 0 and (new_t1,new_t2) not in sl_watch:
                             expanded_sim.append(sim)
-                            pq.put(t)
-                            pq_watch.add((new_t1,new_t2))
-                queue_len.append(pq.qsize())
-
+                            sl.put(t)
+                            sl_watch.add((new_t1,new_t2))
         print(len(self.mapping))
-        fig, ax = plt.subplots(3,1)
-        ax[0].scatter(range(len(expanded_sim)),np.array(expanded_sim),s=1,label='Expanded Similarities')
-        ax[1].scatter(range(len(mapped_sim)), np.array(mapped_sim), s=1, label='Mapped Similarities')
-        ax[2].scatter(range(len(queue_len)),queue_len,s=2, label='Queue Size')
+        fig, ax = plt.subplots()
+        ax.scatter(range(len(expanded_sim)),np.array(expanded_sim),s=1,label='Expanded Similarities')
+        #ax.scatter(range(len(mapped_sim)), np.array(mapped_sim), s=1, label='Mapped Similarities')
         plt.show()
         return
 
