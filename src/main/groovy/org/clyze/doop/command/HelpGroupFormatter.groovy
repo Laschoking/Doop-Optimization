@@ -44,7 +44,7 @@ class HelpGroupFormatter extends HelpFormatter {
         }
     }
 
-    static Tuple2<Options, Integer> getOptionsInfo(org.apache.commons.cli.Options opts) {
+    static Tuple2<Options, Integer> getOptionsInfo(Options opts) {
         return new Tuple2<>(opts, calcMaxWidth(opts))
     }
 
@@ -61,9 +61,9 @@ class HelpGroupFormatter extends HelpFormatter {
      * @param opts      the options
      * @return          the size of the longest option line (excluding description)
      */
-    static int calcMaxWidth(org.apache.commons.cli.Options opts) {
+    static int calcMaxWidth(Options opts) {
         (opts.options as Collection<Option>).collect { opt ->
-            opt.longOpt.size() + (opt.hasArg() ? (opt.argName ?: argName).size() + 3 : 0)
+            opt.longOpt.size() + (opt.hasArg() ? (opt.argName ?: "").size() + 3 : 0)
         }.max()
     }
 }

@@ -1,7 +1,7 @@
 # Doop - Framework for Java Pointer and Taint Analysis (using P/Taint)
 
 This document contains instructions for invoking the main driver of Doop. 
-* For an introduction to Datalog, please consult [Datalog-101](docs/datalog-101.md). 
+* For an introduction to Datalog, please consult [Datalog-101](docs/datalog-101-legacy.md). 
 * For a more detailed tutorial on using the results of Doop analyses, please consult [Doop-101](docs/doop-101.md). 
 * For an introduction to pointer analysis using Datalog, you can read a [research-level tutorial](http://yanniss.github.io/points-to-tutorial15.pdf).
 * For the architecture of Doop, see [docs/documentation.md](docs/documentation.md).
@@ -39,6 +39,48 @@ Support:
 (a) Email: there is currently no mailing list, but there is an alias for support questions: doop-support@googlegroups.com
 
 (b) [Discord server](https://discord.gg/4q7rj5s)
+
+## Using Doop as a Library
+
+Add the JitPack repository to your root build.gradle or pom.xml
+
+### build.gradle configuration for Gradle
+
+```
+dependencyResolutionManagement {
+	repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+	repositories {
+		mavenCentral()
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
+
+### Add the dependency in build.gradle
+```
+dependencies {
+    implementation 'com.github.plast-lab:Doop:4:24:13'
+}
+```
+
+### pom.xml configuration for Maven
+```
+<repositories>
+	<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
+</repositories>
+```
+### Add the dependency in pom.xml
+
+```
+<dependency>
+    <groupId>com.github.plast-lab</groupId>
+    <artifactId>Doop</artifactId>
+    <version>4.24.13</version>
+</dependency>
+```
 
 ## Benchmarks & Platform Lib
 

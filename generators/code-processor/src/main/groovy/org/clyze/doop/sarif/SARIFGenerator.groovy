@@ -1,25 +1,15 @@
 package org.clyze.doop.sarif
 
 import groovy.transform.CompileStatic
-import java.util.Collections
-import java.util.concurrent.atomic.AtomicInteger
 import org.clyze.persistent.model.Element
 import org.clyze.persistent.model.Position
 import org.clyze.persistent.model.SymbolWithId
 import org.clyze.persistent.model.Usage
-import org.clyze.persistent.model.jvm.JvmClass
-import org.clyze.persistent.model.jvm.JvmField
-import org.clyze.persistent.model.jvm.JvmHeapAllocation
-import org.clyze.persistent.model.jvm.JvmMethod
-import org.clyze.persistent.model.jvm.JvmMethodInvocation
-import org.clyze.persistent.model.jvm.JvmVariable
-import org.clyze.sarif.model.ArtifactLocation
-import org.clyze.sarif.model.Location
-import org.clyze.sarif.model.Message
-import org.clyze.sarif.model.Result
-import org.clyze.sarif.model.Rule
+import org.clyze.persistent.model.jvm.*
 import org.clyze.sarif.SARIFWriter
+import org.clyze.sarif.model.*
 
+import java.util.concurrent.atomic.AtomicInteger
 /**
  * This class writes analysis results in the SARIF format.
  * This is an abstract class: concrete subclasses must
@@ -53,8 +43,9 @@ abstract class SARIFGenerator {
     /** List of all metadata, to be used to generate the rules list for SARIF. */
     private final List<RMetadata> allMetadata = new LinkedList<>()
     /** The JVM metadata symbols supported. */
-    private static final List<Class> JVM_SYMBOLS = Arrays.asList(JvmClass.class, JvmField.class, JvmMethod.class,
-            JvmMethodInvocation.class, JvmHeapAllocation.class, JvmVariable.class, Usage.class)
+    private static final Class[] JVM_SYMBOLS_ARRAY = [JvmClass.class, JvmField.class, JvmMethod.class,
+                                                    JvmMethodInvocation.class, JvmHeapAllocation.class, JvmVariable.class, Usage.class]
+    private static final List<Class> JVM_SYMBOLS = Arrays.asList(JVM_SYMBOLS_ARRAY)
 
     protected SARIFGenerator(File db, File out, String version, boolean standalone) {
         this.db = db
