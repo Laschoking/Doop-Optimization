@@ -8,6 +8,7 @@ class Crossproduct_Mapping(Mapping):
         super().__init__(paths,name)
         self.mapping = dict()
 
+# TODO: rewrite this without data_cols
     def compute_similarity(self,db1,db2):
         # based on the path to the first relation, determine path to second relation
         similarity_dict = dict()

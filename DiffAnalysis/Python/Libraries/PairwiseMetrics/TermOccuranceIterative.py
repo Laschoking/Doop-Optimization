@@ -1,9 +1,9 @@
 from collections import Counter
 from Python.Libraries import Classes
-from Python.Libraries.MappingStrategies.Iterative_Anchor_Mapping import *
+from Python.Libraries.MappingStrategies.Iterative_Anchor_Mapping_sortedList import *
 
 
-class TermOccuranceIterative(Iterative_Anchor_Mapping):
+class TermOccuranceIterative(Iterative_Anchor_Mapping_sortedList):
     def __init__(self,paths):
         super().__init__(paths,"TermOccuranceIterative")
 
@@ -12,7 +12,7 @@ class TermOccuranceIterative(Iterative_Anchor_Mapping):
         counter1 = Counter(term1_occ.keys())
         counter2 = Counter(term2_occ.keys())
         intersection = counter1 & counter2
-        structural_sim = -2 * intersection.total() / (counter1.total() + counter2.total())
+        structural_sim = 2 * intersection.total() / (counter1.total() + counter2.total())
         # eventually integrate lexical similarity
         # TODO: currently priority queue works with minimal value first
         join_atoms = []

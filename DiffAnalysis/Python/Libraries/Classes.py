@@ -21,7 +21,6 @@ class DB_Instance:
         self.name = db_base_path.stem + "-" + sub_dir
         self.path = db_base_path.joinpath(sub_dir)
         self.data_rows = dict()
-        self.data_cols = dict()
         self.terms = dict()
         self.files = dict()
         # delete existing files in sub_dir
@@ -42,23 +41,21 @@ class DB_Instance:
         if file not in self.files:
             l_cols = len(rows[0]) if len(rows) > 0 else 0
             self.files[file] = l_cols
-            self.data_cols[file] = [set() for i in range(l_cols)]
             self.data_rows[file] = []
-
         row_nr = len(self.data_rows[file])
 
-        # TODO: aktuell werden Terme für alle DB-Instanzen gespeichert, obwohl
         # nur für db1-facts & db2-facts benötigt
         #create a list of sets (one for each column)
         for row in rows:
             self.data_rows[file].append(row)
             for col_nr in range(l_cols):
+                if not row:
+                    raise ValueError("empty row detected in mapped db: " + str(file))
                 term = row[col_nr]
                 if term in self.terms:
                     self.terms[term][(file,col_nr)] = row_nr
                 else:
                     self.terms[term] = {(file, col_nr) :  row_nr }
-                self.data_cols[file][col_nr].add(row[col_nr])
             row_nr += 1
 
 
@@ -97,8 +94,4 @@ class DataFrame:
 
     def add_mapping(self, mapping):
         self.mappings.append(mapping)
-def print_merge_information(analysis):
-    print("----------- META INFORMATION -----------")
-    print("Compared databases: " + analysis.db1.name + " , " + analysis.db2.name)
-    print("Program analysis: " + analysis.pa_config.pa_name + " Engine: " + analysis.engine.name)
-    print("------------------------")
+
