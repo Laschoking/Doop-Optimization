@@ -11,9 +11,10 @@ import time
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = PointerAnalysis_Calc_old_new
+    db_config = PointerAnalysis12_Config
     pa_sep = analyses["nemo_PA_sep"]
-    pa_merge = analyses["nemo_PA_merge_no_fold"]
+    pa_merge = analyses["nemo_PA_merge_end_fold"]
+    pa_non_mapping_terms = {"<clinit>", "void()","public","static","main","void(java.lang.String[])","java.io.Serializable","java.lang.Cloneable","java.lang.Object","abstract"}
 
     # Fact Creation of Java-Files (or .Jar)
     data_frame = DataFrame(db_config.db1_path, db_config.db2_path)
@@ -49,14 +50,14 @@ if __name__ == "__main__":
     for mapping in data_frame.mappings:
         t0 = time.time()
         # calculate similarity_matrix & compute maximal mapping from db1 to db2
-        mapping.compute_mapping(db1,db2)
+        mapping.compute_mapping(db1,db2,pa_non_mapping_terms)
         print("Anzahl der Mappings: " + str(len(mapping.mapping)))
         #print(mapping.mapping)
 
 
         # execute best mapping and create merged database: merge(map(db1), db2) -> merge_db2
         mapping.merge_dbs(db1,db2)
-        mapping.write_mapping_to_file(db_config.db1_path.joinpath(mapping.name))
+        mapping.write_diagnostics(data_frame,db_config.base_output_path)
 
         mapping.db2_merged_facts.write_data_to_file()
 

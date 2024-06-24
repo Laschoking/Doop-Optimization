@@ -33,6 +33,9 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
 
         l_inters = len(inters)
         l_rows1 = len(unique_rows1)
+        if l_rows1 > 0 and l_rows1 < 5:
+            print(file)
+            print(unique_rows1)
         l_rows2 = len(unique_rows2)
         inters_db1_db2 = inters_db1_db2 | inters
         unique_rows_db1 =  unique_rows_db1 | unique_rows1
@@ -43,6 +46,7 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
         if cov != 100:
             r = [file, l_rows1, l_rows2, l_inters, str(cov) + "%"]
             t.add_row(r,divider=div)
+
 
     l_rows1_files = len(unique_rows_db1)
     l_rows2_files = len(unique_rows_db2)

@@ -1,5 +1,6 @@
 from Python.Libraries import Classes
 import csv
+from Python.Libraries import ShellLib
 # each Mapping has a Strategie and a similarity metric
 class Mapping():
     def __init__(self, paths, name):
@@ -15,20 +16,34 @@ class Mapping():
 
     def set_mapping(self, mapping):
         self.mapping = mapping
-    def compute_mapping(self,db1,db2):
+    def compute_mapping(self,db1,db2,pa_non_mapping_terms):
         pass
 
     def similarity(self):
         pass
 
-    def write_mapping_to_file(self,file):
+
+    # output stuff
+    def write_diagnostics(self, data_frame,base_dir):
+        out_path = base_dir.joinpath("diagnostic-" + self.name)
+        ShellLib.clear_directory(out_path)
+        # write mapping
         if self.mapping:
-            with open(file.with_suffix('.tsv'), 'w', newline='') as file_path:
+            with open(out_path.joinpath("Mapping").with_suffix('.tsv'), 'w', newline='') as file_path:
                 tsv_writer = csv.writer(file_path, delimiter='\t', lineterminator='\n')
                 for term1,term2 in self.mapping.items():
                     tsv_writer.writerow([term1,term2])
 
-
+        # write db1 terms
+        with open(out_path.joinpath("Terms1").with_suffix('.tsv'), 'w', newline='') as file_path:
+            tsv_writer = csv.writer(file_path, delimiter='\t', lineterminator='\n')
+            for term1 in data_frame.db1_original_facts.terms.keys():
+                tsv_writer.writerow([term1])
+        # write db2 terms
+        with open(out_path.joinpath("Terms2").with_suffix('.tsv'), 'w', newline='') as file_path:
+            tsv_writer = csv.writer(file_path, delimiter='\t', lineterminator='\n')
+            for term2 in data_frame.db2_original_facts.terms.keys():
+                tsv_writer.writerow([term2])
 
 # can be implemented faster, just replace db
     def merge_dbs(self,db1,db2):

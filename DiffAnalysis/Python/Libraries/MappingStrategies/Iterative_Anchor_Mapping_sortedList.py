@@ -10,10 +10,21 @@ class Iterative_Anchor_Mapping_sortedList(Mapping):
     def __init__(self,paths,name):
         super().__init__(paths,name)
 
-    def compute_mapping(self, db1,db2):
+    def compute_mapping(self, db1,db2,pa_non_mapping_terms):
         pq = SortedDict()
         free_terms1 = SortedList(list(db1.terms.keys()))
         free_terms2 = SortedList(list(db2.terms.keys()))
+
+        # block certain terms, that cannot be changed without computing wrong results
+        for non_term in pa_non_mapping_terms:
+            if non_term in free_terms1:
+                # map term to itself
+                self.mapping[non_term] = non_term
+                free_terms1.discard(non_term)
+                # if in terms2 then delete occurance there
+                if non_term in free_terms2:
+                    free_terms2.discard(non_term)
+
 
         pq_watch = SortedList()
         expanded_sim = []
@@ -97,7 +108,7 @@ class Iterative_Anchor_Mapping_sortedList(Mapping):
             nodes.append(term)
         mean = np.mean(degrees)
         std_dev = np.std(degrees)
-        threshold = mean + 1 * std_dev
+        threshold = mean + 3.5 * std_dev
         hubs = [nodes[i] for i in range(len(degrees)) if degrees[i] > threshold]
         #print("anzahl der hubs: " + str(len(hubs)))
         #print("anzahl der Terme: " + str(len(nodes)))
