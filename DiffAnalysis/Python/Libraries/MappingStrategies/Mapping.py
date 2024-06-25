@@ -13,6 +13,7 @@ class Mapping():
         self.similarity_dict = dict()
         self.mapping = dict()
         self.inverse_mapping = dict()
+        self.new_term_counter = 0
 
     def set_mapping(self, mapping):
         self.mapping = mapping
@@ -25,7 +26,7 @@ class Mapping():
 
     # output stuff
     def write_diagnostics(self, data_frame,base_dir):
-        out_path = base_dir.joinpath("diagnostic-" + self.name)
+        out_path = base_dir.joinpath("diagnostic").joinpath(self.name)
         ShellLib.clear_directory(out_path)
         # write mapping
         if self.mapping:
@@ -47,7 +48,6 @@ class Mapping():
 
 # can be implemented faster, just replace db
     def merge_dbs(self,db1,db2):
-        new_var_counter = 0
         for file in db1.files:
             rows1 = db1.data_rows[file]
             rows2 = db2.data_rows[file]
@@ -61,10 +61,10 @@ class Mapping():
                         bijected_row.append(self.mapping[term])
                     else:
                         # TODO: this should better be implemented in the mapping step
-                        new_term = "new_var_" + str(new_var_counter)
+                        new_term = "new_var_" + str(self.new_term_counter)
                         #print("add new var: " + new_term + " for " + term)
                         self.mapping[term] = new_term  # introduce new variables
-                        new_var_counter += 1
+                        self.new_term_counter += 1
                         bijected_row.append(new_term)
                 bijected_db.add(tuple(bijected_row))
             merged_rows = []
@@ -79,7 +79,7 @@ class Mapping():
                 merged_rows.append(list(row) + ['10'])
             self.db2_merged_facts.insert_records(file, merged_rows)
 
-# bisschen unschlau programmiert, dass db mitgegeben wird aktuell
+# from_db & to_db are objects of self.mapping, so setting them will modify self.mapping (since its pointers)
     def revert_db_mapping(self,from_db,to_db, from_identifier):
         if not self.inverse_mapping:
             self.inverse_mapping = dict((term2, term1) for term1, term2 in self.mapping.items())
@@ -103,8 +103,10 @@ class Mapping():
 
         # insert reverted rows into DB
         to_db.write_data_to_file()
-        print("terms that have been added by datalog rules: " + str(len(pa_added_terms)))
-        print(pa_added_terms)
+        # TODO this should be printed only once (as summary / abnormalties)
+        if pa_added_terms:
+            print("terms that have been added by datalog rules: " + str(len(pa_added_terms)))
+            print(pa_added_terms)
         return
 
         # return self.db1_inv_bij_results

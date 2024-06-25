@@ -47,7 +47,7 @@ class Crossproduct_Mapping(Mapping):
             sys.exit(str(e))
         return ma_sim_matrix, term1_list, term2_list
 
-    def compute_mapping(self,db1,db2):
+    def compute_mapping(self,db1,db2,pa_non_terms):
         similarity_dict = self.compute_similarity(db1,db2)
         ma_sim_matrix, row_terms, col_terms = self.create_sim_matrix(similarity_dict)
 

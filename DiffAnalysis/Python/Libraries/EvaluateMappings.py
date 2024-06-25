@@ -33,7 +33,7 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
 
         l_inters = len(inters)
         l_rows1 = len(unique_rows1)
-        if l_rows1 > 0 and l_rows1 < 5:
+        if l_rows1 > 0 and print_flag:
             print(file)
             print(unique_rows1)
         l_rows2 = len(unique_rows2)
@@ -73,20 +73,20 @@ def check_data_correctness(data_frame, mapping):
     # TODO: identifier in db speichern
     # this is only to verify that the original facts db can be produced from merging
     mapping.revert_db_mapping(mapping.db2_merged_facts, mapping.db1_inv_bij_facts, 1)
-    diff,unique_rows_db1,unique_rows_db2, inters_db1_db2 = diff_two_dirs(data_frame.db1_original_facts, mapping.db1_inv_bij_facts, rm_identifier='', print_flag=True)
+    diff,unique_rows_db1,unique_rows_db2, inters_db1_db2 = diff_two_dirs(data_frame.db1_original_facts, mapping.db1_inv_bij_facts, rm_identifier='', print_flag=False)
     if (diff[0] > 0 or diff[1] > 0):
         t.add_row(
             [R + data_frame.db2_original_facts.name, diff[0], mapping.db2_merged_facts.name, diff[1], diff[2], diff[3] + "%" + N])
 
 
     # DB2-original-facts == DB2_merged_facts (split 10)
-    diff = diff_two_dirs(data_frame.db2_original_facts, mapping.db2_merged_facts, rm_identifier='10', print_flag=True)[0]
+    diff = diff_two_dirs(data_frame.db2_original_facts, mapping.db2_merged_facts, rm_identifier='10', print_flag=False)[0]
     if (diff[0] > 0 or diff[1] > 0):
         t.add_row(
             [R + data_frame.db2_original_facts.name, diff[0], mapping.db2_merged_facts.name, diff[1], diff[2], diff[3] + "%" + N])
 
     # DB2-separate-results == DB2_merged_results (split 10)
-    diff = diff_two_dirs(data_frame.db2_original_results, mapping.db2_nemo_merged_results, rm_identifier='10', print_flag=True)[0]
+    diff = diff_two_dirs(data_frame.db2_original_results, mapping.db2_nemo_merged_results, rm_identifier='10', print_flag=False)[0]
     if (diff[0] > 0 or diff[1] > 0):
         t.add_row([R + data_frame.db2_original_results.name, diff[0], mapping.db2_nemo_merged_results.name, diff[1], diff[2], diff[3] + "%" + N])
 
@@ -152,18 +152,7 @@ def evaluate_mapping_overlap(data_frame):
         t.add_row(
             [mapping.name, "merged results", split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'], sim + "%"])
 
-
-        # in the PA we only fold the relevant relations VarPointsTo etc.
-        # if we export all intermediate Relations, the overlap of merged-pa-baseline will be smaller than
-        # DB1/DB2 separate PA because, not all relations are folded at the end
-        # if we restrict output to the main relations, both overlaps are identical
-        #split, sim = db_overlap(data_frame.db2_merge_pa_base)
-        #t.add_row(
-        #    ["merged-pa-baseline", split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'], sim + "%"])
-
-
-    # dont print unique rows from each DB
-    return t #.get_string(fields=["DB", "Common Rows", "Total Rows", "Similarity"])
+    return t.get_string(fields=["Method", "data set", "Common Rows", "Total Rows", "overlap in %"])
 
 
 

@@ -65,8 +65,6 @@ class DB_Instance:
                 tsv_writer = csv.writer(file_path, delimiter='\t', lineterminator='\n')
                 for row in self.data_rows[file]:
                     tsv_writer.writerow(row)
-
-
 class BasePaths:
     def __init__(self,db1_base_path, db2_base_path):
         self.db1_facts = db1_base_path.joinpath("facts")

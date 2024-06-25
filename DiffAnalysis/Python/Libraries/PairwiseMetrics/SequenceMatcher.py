@@ -1,4 +1,4 @@
-from Python.Libraries.MappingStrategies.Crossproduct_Mapping import *
+from Python.Libraries.MappingStrategies.Crossproduct_Mapping_Queue import *
 import difflib
 
 '''
@@ -7,14 +7,12 @@ Ausserdem wird gezählt, wie oft die Terme in der gleichen Spalte einer Relation
 score = sim_score(0-1) + countPair(1-...)
 '''
 
-class SequenceMatcher(Crossproduct_Mapping):
+class SequenceMatcher(Crossproduct_Mapping_Queue):
     def __init__(self,paths):
         super().__init__(paths,"SequenceMatcher")
 
-    def similarity(self,term1,term2,sim):
+    def similarity(self,term1,term2,occ1,occ2):
         # similarity was already calculated (just increase by one then)
-        if sim > 0:
-            return sim
         # based on the path to the first relation, determine path to second relation
         if term1.lstrip("-").isdigit() and term2.lstrip("-").isdigit():
             max_int = max(int(term1), int(term2))
