@@ -49,6 +49,8 @@ class Mapping():
 # can be implemented faster, just replace db
     def merge_dbs(self,db1,db2):
         for file in db1.files:
+            if file == "AssignLocal":
+                print("AL")
             rows1 = db1.data_rows[file]
             rows2 = db2.data_rows[file]
             bijected_db = set()
@@ -68,6 +70,7 @@ class Mapping():
                         bijected_row.append(new_term)
                 bijected_db.add(tuple(bijected_row))
             merged_rows = []
+            # atom wird hinzugefügt
             common_rows = bijected_db.intersection(target_db)
             target_db = target_db.difference(common_rows)
             bijected_db = bijected_db.difference(common_rows)
@@ -86,11 +89,15 @@ class Mapping():
         pa_added_terms = set()
         for file in from_db.files:
             inverted_rows = []
+            if file == "AssignLocal":
+                print("AL")
             for row2 in from_db.data_rows[file]:
                 inverted_row = []
                 # only reverse rows that have the common_identifier (0) or the from_identifier (1/2)
                 if row2[-1] == '0' or row2[-1] == str(from_identifier):
                     for term2 in row2[0:-1]:
+                        if term2 == "new_var_9":
+                            print(term2)
                         if term2 in self.inverse_mapping:
                             inverted_row.append(self.inverse_mapping[term2])
                         else:

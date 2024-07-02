@@ -16,6 +16,8 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
             print("faulty database: " + db2.name)
             print("file was not compared: " + file)
             continue
+        #if file == "AssignLocal":
+        #    print("AL")
         rows1 = set(tuple(row) for row in db1.data_rows[file])
         rows2 = set()
         # in case, one db still has identifiers appended (like ["a","b", 0], remove

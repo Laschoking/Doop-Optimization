@@ -57,6 +57,7 @@ class DB_Instance:
                 else:
                     self.terms[term] = {(file, col_nr) :  row_nr }
             row_nr += 1
+        return
 
 
     def write_data_to_file(self):

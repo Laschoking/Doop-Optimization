@@ -8,6 +8,8 @@ from Python.Libraries.PairwiseMetrics.SequenceMatcher import *
 from Python.Libraries.PairwiseMetrics.SequenceMatcherPairOccurance import *
 from Python.Libraries.PairwiseMetrics.StringEquality import StringEquality
 from Python.Libraries.PairwiseMetrics.TermOccuranceIterative import *
+from Python.Libraries.PairwiseMetrics.TermOccuranceIterative_Multiplication import *
+
 
 import time
 
@@ -15,11 +17,13 @@ if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
     db_config = PointerAnalysis_Calc_old_new
-    pa_sep = analyses["nemo_PA_sep"]
-    pa_merge = analyses["nemo_PA_merge_end_fold"]
+    pa_sep = analyses["nemo_CFG_sep"]
+    pa_merge = analyses["nemo_CFG_merge"]
     # the  '' is problematic bc. if it has a different mapping
     # CONCAT(''->var_x,"foo") will produce a different result
     pa_specific_blocked_terms = {'',"<clinit>", "void()","public","static","main","void(java.lang.String[])","java.io.Serializable","java.lang.Cloneable","java.lang.Object","abstract"}
+    #pa_specific_blocked_terms = {'','1',"abstract","<sun.misc.ProxyGenerator: byte[] generateClassFile()>"}
+    pa_specific_blocked_terms.update(str(x) for x in range(1000)) # dirty solution
     l_blocked_terms = len(pa_specific_blocked_terms)
     # Fact Creation of Java-Files (or .Jar)
     data_frame = DataFrame(db_config.db1_path, db_config.db2_path)
@@ -43,11 +47,12 @@ if __name__ == "__main__":
     # add mappings to data_frame
     db1 = data_frame.db1_original_facts
     db2 = data_frame.db2_original_facts
-    '''data_frame.add_mapping(StringEquality(data_frame.paths))
-    data_frame.add_mapping(SequenceMatcher(data_frame.paths))
-    data_frame.add_mapping(SequenceMatcherPairOccurance(data_frame.paths))
-    data_frame.add_mapping(ISUBSequenceMatcher_Crossproduct(data_frame.paths))
-    '''
+    #data_frame.add_mapping(StringEquality(data_frame.paths))
+
+    #data_frame.add_mapping(SequenceMatcher(data_frame.paths))
+    #data_frame.add_mapping(SequenceMatcherPairOccurance(data_frame.paths))
+    #data_frame.add_mapping(ISUBSequenceMatcher_Crossproduct(data_frame.paths))
+ 
     data_frame.add_mapping(ISUBSequenceMatcher_Iterative(data_frame.paths))
     data_frame.add_mapping(ISUBSequenceMatcher_Iterative_Occ(data_frame.paths))
     data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
@@ -78,7 +83,6 @@ if __name__ == "__main__":
 
         # Apply mapping to merged-result (from db2)
         mapping.revert_db_mapping(mapping.db2_nemo_merged_results,mapping.db1_inv_bij_results,1)
-
 
 
         # check if bijected results correspond to correct results from base

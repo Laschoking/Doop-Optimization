@@ -111,6 +111,8 @@ class Iterative_Anchor_Mapping(Mapping):
         mean = np.mean(degrees)
         std_dev = np.std(degrees)
         threshold = mean + 1.5 * std_dev
+        print("mean: "  + str(mean))
+        print("std_dev: " + str(std_dev))
         hubs = [nodes[i] for i in range(len(degrees)) if degrees[i] > threshold]
         #print("anzahl der hubs: " + str(len(hubs)))
         #print("anzahl der Terme: " + str(len(nodes)))
