@@ -1,4 +1,4 @@
-#include "../../facts/facts.dl"
+//#include "../../facts/facts.dl"
 .decl Method_FirstInstruction(?method:Method, ?insn:Instruction)
 .decl OptInstructionFromMethodIndex(?method:Method, ?index:number, ?insn:Instruction)
 .decl Instruction_Next(?i:Instruction, ?next:Instruction)

@@ -1,0 +1,4 @@
+Animal	java.lang.Object
+Dog	Animal
+Pointer	java.lang.Object
+Cat	Animal

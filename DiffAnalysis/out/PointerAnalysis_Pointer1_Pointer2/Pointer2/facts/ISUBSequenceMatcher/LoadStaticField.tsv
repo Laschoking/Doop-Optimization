@@ -1,0 +1,2 @@
+<Pointer: void main(java.lang.String[])>/read-field-out/0	21	<Pointer: void main(java.lang.String[])>/$stack15	<java.lang.System: java.io.PrintStream out>	<Pointer: void main(java.lang.String[])>	0
+<Pointer: void main(java.lang.String[])>/read-field-in/0	7	<Pointer: void main(java.lang.String[])>/$stack8	<java.lang.System: java.io.InputStream in>	<Pointer: void main(java.lang.String[])>	0

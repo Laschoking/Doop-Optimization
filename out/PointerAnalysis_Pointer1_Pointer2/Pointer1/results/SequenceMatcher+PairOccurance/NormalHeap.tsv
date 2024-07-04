@@ -1,0 +1,8 @@
+<Pointer: void main(java.lang.String[])>/new java.lang.StringBuilder/0	java.lang.StringBuilder
+<Pointer: void main(java.lang.String[])>/new java.io.BufferedReader/0	java.io.BufferedReader
+<Pointer: void main(java.lang.String[])>/new Pointer/0	Pointer
+<Pointer: void main(java.lang.String[])>/new java.io.InputStreamReader/0	java.io.InputStreamReader
+<Pointer: void test(int)>/new Cat/2	Cat
+<Pointer: void test(int)>/new Cat/1	Cat
+<Pointer: void test(int)>/new Dog/0	Dog
+<Pointer: void test(int)>/new Cat/0	Cat

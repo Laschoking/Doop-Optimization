@@ -1,5 +1,6 @@
 #define MICRO
-
+#include "../../facts/facts.dl"
+#include "../../basic/basic.dl"
 #include "../../main/implicit-reachable-declarations.dl"
 #include "../../main/implicit-reachable.dl"
 #include "../../main/class-initialization-declarations.dl"

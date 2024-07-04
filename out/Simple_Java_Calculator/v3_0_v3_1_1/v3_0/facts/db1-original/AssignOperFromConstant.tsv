@@ -1,0 +1,13 @@
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/assign/2	2	0.0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/21	2	0.0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/23	2	180.0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/24	2	0.0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/28	2	90.0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/29	2	0.0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/31	2	180.0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/32	2	0.0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/42	2	100.0
+<simplejavacalculator.UI: void <init>()>/assign/32	2	1
+<simplejavacalculator.UI: void init()>/assign/6	2	1
+<simplejavacalculator.UI: void init()>/assign/57	2	1
+<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/assign/8	2	1

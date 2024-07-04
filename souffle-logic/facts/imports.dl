@@ -275,6 +275,14 @@ AssignReturnValue(?invocation, ?to) :-
 // MainClass
 .input MainClass
 
+MainClass(?b):-
+  MainClass(?a),
+  ?l1 = strlen(?a),
+  ?l2 = strlen("Example"),
+  ?b = substr(?a, ?l1 - ?l2, ?l2),
+  match(".*Example",?a).
+
+
 // ClassArtifact
 .decl _ClassArtifact(?artifact:symbol, ?className:ReferenceType, ?subArtifact:symbol, ?size:number)
 .input _ClassArtifact(filename="Class-Artifact.facts")

@@ -1,0 +1,29 @@
+<simplejavacalculator.UI: void <init>()>/assign/34	1	<simplejavacalculator.UI: void <init>()>/i_$$A_1_$$A_1#_90	10
+<simplejavacalculator.UI: void <init>()>/assign/32	1	imageReturn	1
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/28	1	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack28	0
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/assign/13	1	<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/$stack27	0
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/assign/13	2	<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/$stack29	0
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/assign/9	1	<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/$stack33	0
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/assign/9	2	<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/$stack35	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/42	1	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack16	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/32	1	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack35	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/23	1	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack25	0
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/assign/17	1	<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/$stack21	0
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/assign/17	2	<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/$stack23	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/29	1	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack29	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/12	1	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack46	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/12	2	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack47	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/21	1	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack22	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/31	1	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack34	0
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/assign/5	1	<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/$stack43	0
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/assign/5	2	<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/$stack45	0
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/assign/2	1	<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/$stack39	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/24	1	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack26	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/5	1	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack53	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/assign/5	2	<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/$stack54	0
+<simplejavacalculator.UI: void init()>/assign/57	1	i_$$A_1#_126	1
+<simplejavacalculator.UI: void init()>/assign/57	1	<simplejavacalculator.UI: void init()>/i_$$A_1_$$A_4#_198	10
+<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/assign/8	1	i_$$A_1_$$A_4#_198	1
+<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/assign/8	1	<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/i_$$A_1_$$A_1#_227	10
+<simplejavacalculator.UI: void init()>/assign/6	1	i_$$A_1#_89	1
+<simplejavacalculator.UI: void init()>/assign/6	1	<simplejavacalculator.UI: void init()>/i_$$A_1_$$A_1#_127	10

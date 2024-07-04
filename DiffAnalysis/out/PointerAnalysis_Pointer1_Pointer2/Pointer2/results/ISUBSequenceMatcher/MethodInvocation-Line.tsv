@@ -1,0 +1,36 @@
+<Pointer: void main(java.lang.String[])>/Pointer.sanitize/0	13	0
+<Pointer: void main(java.lang.String[])>/java.io.InputStreamReader.<init>/0	9	0
+<Animal: void <init>()>/java.lang.Object.<init>/0	49	10
+<Animal: void <init>()>/java.lang.Object.<init>/0	51	1
+<Dog: void <init>()>/Animal.<init>/0	73	10
+<Dog: void <init>()>/Animal.<init>/0	75	1
+<Pointer: void main(java.lang.String[])>/Pointer.<init>/0	8	0
+<Cat: void <init>()>/Animal.<init>/0	59	10
+<Cat: void <init>()>/Animal.<init>/0	61	1
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.<init>/0	14	0
+<Pointer: void main(java.lang.String[])>/java.io.BufferedReader.<init>/0	9	0
+<Pointer: void <init>()>/java.lang.Object.<init>/0	5	0
+<Pointer: void test(int)>/Cat.<init>/1	32	0
+<Pointer: void test(int)>/Cat.<init>/0	26	0
+38	33	1
+<Pointer: void test(int)>/Dog.<init>/0	28	0
+<Pointer: void main(java.lang.String[])>/java.io.BufferedReader.readLine/0	12	0
+<Pointer: void morePlay(Cat)>/Cat.getParent/0	38	10
+<Pointer: void morePlay(Cat)>/Cat.getParent/0	40	1
+<Pointer: void morePlay(Cat)>/Cat.playWith/0	41	10
+<Pointer: void morePlay(Cat)>/Cat.playWith/0	43	1
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.toString/0	14	0
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/0	14	0
+<Pointer: void main(java.lang.String[])>/java.io.PrintStream.println/0	16	0
+<Pointer: void morePlay(Cat)>/Cat.playWith/1	42	10
+<Pointer: void morePlay(Cat)>/Cat.playWith/1	44	1
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/1	14	0
+<Animal: Animal playWith(Animal)>/Animal.play/0	54	10
+<Animal: Animal playWith(Animal)>/Animal.play/0	56	1
+<Pointer: void morePlay(Cat)>/Cat.play/0	39	10
+<Pointer: void morePlay(Cat)>/Cat.play/0	41	1
+<Pointer: void main(java.lang.String[])>/Pointer.test/0	8	0
+39	34	1
+<Pointer: void test(int)>/Animal.play/0	30	0
+<Pointer: void test(int)>/Pointer.morePlay/0	34	10
+<Pointer: void test(int)>/Pointer.morePlay/0	36	1

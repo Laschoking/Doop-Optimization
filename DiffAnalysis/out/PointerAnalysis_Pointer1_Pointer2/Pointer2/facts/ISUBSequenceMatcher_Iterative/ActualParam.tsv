@@ -1,0 +1,12 @@
+0	<Pointer: void main(java.lang.String[])>/Pointer.test/0	<Pointer: void main(java.lang.String[])>/$stack5	0
+0	<Pointer: void morePlay(Cat)>/Cat.playWith/1	<Pointer: void morePlay(Cat)>/p#_38	0
+0	<Pointer: void main(java.lang.String[])>/Pointer.sanitize/0	<Pointer: void main(java.lang.String[])>/line#_12	0
+0	<Pointer: void morePlay(Cat)>/Cat.playWith/0	<Pointer: void morePlay(Cat)>/c#_0	0
+0	<Pointer: void main(java.lang.String[])>/java.io.InputStreamReader.<init>/0	<Pointer: void main(java.lang.String[])>/$stack8	0
+0	<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/0	<Pointer: void main(java.lang.String[])>/$stack11	0
+0	<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/1	<Pointer: void main(java.lang.String[])>/line#_12	0
+0	<Pointer: void main(java.lang.String[])>/java.io.BufferedReader.<init>/0	<Pointer: void main(java.lang.String[])>/$stack7	0
+0	<Pointer: void main(java.lang.String[])>/java.io.PrintStream.println/0	<Pointer: void main(java.lang.String[])>/result#_14	0
+0	<Pointer: void test(int)>/Pointer.morePlay/0	new_var_16	1
+0	new_var_19	<Pointer: void test(int)>/$stack7	1
+0	<Pointer: void test(int)>/Pointer.morePlay/0	<Pointer: void test(int)>/$stack8	10

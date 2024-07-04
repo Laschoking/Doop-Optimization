@@ -1,0 +1,12 @@
+<Cat: void setParent(Cat)>	<Cat: void setParent(Cat)>/@this
+<Cat: Cat getParent()>	<Cat: Cat getParent()>/@this
+<Pointer: void test(int)>	<Pointer: void test(int)>/@this
+<Animal: Animal playWith(Animal)>	<Animal: Animal playWith(Animal)>/@this
+<Pointer: void morePlay(Cat)>	<Pointer: void morePlay(Cat)>/@this
+<Dog: void play()>	<Dog: void play()>/@this
+<Animal: void play()>	<Animal: void play()>/@this
+<Animal: void <init>()>	<Animal: void <init>()>/@this
+<Dog: void <init>()>	<Dog: void <init>()>/@this
+<Cat: void <init>()>	<Cat: void <init>()>/@this
+<Pointer: void <init>()>	<Pointer: void <init>()>/@this
+<Cat: void play()>	<Cat: void play()>/@this
