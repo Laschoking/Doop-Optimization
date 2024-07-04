@@ -1,0 +1,6 @@
+<simplejavacalculator.UI: void writer(java.lang.Double)>/if/0	2	0	0
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/if/2	2	0	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/if/6	2	0	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/if/8	2	0	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/if/9	2	0	0
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/if/7	2	0	0

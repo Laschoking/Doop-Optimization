@@ -1,0 +1,14 @@
+<Cat: Cat getParent()>	Cat	0
+<Pointer: void main(java.lang.String[])>	void	0
+<Pointer: void test(int)>	void	0
+<Cat: void setParent(Cat)>	void	0
+<Pointer: void sanitize(java.lang.Object)>	void	0
+<Cat: void <init>()>	void	0
+<Pointer: void morePlay(Cat)>	void	0
+<Cat: void play()>	void	0
+<Pointer: void <init>()>	void	0
+<Dog: void play()>	void	0
+<Animal: void play()>	void	0
+<Animal: Animal playWith(Animal)>	Animal	0
+<Dog: void <init>()>	void	0
+<Animal: void <init>()>	void	0

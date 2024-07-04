@@ -1,0 +1,10 @@
+<simplejavacalculator.UI: void init()>/read-array-idx/12	i_$$A_1#_126	1
+<simplejavacalculator.UI: void init()>/read-array-idx/0	i_$$A_1#_89	1
+<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/read-array-idx/1	i_$$A_1_$$A_4#_198	1
+<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/read-array-idx/0	i_$$A_1_$$A_4#_198	1
+<simplejavacalculator.UI: void <init>()>/write-array-idx/10	imageReturn	1
+<simplejavacalculator.UI: void <init>()>/write-array-idx/10	<simplejavacalculator.UI: void <init>()>/i_$$A_1_$$A_1#_90	10
+<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/read-array-idx/1	<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/i_$$A_1_$$A_1#_227	10
+<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/read-array-idx/0	<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/i_$$A_1_$$A_1#_227	10
+<simplejavacalculator.UI: void init()>/read-array-idx/0	<simplejavacalculator.UI: void init()>/i_$$A_1_$$A_1#_127	10
+<simplejavacalculator.UI: void init()>/read-array-idx/12	<simplejavacalculator.UI: void init()>/i_$$A_1_$$A_4#_198	10

@@ -1,0 +1,320 @@
+2	2
+0	0
+1	1
+10	10
+12	12
+20	20
+5	5
+9	9
+11	11
+16	16
+19	19
+21	21
+23	23
+24	24
+3	3
+6	6
+8	8
+	
+7	7
+13	13
+51	51
+56	56
+14	14
+26	26
+28	28
+30	30
+32	32
+33	33
+34	34
+36	36
+40	40
+41	41
+43	43
+44	44
+75	75
+61	61
+15	15
+4	4
+18	18
+17	17
+22	22
+25	25
+<Animal: Animal playWith(Animal)>	<Animal: Animal playWith(Animal)>
+<Animal: void <init>()>	<Animal: void <init>()>
+<Cat: Cat getParent()>	<Cat: Cat getParent()>
+<Pointer: void main(java.lang.String[])>	<Pointer: void main(java.lang.String[])>
+<Pointer: void morePlay(Cat)>	<Pointer: void morePlay(Cat)>
+Animal	Animal
+Dog	Dog
+Pointer	Pointer
+this#_0	this#_0
+void	void
+<Animal: Animal playWith(Animal)>/assign/0	<Animal: Animal playWith(Animal)>/assign/0
+<Animal: Animal playWith(Animal)>/assign/1	<Animal: Animal playWith(Animal)>/assign/1
+<Animal: Animal playWith(Animal)>/@this	<Animal: Animal playWith(Animal)>/@this
+<Animal: Animal playWith(Animal)>/@parameter0	<Animal: Animal playWith(Animal)>/@parameter0
+<Animal: Animal playWith(Animal)>/this#_0	<Animal: Animal playWith(Animal)>/this#_0
+<Animal: Animal playWith(Animal)>/other#_0	<Animal: Animal playWith(Animal)>/other#_0
+playWith	playWith
+(LAnimal;)LAnimal;	(LAnimal;)LAnimal;
+<Animal: Animal playWith(Animal)>/Animal.play/0	<Animal: Animal playWith(Animal)>/Animal.play/0
+<Animal: void play()>	<Animal: void play()>
+<Pointer: void morePlay(Cat)>/Cat.playWith/0	<Pointer: void morePlay(Cat)>/Cat.playWith/0
+<Pointer: void morePlay(Cat)>/Cat.playWith/1	<Pointer: void morePlay(Cat)>/Cat.playWith/1
+<Pointer: void morePlay(Cat)>/p#_40	<Pointer: void morePlay(Cat)>/p#_38
+<Pointer: void morePlay(Cat)>/c#_0	<Pointer: void morePlay(Cat)>/c#_0
+<Animal: Animal playWith(Animal)>/return/0	<Animal: Animal playWith(Animal)>/return/0
+<Animal: void <init>()>/assign/0	<Animal: void <init>()>/assign/0
+<Animal: void <init>()>/@this	<Animal: void <init>()>/@this
+<Animal: void <init>()>/this#_0	<Animal: void <init>()>/this#_0
+<Animal: void <init>()>/java.lang.Object.<init>/0	<Animal: void <init>()>/java.lang.Object.<init>/0
+<java.lang.Object: void <init>()>	<java.lang.Object: void <init>()>
+<Dog: void <init>()>/Animal.<init>/0	<Dog: void <init>()>/Animal.<init>/0
+<Cat: void <init>()>/Animal.<init>/0	<Cat: void <init>()>/Animal.<init>/0
+<Dog: void <init>()>/this#_0	<Dog: void <init>()>/this#_0
+<Cat: void <init>()>/this#_0	<Cat: void <init>()>/this#_0
+<Dog: void <init>()>	<Dog: void <init>()>
+<Animal: void <init>()>/return-void/0	<Animal: void <init>()>/return-void/0
+<init>	<init>
+()V	()V
+<Cat: Cat getParent()>/assign/0	<Cat: Cat getParent()>/assign/0
+<Cat: Cat getParent()>/@this	<Cat: Cat getParent()>/@this
+<Cat: Cat getParent()>/this#_0	<Cat: Cat getParent()>/this#_0
+<Cat: Cat getParent()>/read-field-parent/0	<Cat: Cat getParent()>/read-field-parent/0
+<Cat: Cat getParent()>/$stack1	<Cat: Cat getParent()>/$stack1
+<Cat: Cat parent>	<Cat: Cat parent>
+getParent	getParent
+()LCat;	()LCat;
+<Pointer: void morePlay(Cat)>/Cat.getParent/0	<Pointer: void morePlay(Cat)>/Cat.getParent/0
+<Cat: Cat getParent()>/return/0	<Cat: Cat getParent()>/return/0
+<Pointer: void main(java.lang.String[])>/assign/0	<Pointer: void main(java.lang.String[])>/assign/0
+<Pointer: void main(java.lang.String[])>/assign/5	<Pointer: void main(java.lang.String[])>/assign/5
+<Pointer: void main(java.lang.String[])>/assign/7	<Pointer: void main(java.lang.String[])>/assign/7
+<Pointer: void main(java.lang.String[])>/assign/12	<Pointer: void main(java.lang.String[])>/assign/12
+<Pointer: void main(java.lang.String[])>/@parameter0	<Pointer: void main(java.lang.String[])>/@parameter0
+<Pointer: void main(java.lang.String[])>/$stack6	<Pointer: void main(java.lang.String[])>/$stack6
+<Pointer: void main(java.lang.String[])>/$stack9	<Pointer: void main(java.lang.String[])>/$stack9
+<Pointer: void main(java.lang.String[])>/$stack14	<Pointer: void main(java.lang.String[])>/$stack14
+<Pointer: void main(java.lang.String[])>/args#_0	<Pointer: void main(java.lang.String[])>/args#_0
+<Pointer: void main(java.lang.String[])>/buffer#_9	<Pointer: void main(java.lang.String[])>/buffer#_9
+<Pointer: void main(java.lang.String[])>/line#_12	<Pointer: void main(java.lang.String[])>/line#_12
+<Pointer: void main(java.lang.String[])>/result#_14	<Pointer: void main(java.lang.String[])>/result#_14
+public	public
+static	static
+<Pointer: void main(java.lang.String[])>/Pointer.sanitize/0	<Pointer: void main(java.lang.String[])>/Pointer.sanitize/0
+<Pointer: void sanitize(java.lang.Object)>	<Pointer: void sanitize(java.lang.Object)>
+<Pointer: void main(java.lang.String[])>/read-array-idx/0	<Pointer: void main(java.lang.String[])>/read-array-idx/0
+<Pointer: void main(java.lang.String[])>/$stack11	<Pointer: void main(java.lang.String[])>/$stack11
+<Pointer: void main(java.lang.String[])>/Pointer.<init>/0	<Pointer: void main(java.lang.String[])>/Pointer.<init>/0
+<Pointer: void main(java.lang.String[])>/java.io.InputStreamReader.<init>/0	<Pointer: void main(java.lang.String[])>/java.io.InputStreamReader.<init>/0
+<Pointer: void main(java.lang.String[])>/java.io.BufferedReader.<init>/0	<Pointer: void main(java.lang.String[])>/java.io.BufferedReader.<init>/0
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.<init>/0	<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.<init>/0
+<Pointer: void <init>()>	<Pointer: void <init>()>
+<java.io.InputStreamReader: void <init>(java.io.InputStream)>	<java.io.InputStreamReader: void <init>(java.io.InputStream)>
+<java.io.BufferedReader: void <init>(java.io.Reader)>	<java.io.BufferedReader: void <init>(java.io.Reader)>
+<java.lang.StringBuilder: void <init>()>	<java.lang.StringBuilder: void <init>()>
+<Pointer: void main(java.lang.String[])>/$stack4	<Pointer: void main(java.lang.String[])>/$stack4
+<Pointer: void main(java.lang.String[])>/$stack7	<Pointer: void main(java.lang.String[])>/$stack7
+<Pointer: void main(java.lang.String[])>/$stack10	<Pointer: void main(java.lang.String[])>/$stack10
+<Pointer: void main(java.lang.String[])>/$stack5	<Pointer: void main(java.lang.String[])>/$stack5
+<Pointer: void main(java.lang.String[])>/$stack8	<Pointer: void main(java.lang.String[])>/$stack8
+<Pointer: void main(java.lang.String[])>/$stack12	<Pointer: void main(java.lang.String[])>/$stack12
+<Pointer: void main(java.lang.String[])>/$stack13	<Pointer: void main(java.lang.String[])>/$stack13
+<Pointer: void main(java.lang.String[])>/$stack15	<Pointer: void main(java.lang.String[])>/$stack15
+<Pointer: void main(java.lang.String[])>/assign/2	<Pointer: void main(java.lang.String[])>/assign/2
+<Pointer: void main(java.lang.String[])>/assign/1	<Pointer: void main(java.lang.String[])>/assign/1
+<Pointer: void main(java.lang.String[])>/assign/3	<Pointer: void main(java.lang.String[])>/assign/3
+<Pointer: void main(java.lang.String[])>/assign/4	<Pointer: void main(java.lang.String[])>/assign/4
+<Pointer: void main(java.lang.String[])>/assign/8	<Pointer: void main(java.lang.String[])>/assign/8
+<Pointer: void main(java.lang.String[])>/new Pointer/0	<Pointer: void main(java.lang.String[])>/new Pointer/0
+<Pointer: void main(java.lang.String[])>/new java.io.BufferedReader/0	<Pointer: void main(java.lang.String[])>/new java.io.BufferedReader/0
+<Pointer: void main(java.lang.String[])>/new java.io.InputStreamReader/0	<Pointer: void main(java.lang.String[])>/new java.io.InputStreamReader/0
+<Pointer: void main(java.lang.String[])>/new java.lang.StringBuilder/0	<Pointer: void main(java.lang.String[])>/new java.lang.StringBuilder/0
+<Pointer: void main(java.lang.String[])>/read-field-in/0	<Pointer: void main(java.lang.String[])>/read-field-in/0
+<Pointer: void main(java.lang.String[])>/read-field-out/0	<Pointer: void main(java.lang.String[])>/read-field-out/0
+<java.lang.System: java.io.InputStream in>	<java.lang.System: java.io.InputStream in>
+<java.lang.System: java.io.PrintStream out>	<java.lang.System: java.io.PrintStream out>
+<Pointer: void main(java.lang.String[])>/return-void/0	<Pointer: void main(java.lang.String[])>/return-void/0
+main	main
+java.lang.String[]	java.lang.String[]
+([Ljava/lang/String;)V	([Ljava/lang/String;)V
+<Pointer: void main(java.lang.String[])>/Pointer.test/0	<Pointer: void main(java.lang.String[])>/Pointer.test/0
+<Pointer: void main(java.lang.String[])>/java.io.BufferedReader.readLine/0	<Pointer: void main(java.lang.String[])>/java.io.BufferedReader.readLine/0
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/0	<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/0
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/1	<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/1
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.toString/0	<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.toString/0
+<Pointer: void main(java.lang.String[])>/java.io.PrintStream.println/0	<Pointer: void main(java.lang.String[])>/java.io.PrintStream.println/0
+<java.io.BufferedReader: java.lang.String readLine()>	<java.io.BufferedReader: java.lang.String readLine()>
+<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>	<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>
+<java.lang.StringBuilder: java.lang.String toString()>	<java.lang.StringBuilder: java.lang.String toString()>
+<java.io.PrintStream: void println(java.lang.String)>	<java.io.PrintStream: void println(java.lang.String)>
+java.io.IOException	java.io.IOException
+<Pointer: void morePlay(Cat)>/assign/0	<Pointer: void morePlay(Cat)>/assign/0
+<Pointer: void morePlay(Cat)>/assign/1	<Pointer: void morePlay(Cat)>/assign/1
+<Pointer: void morePlay(Cat)>/assign/3	<Pointer: void morePlay(Cat)>/assign/3
+<Pointer: void morePlay(Cat)>/assign/5	<Pointer: void morePlay(Cat)>/assign/5
+<Pointer: void morePlay(Cat)>/assign/7	<Pointer: void morePlay(Cat)>/assign/7
+<Pointer: void morePlay(Cat)>/@this	<Pointer: void morePlay(Cat)>/@this
+<Pointer: void morePlay(Cat)>/@parameter0	<Pointer: void morePlay(Cat)>/@parameter0
+<Pointer: void morePlay(Cat)>/$stack5	<Pointer: void morePlay(Cat)>/$stack5
+<Pointer: void morePlay(Cat)>/$stack6	<Pointer: void morePlay(Cat)>/$stack6
+<Pointer: void morePlay(Cat)>/$stack7	<Pointer: void morePlay(Cat)>/$stack7
+<Pointer: void morePlay(Cat)>/this#_0	<Pointer: void morePlay(Cat)>/this#_0
+<Pointer: void morePlay(Cat)>/a1#_43	<Pointer: void morePlay(Cat)>/a1#_41
+<Pointer: void morePlay(Cat)>/a2#_44	<Pointer: void morePlay(Cat)>/a2#_42
+<Pointer: void morePlay(Cat)>/if/0	<Pointer: void morePlay(Cat)>/if/0
+<Pointer: void morePlay(Cat)>/return-void/0	<Pointer: void morePlay(Cat)>/return-void/0
+<Pointer: void morePlay(Cat)>/return-void/1	<Pointer: void morePlay(Cat)>/return-void/1
+morePlay	morePlay
+(LCat;)V	(LCat;)V
+<Pointer: void test(int)>/Pointer.morePlay/0	<Pointer: void test(int)>/Pointer.morePlay/0
+<Pointer: void test(int)>/$stack13	<Pointer: void test(int)>/$stack9
+<Pointer: void morePlay(Cat)>/Cat.play/0	<Pointer: void morePlay(Cat)>/Cat.play/0
+<Cat: void play()>	<Cat: void play()>
+<class Animal>	<class Animal>
+<Animal: void play()>/@this	<Animal: void play()>/@this
+<Animal: void play()>/this#_0	<Animal: void play()>/this#_0
+<Pointer: void test(int)>/$stack9	<Pointer: void test(int)>/$stack7
+<Pointer: void test(int)>/a_$$A_1#_26	<Pointer: void test(int)>/a_$$A_1#_26
+<Pointer: void test(int)>/a_$$A_1_$$A_1#_28	<Pointer: void test(int)>/a_$$A_1_$$A_1#_28
+<Pointer: void test(int)>/a_$$A_1_$$A_2#_29	<Pointer: void test(int)>/a_$$A_1_$$A_2#_29
+play	play
+java.lang.Object	java.lang.Object
+<class Dog>	<class Dog>
+<Pointer: void test(int)>/new Dog/0	<Pointer: void test(int)>/new Dog/0
+<Pointer: void test(int)>/$stack5	<Pointer: void test(int)>/$stack4
+<Dog: void <init>()>/@this	<Dog: void <init>()>/@this
+<Dog: void play()>/@this	<Dog: void play()>/@this
+<Dog: void play()>/this#_0	<Dog: void play()>/this#_0
+<Dog: void play()>	<Dog: void play()>
+<class Pointer>	<class Pointer>
+<Pointer: void <init>()>/@this	<Pointer: void <init>()>/@this
+<Pointer: void <init>()>/this#_0	<Pointer: void <init>()>/this#_0
+<Pointer: void test(int)>/@this	<Pointer: void test(int)>/@this
+<Pointer: void test(int)>/this#_0	<Pointer: void test(int)>/this#_0
+sanitize	sanitize
+test	test
+int	int
+(Ljava/lang/Object;)V	(Ljava/lang/Object;)V
+(I)V	(I)V
+<Cat: void setParent(Cat)>/this#_0	<Cat: void setParent(Cat)>/this#_0
+<Cat: void play()>/this#_0	<Cat: void play()>/this#_0
+setParent	setParent
+other#_0	other#_0
+<Animal: void play()>/assign/0	<Animal: void play()>/assign/0
+<Animal: void play()>/return-void/0	<Animal: void play()>/return-void/0
+<Pointer: void test(int)>/Animal.play/0	<Pointer: void test(int)>/Animal.play/0
+p#_40	p#_38
+c#_0	c#_0
+<Pointer: void <init>()>/java.lang.Object.<init>/0	<Pointer: void <init>()>/java.lang.Object.<init>/0
+<Dog: void <init>()>/assign/0	<Dog: void <init>()>/assign/0
+<Cat: void <init>()>/assign/0	<Cat: void <init>()>/assign/0
+<Cat: void <init>()>/@this	<Cat: void <init>()>/@this
+<Pointer: void test(int)>/Dog.<init>/0	<Pointer: void test(int)>/Dog.<init>/0
+<Dog: void <init>()>/return-void/0	<Dog: void <init>()>/return-void/0
+$stack1	$stack1
+<Cat: void setParent(Cat)>/write-field-parent/0	<Cat: void setParent(Cat)>/write-field-parent/0
+<Cat: void setParent(Cat)>/c#_0	<Cat: void setParent(Cat)>/c#_0
+parent	parent
+$stack6	$stack6
+java.io.BufferedReader	java.io.BufferedReader
+$stack9	$stack9
+java.lang.String	java.lang.String
+$stack14	$stack14
+args#_0	args#_0
+buffer#_9	buffer#_9
+line#_12	line#_12
+result#_14	result#_14
+<Pointer: void sanitize(java.lang.Object)>/assign/0	<Pointer: void sanitize(java.lang.Object)>/assign/0
+<Pointer: void sanitize(java.lang.Object)>/@parameter0	<Pointer: void sanitize(java.lang.Object)>/@parameter0
+<Pointer: void sanitize(java.lang.Object)>/o#_0	<Pointer: void sanitize(java.lang.Object)>/o#_0
+<Pointer: void sanitize(java.lang.Object)>/return-void/0	<Pointer: void sanitize(java.lang.Object)>/return-void/0
+<Pointer: void <init>()>/assign/0	<Pointer: void <init>()>/assign/0
+<Pointer: void <init>()>/return-void/0	<Pointer: void <init>()>/return-void/0
+$stack7	$stack7
+java.io.InputStreamReader	java.io.InputStreamReader
+java.lang.StringBuilder	java.lang.StringBuilder
+$stack5	$stack5
+$stack8	$stack8
+java.io.InputStream	java.io.InputStream
+$stack15	$stack15
+java.io.PrintStream	java.io.PrintStream
+len	len
+java.lang.System	java.lang.System
+in	in
+out	out
+a1#_43	a1#_41
+a2#_44	a2#_42
+!=	!=
+<Pointer: void morePlay(Cat)>/tmp<Pointer: void morePlay(Cat)>/if/0	<Pointer: void morePlay(Cat)>/tmp<Pointer: void morePlay(Cat)>/if/0
+<Pointer: void test(int)>/$stack12	<Pointer: void test(int)>/$stack8
+<Pointer: void test(int)>/assign/14	<Pointer: void test(int)>/assign/10
+<Cat: void play()>/assign/0	<Cat: void play()>/assign/0
+<Cat: void play()>/@this	<Cat: void play()>/@this
+<Cat: void play()>/return-void/0	<Cat: void play()>/return-void/0
+<Pointer: void test(int)>/assign/7	<Pointer: void test(int)>/assign/7
+<Pointer: void test(int)>/assign/3	<Pointer: void test(int)>/assign/3
+<Pointer: void test(int)>/$stack8	<Pointer: void test(int)>/$stack6
+<Pointer: void test(int)>/phi-assign/0	<Pointer: void test(int)>/phi-assign/0
+a_$$A_1#_26	a_$$A_1#_26
+<Pointer: void test(int)>/assign/5	<Pointer: void test(int)>/assign/5
+<Pointer: void test(int)>/phi-assign/1	<Pointer: void test(int)>/phi-assign/1
+a_$$A_1_$$A_1#_28	a_$$A_1_$$A_1#_28
+a_$$A_1_$$A_2#_29	a_$$A_1_$$A_2#_29
+<Pointer: void test(int)>/assign/4	<Pointer: void test(int)>/assign/4
+<Dog: void play()>/assign/0	<Dog: void play()>/assign/0
+<Dog: void play()>/return-void/0	<Dog: void play()>/return-void/0
+<Pointer: void test(int)>/assign/0	<Pointer: void test(int)>/assign/0
+<Pointer: void test(int)>/@parameter0	<Pointer: void test(int)>/@parameter0
+<Pointer: void test(int)>/l#_0	<Pointer: void test(int)>/l#_0
+<Cat: void setParent(Cat)>/assign/0	<Cat: void setParent(Cat)>/assign/0
+<Cat: void setParent(Cat)>/@this	<Cat: void setParent(Cat)>/@this
+<Cat: void setParent(Cat)>/assign/1	<Cat: void setParent(Cat)>/assign/1
+<Cat: void setParent(Cat)>/@parameter0	<Cat: void setParent(Cat)>/@parameter0
+o#_0	o#_0
+<Pointer: void test(int)>/if/0	<Pointer: void test(int)>/if/0
+<Pointer: void test(int)>/assign/15	<Pointer: void test(int)>/assign/11
+<Pointer: void test(int)>/Cat.<init>/0	<Pointer: void test(int)>/Cat.<init>/0
+<Pointer: void test(int)>/assign/2	<Pointer: void test(int)>/assign/2
+<Pointer: void test(int)>/new Cat/0	<Pointer: void test(int)>/new Cat/0
+<Pointer: void test(int)>/assign/1	<Pointer: void test(int)>/assign/1
+l#_0	l#_0
+<Pointer: void test(int)>/tmp<Pointer: void test(int)>/if/0	<Pointer: void test(int)>/tmp<Pointer: void test(int)>/if/0
+<Cat: void setParent(Cat)>	<Cat: void setParent(Cat)>
+<Cat: void setParent(Cat)>/return-void/0	<Cat: void setParent(Cat)>/return-void/0
+<Cat: void <init>()>	<Cat: void <init>()>
+<Pointer: void test(int)>/Cat.<init>/1	<Pointer: void test(int)>/Cat.<init>/1
+<Pointer: void test(int)>/$stack6	<Pointer: void test(int)>/$stack5
+<Cat: void <init>()>/return-void/0	<Cat: void <init>()>/return-void/0
+<Pointer: void test(int)>/assign/9	<Pointer: void test(int)>/assign/9
+<Pointer: void test(int)>/assign/8	<Pointer: void test(int)>/assign/8
+<Pointer: void test(int)>/new Cat/1	<Pointer: void test(int)>/new Cat/1
+Cat	Cat
+<class Cat>	<class Cat>
+<Pointer: void test(int)>/c2#_33	<Pointer: void test(int)>/c1#_32
+c2#_33	c1#_32
+<Pointer: void test(int)>	<Pointer: void test(int)>
+<Pointer: void test(int)>/a	<Pointer: void test(int)>/a
+<Pointer: void test(int)>/return-void/0	<Pointer: void test(int)>/return-void/0
+<Pointer: void test(int)>/goto/0	<Pointer: void test(int)>/goto/0
+a	a
+bottom_type	bottom_type
+$stack4	$stack4
+$stack10	$stack10
+$stack12	$stack12
+$stack13	$stack13
+$stack11	$stack11
+<Pointer: void test(int)>/c1#_32	new_var_11
+<Pointer: void test(int)>/assign/11	new_var_12
+<Pointer: void test(int)>/$stack7	new_var_13
+<Pointer: void test(int)>/assign/12	new_var_14
+<Pointer: void test(int)>/$stack11	new_var_15
+<Pointer: void test(int)>/assign/13	new_var_16
+<Pointer: void test(int)>/$stack10	new_var_17
+/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/Java/Pointer1/Pointer	new_var_18
+<Pointer: void test(int)>/Cat.<init>/2	new_var_19
+<Pointer: void test(int)>/Cat.setParent/0	new_var_20
+c1#_32	new_var_21
+<Pointer: void test(int)>/new Cat/2	new_var_22
+<Pointer: void test(int)>/assign/10	new_var_23
