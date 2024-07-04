@@ -8,13 +8,17 @@ class TermOccuranceIterative(Iterative_Anchor_Mapping):
         super().__init__(paths,"TermOccuranceIterative")
 
 
-    def similarity(self,term1,term2,term1_occ,term2_occ):
-        counter1 = Counter(term1_occ.keys())
-        counter2 = Counter(term2_occ.keys())
+    def similarity(self,term_name1,term_obj1,term_name2,term_obj2):
+        # compress the term-occurances
+        counter1 = Counter({key : len(val) for key,val in term_obj1.occurrence.items()})
+        counter2 = Counter({key : len(val) for key,val in term_obj2.occurrence.items()})
         intersection = counter1 & counter2
-        structural_sim = 2 * intersection.total() / (counter1.total() + counter2.total())
+        structural_sim = intersection.total() **2 / (counter1.total() + counter2.total())
         # eventually integrate lexical similarity
         join_atoms = []
+        # maybe it would be smarter to calculate this only after mapping has been accepted
+        # on the other hand: when including the neighbour sim we need this info here
+        # overlap consists of file, col_nr
         for overlap in intersection:
-            join_atoms.append(overlap + (term1_occ[overlap],term2_occ[overlap]))
-        return structural_sim,join_atoms
+            join_atoms.append((overlap + (term_obj1.occurrence[overlap],term_obj2.occurrence[overlap])))
+        return structural_sim, join_atoms

@@ -1,0 +1,5 @@
+simplejavacalculator.Calculator$BiOperatorModes	java.lang.Enum
+simplejavacalculator.Calculator$MonoOperatorModes	java.lang.Enum
+simplejavacalculator.Calculator	java.lang.Object
+simplejavacalculator.SimpleJavaCalculator	java.lang.Object
+simplejavacalculator.UI	java.lang.Object

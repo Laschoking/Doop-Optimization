@@ -1,0 +1,6 @@
+<simplejavacalculator.UI: void parsetoBinary()>/goto/0
+<simplejavacalculator.UI: void init()>/goto/0
+<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/goto/0
+<simplejavacalculator.UI: void init()>/goto/1
+<simplejavacalculator.UI: void writer(java.lang.Double)>/goto/0
+<simplejavacalculator.UI: void <init>()>/goto/0

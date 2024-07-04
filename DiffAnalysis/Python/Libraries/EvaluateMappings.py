@@ -1,4 +1,6 @@
 from prettytable import PrettyTable
+import numpy as np
+import matplotlib.pyplot as plt
 
 def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
     t = PrettyTable()
@@ -8,26 +10,24 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
     unique_rows_db2 = set()
     inters_db1_db2 = set()
 
-    file_count = len(db1.files)
     div = False
-    for file in db1.files:
-        file_count -= 1
-        if file not in db2.files:
+    for file_name,db1_file_obj in db1.files.items():
+        if file_name not in db2.files:
             print("faulty database: " + db2.name)
-            print("file was not compared: " + file)
+            print("file was not compared: " + file_name)
             continue
-        #if file == "AssignLocal":
-        #    print("AL")
-        rows1 = set(tuple(row) for row in db1.data_rows[file])
+
+        db2_file_obj = db2.files[file_name]
+        rows1 = set(tuple(record) for record in db1_file_obj.records)
         rows2 = set()
         # in case, one db still has identifiers appended (like ["a","b", 0], remove
         if rm_identifier != '':
-            for x in db2.data_rows[file]:
+            for record in db2_file_obj.records:
                 # remove only common identifier & from correct side (dont consider rows that come from the other db)
-                if x[-1] == rm_identifier or x[-1] == '0':
-                    rows2.add(tuple(x[:-1]))
+                if record[-1] == rm_identifier or record[-1] == '0':
+                    rows2.add(tuple(record[:-1]))
         else:
-            rows2 = set(tuple(row) for row in db2.data_rows[file])
+            rows2 = set(tuple(record) for record in db2_file_obj.records)
 
         inters = rows1.intersection(rows2)
         unique_rows1 = rows1.difference(rows2)
@@ -36,7 +36,7 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
         l_inters = len(inters)
         l_rows1 = len(unique_rows1)
         if l_rows1 > 0 and print_flag:
-            print(file)
+            print(file_name)
             print(unique_rows1)
         l_rows2 = len(unique_rows2)
         inters_db1_db2 = inters_db1_db2 | inters
@@ -46,7 +46,7 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
 
         cov = round(100 * l_inters / (l_rows1 + l_rows2 + l_inters))
         if cov != 100:
-            r = [file, l_rows1, l_rows2, l_inters, str(cov) + "%"]
+            r = [file_name, l_rows1, l_rows2, l_inters, str(cov) + "%"]
             t.add_row(r,divider=div)
 
 
@@ -117,9 +117,9 @@ def check_data_correctness(data_frame, mapping):
 
 def db_overlap(db):
     split_db = {'1': 0, '10': 0, '0': 0}
-    for file in db.files:
-        for row in db.data_rows[file]:
-            split_db[row[-1]] += 1
+    for file_name,file_obj in db.files.items():
+        for record in file_obj.records:
+            split_db[record[-1]] += 1
         #print(file + ": " +  str(split_db['1']) + "  " + str(split_db['10']) + "  " + str(split_db['0']))
     return split_db, str(round(100 * split_db['0'] / (split_db['1'] + split_db['10'] + split_db['0']), 1))
 
@@ -131,8 +131,8 @@ def evaluate_mapping_overlap(data_frame):
 
     diff = diff_two_dirs(data_frame.db1_original_facts, data_frame.db2_original_facts, rm_identifier='', print_flag=False)[0]
     t.add_row(["No mapping","original facts", diff[0], diff[1], diff[2], diff[0] + diff[1] + diff[2], diff[3] + "%"])
-
-    l_b = data_frame.mappings[-1]
+    if data_frame.mappings:
+        l_b = data_frame.mappings[-1]
     for mapping in data_frame.mappings:
         div = False
         split, sim = db_overlap(mapping.db2_merged_facts)
@@ -157,4 +157,21 @@ def evaluate_mapping_overlap(data_frame):
     return t.get_string(fields=["Method", "data set", "Common Rows", "Total Rows", "overlap in %"])
 
 
+def plot_degree_distribution(terms):
+    degrees = []
+    nodes = []
+    for term,occ in terms.items():
+        degrees.append(len(occ))
+        nodes.append(term)
+    degrees = np.array(degrees)
+    mean = np.mean(degrees)
+    std_dev = np.std(degrees)
+    threshold = mean + std_dev
+    plt.hist(np.array(degrees),100)
+    plt.axvline(degrees.mean(), color='k', linestyle='dashed', linewidth=0.5)
+    plt.axvline(degrees.std(), color='b', linestyle='dashed', linewidth=0.5)
 
+    plt.axvline(threshold, color='r', linestyle='dashed', linewidth=1)
+    print(str(round(100*len([x for x in degrees if x > threshold])/len(degrees),3)) + "%")
+
+    plt.show()

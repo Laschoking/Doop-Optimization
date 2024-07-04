@@ -16,15 +16,10 @@ import time
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = PointerAnalysis_Calc_old_new
+    db_config = Gocd_Websocket_Notifier
     pa_sep = analyses["nemo_CFG_sep"]
     pa_merge = analyses["nemo_CFG_merge"]
-    # the  '' is problematic bc. if it has a different mapping
-    # CONCAT(''->var_x,"foo") will produce a different result
-    pa_specific_blocked_terms = {'',"<clinit>", "void()","public","static","main","void(java.lang.String[])","java.io.Serializable","java.lang.Cloneable","java.lang.Object","abstract"}
-    #pa_specific_blocked_terms = {'','1',"abstract","<sun.misc.ProxyGenerator: byte[] generateClassFile()>"}
-    pa_specific_blocked_terms.update(str(x) for x in range(1000)) # dirty solution
-    l_blocked_terms = len(pa_specific_blocked_terms)
+
     # Fact Creation of Java-Files (or .Jar)
     data_frame = DataFrame(db_config.db1_path, db_config.db2_path)
     ShellLib.create_facts(db_config, data_frame.db1_original_facts.path, data_frame.db2_original_facts.path)
@@ -33,6 +28,10 @@ if __name__ == "__main__":
     # load facts into data-object
     data_frame.db1_original_facts.read_directory()
     data_frame.db2_original_facts.read_directory()
+
+    #plot_degree_distribution(data_frame.db1_original_facts.terms)
+    #plot_degree_distribution(data_frame.db2_original_facts.terms)
+
 
     pa_runtime = []
     eval_mappings = []
@@ -47,15 +46,15 @@ if __name__ == "__main__":
     # add mappings to data_frame
     db1 = data_frame.db1_original_facts
     db2 = data_frame.db2_original_facts
-    #data_frame.add_mapping(StringEquality(data_frame.paths))
 
+    #data_frame.add_mapping(StringEquality(data_frame.paths))
     #data_frame.add_mapping(SequenceMatcher(data_frame.paths))
     #data_frame.add_mapping(SequenceMatcherPairOccurance(data_frame.paths))
     #data_frame.add_mapping(ISUBSequenceMatcher_Crossproduct(data_frame.paths))
- 
-    data_frame.add_mapping(ISUBSequenceMatcher_Iterative(data_frame.paths))
-    data_frame.add_mapping(ISUBSequenceMatcher_Iterative_Occ(data_frame.paths))
-    data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
+    #data_frame.add_mapping(ISUBSequenceMatcher_Iterative(data_frame.paths))
+    #data_frame.add_mapping(ISUBSequenceMatcher_Iterative_Occ(data_frame.paths))
+    #data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
+
 
     time_tab = PrettyTable()
     time_tab.field_names = ["Mapping","#blocked Mappings", "# 1:1 Mappings","#synthetic Terms", "run-time"]
@@ -64,7 +63,7 @@ if __name__ == "__main__":
     for mapping in data_frame.mappings:
         t0 = time.time()
         # calculate similarity_matrix & compute maximal mapping from db1 to db2
-        mapping.compute_mapping(db1,db2,pa_specific_blocked_terms)
+        mapping.compute_mapping(db1,db2,pa_merge["blocked_terms"])
         nr_1_1_mappings  = len(mapping.mapping)
         # execute best mapping and create merged database: merge(map(db1), db2) -> merge_db2
         mapping.merge_dbs(db1,db2)
@@ -88,7 +87,8 @@ if __name__ == "__main__":
         # check if bijected results correspond to correct results from base
         check_data_correctness(data_frame,mapping)
         t1 = time.time()
-        time_tab.add_row([mapping.name,l_blocked_terms,nr_1_1_mappings,mapping.new_term_counter - l_blocked_terms,round(t1 - t0,4)])
+        l_blocked_terms = mapping.new_term_counter
+        time_tab.add_row([mapping.name,l_blocked_terms,nr_1_1_mappings,mapping.new_term_counter,round(t1 - t0,4)])
 
         # Evaluation function to analyse if the mapping reduces storage
     print(time_tab)
@@ -97,3 +97,6 @@ if __name__ == "__main__":
 # eine Tabelle mit allen PA
 
 # data_frame.db2_merge_pa_base.read_directory()
+
+# TODO: Bessere Implementierung der Blocked numbers
+# TODO: iterativ nachbarn einbeziehen

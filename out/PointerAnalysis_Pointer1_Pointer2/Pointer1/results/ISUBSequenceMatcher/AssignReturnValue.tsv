@@ -1,0 +1,7 @@
+<Pointer: void main(java.lang.String[])>/java.io.BufferedReader.readLine/0	<Pointer: void main(java.lang.String[])>/$stack9
+<Pointer: void morePlay(Cat)>/Cat.getParent/0	<Pointer: void morePlay(Cat)>/$stack5
+<Pointer: void morePlay(Cat)>/Cat.playWith/0	<Pointer: void morePlay(Cat)>/$stack6
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.toString/0	<Pointer: void main(java.lang.String[])>/$stack14
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/0	<Pointer: void main(java.lang.String[])>/$stack12
+<Pointer: void morePlay(Cat)>/Cat.playWith/1	<Pointer: void morePlay(Cat)>/$stack7
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/1	<Pointer: void main(java.lang.String[])>/$stack13

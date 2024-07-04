@@ -1,0 +1,14 @@
+<Pointer: void main(java.lang.String[])>/java.io.BufferedReader.readLine/0	11	<java.io.BufferedReader: java.lang.String readLine()>	<Pointer: void main(java.lang.String[])>/buffer#_9	<Pointer: void main(java.lang.String[])>
+<Pointer: void morePlay(Cat)>/Cat.getParent/0	2	<Cat: Cat getParent()>	<Pointer: void morePlay(Cat)>/c#_0	<Pointer: void morePlay(Cat)>
+<Pointer: void morePlay(Cat)>/Cat.playWith/0	5	<Animal: Animal playWith(Animal)>	<Pointer: void morePlay(Cat)>/p#_40	<Pointer: void morePlay(Cat)>
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.toString/0	19	<java.lang.StringBuilder: java.lang.String toString()>	<Pointer: void main(java.lang.String[])>/$stack13	<Pointer: void main(java.lang.String[])>
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/0	17	<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>	<Pointer: void main(java.lang.String[])>/$stack10	<Pointer: void main(java.lang.String[])>
+<Pointer: void main(java.lang.String[])>/java.io.PrintStream.println/0	22	<java.io.PrintStream: void println(java.lang.String)>	<Pointer: void main(java.lang.String[])>/$stack15	<Pointer: void main(java.lang.String[])>
+<Pointer: void morePlay(Cat)>/Cat.playWith/1	7	<Animal: Animal playWith(Animal)>	<Pointer: void morePlay(Cat)>/c#_0	<Pointer: void morePlay(Cat)>
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.append/1	18	<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>	<Pointer: void main(java.lang.String[])>/$stack12	<Pointer: void main(java.lang.String[])>
+<Animal: Animal playWith(Animal)>/Animal.play/0	2	<Animal: void play()>	<Animal: Animal playWith(Animal)>/other#_0	<Animal: Animal playWith(Animal)>
+<Pointer: void morePlay(Cat)>/Cat.play/0	4	<Cat: void play()>	<Pointer: void morePlay(Cat)>/p#_40	<Pointer: void morePlay(Cat)>
+<Pointer: void main(java.lang.String[])>/Pointer.test/0	4	<Pointer: void test(int)>	<Pointer: void main(java.lang.String[])>/$stack4	<Pointer: void main(java.lang.String[])>
+<Pointer: void test(int)>/Cat.setParent/0	22	<Cat: void setParent(Cat)>	<Pointer: void test(int)>/$stack11	<Pointer: void test(int)>
+<Pointer: void test(int)>/Pointer.morePlay/0	25	<Pointer: void morePlay(Cat)>	<Pointer: void test(int)>/$stack13	<Pointer: void test(int)>
+<Pointer: void test(int)>/Animal.play/0	13	<Animal: void play()>	<Pointer: void test(int)>/$stack9	<Pointer: void test(int)>

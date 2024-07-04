@@ -1,0 +1,2 @@
+<Cat: Cat getParent()>/return/0	2	<Cat: Cat getParent()>/$stack1	<Cat: Cat getParent()>	0
+<Animal: Animal playWith(Animal)>/return/0	3	<Animal: Animal playWith(Animal)>/other#_0	<Animal: Animal playWith(Animal)>	0

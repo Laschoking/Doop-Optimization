@@ -1,0 +1,199 @@
+2	java.lang.String
+1	java.lang.String
+0	java.lang.String
+simplejavacalculator.SimpleJavaCalculator	java.lang.String
+${build.dir}/generated-sources	java.lang.String
+${javac.classpath}:${build.classes.dir}	java.lang.String
+1.8	java.lang.String
+${src.dir}/META-INF	java.lang.String
+${javac.test.classpath}:${build.test.classes.dir}	java.lang.String
+<simplejavacalculator.Calculator$MonoOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$MonoOperatorModes/6	simplejavacalculator.Calculator$MonoOperatorModes
+<simplejavacalculator.Calculator$MonoOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$MonoOperatorModes/8	simplejavacalculator.Calculator$MonoOperatorModes
+<simplejavacalculator.UI: void <init>()>/new javax.swing.ImageIcon/0	javax.swing.ImageIcon
+<simplejavacalculator.Calculator: java.lang.Double calculateBiImpl()>/new java.lang.Error/0	java.lang.Error
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/0	javax.swing.JButton
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JPanel/3	javax.swing.JPanel
+<simplejavacalculator.UI: void <init>()>/new java.awt.FlowLayout/0	java.awt.FlowLayout
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/14	javax.swing.JButton
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/9	javax.swing.JButton
+<simplejavacalculator.Calculator$MonoOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$MonoOperatorModes/4	simplejavacalculator.Calculator$MonoOperatorModes
+<simplejavacalculator.Calculator$BiOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$BiOperatorModes/3	simplejavacalculator.Calculator$BiOperatorModes
+<simplejavacalculator.UI: void <init>()>/new java.awt.FlowLayout/7	java.awt.FlowLayout
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/6	javax.swing.JButton
+<simplejavacalculator.Calculator$MonoOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$MonoOperatorModes/2	simplejavacalculator.Calculator$MonoOperatorModes
+<simplejavacalculator.Calculator$MonoOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$MonoOperatorModes/5	simplejavacalculator.Calculator$MonoOperatorModes
+<simplejavacalculator.Calculator$BiOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$BiOperatorModes[]/0	simplejavacalculator.Calculator$BiOperatorModes[]
+<simplejavacalculator.Calculator$BiOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$BiOperatorModes/4	simplejavacalculator.Calculator$BiOperatorModes
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JTextArea/0	javax.swing.JTextArea
+<simplejavacalculator.Calculator$MonoOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$MonoOperatorModes[]/0	simplejavacalculator.Calculator$MonoOperatorModes[]
+<simplejavacalculator.Calculator$MonoOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$MonoOperatorModes/7	simplejavacalculator.Calculator$MonoOperatorModes
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/2	javax.swing.JButton
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/5	javax.swing.JButton
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/4	javax.swing.JButton
+<simplejavacalculator.Calculator$BiOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$BiOperatorModes/5	simplejavacalculator.Calculator$BiOperatorModes
+<simplejavacalculator.UI: void <init>()>/new simplejavacalculator.Calculator/0	simplejavacalculator.Calculator
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/17	javax.swing.JButton
+<simplejavacalculator.Calculator$BiOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$BiOperatorModes/2	simplejavacalculator.Calculator$BiOperatorModes
+<simplejavacalculator.Calculator$BiOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$BiOperatorModes/0	simplejavacalculator.Calculator$BiOperatorModes
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/7	javax.swing.JButton
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/12	javax.swing.JButton
+<simplejavacalculator.Calculator$MonoOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$MonoOperatorModes/0	simplejavacalculator.Calculator$MonoOperatorModes
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/16	javax.swing.JButton
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JFrame/0	javax.swing.JFrame
+<simplejavacalculator.UI: void <init>()>/new java.lang.String[]/0	java.lang.String[]
+<simplejavacalculator.Calculator: java.lang.Double calculateMono(simplejavacalculator.Calculator$MonoOperatorModes,java.lang.Double)>/new java.lang.Error/0	java.lang.Error
+<simplejavacalculator.UI: void <init>()>/new java.awt.Font/1	java.awt.Font
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/13	javax.swing.JButton
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/8	javax.swing.JButton
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/15	javax.swing.JButton
+<simplejavacalculator.Calculator$MonoOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$MonoOperatorModes/3	simplejavacalculator.Calculator$MonoOperatorModes
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/1	javax.swing.JButton
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/11	javax.swing.JButton
+<simplejavacalculator.UI: void parsetoBinary()>/new java.lang.StringBuilder/1	java.lang.StringBuilder
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/10	javax.swing.JButton
+<simplejavacalculator.SimpleJavaCalculator: void main(java.lang.String[])>/new simplejavacalculator.UI/0	simplejavacalculator.UI
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton/3	javax.swing.JButton
+<simplejavacalculator.Calculator$MonoOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$MonoOperatorModes/1	simplejavacalculator.Calculator$MonoOperatorModes
+<simplejavacalculator.Calculator$BiOperatorModes: void <clinit>()>/new simplejavacalculator.Calculator$BiOperatorModes/1	simplejavacalculator.Calculator$BiOperatorModes
+<simplejavacalculator.UI: void parsetoBinary()>/new java.lang.StringBuilder/0	java.lang.StringBuilder
+<simplejavacalculator.UI: void <init>()>/new java.awt.Font/0	java.awt.Font
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JPanel/0	javax.swing.JPanel
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JPanel/1	javax.swing.JPanel
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JPanel/5	javax.swing.JPanel
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JPanel/4	javax.swing.JPanel
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JPanel/8	javax.swing.JPanel
+<simplejavacalculator.UI: void <init>()>/new java.awt.FlowLayout/4	java.awt.FlowLayout
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JPanel/6	javax.swing.JPanel
+<simplejavacalculator.UI: void <init>()>/new java.awt.FlowLayout/6	java.awt.FlowLayout
+<simplejavacalculator.UI: void <init>()>/new java.awt.FlowLayout/3	java.awt.FlowLayout
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JButton[]/0	javax.swing.JButton[]
+<simplejavacalculator.UI: void <init>()>/new java.awt.FlowLayout/2	java.awt.FlowLayout
+<simplejavacalculator.UI: void <init>()>/new java.awt.FlowLayout/1	java.awt.FlowLayout
+<simplejavacalculator.UI: void <init>()>/new javax.swing.BoxLayout/0	javax.swing.BoxLayout
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JPanel/7	javax.swing.JPanel
+<simplejavacalculator.UI: void <init>()>/new java.awt.FlowLayout/5	java.awt.FlowLayout
+<simplejavacalculator.UI: void <init>()>/new javax.swing.JPanel/2	javax.swing.JPanel
+/	java.lang.String
+Sin	java.lang.String
+<<main method array>>	java.lang.String[]
+<<main method array content>>	java.lang.String
+build.generated.sources.dir	java.lang.String
+default_platform	java.lang.String
+multiply	java.lang.String
+4	java.lang.String
+UTF-8	java.lang.String
+javac.processorpath	java.lang.String
+annotation.processing.run.all.processors	java.lang.String
+7	java.lang.String
+${dist.dir}/SimpleJavaCalculator.jar	java.lang.String
+cos	java.lang.String
+build.sysclasspath	java.lang.String
+platform.active	java.lang.String
+src	java.lang.String
+Tan	java.lang.String
+${build.dir}/classes	java.lang.String
+${source.encoding}	java.lang.String
+meta.inf.dir	java.lang.String
+log	java.lang.String
+/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/Java/Simple-Java-Calculator_old/SimpleJavaCalculator.jar	java.lang.String
+5	java.lang.String
+x^y	java.lang.String
+source.encoding	java.lang.String
+**/*.java,**/*.form	java.lang.String
+javadoc.notree	java.lang.String
+divide	java.lang.String
+6	java.lang.String
+javac.source	java.lang.String
+minus	java.lang.String
+excludes	java.lang.String
+ignore	java.lang.String
+javadoc.windowtitle	java.lang.String
+dist.dir	java.lang.String
+javadoc.private	java.lang.String
+${run.test.classpath}	java.lang.String
+C	java.lang.String
+javadoc.version	java.lang.String
+oneDevidedBy	java.lang.String
+build.generated.dir	java.lang.String
+javadoc.splitindex	java.lang.String
+tan	java.lang.String
+manifest.file	java.lang.String
+1/x	java.lang.String
+abs	java.lang.String
+run.classpath	java.lang.String
+annotation.processing.enabled.in.editor	java.lang.String
+log10(x)	java.lang.String
+test.src.dir	java.lang.String
+squareRoot	java.lang.String
+annotation.processing.enabled	java.lang.String
+javac.test.processorpath	java.lang.String
+javac.target	java.lang.String
+${javac.test.classpath}	java.lang.String
+xpowerofy	java.lang.String
+${javac.classpath}	java.lang.String
+sqrt	java.lang.String
+javadoc.author	java.lang.String
+icon/icon.png	java.lang.String
+*	java.lang.String
+${build.dir}/test/classes	java.lang.String
+annotation.processing.source.output	java.lang.String
+src.dir	java.lang.String
+build	java.lang.String
+build.classes.dir	java.lang.String
+**	java.lang.String
+${build.dir}/generated	java.lang.String
+=	java.lang.String
+javac.deprecation	java.lang.String
+javac.classpath	java.lang.String
+abs(x)	java.lang.String
+normal	java.lang.String
+${run.classpath}	java.lang.String
+Error while parse to binary.	java.lang.String
+add	java.lang.String
+build.classes.excludes	java.lang.String
+manifest.mf	java.lang.String
+main.class	java.lang.String
+run.test.classpath	java.lang.String
+Consolas	java.lang.String
+dist	java.lang.String
+build.dir	java.lang.String
+x%	java.lang.String
+build.test.classes.dir	java.lang.String
+annotation.processing.processors.list	java.lang.String
+rate	java.lang.String
+annotation.processing.processor.options	java.lang.String
+debug.classpath	java.lang.String
+Calculator PH	java.lang.String
+square	java.lang.String
+javadoc.additionalparam	java.lang.String
+-	java.lang.String
+${build.generated.sources.dir}/ap-source-output	java.lang.String
+dist.archive.excludes	java.lang.String
+includes	java.lang.String
+sin	java.lang.String
+javadoc.noindex	java.lang.String
+mkdist.disabled	java.lang.String
+jar.compress	java.lang.String
++	java.lang.String
+Bin	java.lang.String
+build.test.results.dir	java.lang.String
+run.jvmargs	java.lang.String
+x*x	java.lang.String
+javadoc.use	java.lang.String
+javadoc.nonavbar	java.lang.String
+debug.test.classpath	java.lang.String
+test	java.lang.String
+dist.jar	java.lang.String
+"<<\\""\\"">>"	java.lang.String
+8	java.lang.String
+dist.javadoc.dir	java.lang.String
+false	java.lang.String
+Cos	java.lang.String
+9	java.lang.String
+javac.test.classpath	java.lang.String
+3	java.lang.String
+true	java.lang.String
+javac.compilerargs	java.lang.String
+${build.dir}/test/results	java.lang.String
+${dist.dir}/javadoc	java.lang.String
+javadoc.encoding	java.lang.String
