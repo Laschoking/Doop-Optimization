@@ -1,0 +1,12 @@
+<Pointer: void main(java.lang.String[])>/java.io.InputStreamReader.<init>/0	8	<java.io.InputStreamReader: void <init>(java.io.InputStream)>	<Pointer: void main(java.lang.String[])>/$stack7	<Pointer: void main(java.lang.String[])>
+<Animal: void <init>()>/java.lang.Object.<init>/0	1	<java.lang.Object: void <init>()>	<Animal: void <init>()>/this#_0	<Animal: void <init>()>
+<Dog: void <init>()>/Animal.<init>/0	1	<Animal: void <init>()>	<Dog: void <init>()>/this#_0	<Dog: void <init>()>
+<Pointer: void main(java.lang.String[])>/Pointer.<init>/0	2	<Pointer: void <init>()>	<Pointer: void main(java.lang.String[])>/$stack4	<Pointer: void main(java.lang.String[])>
+<Cat: void <init>()>/Animal.<init>/0	1	<Animal: void <init>()>	<Cat: void <init>()>/this#_0	<Cat: void <init>()>
+<Pointer: void main(java.lang.String[])>/java.lang.StringBuilder.<init>/0	15	<java.lang.StringBuilder: void <init>()>	<Pointer: void main(java.lang.String[])>/$stack10	<Pointer: void main(java.lang.String[])>
+<Pointer: void main(java.lang.String[])>/java.io.BufferedReader.<init>/0	9	<java.io.BufferedReader: void <init>(java.io.Reader)>	<Pointer: void main(java.lang.String[])>/$stack6	<Pointer: void main(java.lang.String[])>
+<Pointer: void <init>()>/java.lang.Object.<init>/0	1	<java.lang.Object: void <init>()>	<Pointer: void <init>()>/this#_0	<Pointer: void <init>()>
+<Pointer: void test(int)>/Cat.<init>/2	18	<Cat: void <init>()>	<Pointer: void test(int)>/$stack7	<Pointer: void test(int)>
+<Pointer: void test(int)>/Cat.<init>/1	15	<Cat: void <init>()>	<Pointer: void test(int)>/$stack6	<Pointer: void test(int)>
+<Pointer: void test(int)>/Cat.<init>/0	4	<Cat: void <init>()>	<Pointer: void test(int)>/$stack8	<Pointer: void test(int)>
+<Pointer: void test(int)>/Dog.<init>/0	8	<Dog: void <init>()>	<Pointer: void test(int)>/$stack5	<Pointer: void test(int)>

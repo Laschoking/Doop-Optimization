@@ -1,0 +1,15 @@
+<simplejavacalculator.UI: void <init>()>/simplejavacalculator.BufferedImageCustom.imageReturn/0	28	1
+<simplejavacalculator.UI: void <init>()>/simplejavacalculator.BufferedImageCustom.imageReturn/0	29	1
+<simplejavacalculator.UI: void parsetoBinary()>/goto/0	26	0
+<simplejavacalculator.UI: void init()>/goto/1	232	0
+<simplejavacalculator.UI: void init()>/goto/1	233	0
+<simplejavacalculator.UI: void writer(java.lang.Double)>/goto/0	13	0
+<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/goto/0	5	0
+<simplejavacalculator.UI: void actionPerformed(java.awt.event.ActionEvent)>/goto/0	6	0
+<simplejavacalculator.UI: void <init>()>/goto/0	101	1
+<simplejavacalculator.UI: void <init>()>/goto/0	102	1
+<simplejavacalculator.UI: void <init>()>/goto/0	105	10
+<simplejavacalculator.UI: void <init>()>/goto/0	106	10
+<simplejavacalculator.SimpleJavaCalculator: void main(java.lang.String[])>/goto/0	12	10
+<simplejavacalculator.UI: void init()>/goto/0	28	10
+<simplejavacalculator.UI: void init()>/goto/0	29	10

@@ -1,0 +1,6 @@
+simplejavacalculator.Calculator$BiOperatorModes	java.lang.Enum
+simplejavacalculator.UI	java.lang.Object
+simplejavacalculator.BufferedImageCustom	java.lang.Object
+simplejavacalculator.SimpleJavaCalculator	java.lang.Object
+simplejavacalculator.Calculator	java.lang.Object
+simplejavacalculator.Calculator$MonoOperatorModes	java.lang.Enum

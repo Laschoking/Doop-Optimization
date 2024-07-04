@@ -1,0 +1,3 @@
+<Cat: Cat parent>	Cat	parent	Cat	0
+<java.lang.System: java.io.PrintStream out>	java.lang.System	out	java.io.PrintStream	0
+<java.lang.System: java.io.InputStream in>	java.lang.System	in	java.io.InputStream	0
