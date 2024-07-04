@@ -62,8 +62,7 @@ class DoopAnalysisFactory implements AnalysisFactory<DoopAnalysis> {
 			"1-object-1-type-sensitive+heap"     : "OneObjectOneTypeSensitivePlusHeapConfiguration",
 			"web-app-sensitive"                  : "WebAppSensitiveConfiguration",
 			"sticky-2-object-sensitive"          : "StickyTwoObjectSensitiveConfiguration",
-			"adaptive-2-object-sensitive+heap"   : "AdaptiveTwoObjectSensitivePlusHeapConfiguration",
-			"knut-only"						     :	"KnutOnlyConfiguration"
+			"adaptive-2-object-sensitive+heap"   : "AdaptiveTwoObjectSensitivePlusHeapConfiguration"
 	]
 
 	/**
@@ -364,9 +363,6 @@ class DoopAnalysisFactory implements AnalysisFactory<DoopAnalysis> {
 			log.warn "WARNING: Default statistics are not compatible with analysis '${analysisName}', disabling statistics logic."
 			options.X_STATS_NONE.value = true
 		} else if (analysisName == 'basic-only') {
-			log.warn "WARNING: Default statistics are not compatible with analysis '${analysisName}', disabling statistics logic."
-			options.X_STATS_NONE.value = true
-		} else if (analysisName == 'knut-only') {
 			log.warn "WARNING: Default statistics are not compatible with analysis '${analysisName}', disabling statistics logic."
 			options.X_STATS_NONE.value = true
 		} else if (analysisName == 'data-flow') {

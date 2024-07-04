@@ -64,29 +64,9 @@ public class Main {
 
         Options.v().set_output_dir(outDir);
         // Use-original-names may cause crashes on Android (Soot issue 1256).
-        //Options.v().setPhaseOption("jb", "use-original-names:true");
+        if (!sootParameters._android)
+            Options.v().setPhaseOption("jb", "use-original-names:true");
         Options.v().setPhaseOption("jb", "model-lambdametafactory:false");
-        //Options.v().setPhaseOption("jb.dtr", "enabled:false");
-        //Options.v().setPhaseOption("jb.ese", "enabled:false");
-        //Options.v().setPhaseOption("jb.ls", "enabled:false");
-        Options.v().setPhaseOption("jb.cp", "enabled:false");
-        Options.v().setPhaseOption("jb.a", "enabled:false");
-        Options.v().setPhaseOption("jb.ule", "enabled:false");
-        //Options.v().setPhaseOption("jb.tr", "enabled:false");
-        Options.v().setPhaseOption("jb.dae", "enabled:false");
-        //Options.v().setPhaseOption("jb.lns", "enabled:false");
-        Options.v().setPhaseOption("jb.cp-ule", "enabled:false");
-        //Options.v().setPhaseOption("jb.lp", "enabled:false");
-        //Options.v().setPhaseOption("jb.ne", "enabled:false");
-        //Options.v().setPhaseOption("jb.uce", "enabled:false");
-        //Options.v().setPhaseOption("jb.tt", "enabled:false");
-        //Options.v().setPhaseOption("jj.cp", "enabled:false");
-        //Options.v().setPhaseOption("jop.cp", "enabled:false");
-        //Options.v().setPhaseOption("jop.cpf", "enabled:false");
-        //Options.v().setPhaseOption("wsop", "enabled:false");
-        //Options.v().setPhaseOption("wjtp", "enabled:false");
-        //Options.v().setPhaseOption("wjop", "enabled:false");
-
 
         if (sootParameters._ignoreWrongStaticness || sootParameters._ignoreFactGenErrors)
             Options.v().set_wrong_staticness(Options.wrong_staticness_ignore);
