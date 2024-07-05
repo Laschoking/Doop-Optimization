@@ -5,6 +5,7 @@ from Python.Libraries import ShellLib
 from sortedcontainers import SortedList,SortedDict
 
 import csv
+from collections import Counter
 
 
 class Config:
@@ -20,6 +21,7 @@ class Term:
     def __init__(self, term_name):
         self.name = term_name
         self.occurrence = dict()
+        self.occurrence_c = Counter()
         self.type = "int" if term_name.lstrip("-").isdigit() else "string"
         self.degree = 0
 
@@ -29,6 +31,7 @@ class Term:
     # those keys can be used for later set-operations while mapping
     def add_occurence(self,file_name,col_nr,row_nr):
         key = (file_name,col_nr)
+        self.occurrence_c.update([key])
         if key in self.occurrence:
             self.occurrence[key].append(row_nr)
         else:

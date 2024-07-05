@@ -3,14 +3,14 @@ from pathlib import Path
 from enum import Enum
 
 # create path to doop base and its output dir
-DOOP_BASE = Path("/home/kotname/Documents/Diplom/Code/doop/master/")
-DOOP_OUT = Path("/home/kotname/Documents/Diplom/Code/doop/master/out/")
+DOOP_BASE = Path("/home/kotname/Documents/Diplom/Code/doop/")
+DOOP_OUT = Path("/home/kotname/Documents/Diplom/Code/doop/out/")
 NEMO_ENGINE = Path("/home/kotname/Documents/Diplom/Code/nemo/nemo")
 
 #
 
 # this path will be the base for all of our file manipulation
-base_diff_path = Path("/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis")
+base_diff_path = Path("/home/kotname/Documents/Diplom/Code/doop/DiffAnalysis")
 base_out_path = base_diff_path.joinpath("out")
 java_source_dir = base_diff_path.joinpath("Java")
 

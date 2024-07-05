@@ -9,25 +9,27 @@ class ISUBSequenceMatcher_Iterative(Iterative_Anchor_Mapping):
     def __init__(self, paths):
         super().__init__(paths, "ISUBSequenceMatcher_Iterative")
 
-    def similarity(self, term1, term2, term1_occ, term2_occ):
-        counter1 = Counter(term1_occ.keys())
-        counter2 = Counter(term2_occ.keys())
-        intersection = counter1 & counter2
+    def similarity(self,term_name1,term_obj1,term_name2,term_obj2):
+        # compress the term-occurances
+        intersection = term_obj1.occurrence_c & term_obj2.occurrence_c
         # eventually integrate lexical similarity
-        # TODO: currently priority queue works with minimal value first
         join_atoms = []
+        # maybe it would be smarter to calculate this only after mapping has been accepted
+        # on the other hand: when including the neighbour sim we need this info here
+        # overlap consists of file, col_nr
         for overlap in intersection:
-            join_atoms.append(overlap + (term1_occ[overlap], term2_occ[overlap]))
+            join_atoms.append((overlap + (term_obj1.occurrence[overlap],term_obj2.occurrence[overlap])))
 
         # based on the path to the first relation, determine path to second relation
-        if term1.lstrip("-").isdigit() and term2.lstrip("-").isdigit():
+        '''if term1.lstrip("-").isdigit() and term2.lstrip("-").isdigit():
             max_int = max(int(term1), int(term2))
             if max_int > 0:
                 return 1 - abs(int(term1) - int(term2)) / max_int,join_atoms
             else:
                 return 1,join_atoms
-        else:
-            return isub(term1, term2),join_atoms
+        else:'''
+
+        return isub(term_name1, term_name2),join_atoms
 
 
 def isub(st1, st2):

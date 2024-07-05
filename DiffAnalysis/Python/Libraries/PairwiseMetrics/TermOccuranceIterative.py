@@ -10,10 +10,8 @@ class TermOccuranceIterative(Iterative_Anchor_Mapping):
 
     def similarity(self,term_name1,term_obj1,term_name2,term_obj2):
         # compress the term-occurances
-        counter1 = Counter({key : len(val) for key,val in term_obj1.occurrence.items()})
-        counter2 = Counter({key : len(val) for key,val in term_obj2.occurrence.items()})
-        intersection = counter1 & counter2
-        structural_sim = intersection.total() **2 / (counter1.total() + counter2.total())
+        intersection = term_obj1.occurrence_c & term_obj2.occurrence_c
+        structural_sim = intersection.total() **2 / (term_obj1.occurrence_c.total() + term_obj2.occurrence_c.total())
         # eventually integrate lexical similarity
         join_atoms = []
         # maybe it would be smarter to calculate this only after mapping has been accepted

@@ -35,10 +35,12 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
 
         l_inters = len(inters)
         l_rows1 = len(unique_rows1)
-        if l_rows1 > 0 and print_flag:
-            print(file_name)
-            print(unique_rows1)
         l_rows2 = len(unique_rows2)
+
+        if (l_rows1 > 0 or l_rows2 > 0) and print_flag:
+            print(file_name)
+            print("db1 unique-rows: " + str(unique_rows1))
+            print("db2 unique-rows: " + str(unique_rows2))
         inters_db1_db2 = inters_db1_db2 | inters
         unique_rows_db1 =  unique_rows_db1 | unique_rows1
         unique_rows_db2 = unique_rows_db2 | unique_rows2
@@ -55,7 +57,7 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
     l_inters_files = len(inters_db1_db2)
     #t.add_row(['','','','',''],divider=True)
     t.add_row(["SUMMARY", l_rows1_files , l_rows2_files , l_inters_files,
-               str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files))) + "%"])
+               str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files),2)) + "%"])
     if (l_rows1_files > 0 or l_rows2_files > 0) and print_flag:
         print(t)
     # we return the nr. of rows for db1, db2, their intersection, and the overlap (inters/ (sum))

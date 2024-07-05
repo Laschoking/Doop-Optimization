@@ -17,7 +17,7 @@ class Iterative_Anchor_Mapping(Mapping):
         # block certain terms, that cannot be changed without computing wrong results
         # TODO floats etc. beachten
         for term_name,term_obj in db1.terms.items():
-            if term_name in blocked_terms or term_obj.type == "int":
+            if term_name in blocked_terms: # or term_obj.type == "int":
                 # map term to itself
                 self.mapping[term_name] = term_name
                 free_terms1.discard(term_name)

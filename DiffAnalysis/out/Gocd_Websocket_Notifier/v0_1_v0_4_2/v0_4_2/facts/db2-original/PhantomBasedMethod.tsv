@@ -1,0 +1,13 @@
+<com.matt_richardson.gocd.websocket_notifier.PipelineWebSocketServer: void onOpen(org.java_websocket.WebSocket,org.java_websocket.handshake.ClientHandshake)>
+<com.matt_richardson.gocd.websocket_notifier.PipelineWebSocketServer: void onClose(org.java_websocket.WebSocket,int,java.lang.String,boolean)>
+<com.matt_richardson.gocd.websocket_notifier.PipelineWebSocketServer: void onMessage(org.java_websocket.WebSocket,java.lang.String)>
+<com.matt_richardson.gocd.websocket_notifier.PipelineWebSocketServer: void onError(org.java_websocket.WebSocket,java.lang.Exception)>
+<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: void initializeGoApplicationAccessor(com.thoughtworks.go.plugin.api.GoApplicationAccessor)>
+<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: com.thoughtworks.go.plugin.api.response.GoPluginApiResponse handle(com.thoughtworks.go.plugin.api.request.GoPluginApiRequest)>
+<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: com.thoughtworks.go.plugin.api.GoPluginIdentifier pluginIdentifier()>
+<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: com.thoughtworks.go.plugin.api.response.GoPluginApiResponse handleNotificationsInterestedIn()>
+<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: com.thoughtworks.go.plugin.api.response.GoPluginApiResponse handleStageNotification(com.thoughtworks.go.plugin.api.request.GoPluginApiRequest)>
+<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: com.thoughtworks.go.plugin.api.response.GoPluginApiResponse renderJSON(int,java.lang.Object)>
+<com.matt_richardson.gocd.websocket_notifier.WebSocketPipelineListener: void notify(com.thoughtworks.go.plugin.api.request.GoPluginApiRequest)>
+<com.matt_richardson.gocd.websocket_notifier.PipelineDetailsPopulator: java.lang.String mergeInPipelineInstanceDetails(com.google.gson.JsonElement,com.google.gson.JsonElement)>
+<com.matt_richardson.gocd.websocket_notifier.PipelineDetailsPopulator: com.google.gson.JsonElement downloadPipelineInstanceDetails(java.lang.String)>

@@ -1,9 +1,70 @@
-/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/Java/Gocd_Websocket_Notifier/v0_4_2/Gocd_Websocket_Notifier.jar
+/home/kotname/Documents/Diplom/Code/doop/DiffAnalysis/Java/Gocd_Websocket_Notifier/v0_4_2/Gocd_Websocket_Notifier.jar
 groupId
 com.matt-richardson
-/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/Java/Gocd_Websocket_Notifier/v0_4_2/Gocd_Websocket_Notifier.jar
+/home/kotname/Documents/Diplom/Code/doop/DiffAnalysis/Java/Gocd_Websocket_Notifier/v0_4_2/Gocd_Websocket_Notifier.jar
 artifactId
 gocd-websocket-notifier
-/home/kotname/Documents/Diplom/Code/doop/master/DiffAnalysis/Java/Gocd_Websocket_Notifier/v0_4_2/Gocd_Websocket_Notifier.jar
+/home/kotname/Documents/Diplom/Code/doop/DiffAnalysis/Java/Gocd_Websocket_Notifier/v0_4_2/Gocd_Websocket_Notifier.jar
 version
 0.4.2+build.60.sha.7d0b8bc
+<<\\" connected\\">>
+<<\\" has disconnected\\">>
+websocket error
+sending \'
+<<\\"\' to \\">>
+\\"notification\\"
+\\"notifications-interested-in\\"
+\\"stage-status\\"
+<<\\"Starting WebSocket server started on port: \\">>
+<<\\"WebSocket server started on port: \\">>
+<<\\"Failed to launch WebSocket server on port: \\">>
+<<\\"received go plugin api request \\">>
+notifications-interested-in
+stage-status
+<<\\"Invalid request name: \\">>
+<<\\"Failed to handle request with name: %s , and body: %s \\">>
+received pluginIdentifier request
+notification
+stage-status
+notifications
+requesting details of stage-status notifications
+handling stage notification
+status
+success
+failed to notify pipeline listener
+status
+failure
+messages
+1.0
+\\"gocd-websocket-notifier.conf\\"
+<<\\"\\">>
+user.home
+gocd-websocket-notifier.conf
+gocd-websocket-notifier.conf
+Config file %s was not found in %s. Using default values.
+port
+port
+host
+host
+goHttpPort
+goHttpPort
+goUser
+goUser
+goPassword
+goPassword
+notify called with request name \'
+\' and requestBody \'
+\'
+x-pipeline-instance-details
+http://localhost:
+/go/api/pipelines/
+/history
+:
+<<\\"Basic \\">>
+Authorization
+pipelines
+pipeline-name
+pipeline
+name
+Failed to download pipeline instance details for requestBody \'
+\'

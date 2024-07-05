@@ -15,10 +15,10 @@ def clear_directory(directory):
     os.system("mkdir -p " + str(directory))
 
 # Intermediate Functions
-def create_facts(db_config,db1_path, db2_path):
-    doop_create_facts(db_config, db_config.db1_name, db1_path)
-    doop_create_facts(db_config, db_config.db2_name, db2_path)
-def doop_create_facts(db_config, db_name, fact_path):
+def create_facts(db_config,db1_path, db2_path,gen_new_facts):
+    doop_create_facts(db_config, db_config.db1_name, db1_path,gen_new_facts)
+    doop_create_facts(db_config, db_config.db2_name, db2_path,gen_new_facts)
+def doop_create_facts(db_config, db_name, fact_path, gen_new_facts):
     os.chdir(PathLib.DOOP_BASE)
     #clear_directory(fact_path)
 
@@ -31,9 +31,12 @@ def doop_create_facts(db_config, db_name, fact_path):
         print("No Java-file found, use .jar ")
     if not os.path.isfile(jar_path):
         raise FileNotFoundError("Java & Jar File do not exist: " + str(java_path) + str(jar_path))
-    os.system("./doop -a context-insensitive -i " + str(jar_path) + " --id " + str(db_name) + " --facts-only --Xfacts-subset APP --cache --generate-jimple")
+    # cannot name the java or jar files appart bc. javac would complain that Class name & file-name differ
+    doop_out_name = db_config.dir_name + "_" + db_name
+    if gen_new_facts:
+        os.system("./doop -a context-insensitive -i " + str(jar_path) + " --id " + str(doop_out_name) + " --facts-only --Xfacts-subset APP --cache --generate-jimple")
 
-    for file in PathLib.DOOP_OUT.joinpath(db_name).joinpath("database").glob("*.facts"):
+    for file in PathLib.DOOP_OUT.joinpath(doop_out_name).joinpath("database").glob("*.facts"):
         new_file_name = file.with_suffix('.tsv').name
         target_file = fact_path.joinpath(new_file_name)
         shutil.copy(file, target_file)

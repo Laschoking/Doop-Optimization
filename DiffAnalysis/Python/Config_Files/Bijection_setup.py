@@ -16,13 +16,14 @@ import time
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = Gocd_Websocket_Notifier
-    pa_sep = analyses["nemo_CFG_sep"]
-    pa_merge = analyses["nemo_CFG_merge"]
+    db_config = Gocd_Websocket_Notifier_v1_v4
+    pa_sep = analyses["nemo_PA_sep"]
+    pa_merge = analyses["nemo_PA_merge_no_fold"]
+    gen_new_facts = False # if true, run doop again for new fact-gen, otherwise just copy from doop/out
 
     # Fact Creation of Java-Files (or .Jar)
     data_frame = DataFrame(db_config.db1_path, db_config.db2_path)
-    ShellLib.create_facts(db_config, data_frame.db1_original_facts.path, data_frame.db2_original_facts.path)
+    ShellLib.create_facts(db_config, data_frame.db1_original_facts.path, data_frame.db2_original_facts.path,gen_new_facts=gen_new_facts)
 
 
     # load facts into data-object
@@ -51,9 +52,9 @@ if __name__ == "__main__":
     #data_frame.add_mapping(SequenceMatcher(data_frame.paths))
     #data_frame.add_mapping(SequenceMatcherPairOccurance(data_frame.paths))
     #data_frame.add_mapping(ISUBSequenceMatcher_Crossproduct(data_frame.paths))
-    #data_frame.add_mapping(ISUBSequenceMatcher_Iterative(data_frame.paths))
+    data_frame.add_mapping(ISUBSequenceMatcher_Iterative(data_frame.paths))
     #data_frame.add_mapping(ISUBSequenceMatcher_Iterative_Occ(data_frame.paths))
-    #data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
+    data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
 
 
     time_tab = PrettyTable()
