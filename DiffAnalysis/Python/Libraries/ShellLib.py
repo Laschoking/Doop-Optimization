@@ -42,18 +42,6 @@ def doop_create_facts(db_config, db_name, fact_path, gen_new_facts):
         shutil.copy(file, target_file)
 
 
-
-'''def run_souffle_pa(pa_path,fact_path, result_path):
-    clear_directory(result_path)
-    command= ["souffle", str(pa_path),"-F", str(fact_path),"-D",str(result_path),"-j4"]
-    p = subprocess.run(command,capture_output=True)
-    if p.returncode != 0:
-        raise ChildProcessError(p.stderr.decode("utf-8"))
-
-    os.chdir(result_path)
-    os.system("rename 's/basic.//' *")
-'''
-
 def chase_nemo(pa_config, fact_path, result_path):
     pa_path = PathLib.NEMO_ANALYSIS_BASE.joinpath(pa_config["pa"])
     command = [str(PathLib.NEMO_ENGINE.joinpath("target/release/nmo")), str(pa_path), "-I", str(fact_path), "-D", str(result_path), "--overwrite-results", "-e", "keep"]

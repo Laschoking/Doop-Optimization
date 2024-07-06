@@ -1,6 +1,0 @@
-0	<Cat: void setParent(Cat)>	<Cat: void setParent(Cat)>/@parameter0	0
-0	<Pointer: void main(java.lang.String[])>	<Pointer: void main(java.lang.String[])>/@parameter0	0
-0	<Pointer: void test(int)>	<Pointer: void test(int)>/@parameter0	0
-0	<Pointer: void sanitize(java.lang.Object)>	<Pointer: void sanitize(java.lang.Object)>/@parameter0	0
-0	<Pointer: void morePlay(Cat)>	<Pointer: void morePlay(Cat)>/@parameter0	0
-0	<Animal: Animal playWith(Animal)>	<Animal: Animal playWith(Animal)>/@parameter0	0

@@ -1,8 +1,0 @@
-<Pointer: void main(java.lang.String[])>/new java.lang.StringBuilder/0	java.lang.StringBuilder	0
-<Pointer: void main(java.lang.String[])>/new java.io.InputStreamReader/0	java.io.InputStreamReader	0
-<Pointer: void test(int)>/new Dog/0	Dog	0
-<Pointer: void main(java.lang.String[])>/new java.io.BufferedReader/0	java.io.BufferedReader	0
-<Pointer: void main(java.lang.String[])>/new Pointer/0	Pointer	0
-new_var_25	Cat	1
-<Pointer: void test(int)>/new Cat/1	Cat	0
-<Pointer: void test(int)>/new Cat/0	Cat	0

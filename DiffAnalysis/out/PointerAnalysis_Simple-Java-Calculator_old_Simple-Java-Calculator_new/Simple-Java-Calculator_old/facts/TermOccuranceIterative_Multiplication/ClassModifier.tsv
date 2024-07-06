@@ -1,9 +1,0 @@
-public	simplejavacalculator.Calculator$MonoOperatorModes
-public	simplejavacalculator.UI
-final	simplejavacalculator.Calculator$BiOperatorModes
-public	simplejavacalculator.SimpleJavaCalculator
-final	simplejavacalculator.Calculator$MonoOperatorModes
-enum	simplejavacalculator.Calculator$BiOperatorModes
-enum	simplejavacalculator.Calculator$MonoOperatorModes
-public	simplejavacalculator.Calculator
-public	simplejavacalculator.Calculator$BiOperatorModes

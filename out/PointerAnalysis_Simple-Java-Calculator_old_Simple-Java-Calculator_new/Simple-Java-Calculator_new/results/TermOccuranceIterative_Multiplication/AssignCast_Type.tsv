@@ -1,6 +1,0 @@
-<simplejavacalculator.Calculator$MonoOperatorModes: simplejavacalculator.Calculator$MonoOperatorModes[] values()>/assign-cast/0	simplejavacalculator.Calculator$MonoOperatorModes[]	0
-<simplejavacalculator.Calculator$BiOperatorModes: simplejavacalculator.Calculator$BiOperatorModes[] values()>/assign-cast/0	simplejavacalculator.Calculator$BiOperatorModes[]	0
-<simplejavacalculator.Calculator$BiOperatorModes: simplejavacalculator.Calculator$BiOperatorModes valueOf(java.lang.String)>/assign-cast/0	simplejavacalculator.Calculator$BiOperatorModes	1
-<simplejavacalculator.Calculator$BiOperatorModes: simplejavacalculator.Calculator$BiOperatorModes valueOf(java.lang.String)>/assign-cast/0	simplejavacalculator.Calculator$BiOperatorModes	10
-<simplejavacalculator.Calculator$MonoOperatorModes: simplejavacalculator.Calculator$MonoOperatorModes valueOf(java.lang.String)>/assign-cast/0	simplejavacalculator.Calculator$MonoOperatorModes	1
-<simplejavacalculator.Calculator$MonoOperatorModes: simplejavacalculator.Calculator$MonoOperatorModes valueOf(java.lang.String)>/assign-cast/0	simplejavacalculator.Calculator$MonoOperatorModes	10

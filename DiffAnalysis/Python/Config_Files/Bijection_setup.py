@@ -1,14 +1,11 @@
 from Python.Libraries.EvaluateMappings import *
 from Python.Config_Files.Analysis_Configs import *
 
-from Python.Libraries.PairwiseMetrics.ISUBSequenceMatcher_Crossproduct import *
-from Python.Libraries.PairwiseMetrics.ISUBSequenceMatcher_Iterative import *
-from Python.Libraries.PairwiseMetrics.ISUBSequenceMatcher_Iterative_Occ import *
-from Python.Libraries.PairwiseMetrics.SequenceMatcher import *
-from Python.Libraries.PairwiseMetrics.SequenceMatcherPairOccurance import *
-from Python.Libraries.PairwiseMetrics.StringEquality import StringEquality
-from Python.Libraries.PairwiseMetrics.TermOccuranceIterative import *
-from Python.Libraries.PairwiseMetrics.TermOccuranceIterative_Multiplication import *
+from Python.Libraries.SimilarityMetric.ISUB_SequenceMatcher import *
+from Python.Libraries.SimilarityMetric.SequenceMatcherPairOccurance import *
+from Python.Libraries.SimilarityMetric.Term_Equality import *
+from Python.Libraries.SimilarityMetric.Jaccard_Term_Overlap import *
+from Python.Libraries.SimilarityMetric.Occurance_Multiplication import *
 
 
 import time
@@ -16,7 +13,7 @@ import time
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = Gocd_Websocket_Notifier_v1_v4
+    db_config = Simple_Java_Calculator
     pa_sep = analyses["nemo_PA_sep"]
     pa_merge = analyses["nemo_PA_merge_no_fold"]
     gen_new_facts = False # if true, run doop again for new fact-gen, otherwise just copy from doop/out
@@ -52,9 +49,13 @@ if __name__ == "__main__":
     #data_frame.add_mapping(SequenceMatcher(data_frame.paths))
     #data_frame.add_mapping(SequenceMatcherPairOccurance(data_frame.paths))
     #data_frame.add_mapping(ISUBSequenceMatcher_Crossproduct(data_frame.paths))
-    data_frame.add_mapping(ISUBSequenceMatcher_Iterative(data_frame.paths))
+    #data_frame.add_mapping(ISUBSequenceMatcher_Iterative(data_frame.paths))
     #data_frame.add_mapping(ISUBSequenceMatcher_Iterative_Occ(data_frame.paths))
-    data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
+    #data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
+    data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"jaccard",jaccard_term_overlap))
+    #data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"isub_sm",isub_sequence_matcher))
+    #data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"occ_multiplication",occurrence_multiplication))
+    #data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"term_equality",term_equality))
 
 
     time_tab = PrettyTable()
@@ -65,7 +66,7 @@ if __name__ == "__main__":
         t0 = time.time()
         # calculate similarity_matrix & compute maximal mapping from db1 to db2
         mapping.compute_mapping(db1,db2,pa_merge["blocked_terms"])
-        nr_1_1_mappings  = len(mapping.mapping)
+        nr_1_1_mappings = len(mapping.mapping)
         # execute best mapping and create merged database: merge(map(db1), db2) -> merge_db2
         mapping.merge_dbs(db1,db2)
         mapping.write_diagnostics(data_frame,db_config.base_output_path)
@@ -88,7 +89,7 @@ if __name__ == "__main__":
         # check if bijected results correspond to correct results from base
         check_data_correctness(data_frame,mapping)
         t1 = time.time()
-        l_blocked_terms = mapping.new_term_counter
+        l_blocked_terms = mapping.new_term_counter + len(pa_merge["blocked_terms"])
         time_tab.add_row([mapping.name,l_blocked_terms,nr_1_1_mappings,mapping.new_term_counter,round(t1 - t0,4)])
 
         # Evaluation function to analyse if the mapping reduces storage
