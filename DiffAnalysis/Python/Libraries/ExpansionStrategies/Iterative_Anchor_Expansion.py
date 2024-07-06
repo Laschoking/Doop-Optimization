@@ -47,13 +47,13 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
 
             if term_name1 in free_terms1 and term_name2 in free_terms2:
                 # if value is too bad - find new Hubs
-                if sim < 0.9 * last_sim:
+                '''if sim < 0.9 * last_sim:
                     new_hubs_flag = True
                     insert_sim_to_queue((term_name1, term_name2) ,sim, join, pq)
-                    common_occ, term1_record_ids, term2_record_ids = join
                     last_sim = sim
-                    continue
+                    continue'''
 
+                common_occ, term1_record_ids, term2_record_ids = join
 
                 # add new mapping
                 mapping_obj.mapping[term_name1] = term_name2
@@ -76,13 +76,13 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
                     # this excludes the old column of term_name1 & term_name2
                     for ind in itertools.chain(range(col), range(col + 1,db1_file_obj.col_size)):
                         # db1_row_ids & db2_row_ids are lists, since the terms may occur multiple times in 1 file
+                        # iterate through all records of DB1: "filename", where term1 was at place "col"
                         for db1_row_id in db1_row_ids:
+                            new_t1_name = db1_file_obj.records[db1_row_id][ind]
+                            if new_t1_name not in free_terms1:
+                                continue
+                            # iterate through all records of DB2: "filename", where term2 was at place "col"
                             for db2_row_id in db2_row_ids:
-
-                                new_t1_name = db1_file_obj.records[db1_row_id][ind]
-                                if new_t1_name not in free_terms1:
-                                    continue
-
                                 new_t2_name = db2_file_obj.records[db2_row_id][ind]
                                 if new_t2_name not in free_terms2:
                                     continue

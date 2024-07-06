@@ -13,7 +13,7 @@ import time
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = Simple_Java_Calculator
+    db_config = Gocd_Websocket_Notifier_v1_v4
     pa_sep = analyses["nemo_PA_sep"]
     pa_merge = analyses["nemo_PA_merge_no_fold"]
     gen_new_facts = False # if true, run doop again for new fact-gen, otherwise just copy from doop/out
@@ -89,7 +89,7 @@ if __name__ == "__main__":
         # check if bijected results correspond to correct results from base
         check_data_correctness(data_frame,mapping)
         t1 = time.time()
-        l_blocked_terms = mapping.new_term_counter + len(pa_merge["blocked_terms"])
+        l_blocked_terms = len(pa_merge["blocked_terms"])
         time_tab.add_row([mapping.name,l_blocked_terms,nr_1_1_mappings,mapping.new_term_counter,round(t1 - t0,4)])
 
         # Evaluation function to analyse if the mapping reduces storage
