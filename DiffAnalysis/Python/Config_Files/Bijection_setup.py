@@ -13,7 +13,7 @@ import time
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = Gocd_Websocket_Notifier_v1_v4
+    db_config = Simple_Java_Calculator
     pa_sep = analyses["nemo_PA_sep"]
     pa_merge = analyses["nemo_PA_merge_no_fold"]
     gen_new_facts = False # if true, run doop again for new fact-gen, otherwise just copy from doop/out
