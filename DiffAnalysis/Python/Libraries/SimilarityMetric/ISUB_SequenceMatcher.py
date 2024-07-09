@@ -5,17 +5,21 @@ from collections import Counter
 
 
 
-def isub_sequence_matcher(term_name1,term_name2,term_obj1,term_obj2,overlap):
-    # based on the path to the first relation, determine path to second relation
-    '''if term1.lstrip("-").isdigit() and term2.lstrip("-").isdigit():
-        max_int = max(int(term1), int(term2))
+def isub_sequence_matcher(term_obj1, term_obj2, common_occ):
+    term_name1 = term_obj1.name
+    term_name2 = term_obj2.name
+    # if both terms are integers String-Matching will have problems -> return closeness of both ints then
+    if term_obj1.type == "int" and term_obj2.type == "int":
+        max_int = max(int(term_name1), int(term_name2))
         if max_int > 0:
-            return 1 - abs(int(term1) - int(term2)) / max_int,join_atoms
+            return 1 - abs(int(term_name1) - int(term_name2)) / max_int
         else:
-            return 1,join_atoms
-    else:'''
-    
-    if term_name1 is None or term_name2 is None or term_name1 == '' or term_name2 == '':
+            return 1
+    # if both were int we return already. now we know, that 1 is string
+    elif (term_obj1.type == "int" and term_obj2.type != "int") or (term_obj1.type != "int" and term_obj2.type == "int"):
+        return -1
+
+    elif term_name1 is None or term_name2 is None or term_name1 == '' or term_name2 == '':
         return -1
 
     # count common substrings

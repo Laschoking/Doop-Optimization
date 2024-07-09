@@ -7,8 +7,6 @@ import itertools
 
 
 
-
-
 def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_metric):
     prio_dict = SortedDict()
     
@@ -65,7 +63,8 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
 
             if term_name1 in free_term_names1 and term_name2 in free_term_names2:
                 # if value is too bad - find new Hubs
-                if sim < 0.5 * last_sim:
+                # TODO find better strategy
+                if sim < 0.6 * last_sim:
                     new_hubs_flag = True
                     last_sim = sim
                     count_hub_recomp += 1
@@ -83,7 +82,6 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
                 # remove tuple from mirror so that we have no key error
                 terms1_pq_mirror[term_name1].remove((term_name_tuple,sim))
                 terms2_pq_mirror[term_name2].remove((term_name_tuple,sim))
-                    #terms2_pq_mirror[term_name2].discard(term_name_tuple))
 
                 # delete all tuples from priority queue, that contain term_obj1 or term_obj2
 
@@ -128,7 +126,6 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
 
             watch_prio_len.append(sum(len(val) for val in prio_dict.values()))
 
-                #queue_len.append(len(prio_dict))
 
         # add new hubs, if prio_dict is empty
         elif len(free_term_names1) > 0 and len(free_term_names2) > 0 and new_hubs_flag:
@@ -141,8 +138,6 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
             new_mapping_tuples = find_crossproduct_mappings(hubs1, hubs2)
             add_mappings_to_pq(new_mapping_tuples,all_tuple_sim,terms1_pq_mirror,terms2_pq_mirror, prio_dict,processed_mapping_tuples,watch_exp_sim, similarity_metric)
 
-            #pq_watch.add((term_name1, term_name2))
-            #watch_exp_sim.append(sim)
             watch_prio_len.append(sum(len(val) for val in prio_dict.values()))
         else:
             break
@@ -152,10 +147,16 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
     print("number of calculated tuples: " + str(len(all_tuple_sim.keys())))
     print("number of maximal tuples: " + str(len(db1.terms) * len(db2.terms)))
     fig, ax = plt.subplots(4,1)
+    fig.suptitle("iterativeExpansion + " + similarity_metric.__name__)
     ax[0].scatter(range(len(watch_prio_len)),watch_prio_len,s=1, label='Queue Size')
+    ax[0].set_title("Queue Size")
     ax[1].scatter(range(len(watch_exp_sim)),np.array(watch_exp_sim),s=1,label='Expanded Similarities')
+    ax[1].set_title("Computed Similarities")
     ax[2].scatter(range(len(watch_mapped_sim)), np.array(watch_mapped_sim), s=0.5, label='Mapped Similarities')
+    ax[2].set_title("Mapped Similarities")
     ax[3].hist(watch_mapped_sim,100,label='Accepted Mapping Distribution')
+    ax[3].set_title("Distribution of Similarities")
+    fig.tight_layout()
     plt.show()
     return
 

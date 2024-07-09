@@ -13,7 +13,7 @@ import time
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = Simple_Java_Calculator
+    db_config = Gocd_Websocket_Notifier_v1_v4
     pa_sep = analyses["nemo_PA_sep"]
     pa_merge = analyses["nemo_PA_merge_no_fold"]
     gen_new_facts = False # if true, run doop again for new fact-gen, otherwise just copy from doop/out
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     #data_frame.add_mapping(ISUBSequenceMatcher_Iterative_Occ(data_frame.paths))
     #data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
     data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"jaccard",jaccard_term_overlap))
-    #data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"isub_sm",isub_sequence_matcher))
+    data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"isub_sm",isub_sequence_matcher))
     #data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"occ_multiplication",occurrence_multiplication))
     #data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"term_equality",term_equality))
 
