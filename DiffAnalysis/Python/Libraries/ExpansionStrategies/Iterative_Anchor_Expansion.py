@@ -114,8 +114,8 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
                         # iterate through all records of DB1: "filename", where term1 was at place "map_term_col"
 
                         # retrieve Term-objects that are neigbours of previously mapped terms
-                        new_term_objs1 = [db1.terms[db1_file_obj.records[rec_ind][col_ind]] for rec_ind in db1_row_ids]
-                        new_term_objs2 = [db2.terms[db2_file_obj.records[rec_ind][col_ind]] for rec_ind in db2_row_ids]
+                        new_term_objs1 = set(db1.terms[db1_file_obj.records[rec_ind][col_ind]] for rec_ind in db1_row_ids)
+                        new_term_objs2 = set(db2.terms[db2_file_obj.records[rec_ind][col_ind]] for rec_ind in db2_row_ids)
 
                         # insert crossproduct of poss. new mappings into set
                         new_mapping_tuples |= find_crossproduct_mappings(new_term_objs1,new_term_objs2)
@@ -245,4 +245,4 @@ def find_hubs_quantile(free_term_names, terms):
     nodes = [terms[term_name].degree for term_name in free_term_names]
     quantile = np.quantile(nodes,q=0.95)
     # returns termobjects
-    return [terms[free_term_names[iter]] for iter in range(len(free_term_names)) if nodes[iter] >= quantile]
+    return set(terms[free_term_names[iter]] for iter in range(len(free_term_names)) if nodes[iter] >= quantile)
