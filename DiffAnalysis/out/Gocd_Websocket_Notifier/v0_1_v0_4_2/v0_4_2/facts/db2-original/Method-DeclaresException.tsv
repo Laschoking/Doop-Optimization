@@ -1,4 +1,0 @@
-java.net.UnknownHostException	<com.matt_richardson.gocd.websocket_notifier.PipelineWebSocketServer: void <init>(int)>
-java.net.UnknownHostException	<com.matt_richardson.gocd.websocket_notifier.PipelineWebSocketServer: void <init>(java.lang.String,int)>
-java.lang.Exception	<com.matt_richardson.gocd.websocket_notifier.WebSocketPipelineListener: void notify(com.thoughtworks.go.plugin.api.request.GoPluginApiRequest)>
-java.io.IOException	<com.matt_richardson.gocd.websocket_notifier.PipelineDetailsPopulator: com.google.gson.JsonElement downloadPipelineInstanceDetails(java.lang.String)>

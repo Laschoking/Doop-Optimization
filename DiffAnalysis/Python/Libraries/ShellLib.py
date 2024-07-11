@@ -14,16 +14,27 @@ def clear_directory(directory):
         shutil.rmtree(str(directory))
     os.system("mkdir -p " + str(directory))
 
-# Intermediate Functions
-def create_facts(db_config,db1_path, db2_path,gen_new_facts):
-    doop_create_facts(db_config, db_config.db1_name, db1_path,gen_new_facts)
-    doop_create_facts(db_config, db_config.db2_name, db2_path,gen_new_facts)
-def doop_create_facts(db_config, db_name, fact_path, gen_new_facts):
-    os.chdir(PathLib.DOOP_BASE)
-    #clear_directory(fact_path)
+def init_synth_souffle_database(db_config, db_name, fact_path):
+    gen_facts_path = PathLib.datalog_programs_path.joinpath(db_config.db_type).joinpath(db_config.dir_name)
+    os.chdir(gen_facts_path)
+    command = ["./gen_facts.sh","small",str(fact_path)]
+    p = subprocess.run(command,capture_output=True)
+    if p.returncode != 0:
+        raise ChildProcessError(p.stderr.decode("utf-8"))
 
-    java_path = Path.joinpath(PathLib.java_source_dir, db_config.dir_name).joinpath(db_name).joinpath(db_config.dir_name + ".java")
-    jar_path = Path.joinpath(PathLib.java_source_dir, db_config.dir_name).joinpath(db_name).joinpath(db_config.dir_name + ".jar")
+def create_input_facts(db_config, db_dir_name, db_file_name, fact_path):
+    if db_config.db_type == "DoopProgramAnalysis":
+        create_doop_facts(db_config, db_dir_name,db_file_name, fact_path)
+    elif db_config.db_type == "SouffleSynthetic":
+        init_synth_souffle_database(db_config, db_dir_name,fact_path)
+    print("initialized database: " + db_dir_name)
+
+def create_doop_facts(db_config, db_name, db_file_name,fact_path):
+    os.chdir(PathLib.DOOP_BASE)
+    clear_directory(fact_path)
+
+    java_path = Path.joinpath(PathLib.java_source_dir, db_config.dir_name).joinpath(db_name).joinpath(db_file_name + ".java")
+    jar_path = Path.joinpath(PathLib.java_source_dir, db_config.dir_name).joinpath(db_name).joinpath(db_file_name + ".jar")
     if os.path.isfile(java_path):
         os.system("bin/mkjar " + str(java_path)
                   + " 1.8 " + str(jar_path.parents[0]))#+ ">/dev/null 2>&1")
@@ -33,25 +44,23 @@ def doop_create_facts(db_config, db_name, fact_path, gen_new_facts):
         raise FileNotFoundError("Java & Jar File do not exist: " + str(java_path) + str(jar_path))
     # cannot name the java or jar files appart bc. javac would complain that Class name & file-name differ
     doop_out_name = db_config.dir_name + "_" + db_name
-    if gen_new_facts:
-        os.system("./doop -a context-insensitive -i " + str(jar_path) + " --id " + str(doop_out_name) + " --facts-only --Xfacts-subset APP --cache --generate-jimple")
+
+    os.system("./doop -a context-insensitive -i " + str(jar_path) + " --id " + str(doop_out_name) + " --facts-only --Xfacts-subset APP --cache --generate-jimple")
 
     for file in PathLib.DOOP_OUT.joinpath(doop_out_name).joinpath("database").glob("*.facts"):
         new_file_name = file.with_suffix('.tsv').name
         target_file = fact_path.joinpath(new_file_name)
         shutil.copy(file, target_file)
 
-
-def chase_nemo(pa_config, fact_path, result_path):
-    pa_path = PathLib.NEMO_ANALYSIS_BASE.joinpath(pa_config["pa"])
-    command = [str(PathLib.NEMO_ENGINE.joinpath("target/release/nmo")), str(pa_path), "-I", str(fact_path), "-D", str(result_path), "--overwrite-results", "-e", "keep"]
+def chase_nemo(dl_rule_path, fact_path, result_path):
+    command = [str(PathLib.NEMO_ENGINE.joinpath("target/release/nmo")), str(dl_rule_path), "-I", str(fact_path), "-D", str(result_path), "--overwrite-results", "-e", "keep"]
     p = subprocess.run(command,capture_output=True)
     if p.returncode != 0:
         raise ChildProcessError(p.stderr.decode("utf-8"))
 
     Dict = split_nemo_stdout(p.stdout)
     os.chdir(PathLib.DOOP_BASE)
-    return [pa_config["pa"]] + [fact_path.parts[-2:]] + Dict
+    return [dl_rule_path.name] + [fact_path.parts[-2:]] + Dict
 
 # parse Nemo output for runtimes
 def split_nemo_stdout(stdout):

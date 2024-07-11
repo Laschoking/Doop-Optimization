@@ -1,8 +1,18 @@
-
+import Python.Libraries.ExpansionStrategies.Iterative_Anchor_Expansion
 def jaccard_term_overlap(term_obj1,term_obj2,occ_overlap):
     # compress the term-occurances
-    structural_sim = occ_overlap.total() ** 2 / (term_obj1.occurrence_c.total() + term_obj2.occurrence_c.total())
-    if structural_sim > 50:
-        print(structural_sim,term_obj1.name,term_obj2.name)
+    # TODO Bei implementierung der Neighbourhood-Sim drauf achten, dass Termpaare die oft vorkommen auch besser Gewichtet werden
+    # das sollten sie sowieso, da sie dann mehr Überlappung haben
+    if occ_overlap.total() == 0:
+        return 0
+    local_sim = occ_overlap.total() ** 1.5 / (term_obj1.occurrence_c.total() + term_obj2.occurrence_c.total())
+
+
+
+    #for n
+
+
     # eventually integrate lexical similarity
-    return structural_sim
+    return local_sim
+
+#def structural_similarity_jaccard(term_obj1,term_obj2,occ_overlap,all_tuple_sim):

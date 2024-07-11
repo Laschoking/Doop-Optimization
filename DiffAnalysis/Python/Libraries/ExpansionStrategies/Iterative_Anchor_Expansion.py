@@ -19,7 +19,7 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
     terms1_pq_mirror = SortedDict()
     terms2_pq_mirror = SortedDict()
     
-    all_tuple_sim = SortedDict()
+    tuples_loc_sim = SortedDict()
     processed_mapping_tuples = set()
 
     # block certain terms, that cannot be changed without computing wrong results
@@ -67,13 +67,16 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
                 if sim < 0.6 * last_sim:
                     new_hubs_flag = True
                     last_sim = sim
-                    count_hub_recomp += 1
                     continue
+                # means we discovered better tuples
+                #if sim > last_sim:
+                #    print(sim,last_sim)
 
-                sim,common_occ = all_tuple_sim[term_name_tuple]
+                sim,common_occ = tuples_loc_sim[term_name_tuple]
 
                 # add new mapping
                 mapping_obj.mapping[term_name1] = term_name2
+                print(term_name1 + " : " + term_name2)
 
                 # make terms "blocked"
                 free_term_names1.discard(term_name1)
@@ -121,30 +124,34 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
                     # remove pairs, that are in prio_dict 
                     new_mapping_tuples -= processed_mapping_tuples
 
-                    add_mappings_to_pq(new_mapping_tuples, all_tuple_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
+                    add_mappings_to_pq(new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
                                        processed_mapping_tuples, watch_exp_sim, similarity_metric)
 
             watch_prio_len.append(sum(len(val) for val in prio_dict.values()))
 
 
         # add new hubs, if prio_dict is empty
-        elif len(free_term_names1) > 0 and len(free_term_names2) > 0 and new_hubs_flag:
+        elif len(free_term_names1) > 0 and len(free_term_names2) > 0 or new_hubs_flag:
             new_hubs_flag = False #idea is to only find new hubs if in last iteration at least 1 mapping was added
+            count_hub_recomp += 1
 
             # detect new hubs (term-objects) based on all free-terms for each Database
             hubs1 = find_hubs_quantile(free_term_names1, db1.terms)
             hubs2 = find_hubs_quantile(free_term_names2, db2.terms)
 
             new_mapping_tuples = find_crossproduct_mappings(hubs1, hubs2)
-            add_mappings_to_pq(new_mapping_tuples,all_tuple_sim,terms1_pq_mirror,terms2_pq_mirror, prio_dict,processed_mapping_tuples,watch_exp_sim, similarity_metric)
-
+            add_mappings_to_pq(new_mapping_tuples,tuples_loc_sim,terms1_pq_mirror,terms2_pq_mirror, prio_dict,processed_mapping_tuples,watch_exp_sim, similarity_metric)
             watch_prio_len.append(sum(len(val) for val in prio_dict.values()))
+
+            # tried to find new mappings, but none detected -> escape while loop
+            if not prio_dict:
+                break
         else:
             break
             
     # TODOL=: print strategy & make nice table or sth
     print("hub recompution: " + str(count_hub_recomp))
-    print("number of calculated tuples: " + str(len(all_tuple_sim.keys())))
+    print("number of calculated tuples: " + str(len(tuples_loc_sim.keys())))
     print("number of maximal tuples: " + str(len(db1.terms) * len(db2.terms)))
     fig, ax = plt.subplots(4,1)
     fig.suptitle("iterativeExpansion + " + similarity_metric.__name__)
@@ -177,17 +184,17 @@ def find_crossproduct_mappings(hubs1, hubs2):
     return set(itertools.product(hubs1, hubs2))
 
 # poss_mappings is a set of tuple
-def add_mappings_to_pq(new_mapping_tuples,all_tuple_sim,terms1_pq_mirror, terms2_pq_mirror, prio_dict,processed_mapping_tuples, watch_exp_sim,similarity_metric):
+def add_mappings_to_pq(new_mapping_tuples,tuples_loc_sim,terms1_pq_mirror, terms2_pq_mirror, prio_dict,processed_mapping_tuples, watch_exp_sim,similarity_metric):
     for term_obj1, term_obj2 in new_mapping_tuples:
         term_name_tuple = term_obj1.name, term_obj2.name
 
         # this check is currently not necessary but later, when adding struc-sim we need it
-        if term_name_tuple not in all_tuple_sim:
+        if term_name_tuple not in tuples_loc_sim:
             join = occurrence_overlap(term_obj1, term_obj2)
             common_occ, term1_record_ids, term2_record_ids = join
             sim = similarity_metric(term_obj1, term_obj2, common_occ)
 
-            all_tuple_sim[term_name_tuple] = (sim, common_occ)
+            tuples_loc_sim[term_name_tuple] = (sim, common_occ)
             
             # add tuple to priority_queue
             if sim > 0:
@@ -244,6 +251,7 @@ def find_hubs_std(free_term_names, terms_occ):
 
 def find_hubs_quantile(free_term_names, terms):
     nodes = [terms[term_name].degree for term_name in free_term_names]
-    quantile = np.quantile(nodes,q=0.95)
+    print("node degree mean: " + str(np.mean(nodes)))
+    quantile = np.quantile(nodes,q=0.9)
     # returns termobjects
     return set(terms[free_term_names[iter]] for iter in range(len(free_term_names)) if nodes[iter] >= quantile)

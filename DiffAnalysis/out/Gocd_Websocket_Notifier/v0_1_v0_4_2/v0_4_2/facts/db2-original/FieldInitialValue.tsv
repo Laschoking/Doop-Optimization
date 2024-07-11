@@ -1,7 +1,0 @@
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: java.lang.String EXTENSION_TYPE>	\\"notification\\"
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: java.lang.String REQUEST_NOTIFICATIONS_INTERESTED_IN>	\\"notifications-interested-in\\"
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: java.lang.String REQUEST_STAGE_STATUS>	\\"stage-status\\"
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: int SUCCESS_RESPONSE_CODE>	200
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: int INTERNAL_ERROR_RESPONSE_CODE>	500
-<com.matt_richardson.gocd.websocket_notifier.PluginConfig: java.lang.String PLUGIN_CONF>	\\"gocd-websocket-notifier.conf\\"
-<com.matt_richardson.gocd.websocket_notifier.PluginConfig: int goDefaultHttpPort>	8153

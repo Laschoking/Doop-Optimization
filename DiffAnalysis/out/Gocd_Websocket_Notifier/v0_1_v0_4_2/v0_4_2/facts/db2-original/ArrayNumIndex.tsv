@@ -1,6 +1,0 @@
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: com.thoughtworks.go.plugin.api.response.GoPluginApiResponse handle(com.thoughtworks.go.plugin.api.request.GoPluginApiRequest)>/write-array-idx/0	0
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: com.thoughtworks.go.plugin.api.response.GoPluginApiResponse handle(com.thoughtworks.go.plugin.api.request.GoPluginApiRequest)>/write-array-idx/1	1
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: com.thoughtworks.go.plugin.api.response.GoPluginApiResponse handleNotificationsInterestedIn()>/write-array-idx/0	0
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: void <clinit>()>/write-array-idx/0	0
-<com.matt_richardson.gocd.websocket_notifier.PluginConfig: void <init>()>/write-array-idx/0	0
-<com.matt_richardson.gocd.websocket_notifier.PluginConfig: void <init>()>/write-array-idx/1	1

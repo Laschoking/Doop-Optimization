@@ -8,15 +8,6 @@ import csv
 from collections import Counter
 
 
-class Config:
-    def __init__(self, dir_name, db1_name, db2_name):
-        self.dir_name = dir_name
-        self.base_output_path = PathLib.base_out_path.joinpath(dir_name).joinpath(db1_name + "_" + db2_name)
-        self.db1_name = db1_name
-        self.db2_name = db2_name
-        self.db1_path = self.base_output_path.joinpath(db1_name)
-        self.db2_path = self.base_output_path.joinpath(db2_name)
-
 class Term:
     def __init__(self, term_name):
         self.name = term_name
@@ -57,7 +48,7 @@ class DB_Instance:
         self.terms = dict()
         self.files = dict() # file : file_object
         # delete existing files in sub_dir
-        ShellLib.clear_directory(self.path)
+        #ShellLib.clear_directory(self.path)
 
 
     def read_directory(self):
@@ -102,6 +93,7 @@ class DB_Instance:
 
 
     def write_data_to_file(self):
+        ShellLib.clear_directory(self.path)
         for file_name,file_obj in self.files.items():
             with open(self.path.joinpath(file_name).with_suffix('.tsv'), 'w', newline='') as file_path:
                 tsv_writer = csv.writer(file_path, delimiter='\t', lineterminator='\n')

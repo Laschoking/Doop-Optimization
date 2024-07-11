@@ -1,4 +1,0 @@
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: com.thoughtworks.go.plugin.api.response.GoPluginApiResponse handle(com.thoughtworks.go.plugin.api.request.GoPluginApiRequest)>/assign/20	0	2
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: com.thoughtworks.go.plugin.api.response.GoPluginApiResponse handleNotificationsInterestedIn()>/assign/2	0	1
-<com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin: void <clinit>()>/assign/1	0	1
-<com.matt_richardson.gocd.websocket_notifier.PluginConfig: void <init>()>/assign/9	0	2

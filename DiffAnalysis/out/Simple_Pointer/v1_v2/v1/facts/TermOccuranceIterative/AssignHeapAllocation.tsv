@@ -1,8 +1,0 @@
-<Pointer: void main(java.lang.String[])>/assign/8	14	<Pointer: void main(java.lang.String[])>/new java.lang.StringBuilder/0	<Pointer: void main(java.lang.String[])>/$stack10	<Pointer: void main(java.lang.String[])>	14
-<Pointer: void test(int)>/assign/8	14	<Pointer: void test(int)>/new Cat/1	<Pointer: void test(int)>/$stack6	<Pointer: void test(int)>	32
-<Pointer: void test(int)>/assign/2	3	<Pointer: void test(int)>/new Cat/0	<Pointer: void test(int)>/$stack8	<Pointer: void test(int)>	26
-<Pointer: void main(java.lang.String[])>/assign/3	5	<Pointer: void main(java.lang.String[])>/new java.io.BufferedReader/0	<Pointer: void main(java.lang.String[])>/$stack6	<Pointer: void main(java.lang.String[])>	9
-<Pointer: void main(java.lang.String[])>/assign/1	1	<Pointer: void main(java.lang.String[])>/new Pointer/0	<Pointer: void main(java.lang.String[])>/$stack4	<Pointer: void main(java.lang.String[])>	8
-<Pointer: void test(int)>/assign/4	7	<Pointer: void test(int)>/new Dog/0	<Pointer: void test(int)>/$stack5	<Pointer: void test(int)>	28
-<Pointer: void main(java.lang.String[])>/assign/4	6	<Pointer: void main(java.lang.String[])>/new java.io.InputStreamReader/0	<Pointer: void main(java.lang.String[])>/$stack7	<Pointer: void main(java.lang.String[])>	9
-<Pointer: void test(int)>/assign/10	17	<Pointer: void test(int)>/new Cat/2	<Pointer: void test(int)>/$stack7	<Pointer: void test(int)>	33

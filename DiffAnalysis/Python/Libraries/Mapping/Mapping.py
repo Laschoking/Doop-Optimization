@@ -24,6 +24,15 @@ class Mapping():
     def compute_mapping(self,db1,db2,pa_non_mapping_terms):
         self.expansion_strategy(self,db1,db2,pa_non_mapping_terms,self.similarity_metric)
 
+    def read_mapping(self,base_dir):
+        out_path = base_dir.joinpath("diagnostic").joinpath(self.name)
+
+        with open(out_path.joinpath("Mapping").with_suffix('.tsv'), newline='') as file_path:
+            mapping_file = csv.reader(file_path, delimiter='\t', quotechar='"')
+            for term1, term2 in mapping_file:
+                self.mapping[term1] = term2
+                if "new_var" in term2:
+                    self.new_term_counter += 1
 
 
     # output stuff
@@ -66,6 +75,7 @@ class Mapping():
                         new_term = "new_var_" + str(self.new_term_counter)
                         #print("add new var: " + new_term + " for " + term)
                         self.mapping[term] = new_term  # introduce new variables
+
                         self.new_term_counter += 1
                         bijected_record.append(new_term)
                 bijected_db.add(tuple(bijected_record))

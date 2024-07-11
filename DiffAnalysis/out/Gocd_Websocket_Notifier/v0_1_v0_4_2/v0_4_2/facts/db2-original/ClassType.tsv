@@ -1,6 +1,0 @@
-com.matt_richardson.gocd.websocket_notifier.PipelineWebSocketServer
-com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin
-com.matt_richardson.gocd.websocket_notifier.GoNotificationPlugin$1
-com.matt_richardson.gocd.websocket_notifier.PluginConfig
-com.matt_richardson.gocd.websocket_notifier.WebSocketPipelineListener
-com.matt_richardson.gocd.websocket_notifier.PipelineDetailsPopulator

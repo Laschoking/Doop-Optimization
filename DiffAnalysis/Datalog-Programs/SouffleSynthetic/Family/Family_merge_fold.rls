@@ -1,0 +1,137 @@
+@import father :- tsv{resource ="father.tsv",format=(string,string,int)} .
+@import mother :- tsv{resource ="mother.tsv",format=(string,string,int)} .
+
+A(1).A(10).C(1).C(2).C(3).C(4).C(5).C(6).C(7).C(8).C(9).
+
+merge_strat(?n, ?a * ?m,?a):-
+   A(?a),C(?n),C(?m),?m <= ?n.
+merge_strat(?a,0,0):-
+   C(?a).
+
+% input rules have different atoms
+parent(?a,?b,?side_):-
+  father(?a,?b,?side_1),
+  ?side_ = ?side_1 .
+
+parent(?a,?b,?side_):-
+  mother(?a,?b,?side_1),
+  ?side_ = ?side_1 .
+
+% inherits side directly
+ancestor_fold(?a,?b,?side_):-
+  parent(?a,?b,?side_1),
+  ?side_ = ?side_1 .
+
+% folding
+ancestor_fold(?a,?b,?side_):-
+  parent(?a,?c,?side_1),
+  ancestor_fold(?c,?b,?side_2),
+  merge_strat(2,?side_1 + ?side_2,?side_).
+
+ ancestor(?a,?b, 0),
+ ancestor_both(?a,?b, 0):-
+    ancestor_fold(?a,?b,?side_1),
+    ancestor_fold(?a,?b,?side_2),
+    ?side_1 != ?side_2.
+
+ancestor(?a,?b, ?side_):-
+     ancestor_fold(?a,?b,?side_),
+     ~ancestor_both(?a,?b, _).
+
+% gm- fold
+grandmother_fold(?a,?b,?side_):-
+  mother(?a,?c,?side_1),
+  ancestor(?c,?b,?side_2),
+  merge_strat(2,?side_1 + ?side_2,?side_).  
+
+grandmother(?a,?b, 0),
+grandmother_both(?a,?b, 0):-
+    grandmother_fold(?a,?b,?side_1),
+    grandmother_fold(?a,?b,?side_2),
+    ?side_1 != ?side_2.
+
+grandmother(?a,?b, ?side_):-
+     grandmother_fold(?a,?b,?side_),
+     ~grandmother_both(?a,?b, _).
+
+% sibling
+sibling_fold(?a,?b,?side_):-
+  parent(?c,?a,?side_1),
+  parent(?c,?b,?side_2),  
+  ?a != ?b,
+  merge_strat(2,?side_1 + ?side_2,?side_).
+
+sibling(?a,?b, 0),
+sibling_both(?a,?b, 0):-
+    sibling_fold(?a,?b,?side_1),
+    sibling_fold(?a,?b,?side_2),
+    ?side_1 != ?side_2.
+
+sibling(?a,?b, ?side_):-
+     sibling_fold(?a,?b,?side_),
+     ~sibling_both(?a,?b, _).
+
+t(0,10,1).
+t(0,1,10).
+t(10,0,1).
+t(1,0,10).
+
+% cousin - fold
+cousin_fold(?a,?b,?side_):-
+  ancestor(?c,?a,?side_1),
+  ancestor(?c,?b,?side_2),  
+  ?a != ?b,
+  ~sibling(?a,?b,0),
+  ~sibling(?a,?b,?side_),
+  ~parent(?a,?b,0),
+  ~parent(?a,?b,?side_),
+  merge_strat(2,?side_1 + ?side_2,?side_).
+inv(1,10).
+inv(10,1).
+
+cousin_fold(?a,?b,?side_2):-
+  ancestor(?c,?a,0),
+  ancestor(?c,?b,0),
+  ?a != ?b,
+  ~sibling(?a,?b,0),
+  sibling(?a,?b,?side_1),
+  ~sibling(?a,?b,?side_2),
+  inv(?side_1,?side_2),
+
+  ~parent(?a,?b,0),
+  ~parent(?a,?b,?side_),
+  merge_strat(2,?side_1 + ?side_2,?side_).
+
+ cousin(?a,?b, 0),
+ cousin_both(?a,?b, 0):-
+    cousin_fold(?a,?b,?side_1),
+    cousin_fold(?a,?b,?side_2),
+    ?side_1 != ?side_2.
+
+cousin(?a,?b, ?side_):-
+     cousin_fold(?a,?b,?side_),
+     ~cousin_both(?a,?b, _).
+
+% relative - fold
+relative_fold(?a,?b,?side_):-
+  sibling(?a,?c,?side_1),
+  parent(?c,?b,?side_2),
+  merge_strat(2,?side_1 + ?side_2,?side_).  
+
+relative(?a,?b, 0),
+relative_both(?a,?b, 0):-
+    relative_fold(?a,?b,?side_1),
+    relative_fold(?a,?b,?side_2),
+    ?side_1 != ?side_2.
+
+relative(?a,?b, ?side_):-
+     relative_fold(?a,?b,?side_),
+     ~relative_both(?a,?b, _).
+
+
+@export parent :- tsv{resource="parent.tsv",format=(string,string,int)} .
+@export ancestor :- tsv{resource="ancestor.tsv",format=(string,string,int)} .
+@export grandmother :- tsv{resource="grandmother.tsv",format=(string,string,int)} .
+@export sibling :- tsv{resource="sibling.tsv",format=(string,string,int)} .
+@export cousin :- tsv{resource="cousin.tsv",format=(string,string,int)} .
+@export relative :- tsv{resource="relative.tsv",format=(string,string,int)} .

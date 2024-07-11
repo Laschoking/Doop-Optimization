@@ -1,0 +1,1935 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+true("true"^^xsd:boolean).
+@import MainClass :-tsv{resource="MainClass.tsv",format=(string,int)}. 
+
+% "<sun.misc.ProxyGenerator: byte[] generateClassFile()>"
+
+% "abstract", 1
+@import A_ArrayType :-tsv{resource="ArrayType.tsv",format=(string,int)}.
+@import A_ActualParam :-tsv{resource="ActualParam.tsv",format=(int,string,string,int)}.
+@import A_Var_Type :-tsv{resource="Var-Type.tsv",format=(string,string ,int)}.
+@import A_Var_DeclaringMethod :-tsv{resource="Var-DeclaringMethod.tsv",format=(string,string,int)}.
+@import A_Var_SimpleName :-tsv{resource="Var-SimpleName.tsv",format=(string,string,int)}.
+@import A_ApplicationClass :-tsv{resource="ApplicationClass.tsv",format=(string ,int)}.
+@import A_ApplicationPackage :-tsv{resource="ApplicationPackage.tsv",format=(string,int)}.
+@import A_ThisVar :-tsv{resource="ThisVar.tsv",format=(string,string,int)}.
+@import A_ExceptionHandler_Previous :-tsv{resource="ExceptionHandler-Previous.tsv",format=(string,string,int)}.
+@import A_ArrayAllocation :-tsv{resource="ArrayAllocation.tsv",format=(string,int,string,int)}.
+@import A_ArrayInsnIndex :-tsv{resource="ArrayInsnIndex.tsv",format=(string,string,int)}.
+@import A_Type_Annotation :-tsv{resource="Type-Annotation.tsv",format=(string,string,int)}.
+@import A_Method_Annotation :-tsv{resource="Method-Annotation.tsv",format=(string,string,int)}.
+@import A_Field_Annotation :-tsv{resource="Field-Annotation.tsv",format=(string,string,int)}.
+@import A_Param_Annotation :-tsv{resource="Param-Annotation.tsv",format=(string,int,string,int)}.
+@import A_AssignBinop :-tsv{resource="AssignBinop.tsv", format=(string, int, string, string,int)}.
+@import A_AssignCast :-tsv{resource="AssignCast.tsv", format=(string, int, string, string, string, string,int)}.
+@import A_AssignCastNull :-tsv{resource="AssignCastNull.tsv", format=(string, int, string, string, string,int)}.
+@import A_AssignCastNumConstant :-tsv{resource="AssignCastNumConstant.tsv", format=(string, int, string, string, string, string,int)}.
+@import A_AssignHeapAllocation :-tsv{resource="AssignHeapAllocation.tsv", format=(string, int, string, string, string, int,int)}.
+@import A_AssignInstanceOf :-tsv{resource="AssignInstanceOf.tsv", format=(string, int, string, string, string, string,int)}.
+@import A_AssignLocal :-tsv{resource="AssignLocal.tsv", format=(string, int, string, string, string,int)}.
+@import A_AssignNull :-tsv{resource="AssignNull.tsv", format=(string, int, string, string,int)}.
+@import A_AssignNumConstant :-tsv{resource="AssignNumConstant.tsv", format=(string, int, string, string, string,int)}.
+@import A_AssignOperFrom :-tsv{resource="AssignOperFrom.tsv", format=(string, int, string,int)}.
+@import A_AssignOperFromConstant :-tsv{resource="AssignOperFromConstant.tsv", format=(string, int, double,int)}.
+@import A_AssignPhantomInvoke :-tsv{resource="AssignPhantomInvoke.tsv", format=(string, int, string,int)}.
+@import A_AssignReturnValue :-tsv{resource="AssignReturnValue.tsv", format=(string, string,int)}.
+@import A_AssignUnop :-tsv{resource="AssignUnop.tsv", format=(string, int, string, string,int)}.
+@import A_BootstrapParam :-tsv{resource="BootstrapParam.tsv", format=(int, string, string,int)}.
+@import A_BreakpointStmt :-tsv{resource="BreakpointStmt.tsv", format=(string, int, string,int)}.
+@import A_ClassArtifact :-tsv{resource="Class-Artifact.tsv", format=(string, string, string, int,int)}.
+@import A_ClassHeap :-tsv{resource="ClassHeap.tsv", format=(string, string,int)}.
+@import A_ClassModifier :-tsv{resource="ClassModifier.tsv", format=(string, string,int)}.
+@import A_ClassType :-tsv{resource="ClassType.tsv", format=(string,int)}.
+@import A_ComponentType :-tsv{resource="ComponentType.tsv", format=(string, string,int)}.
+@import A_DirectSuperclass :-tsv{resource="DirectSuperclass.tsv", format=(string, string,int)}.
+@import A_DirectSuperinterface :-tsv{resource="DirectSuperinterface.tsv", format=(string, string,int)}.
+@import A_DummyIfVar :-tsv{resource="DummyIfVar.tsv", format=(string, string,int)}.
+@import A_DynamicMethodInvocation :-tsv{resource="DynamicMethodInvocation.tsv", format=(string, int, string, string, string, int, string,int, string,int)}.
+@import A_EmptyArray :-tsv{resource="EmptyArray.tsv", format=(string,int)}.
+@import A_EnterMonitor :-tsv{resource="EnterMonitor.tsv", format=(string, int, string, string,int)}.
+@import A_ExceptionHandler :-tsv{resource="ExceptionHandler.tsv", format=(string, string, int, string, int, int,int)}.
+@import A_ExitMonitor :-tsv{resource="ExitMonitor.tsv", format=(string, int, string, string,int)}.
+@import A_Field :-tsv{resource="Field.tsv", format=(string, string, string, string,int)}.
+@import A_Field_Modifier :-tsv{resource="Field-Modifier.tsv", format=(string, string,int)}.
+@import A_FormalParam :-tsv{resource="FormalParam.tsv", format=(int, string, string,int)}.
+@import A_Goto :-tsv{resource="Goto.tsv", format=(string, int, int, string,int)}.
+@import A_If :-tsv{resource="If.tsv", format=(string, int, int, string,int)}.
+@import A_IfConstant :-tsv{resource="IfConstant.tsv", format=(string, int, string,int)}.
+@import A_IfVar :-tsv{resource="IfVar.tsv", format=(string, int, string,int)}.
+@import A_InterfaceType :-tsv{resource="InterfaceType.tsv", format=(string,int)}.
+@import A_LoadArrayIndex :-tsv{resource="LoadArrayIndex.tsv", format=(string, int, string, string, string,int)}.
+@import A_LoadInstanceField :-tsv{resource="LoadInstanceField.tsv", format=(string, int, string, string, string, string,int)}.
+@import A_LoadStaticField :-tsv{resource="LoadStaticField.tsv", format=(string, int, string, string, string,int)}.
+@import A_LookupSwitch :-tsv{resource="LookupSwitch.tsv", format=(string, int, string, string,int)}.
+@import A_LookupSwitch_Default :-tsv{resource="LookupSwitch-Default.tsv", format=(string, int,int)}.
+@import A_LookupSwitch_Target :-tsv{resource="LookupSwitch-Target.tsv", format=(string, int, int,int)}.
+@import A_Method :-tsv{resource="Method.tsv", format=(string, string, string, string, string, string, int,int)}.
+@import A_MethodHandleConstant :-tsv{resource="MethodHandleConstant.tsv", format=(string, string, string, string, int,int)}.
+@import A_MethodInvocation_Line :-tsv{resource="MethodInvocation-Line.tsv", format=(string, int,int)}.
+@import A_MethodTypeConstant :-tsv{resource="MethodTypeConstant.tsv", format=(string, int, string, string,int)}.
+@import A_MethodTypeConstantParam :-tsv{resource="MethodTypeConstantParam.tsv", format=(string, int, string,int)}.
+@import A_Method_DeclaresException :-tsv{resource="Method-DeclaresException.tsv", format=(string, string,int)}.
+@import A_Method_Modifier :-tsv{resource="Method-Modifier.tsv", format=(string, string,int)}.
+@import A_NativeLibEntryPoint :-tsv{resource="NativeLibEntryPoint.tsv", format=(string, string, string,int)}.
+@import A_NativeMethodId :-tsv{resource="NativeMethodId.tsv", format=(string, string,int)}.
+@import A_NativeMethodTypeCandidate :-tsv{resource="NativeMethodTypeCandidate.tsv", format=(string, string, string, int,int)}.
+@import A_NativeNameCandidate :-tsv{resource="NativeNameCandidate.tsv", format=(string, string, string, int,int)}.
+@import A_NativeReturnVar :-tsv{resource="NativeReturnVar.tsv", format=(string, string,int)}.
+@import A_NativeXRef :-tsv{resource="NativeXRef.tsv", format=(string, string, string, int,int)}.
+@import A_NormalHeap :-tsv{resource="NormalHeap.tsv", format=(string, string,int)}.
+@import A_OperatorAt :-tsv{resource="OperatorAt.tsv", format=(string, string,int)}.
+@import A_PolymorphicInvocation :-tsv{resource="PolymorphicInvocation.tsv", format=(string, string,int)}.
+@import A_Return :-tsv{resource="Return.tsv", format=(string, int, string, string,int)}.
+@import A_ReturnVoid :-tsv{resource="ReturnVoid.tsv", format=(string, int, string,int)}.
+@import A_SpecialMethodInvocation :-tsv{resource="SpecialMethodInvocation.tsv", format=(string, int, string, string, string,int)}.
+@import A_StaticMethodInvocation :-tsv{resource="StaticMethodInvocation.tsv", format=(string, int, string, string,int)}.
+@import A_StoreArrayIndex :-tsv{resource="StoreArrayIndex.tsv", format=(string, int, string, string, string,int)}.
+@import A_StoreInstanceField :-tsv{resource="StoreInstanceField.tsv", format=(string, int, string, string, string, string,int)}.
+@import A_StoreStaticField :-tsv{resource="StoreStaticField.tsv", format=(string, int, string, string, string,int)}.
+@import A_StringConstant :-tsv{resource="StringConstant.tsv", format=(string,int)}.
+@import A_StringRaw :-tsv{resource="StringRaw.tsv", format=(string, string,int)}.
+@import A_SuperMethodInvocation :-tsv{resource="SuperMethodInvocation.tsv", format=(string, int, string, string, string,int)}.
+@import A_TableSwitch :-tsv{resource="TableSwitch.tsv", format=(string, int, string, string,int)}.
+@import A_TableSwitch_Default :-tsv{resource="TableSwitch-Default.tsv", format=(string, int,int)}.
+@import A_TableSwitch_Target :-tsv{resource="TableSwitch-Target.tsv", format=(string, int, int,int)}.
+@import A_ThisVar :-tsv{resource="ThisVar.tsv", format=(string, string,int)}.
+@import A_Throw :-tsv{resource="Throw.tsv", format=(string, int, string, string,int)}.
+@import A_ThrowNull :-tsv{resource="ThrowNull.tsv", format=(string, int, string,int)}.
+@import A_UnsupportedInstruction :-tsv{resource="UnsupportedInstruction.tsv",format=(string,int,string,int)}.
+@import A_VirtualMethodInvocation :-tsv{resource="VirtualMethodInvocation.tsv",format=(string,int,string,string,string,int)}.
+
+
+A(1).A(10).C(1).C(2).C(3).C(4).C(5).C(6).C(7).C(8).C(9).
+
+merge_strat(?n, ?a * ?m,?a):-
+   A(?a),C(?n),C(?m),?m <= ?n.
+merge_strat(?a,0,0):-
+   C(?a).
+
+
+isType("java.lang.invoke.MethodHandle",0) .
+isReferenceType("java.lang.invoke.MethodHandle",0) .
+isClassType("java.lang.invoke.MethodHandle",0) .
+isClassType("java.lang.String", 0).
+
+
+Throw(?insn, ?var, ?side_) :-
+	isThrow_Insn(?insn, ?side_1) ,
+	Throw_Var(?insn, ?var, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+
+LoadInstanceField(?base, ?sig, ?to, ?inmethod, ?side_) :-
+	isLoadInstanceField_Insn(?insn, ?side_1) ,
+	Instruction_Method(?insn, ?inmethod, ?side_2) ,
+	LoadInstanceField_Base(?insn, ?base, ?side_3) ,
+	FieldInstruction_Signature(?insn, ?sig, ?side_4) ,
+	LoadInstanceField_To(?insn, ?to, ?side_5) ,
+  merge_strat(5,?side_1 + ?side_2 + ?side_3 + ?side_4 + ?side_5, ?side_) . 
+
+StoreInstanceField(?from, ?base, ?sig, ?inmethod, ?side_) :-
+	isStoreInstanceField_Insn(?insn, ?side_1) ,
+	Instruction_Method(?insn, ?inmethod, ?side_2) ,
+	StoreInstanceField_From(?insn, ?from, ?side_3) ,
+	StoreInstanceField_Base(?insn, ?base, ?side_4) ,
+	FieldInstruction_Signature(?insn, ?sig, ?side_5) ,
+  merge_strat(5,?side_1 + ?side_2 + ?side_3 + ?side_4 + ?side_5, ?side_) . 
+
+LoadStaticField(?sig, ?to, ?inmethod, ?side_) :-
+	isLoadStaticField_Insn(?insn, ?side_1) ,
+	Instruction_Method(?insn, ?inmethod, ?side_2) ,
+	FieldInstruction_Signature(?insn, ?sig, ?side_3) ,
+	LoadStaticField_To(?insn, ?to, ?side_4) ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+StoreStaticField(?from, ?sig, ?inmethod, ?side_) :-
+	isStoreStaticField_Insn(?insn, ?side_1) ,
+	Instruction_Method(?insn, ?inmethod, ?side_2) ,
+	StoreStaticField_From(?insn, ?from, ?side_3) ,
+	FieldInstruction_Signature(?insn, ?sig, ?side_4) ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+LoadArrayIndex(?base, ?to, ?inmethod, ?side_) :-
+	isLoadArrayIndex_Insn(?insn, ?side_1) ,
+	Instruction_Method(?insn, ?inmethod, ?side_2) ,
+	LoadArrayIndex_Base(?insn, ?base, ?side_3) ,
+	LoadArrayIndex_To(?insn, ?to, ?side_4) ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+StoreArrayIndex(?from, ?base, ?inmethod, ?side_) :-
+	isStoreArrayIndex_Insn(?insn, ?side_1) ,
+	Instruction_Method(?insn, ?inmethod, ?side_2) ,
+	StoreArrayIndex_From(?insn, ?from, ?side_3) ,
+	StoreArrayIndex_Base(?insn, ?base, ?side_4) ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+
+AssignNull(?to, ?inmethod, ?side_) :-
+	isAssignNull_Insn(?insn, ?side_1) ,
+	AssignInstruction_To(?insn, ?to, ?side_2) ,
+	Instruction_Method(?insn, ?inmethod, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+
+ReturnVar(?var, ?method, ?side_) :-
+	isReturnNonvoid_Insn(?insn, ?side_1) ,
+	Instruction_Method(?insn, ?method, ?side_2) ,
+	ReturnNonvoid_Var(?insn, ?var, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ReturnVar(?var, ?method, ?side_) :-
+	NativeReturnVar(?var, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+VirtualMethodInvocation(?invocation, ?signature, ?inmethod, ?side_) :-
+	isVirtualMethodInvocation_Insn(?invocation, ?side_1) ,
+	Instruction_Method(?invocation, ?inmethod, ?side_2) ,
+	MethodInvocation_Method(?invocation, ?signature, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+StaticMethodInvocation(?invocation, ?signature, ?inmethod, ?side_) :-
+	isStaticMethodInvocation_Insn(?invocation, ?side_1) ,
+	Instruction_Method(?invocation, ?inmethod, ?side_2) ,
+	MethodInvocation_Method(?invocation, ?signature, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+SuperMethodInvocation(?invocation, ?signature, ?inmethod, ?side_) :-
+	isSuperMethodInvocation_Insn(?invocation, ?side_1) ,
+	Instruction_Method(?invocation, ?inmethod, ?side_2) ,
+	MethodInvocation_Method(?invocation, ?signature, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+VirtualMethodInvocation_SimpleName(?invocation, ?simplename, ?side_) ,
+VirtualMethodInvocation_Descriptor(?invocation, ?descriptor, ?side_) :-
+	isVirtualMethodInvocation_Insn(?invocation, ?side_1) ,
+	MethodInvocation_Method(?invocation, ?signature, ?side_2) ,
+	Method_SimpleName(?signature, ?simplename, ?side_3) ,
+	Method_Descriptor(?signature, ?descriptor, ?side_4) ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+StaticMethodInvocation_SimpleName(?invocation, ?simplename, ?side_) ,
+StaticMethodInvocation_Descriptor(?invocation, ?descriptor, ?side_) :-
+	isStaticMethodInvocation_Insn(?invocation, ?side_1) ,
+	MethodInvocation_Method(?invocation, ?signature, ?side_2) ,
+	Method_SimpleName(?signature, ?simplename, ?side_3) ,
+	Method_Descriptor(?signature, ?descriptor, ?side_4) ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+SpecialMethodInvocation_SimpleName(?invocation, ?simplename, ?side_) ,
+SpecialMethodInvocation_Descriptor(?invocation, ?descriptor, ?side_) :-
+	isSpecialMethodInvocation_Insn(?invocation, ?side_1) ,
+	MethodInvocation_Method(?invocation, ?signature, ?side_2) ,
+	Method_SimpleName(?signature, ?simplename, ?side_3) ,
+	Method_Descriptor(?signature, ?descriptor, ?side_4) ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+SuperMethodInvocation_SimpleName(?invocation, ?simplename, ?side_) ,
+SuperMethodInvocation_Descriptor(?invocation, ?descriptor, ?side_) :-
+	isSuperMethodInvocation_Insn(?invocation, ?side_1) ,
+	MethodInvocation_Method(?invocation, ?signature, ?side_2) ,
+	Method_SimpleName(?signature, ?simplename, ?side_3) ,
+	Method_Descriptor(?signature, ?descriptor, ?side_4) ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+
+MethodInvocation_SimpleName(?invocation, ?simplename, ?side_) :-
+	VirtualMethodInvocation_SimpleName(?invocation, ?simplename, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+MethodInvocation_SimpleName(?invocation, ?simplename, ?side_) :-
+	SpecialMethodInvocation_SimpleName(?invocation, ?simplename, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+MethodInvocation_SimpleName(?invocation, ?simplename, ?side_) :-
+	StaticMethodInvocation_SimpleName(?invocation, ?simplename, ?side_1) ,
+  ?side_ = ?side_1 .
+
+  
+MethodInvocation_SimpleName(?invocation, ?simplename, ?side_) :-
+	SuperMethodInvocation_SimpleName(?invocation, ?simplename, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isOpaqueInstruction(?instruction, ?side_) :-
+  A_StaticMethodInvocation(?instruction, _, ?signature, _, ?side_1) ,
+  isOpaqueMethod(?signature, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+
+isOpaqueInstruction(?instruction, ?side_) :-
+  A_SpecialMethodInvocation(?instruction, _, ?signature, _, _, ?side_1) ,
+  isOpaqueMethod(?signature, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+
+isOpaqueInstruction(?instruction, ?side_) :-
+  A_VirtualMethodInvocation(?instruction, _, ?signature, _, _, ?side_1) ,
+  isOpaqueMethod(?signature, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+isOpaqueMethod(?m, ?side_) :-
+  isMethod(?m, ?side_1) ,
+  ?m = "<sun.misc.ProxyGenerator: byte[] generateClassFile()>" ,
+  ?side_ = ?side_1 . 
+
+isType(?t, ?side_) :-
+  isPrimitiveType(?t, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isType(?t, ?side_) :-
+  isReferenceType(?t, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isReferenceType(?t, ?side_) :-
+  isNullType(?t, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isReferenceType(?t, ?side_) :-
+  isArrayType(?t, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isReferenceType(?t, ?side_) :-
+  isClassType(?t, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isReferenceType(?t, ?side_) :-
+  isInterfaceType(?t, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isReferenceType(?t, ?side_) :-
+  isAnnotation(?t, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isHeapAllocation(?h, ?side_) :-
+  isNormalHeap(?h, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isHeapAllocation(?h, ?side_) :-
+  isStringConstant(?h, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isHeapAllocation(?h, ?side_) :-
+  isClassHeap(?h, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isHeapAllocation(?h, ?side_) :-
+  isMethodHandleConstant(?h, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isHeapAllocation(?h, ?side_) :-
+  isMethodTypeConstant(?h, ?side_1) ,
+  ?side_ = ?side_1 .
+
+  
+isInstruction(?i, ?side_) :-
+  isThrow_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isInstruction(?i, ?side_) :-
+  isGoto_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isInstruction(?i, ?side_) :-
+  isIf_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isInstruction(?i, ?side_) :-
+  isSwitch_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isInstruction(?i, ?side_) :-
+  isMonitorInstruction(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isInstruction(?i, ?side_) :-
+  isFieldInstruction(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isInstruction(?i, ?side_) :-
+  isArrayInstruction(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isInstruction(?i, ?side_) :-
+  isAssignInstruction(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isInstruction(?i, ?side_) :-
+  isReturnInstruction(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isInstruction(?i, ?side_) :-
+  isMethodInvocation(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isInstruction(?i, ?side_) :-
+  isUnsupportedInstruction(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isThrowNull_Insn(?i, ?side_) :-
+  isThrow_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isSwitch_Insn(?i, ?side_) :-
+  isTableSwitch_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isSwitch_Insn(?i, ?side_) :-
+  isLookupSwitch_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isMonitorInstruction(?i, ?side_) :-
+  isEnterMonitor_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isMonitorInstruction(?i, ?side_) :-
+  isExitMonitor_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isFieldInstruction(?i, ?side_) :-
+  isLoadInstanceField_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isFieldInstruction(?i, ?side_) :-
+  isStoreInstanceField_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isFieldInstruction(?i, ?side_) :-
+  isLoadStaticField_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isFieldInstruction(?i, ?side_) :-
+  isStoreStaticField_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isArrayInstruction(?i, ?side_) :-
+  isLoadArrayIndex_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isArrayInstruction(?i, ?side_) :-
+  isStoreArrayIndex_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignInstruction(?i, ?side_) :-
+  isAssignOper_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignInstruction(?i, ?side_) :-
+  isAssignInstanceOf_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignInstruction(?i, ?side_) :-
+  isAssignNull_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignInstruction(?i, ?side_) :-
+  isAssignNumConstant_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignInstruction(?i, ?side_) :-
+  isAssignCast_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignInstruction(?i, ?side_) :-
+  isAssignHeapAllocation_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignOper_Insn(?i, ?side_) :-
+  isAssignBinop_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignOper_Insn(?i, ?side_) :-
+  isAssignUnop_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isAssignOper_Insn(?i, ?side_) :-
+  isAssignLocal_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isAssignCast_Insn(?i, ?side_) :-
+  isAssignCastNumConstant_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isAssignOper_Insn(?i, ?side_) :-
+  isAssignCastNull_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isReturnInstruction(?i, ?side_) :-
+  isReturnVoid_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isReturnInstruction(?i, ?side_) :-
+  isReturnNonvoid_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isMethodInvocation(?i, ?side_) :-
+  isVirtualMethodInvocation_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isMethodInvocation(?i, ?side_) :-
+  isSpecialMethodInvocation_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isMethodInvocation(?i, ?side_) :-
+  isStaticMethodInvocation_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isMethodInvocation(?i, ?side_) :-
+  isSuperMethodInvocation_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isMethodInvocation(?i, ?side_) :-
+  isDynamicMethodInvocation_Insn(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isUnsupportedInstruction(?i, ?side_) :-
+  isAssignPhantomInvoke(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isUnsupportedInstruction(?i, ?side_) :-
+  isBreakpointStmt(?i, ?side_1) ,
+  ?side_ = ?side_1 .
+
+
+isClassType(?class, ?side_) :-
+  A_ClassType(?class, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isArrayType(?arrayType, ?side_) :-
+  A_ArrayType(?arrayType, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isInterfaceType(?interface, ?side_) :-
+  A_InterfaceType(?interface, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isArrayType(?arrayType, ?side_) ,
+isType(?componentType, ?side_) ,
+ComponentType(?arrayType, ?componentType, ?side_) :-
+  A_ComponentType(?arrayType, ?componentType, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isMethodInvocation(?invocation, ?side_) ,
+isVar(?var, ?side_) ,
+ActualParam(?index, ?invocation, ?var, ?side_) :-
+  A_ActualParam(?index, ?invocation, ?var, ?side_1) ,
+  ?side_ = ?side_1 .
+
+
+isDynamicMethodInvocation_Insn(?invocation, ?side_) ,
+isVar(?var, ?side_) ,
+BootstrapParam(?index, ?invocation, ?var, ?side_) :-
+  A_BootstrapParam(?index, ?invocation, ?var, ?side_1) ,
+  ?side_ = ?side_1 .
+
+
+isReferenceType(?class, ?side_) ,
+isInterfaceType(?interface, ?side_) ,
+DirectSuperinterface(?class, ?interface, ?side_) :-
+  A_DirectSuperinterface(?class, ?interface, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isClassType(?class, ?side_) ,
+isClassType(?superclass, ?side_) ,
+DirectSuperclass(?class, ?superclass, ?side_) :-
+  A_DirectSuperclass(?class, ?superclass, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isModifier(?modifier, ?side_) ,
+isField(?field, ?side_) ,
+Field_Modifier(?modifier, ?field, ?side_) :-
+  A_Field_Modifier(?modifier, ?field, ?side_1) ,
+  ?side_ = ?side_1 .
+
+ClassModifier(?modifier, ?class, ?side_) :-
+  A_ClassModifier(?modifier, ?class, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isMethod(?method, ?side_) ,
+isVar(?var, ?side_) ,
+FormalParam(?index, ?method, ?var, ?side_) :-
+  A_FormalParam(?index, ?method, ?var, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isReferenceType(?exceptionType, ?side_) ,
+isMethod(?method, ?side_) ,
+Method_DeclaresException(?exceptionType, ?method, ?side_) :-
+  A_Method_DeclaresException(?exceptionType, ?method, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isModifier(?mod, ?side_) ,
+isMethod(?method, ?side_) ,
+Method_Modifier(?mod, ?method, ?side_) :-
+  A_Method_Modifier(?mod, ?method, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isVar(?var, ?side_) ,
+isMethod(?method, ?side_) ,
+NativeReturnVar(?var, ?method, ?side_) :-
+  A_NativeReturnVar(?var, ?method, ?side_1) ,
+  ?side_ = ?side_1 .
+
+isVar(?var, ?side_) ,
+isType(?type, ?side_) ,
+Var_Type(?var, ?type, ?side_) :-
+  A_Var_Type(?var, ?type, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isVar(?var, ?side_) ,
+isMethod(?method, ?side_) ,
+Var_DeclaringMethod(?var, ?method, ?side_) :-
+  A_Var_DeclaringMethod(?var, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isVar(?var, ?side_) ,
+Var_SimpleName(?var, ?simplename, ?side_) :-
+  A_Var_SimpleName(?var, ?simplename, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isReferenceType(?type, ?side_) ,
+ApplicationClass(?type, ?side_) :-
+  A_ApplicationClass(?type, ?side_1) ,
+  ?side_ = ?side_1 . 
+ 
+
+
+isMethod(?method, ?side_) ,
+isVar(?var, ?side_) ,
+ThisVar(?method, ?var, ?side_) :-
+  A_ThisVar(?method, ?var, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isExceptionHandler(?handler, ?side_) ,
+isExceptionHandler(?previous, ?side_) ,
+ExceptionHandler_Previous(?handler, ?previous, ?side_) :-
+  A_ExceptionHandler_Previous(?handler, ?previous, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isMethodInvocation(?invocation, ?side_) ,
+isVar(?to, ?side_) ,
+AssignReturnValue(?invocation, ?to, ?side_) :-
+  A_AssignReturnValue(?invocation, ?to, ?side_1) ,
+  ?side_ = ?side_1 . 
+ 
+
+MainClass(?b,?side_) :-
+  A_ClassModifier(_,?b, ?side_1) ,
+  MainClass(?a, ?side_2) ,
+  true(CONTAINS(?a,?b)) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+
+
+isType(?type, ?side_) ,
+isNormalHeap(?id, ?side_) ,
+OriginalHeapAllocation_Type(?id, ?type, ?side_) ,
+HeapAllocation_Type(?id, ?type, ?side_) :-
+  A_NormalHeap(?id, ?type, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isStringConstant(?id, ?side_) ,
+OriginalHeapAllocation_Type(?id, "java.lang.String", ?side_) ,
+HeapAllocation_Type(?id, "java.lang.String", ?side_) :-
+  A_StringConstant(?id, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isStringRaw(?id, ?side_) ,
+String_toRaw(?id, ?rawId, ?side_) :-
+  A_StringRaw(?id, ?rawId, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isType(?instanceType, ?side_) ,
+isClassHeap(?id, ?side_) ,
+ClassHeap_InstanceType(?id, ?instanceType, ?side_) ,
+OriginalHeapAllocation_Type(?id, "java.lang.Class", ?side_) ,
+HeapAllocation_Type(?id, "java.lang.Class", ?side_) :-
+  A_ClassHeap(?id, ?instanceType, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isMethodHandleConstant(?id, ?side_) ,
+OriginalHeapAllocation_Type(?id, "java.lang.invoke.MethodHandle", ?side_) ,
+MethodHandleConstant_Method(?id, ?method, ?side_) ,
+MethodHandleConstant_Arity(?id, ?arity, ?side_) ,
+MethodHandleConstant_ReturnType(?id, ?retType, ?side_) ,
+MethodHandleConstant_ParamTypes(?id, ?paramTypes, ?side_) ,
+HeapAllocation_Type(?id, "java.lang.invoke.MethodHandle", ?side_) :-
+  A_MethodHandleConstant(?id, ?method, ?retType, ?paramTypes, ?arity, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isMethodTypeConstant(?id, ?side_) ,
+HeapAllocation_Type(?id, "java.lang.invoke.MethodType", ?side_) ,
+MethodTypeConstant_Arity(?id, ?arity, ?side_) ,
+MethodTypeConstant_ReturnType(?id, ?retType, ?side_) ,
+MethodTypeConstant_ParamTypes(?id, ?paramTypes, ?side_) ,
+OriginalHeapAllocation_Type(?id, "java.lang.invoke.MethodType", ?side_) :-
+  A_MethodTypeConstant(?id, ?arity, ?retType, ?paramTypes, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+
+HeapAllocation_EmptyArray(?id, ?side_) :-
+  A_EmptyArray(?id, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+ArrayAllocation(?insn, ?pos, ?sizeVar, ?side_) :-
+  A_ArrayAllocation(?insn, ?pos, ?sizeVar, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignHeapAllocation_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Line(?instruction, ?linenumber, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+AssignInstruction_To(?instruction, ?to, ?side_) ,
+AssignHeapAllocation_Heap(?instruction, ?heap, ?side_) :-
+  A_AssignHeapAllocation(?instruction, ?index, ?heap, ?to, ?method, ?linenumber, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignLocal_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+AssignLocal_From(?instruction, ?from, ?side_) ,
+AssignInstruction_To(?instruction, ?to, ?side_) :-
+  A_AssignLocal(?instruction, ?index, ?from, ?to, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignBinop_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+AssignInstruction_To(?instruction, ?to, ?side_) :-
+  A_AssignBinop(?instruction, ?index, ?to, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignUnop_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+AssignInstruction_To(?instruction, ?to, ?side_) :-
+  A_AssignUnop(?instruction, ?index, ?to, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+AssignOper_From(?instruction, ?pos, ?from, ?side_) :-
+  A_AssignOperFrom(?instruction, ?pos, ?from, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+AssignOper_FromConstant(?instruction, ?pos, ?from, ?side_) :-
+  A_AssignOperFromConstant(?instruction, ?pos, ?from, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+If_Constant(?instruction, ?pos, ?cons, ?side_) :-
+  A_IfConstant(?instruction, ?pos, ?cons, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+If_Var(?instruction, ?pos, ?var, ?side_) :-
+  A_IfVar(?instruction, ?pos, ?var, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+DummyIf_Var(?instruction, ?var, ?side_) :-
+  A_DummyIfVar(?instruction, ?var, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isAssignCast_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+AssignCast_Type(?instruction, ?type, ?side_) ,
+AssignCast_From(?instruction, ?from, ?side_) ,
+AssignInstruction_To(?instruction, ?to, ?side_) :-
+  A_AssignCast(?instruction, ?index, ?from, ?to, ?type, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignCastNumConstant_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+AssignCast_Type(?instruction, ?type, ?side_) ,
+AssignCastNumConstant_Id(?instruction, ?const, ?side_) ,
+AssignInstruction_To(?instruction, ?to, ?side_) :-
+  A_AssignCastNumConstant(?instruction, ?index, ?const, ?to, ?type, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignCastNull_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+AssignCast_Type(?instruction, ?type, ?side_) ,
+AssignInstruction_To(?instruction, ?to, ?side_) :-
+  A_AssignCastNull(?instruction, ?index, ?to, ?type, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isNumConstant(?const, ?side_) ,
+isAssignNumConstant_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+AssignNumConstant_Id(?instruction, ?const, ?side_) ,
+AssignInstruction_To(?instruction, ?to, ?side_) :-
+  A_AssignNumConstant(?instruction, ?index, ?const, ?to, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignNull_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+AssignInstruction_To(?instruction, ?to, ?side_) :-
+  A_AssignNull(?instruction, ?index, ?to, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignInstanceOf_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+AssignInstanceOf_From(?instruction, ?from, ?side_) ,
+AssignInstanceOf_Type(?instruction, ?type, ?side_) ,
+AssignInstruction_To(?instruction, ?to, ?side_) :-
+  A_AssignInstanceOf(?instruction, ?index, ?from, ?to, ?type, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isField(?signature, ?side_) ,
+Field_DeclaringType(?signature, ?declaringType, ?side_) ,
+Field_SimpleName(?signature, ?simplename, ?side_) ,
+Field_Type(?signature, ?type, ?side_) :-
+  A_Field(?signature, ?declaringType, ?simplename, ?type, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isEnterMonitor_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+EnterMonitor_Var(?instruction, ?var, ?side_) :-
+  A_EnterMonitor(?instruction, ?index, ?var, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isExitMonitor_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+ExitMonitor_Var(?instruction, ?var, ?side_) :-
+  A_ExitMonitor(?instruction, ?index, ?var, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isMethodInvocation(?instruction, ?side_) ,
+MethodInvocation_Line(?instruction, ?line, ?side_) :-
+  A_MethodInvocation_Line(?instruction, ?line, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+MethodInvocation_Base(?invocation, ?base, ?side_) :-
+  VirtualMethodInvocation_Base(?invocation, ?base, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+MethodInvocation_Base(?invocation, ?base, ?side_) :-
+  SpecialMethodInvocation_Base(?invocation, ?base, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isMethod(?signature, ?side_) ,
+isMethodInvocation(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+MethodInvocation_Method(?instruction, ?signature, ?side_) :-
+  A_StaticMethodInvocation(?instruction, ?index, ?signature, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isStaticMethodInvocation_Insn(?instruction, ?side_) :-
+  A_StaticMethodInvocation(?instruction, _, ?signature, _, ?side_1) ,
+  ~isOpaqueMethod(?signature, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isMethod(?signature, ?side_) ,
+isMethodInvocation(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+MethodInvocation_Method(?instruction, ?signature, ?side_) :-
+  A_SpecialMethodInvocation(?instruction, ?index, ?signature, _, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isSpecialMethodInvocation_Insn(?instruction, ?side_) ,
+SpecialMethodInvocation_Base(?instruction, ?base, ?side_) :-
+  A_SpecialMethodInvocation(?instruction, _, ?signature, ?base, _, ?side_1) ,
+  ~isOpaqueMethod(?signature, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isMethod(?signature, ?side_) ,
+isMethodInvocation(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+MethodInvocation_Method(?instruction, ?signature, ?side_) :-
+  A_VirtualMethodInvocation(?instruction, ?index, ?signature, _, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isVirtualMethodInvocation_Insn(?instruction, ?side_) ,
+VirtualMethodInvocation_Base(?instruction, ?base, ?side_) :-
+  A_VirtualMethodInvocation(?instruction, _, ?signature, ?base, _, ?side_1) ,
+  ~isOpaqueMethod(?signature, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isMethod(?signature, ?side_) ,
+isMethodInvocation(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+MethodInvocation_Method(?instruction, ?signature, ?side_) ,
+isSuperMethodInvocation_Insn(?instruction, ?side_) ,
+SuperMethodInvocation_Base(?instruction, ?base, ?side_) :-
+  A_SuperMethodInvocation(?instruction, ?index, ?signature, ?base, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isDynamicMethodInvocation_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+DynamicMethodInvocation_Bootstrap(?instruction, ?bootSignature, ?side_) ,
+DynamicMethodInvocation_DynName(?instruction, ?dynName, ?side_) ,
+DynamicMethodInvocation_DynReturnType(?instruction, ?dynRetType, ?side_) ,
+DynamicMethodInvocation_DynParamTypes(?instruction, ?dynParamTypes, ?side_) ,
+DynamicMethodInvocation_HandleTag(?instruction, ?tag, ?side_) ,
+DynamicMethodInvocation_DynArity(?instruction, ?dynArity, ?side_) :-
+  A_DynamicMethodInvocation(?instruction, ?index, ?bootSignature, ?dynName, ?dynRetType, ?dynArity, ?dynParamTypes, ?tag, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+ 
+
+
+isThrow_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+Throw(?instruction, ?var, ?side_) ,
+Throw_Var(?instruction, ?var, ?side_) :-
+  A_Throw(?instruction, ?index, ?var, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isThrowNull_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) :-
+  A_ThrowNull(?instruction, ?index, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isExceptionHandler(?handler, ?side_) ,
+isInstruction(?handler, ?side_) ,
+Instruction_Index(?handler, ?index, ?side_) ,
+Instruction_Method(?handler, ?method, ?side_) ,
+ExceptionHandler_Method(?handler, ?method, ?side_) ,
+ExceptionHandler_Index(?handler, ?index, ?side_) ,
+ExceptionHandler_Type(?handler, ?type, ?side_) ,
+ExceptionHandler_Begin(?handler, ?begin, ?side_) ,
+ExceptionHandler_End(?handler, ?end, ?side_) :-
+  A_ExceptionHandler(?handler, ?method, ?index, ?type, ?begin, ?end, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isMethod(?method, ?side_) ,
+isJVMDescriptor(?jvmDescriptor, ?side_) ,
+Method_SimpleName(?method, ?simplename, ?side_) ,
+Method_ParamTypes(?method, ?params, ?side_) ,
+Method_DeclaringType(?method, ?declaringType, ?side_) ,
+Method_JVMDescriptor(?method, ?jvmDescriptor, ?side_) ,
+Method_Arity(?method, ?arity, ?side_) ,
+Method_ReturnType(?method, ?returnType, ?side_) :-
+  A_Method(?method, ?simplename, ?params, ?declaringType, ?returnType, ?jvmDescriptor, ?arity, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+%Method_Descriptor(?method, ?descriptor, ?side_) :-
+%  Method_ReturnType(?method, ?returnType, ?side_1) ,
+%  Method_ParamTypes(?method, ?params, ?side_2) ,
+%  ?descriptor = CONCAT(?returnType, "(", ?params, ")") ,
+%  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+
+isStoreInstanceField_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+FieldInstruction_Signature(?instruction, ?signature, ?side_) ,
+StoreInstanceField_Base(?instruction, ?base, ?side_) ,
+StoreInstanceField_From(?instruction, ?from, ?side_) :-
+  A_StoreInstanceField(?instruction, ?index, ?from, ?base, ?signature, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isLoadInstanceField_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+FieldInstruction_Signature(?instruction, ?signature, ?side_) ,
+LoadInstanceField_Base(?instruction, ?base, ?side_) ,
+LoadInstanceField_To(?instruction, ?to, ?side_) :-
+  A_LoadInstanceField(?instruction, ?index, ?to, ?base, ?signature, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isStoreStaticField_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+FieldInstruction_Signature(?instruction, ?signature, ?side_) ,
+StoreStaticField_From(?instruction, ?from, ?side_) :-
+  A_StoreStaticField(?instruction, ?index, ?from, ?signature, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isLoadStaticField_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+FieldInstruction_Signature(?instruction, ?signature, ?side_) ,
+LoadStaticField_To(?instruction, ?to, ?side_) :-
+  A_LoadStaticField(?instruction, ?index, ?to, ?signature, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isStoreArrayIndex_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+StoreArrayIndex_Base(?instruction, ?base, ?side_) ,
+StoreArrayIndex_From(?instruction, ?from, ?side_) :-
+  A_StoreArrayIndex(?instruction, ?index, ?from, ?base, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isLoadArrayIndex_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+LoadArrayIndex_Base(?instruction, ?base, ?side_) ,
+LoadArrayIndex_To(?instruction, ?to, ?side_) :-
+  A_LoadArrayIndex(?instruction, ?index, ?to, ?base, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ArrayInsnIndex(?instruction, ?index, ?side_) :-
+  A_ArrayInsnIndex(?instruction, ?index, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ArrayNumIndex(?instruction, ?index, ?side_) :-
+  A_ArrayNumIndex(?instruction, ?index, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isGoto_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+Goto_Target(?instruction, ?to, ?side_) :-
+  A_Goto(?instruction, ?index, ?to, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isIf_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+If_Target(?instruction, ?to, ?side_) :-
+  A_If(?instruction, ?index, ?to, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isTableSwitch_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+Switch_Key(?instruction, ?key, ?side_) :-
+  A_TableSwitch(?instruction, ?index, ?key, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isLookupSwitch_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+Switch_Key(?instruction, ?key, ?side_) :-
+  A_LookupSwitch(?instruction, ?index, ?key, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+Switch_Target(?instruction, ?value, ?target, ?side_) :-
+  A_TableSwitch_Target(?instruction, ?value, ?target, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+Switch_Target(?instruction, ?value, ?target, ?side_) :-
+  A_LookupSwitch_Target(?instruction, ?value, ?target, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+Switch_DefaultTarget(?instruction, ?target, ?side_) :-
+  A_TableSwitch_Default(?instruction, ?target, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+Switch_DefaultTarget(?instruction, ?target, ?side_) :-
+  A_LookupSwitch_Default(?instruction, ?target, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isReturnNonvoid_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) ,
+ReturnNonvoid_Var(?instruction, ?var, ?side_) :-
+  A_Return(?instruction, ?index, ?var, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isReturnVoid_Insn(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) :-
+  A_ReturnVoid(?instruction, ?index, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isAssignPhantomInvoke(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) :-
+  A_AssignPhantomInvoke(?instruction, ?index, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isBreakpointStmt(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) :-
+  A_BreakpointStmt(?instruction, ?index, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isUnsupportedInstruction(?instruction, ?side_) ,
+Instruction_Index(?instruction, ?index, ?side_) ,
+Instruction_Method(?instruction, ?method, ?side_) :-
+  A_UnsupportedInstruction(?instruction, ?index, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+
+isModifier(?x, ?side_) ,
+Modifier_abstract(?x, ?side_) :-
+  ?x= "abstract" ,
+  ?side_ = 0 . 
+
+isModifier(?x, ?side_) ,
+Modifier_public(?x, ?side_) :-
+  ?x= "public" ,
+  ?side_ = 0 . 
+
+isModifier(?x, ?side_) ,
+Modifier_private(?x, ?side_) :-
+  ?x= "private" ,
+  ?side_ = 0 . 
+
+isModifier(?x, ?side_) ,
+Modifier_final(?x, ?side_) :-
+  ?x= "final" ,
+  ?side_ = 0 . 
+
+isModifier(?x, ?side_) ,
+Modifier_static(?x, ?side_) :-
+  ?x= "static" ,
+  ?side_ = 0 . 
+
+isPrimitiveType(?t, ?side_) ,
+Type_boolean(?t, ?side_) :-
+  ?t = "boolean" ,
+  ?side_ = 0 . 
+
+isPrimitiveType(?t, ?side_) ,
+Type_byte(?t, ?side_) :-
+  ?t = "byte" ,
+  ?side_ = 0 . 
+
+isPrimitiveType(?t, ?side_) ,
+Type_char(?t, ?side_) :-
+  ?t = "char" ,
+  ?side_ = 0 . 
+
+isPrimitiveType(?t, ?side_) ,
+Type_short(?t, ?side_) :-
+  ?t = "short" ,
+  ?side_ = 0 . 
+
+isPrimitiveType(?t, ?side_) ,
+Type_int(?t, ?side_) :-
+  ?t = "int" ,
+  ?side_ = 0 . 
+
+isPrimitiveType(?t, ?side_) ,
+Type_long(?t, ?side_) :-
+  ?t = "long" ,
+  ?side_ = 0 . 
+
+isPrimitiveType(?t, ?side_) ,
+Type_float(?t, ?side_) :-
+  ?t = "float" ,
+  ?side_ = 0 . 
+
+isPrimitiveType(?t, ?side_) ,
+Type_double(?t, ?side_) :-
+  ?t = "double" ,
+  ?side_ = 0 . 
+
+isPrimitiveType(?t, ?side_) ,
+Type_void(?t, ?side_) :-
+  ?t = "void" ,
+  ?side_ = 0 . 
+
+
+isNullType(?t, ?side_) ,
+Type_null(?t, ?side_) :-
+  ?t = "null_type" ,
+  ?side_ = 0 . 
+
+
+isClassType(?t, ?side_) ,
+Type_object(?t, ?side_) :-
+  ?t = "java.lang.Object" ,
+  ?side_ = 0 . 
+
+isAnnotation(?annotation, ?side_) :-
+  isReferenceType(?annotation, ?side_1) ,
+  A_Type_Annotation(_, ?annotation, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+isAnnotation(?annotation, ?side_) :-
+  isReferenceType(?annotation, ?side_1) ,
+  A_Method_Annotation(_, ?annotation, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+isAnnotation(?annotation, ?side_) :-
+  isReferenceType(?annotation, ?side_1) ,
+  A_Field_Annotation(_, ?annotation, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+isAnnotation(?annotation, ?side_) :-
+  isReferenceType(?annotation, ?side_1) ,
+  A_Param_Annotation(_, _, ?annotation, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+isMethodHandleConstant(?heap, ?side_) ,
+MethodHandleConstant_Method(?heap, ?method, ?side_) ,
+HeapAllocation_Type(?heap, "java.lang.invoke.MethodHandle", ?side_) :-
+  MethodHandleConstant_Method(?heap, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isHeapAllocation(?null, ?side_) ,
+HeapAllocation_Type(?null, ?type, ?side_) ,
+HeapAllocation_Null(?null, ?side_) :-
+  ?null = "<<null pseudo heap>>",
+  Type_null(?type, ?side_1) ,
+  ?side_ = ?side_1 .  
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) ,
+MainMethodArgArray(?heap, ?side_) :-
+  ?heap = "<<main method array>>",
+  ?type = "java.lang.String[]" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) ,
+MainMethodArgArrayContent(?heap, ?side_) :-
+  ?heap = "<<main method array content>>",
+  ?type = "java.lang.String" ,
+  ?side_ = 0 . 
+
+
+ApplicationField(?field, ?side_) :-
+  Field_DeclaringType(?field, ?type, ?side_1) ,
+  ApplicationClass(?type, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ApplicationMethod(?method, ?side_) :-
+  Method_DeclaringType(?method, ?class, ?side_1) ,
+  ApplicationClass(?class, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ApplicationVar(?var, ?side_) :-
+  Var_DeclaringMethod(?var, ?method, ?side_1) ,
+  ApplicationMethod(?method, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ApplicationInvocation(?invocation, ?side_) :-
+  isMethodInvocation(?invocation, ?side_1) ,
+  Instruction_Method(?invocation, ?method, ?side_2) ,
+  ApplicationMethod(?method, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ApplicationAllocation(?heap, ?side_) :-
+  isAssignHeapAllocation_Insn(?insn, ?side_1) ,
+  Instruction_Method(?insn, ?method, ?side_2) ,
+  ApplicationMethod(?method, ?side_3) ,
+  AssignHeapAllocation_Heap(?insn, ?heap, ?side_4) ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+ConcreteClass(?class, ?side_) :-
+  isClassType(?class, ?side_1) ,
+  ~ClassModifier("abstract", ?class, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<java.io.UnixFileSystem: java.lang.String[] list(java.io.File)>/new java.lang.String[]/0",
+  ?type = "java.lang.String[]" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<java.io.UnixFileSystem: java.lang.String[] list(java.io.File)>/new java.lang.String/0",
+  ?type = "java.lang.String" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<sun.misc.Perf: java.nio.ByteBuffer createLong(java.lang.String,int,int,long)>/new java.nio.DirectByteBuffer/0",
+  ?type = "java.nio.DirectByteBuffer" ,
+  ?side_ = 0 . 
+
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<string-constant>>",
+  ?type = "java.lang.String" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<reflection-string-constant>>",
+  ?type = "java.lang.String" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<string-buffer>>",
+  ?type = "java.lang.StringBuffer" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<string-builder>>",
+  ?type = "java.lang.StringBuilder" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<system-thread-group>>",
+  ?type = "java.lang.ThreadGroup" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<main-thread-group>>",
+  ?type = "java.lang.ThreadGroup" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<main-thread>>",
+  ?type = "java.lang.Thread" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<initial-context>>",
+  ?type = "java.lang.Object" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<jvm-startup-context>>",
+  ?type = "java.lang.Object" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<jvm-startup-hcontext>>",
+  ?type = "java.lang.Object" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<clinit-context>>",
+  ?type = "java.lang.Object" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<immutable-context>>",
+  ?type = "java.lang.Object" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<immutable-hcontext>>",
+  ?type = "java.lang.Object" ,
+  ?side_ = 0 . 
+
+
+isHeapAllocation(?heap, ?side_) ,
+HeapAllocation_Type(?heap, ?type, ?side_) :-
+  ?heap = "<<immutable>>",
+  ?type = "java.lang.Object" ,
+  ?side_ = 0 . 
+
+
+
+
+% CFG
+
+Method_FirstInstruction(?method, ?insn, ?side_) :-
+  Instruction_Method(?insn, ?method, ?side_1) ,
+  ~Instruction_Prev(?insn, _, ?side_1) ,
+  ~IsJumpTarget(?insn, ?side_1) ,
+  ~A_Throw(?insn, _, _, ?method, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+OptInstructionFromMethodIndex(?method, ?index, ?insn, ?side_) :-
+  Instruction_Method(?insn, ?method, ?side_1) ,
+  Instruction_Index(?insn, ?index, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+Instruction_Next(?insn, ?next, ?side_) :-
+  Instruction_Method(?insn, ?inMethod, ?side_1) ,
+  Instruction_Index(?insn, ?i, ?side_2) ,
+  OptInstructionFromMethodIndex(?inMethod, ?i + 1, ?next, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ 
+Instruction_Prev(?insn, ?prev, ?side_) :-
+  Instruction_Method(?insn, ?inMethod, ?side_1) ,
+  Instruction_Index(?insn, ?i, ?side_2) ,
+  OptInstructionFromMethodIndex(?inMethod, ?i - 1, ?prev, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ 
+JumpTarget(?insn, ?goto, ?side_) :-
+  Goto_Target(?goto, ?targetIndex, ?side_1) ,
+  Instruction_Method(?goto, ?gotoMethod, ?side_2) ,
+  OptInstructionFromMethodIndex(?gotoMethod, ?targetIndex, ?insn, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+JumpTarget(?insn, ?if, ?side_) :-
+  If_Target(?if, ?targetIndex, ?side_1) ,
+  Instruction_Method(?if, ?method, ?side_2) ,
+  OptInstructionFromMethodIndex(?method, ?targetIndex, ?insn, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ 
+JumpTarget(?insn, ?sw, ?side_) :-
+  Switch_Target(?sw, _, ?targetIndex, ?side_1) ,
+  Instruction_Method(?sw, ?method, ?side_2) ,
+  OptInstructionFromMethodIndex(?method, ?targetIndex, ?insn, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ 
+JumpTarget(?insn, ?sw, ?side_) :-
+  Switch_DefaultTarget(?sw, ?targetIndex, ?side_1) ,
+  Instruction_Method(?sw, ?method, ?side_2) ,
+  OptInstructionFromMethodIndex(?method, ?targetIndex, ?insn, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ 
+IsJumpTarget(?insn, ?side_) :-
+  JumpTarget(?insn, _, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ExceptionHandlerFirstInstruction(?insn, ?side_) :-
+  ExceptionHandler_Index(?handler, ?index, ?side_1) ,
+  ExceptionHandler_Method(?handler, ?method, ?side_2) ,
+  OptInstructionFromMethodIndex(?method, ?index, ?insn, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ 
+FallThrough(?insn, ?side_) :-
+  isIf_Insn(?if, ?side_1) ,
+  Instruction_Next(?if, ?insn, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+FallThrough(?insn, ?side_) :-
+  isReturnInstruction(?ret, ?side_1) ,
+  Instruction_Next(?ret, ?insn, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+FallThrough(?insn, ?side_) :-
+  isThrow_Insn(?throw, ?side_1) ,
+  Instruction_Next(?throw, ?insn, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+ 
+% First instruction of a method is a basic block beginning
+BasicBlockBegin(?insn, ?side_) :-
+  OptInstructionFromMethodIndex(_, 1, ?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+BasicBlockBegin(?insn, ?side_) :-
+  ExceptionHandlerFirstInstruction(?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+BasicBlockBegin(?insn, ?side_) :-
+  JumpTarget(?insn, _, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+BasicBlockBegin(?insn, ?side_) :-
+  FallThrough(?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+NextInSameBasicBlock(?insn, ?next, ?side_) :-
+  Instruction_Next(?insn, ?next, ?side_1) ,
+  ~BasicBlockBegin(?next, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+PrevInSameBasicBlock(?insn, ?prev, ?side_) :-
+  NextInSameBasicBlock(?prev, ?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+BasicBlockHead(?insn, ?insn, ?side_) :-
+  BasicBlockBegin(?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+BasicBlockHead(?insn, ?headInsn, ?side_) :-
+  BasicBlockHead(?prev, ?headInsn, ?side_1) ,
+  NextInSameBasicBlock(?prev, ?insn, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+BasicBlockTail(?headInsn, ?tailInsn, ?side_) :-
+  BasicBlockHead(?tailInsn, ?headInsn, ?side_1) ,
+  ~NextInSameBasicBlock(?tailInsn, _, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+BasicBlockEnd(?insn, ?side_) :-
+  BasicBlockTail(_, ?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+ 
+
+
+UnconditionalControlTransfer(?insn, ?side_) :-
+  isGoto_Insn(?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+UnconditionalControlTransfer(?insn, ?side_) :-
+  isSwitch_Insn(?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+UnconditionalControlTransfer(?insn, ?side_) :-
+  isReturnInstruction(?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+UnconditionalControlTransfer(?insn, ?side_) :-
+  isThrow_Insn(?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+MaySuccessorModuloThrow(?next, ?prev, ?side_) :-
+  JumpTarget(?next, ?prev, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+MaySuccessorModuloThrow(?next, ?insn, ?side_) :-
+  Instruction_Next(?insn, ?next, ?side_1) ,
+  ~UnconditionalControlTransfer(?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+MayPredecessorModuloThrow(?prev, ?next, ?side_) :-
+  MaySuccessorModuloThrow(?next, ?prev, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+MaySuccessorBBModuloThrow(?next, ?prev, ?side_) :-
+  MaySuccessorModuloThrow(?next, ?prevEnd, ?side_1) ,
+  BasicBlockEnd(?prevEnd, ?side_2) ,
+  BasicBlockBegin(?next, ?side_3) ,
+  BasicBlockHead(?prevEnd, ?prev, ?side_4) ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+ 
+MayPredecessorBBModuloThrow(?prev, ?next, ?side_) :-
+  MaySuccessorBBModuloThrow(?next, ?prev, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+  
+% Dominates(?dominator, ?insn): To get to ?insn, we need to have gone
+% through ?dominator
+Dominates(?dominator, ?insn, ?side_) :-
+  SameMethodBBHeads(?dominator, ?insn, ?side_1) ,
+  ~DoesNotDominate(?dominator, ?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+% Either the first instruction...
+CFGRoot(?insn, ?method, ?side_) :-
+  OptInstructionFromMethodIndex(?method, 1, ?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+% or... could also be beginning of exception handler
+
+CFGRoot(?insn, ?method, ?side_) :-
+  BBHeadInMethod(?insn, ?method, ?side_1) ,
+  ~MayPredecessorBBModuloThrow(_, ?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+ExistsMayPredecessorBBModuloThrow(?insn, ?side_) :-
+  MayPredecessorBBModuloThrow(_, ?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+% DoesNotDominate(?dominatorCandidate, ?insn): ?insn (which is a
+% basic block head) is NOT dominated by ?dominatorCandidate
+DoesNotDominate(?dominatorCandidate, ?insn, ?side_) :-
+  BBHeadInMethod(?dominatorCandidate, ?method, ?side_1) ,
+  CFGRoot(?insn, ?method, ?side_2) ,
+  ?dominatorCandidate != ?insn ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+DoesNotDominate(?dominatorCandidate, ?insn, ?side_) :-
+  DoesNotDominate(?dominatorCandidate, ?otherInsn, ?side_1) ,
+  MaySuccessorBBModuloThrow(?insn, ?otherInsn, ?side_2) ,
+  ?insn != ?dominatorCandidate ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+ 
+% ?insn dominates its predecessor. ?insn must be the head of a basic
+% block (head of a loop, ?side_) ,
+DominatesItsPredecessorInstruction(?prevInsn, ?insn, ?side_) :-
+  JumpTarget(?insn, ?prevInsn, ?side_1) ,
+  BasicBlockHead(?prevInsn, ?prevInsnHead, ?side_2) ,
+  ?insn = ?prevInsnHead ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+  
+DominatesItsPredecessorInstruction(?prevInsn, ?insn, ?side_) :-
+  JumpTarget(?insn, ?prevInsn, ?side_1) ,
+  BasicBlockHead(?prevInsn, ?prevInsnHead, ?side_2) ,
+  Dominates(?insn, ?prevInsnHead, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+ 
+
+ 
+NextInSamePhiNode(?insn, ?nextInsn, ?side_) :-
+  isAssignLocal_Insn(?insn, ?side_1) ,
+  AssignInstruction_To(?insn, ?var, ?side_2) ,
+  Instruction_Next(?insn, ?nextInsn, ?side_3) ,
+  isAssignLocal_Insn(?nextInsn, ?side_4) ,
+  AssignInstruction_To(?nextInsn, ?var, ?side_5) ,
+  merge_strat(5,?side_1 + ?side_2 + ?side_3 + ?side_4 + ?side_5, ?side_) . 
+
+ 
+PhiNodeHead(?nextInsn, ?insn, ?side_) ,
+PhiNodeHead(?insn, ?insn, ?side_) :-
+  NextInSamePhiNode(?insn, ?nextInsn, ?side_1) ,
+  Instruction_Prev(?insn, ?prevInsn, ?side_2) ,
+  ~NextInSamePhiNode(?prevInsn, ?insn, ?side_) ,
+  ~NextInSamePhiNode(?prevInsn, ?insn, 0) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+PhiNodeHead(?nextInsn, ?insn, ?side_) ,
+PhiNodeHead(?insn, ?insn, ?side_) :-
+  NextInSamePhiNode(?insn, ?nextInsn, ?side_1) ,
+  ~Instruction_Prev(?insn, _, ?side_1) ,
+  ?side_ = ?side_1 .
+
+ 
+PhiNodeHead(?nextInsn, ?headInsn, ?side_) :-
+  PhiNodeHead(?phiInsn, ?headInsn, ?side_1) ,
+  NextInSamePhiNode(?phiInsn, ?nextInsn, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+% Just inverting for efficiency.
+InstructionInPhiNode(?insn, ?headInsn, ?side_) :-
+  PhiNodeHead(?insn, ?headInsn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+  
+%/ auxiliary quick-and-dirty predicates
+
+OptReturnInsn(?insn, ?method, ?side_) :-
+  isReturnInstruction(?insn, ?side_1) ,
+  Instruction_Method(?insn, ?method, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+HigherReturnIndex(?insn, ?indexHigher, ?side_) :-
+  OptReturnInsn(?insn, ?method, ?side_1) ,
+  OptReturnInsn(?insnHigher, ?method, ?side_2) ,
+  Instruction_Index(?insnHigher, ?indexHigher, ?side_3) ,
+  Instruction_Index(?insn, ?index, ?side_4) ,
+%  ?index < ?indexHigher,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+ 
+ 
+NextReturnIndex(?returnInsn, #min(?index), ?side_) :-
+  isInstruction(?returnInsn, ?side_1) ,
+  HigherReturnIndex(?returnInsn, ?index, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+NextReturn(?returnInsn, ?nextReturnInsn, ?side_) :-
+  NextReturnIndex(?returnInsn, ?nextReturnIndex, ?side_1) ,
+  Instruction_Method(?returnInsn, ?meth, ?side_2) ,
+  OptInstructionFromMethodIndex(?meth, ?nextReturnIndex, ?nextReturnInsn, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ 
+ExistsPreviousReturn(?insn, ?side_) :-
+  NextReturn(_, ?insn, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+BBHeadInMethod(?insn, ?method, ?side_) :-
+  BasicBlockBegin(?insn, ?side_1) ,
+  Instruction_Method(?insn, ?method, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+SameMethodBBHeads(?insn1, ?insn2, ?side_) :-
+  BBHeadInMethod(?insn1, ?method, ?side_1) ,
+  BBHeadInMethod(?insn2, ?method, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+% Auxiliaries...
+
+
+% Quadratic, but doesn't matter, since it's so local and only
+% defined on basic blocks.
+PredecessorBBsToSameBB(?insn, ?prev1, ?prev2, ?side_) :-
+  MayPredecessorBBModuloThrow(?prev1, ?insn, ?side_1) ,
+  MayPredecessorBBModuloThrow(?prev2, ?insn, ?side_2) ,
+  ?prev1 != ?prev2 ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+LargerPredecessorIndexToSameBB(?insn, ?indexLarge, ?prevSmall, ?side_) :-
+  PredecessorBBsToSameBB(?insn, ?prevLarge, ?prevSmall, ?side_) ,
+  Instruction_Index(?prevLarge, ?indexLarge, ?side_1) ,
+  Instruction_Index(?prevSmall, ?indexSmall, ?side_2) ,
+ % ?indexLarge > ?indexSmall ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+% may not return same result 
+NextPredecessorIndexToSameBB(?insn, ?prev, #min(?index), ?side_) :-
+  LargerPredecessorIndexToSameBB(?insn, _, ?prev, ?side_1) ,
+  LargerPredecessorIndexToSameBB(?insn, ?index, ?prev, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+ 
+NextPredecessorToSameBB(?insn, ?pred, ?nextPred, ?side_) :-
+  NextPredecessorIndexToSameBB(?insn, ?pred, ?indexNext, ?side_1) ,
+  Instruction_Method(?insn, ?method, ?side_2) ,
+  OptInstructionFromMethodIndex(?method, ?indexNext, ?nextPred, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ 
+PreviousPredecessorToSameB(?insn, ?nextPred, ?prevPred, ?side_) :-
+  NextPredecessorToSameBB(?insn, ?prevPred, ?nextPred, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+ExistsPreviousPredecessorToSameBB(?pred, ?insn, ?side_) :-
+  NextPredecessorToSameBB(?insn, _, ?pred, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+% Same concepts as above, but for non-dominated (shortened to "NonDom")
+% predecessors
+NonDomPredecessorBBsToSameBB(?insn, ?prev1, ?prev2, ?side_) :-
+  MayPredecessorBBModuloThrow(?prev1, ?insn, ?side_1) ,
+  MayPredecessorBBModuloThrow(?prev2, ?insn, ?side_2) ,
+  BasicBlockTail(?prev1, ?prevTail1, ?side_3) ,
+  BasicBlockTail(?prev2, ?prevTail2, ?side_4) ,
+  ~DominatesItsPredecessorInstruction(?prevTail1, ?insn, ?side_) ,
+  ~DominatesItsPredecessorInstruction(?prevTail1, ?insn, 0) ,
+  ~DominatesItsPredecessorInstruction(?prevTail2, ?insn, ?side_) ,
+  ~DominatesItsPredecessorInstruction(?prevTail2, ?insn, 0) ,
+  ?prev1 != ?prev2 ,
+  merge_strat(4,?side_1 + ?side_2 + ?side_3 + ?side_4, ?side_) .  
+
+ 
+LargerNonDomPredecessorIndexToSameBB(?insn, ?indexLarge, ?prevSmall, ?side_) :-
+  NonDomPredecessorBBsToSameBB(?insn, ?prevLarge, ?prevSmall, ?side_1) ,
+  Instruction_Index(?prevLarge, ?indexLarge, ?side_2) ,
+  Instruction_Index(?prevSmall, ?indexSmall, ?side_3) ,
+%  ?indexLarge > ?indexSmall ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ 
+NextNonDomPredecessorIndexToSameBB(?insn, ?prev, #min(?index), ?side_) :-
+  LargerNonDomPredecessorIndexToSameBB(?insn, _, ?prev, ?side_1) ,
+  LargerNonDomPredecessorIndexToSameBB(?insn, ?index, ?prev, ?side_2) ,
+  merge_strat(2,?side_1 + ?side_2, ?side_) . 
+
+ 
+NextNonDomPredecessorToSameBB(?insn, ?pred, ?nextPred, ?side_) :-
+  NextNonDomPredecessorIndexToSameBB(?insn, ?pred, ?indexNext, ?side_1) ,
+  Instruction_Method(?insn, ?method, ?side_2) ,
+  OptInstructionFromMethodIndex(?method, ?indexNext, ?nextPred, ?side_3) ,
+  merge_strat(3,?side_1 + ?side_2 + ?side_3, ?side_) .  
+
+ 
+PreviousNonDomPredecessorToSameBB(?insn, ?nextPred, ?prevPred, ?side_) :-
+  NextNonDomPredecessorToSameBB(?insn, ?prevPred, ?nextPred, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+ExistsPreviousNonDomPredecessorToSameBB(?pred, ?insn, ?side_) :-
+  NextNonDomPredecessorToSameBB(?insn, _, ?pred, ?side_1) ,
+  ?side_ = ?side_1 . 
+
+ 
+ 
+@export Method_Descriptor :-tsv{resource="Method_Descriptor.csv",format=(string,string,int)}.
+@export Instruction_Method :-tsv{resource="Instruction_Method.csv",format=(string, string,int)}.
+@export Instruction_Index :-tsv{resource="Instruction_Index.csv",format=(string, int,int)}.
+@export isReturnInstruction :-tsv{resource="isReturnInstruction.csv",format=(string,int)}.
+@export isAssignLocal_Insn :-tsv{resource="isAssignLocal_Insn.csv",format=(string,int)}.
+@export isThrow_Insn :-tsv{resource="isThrow_Insn.csv",format=(string,int)}.
+@export isSwitch_Insn :-tsv{resource="isSwitch_Insn.csv",format=(string,int)}.
+@export isGoto_Insn :-tsv{resource="isGoto_Insn.csv",format=(string,int)}.
+@export ExceptionHandler_Method :-tsv{resource="ExceptionHandler_Method.csv",format=(string, string,int)}.
+@export ExceptionHandler_Index :-tsv{resource="ExceptionHandler_Index.csv",format=(string, int,int)}.
+@export Switch_Target :-tsv{resource="Switch_Target.csv",format=(string, int, int,int)}.
+@export If_Target :-tsv{resource="If_Target.csv",format=(string, int,int)}.
+@export Goto_Target :-tsv{resource="Goto_Target.csv",format=(string, int,int)}.
+@export isInstruction :-tsv{resource="isInstruction.csv",format=(string,int)}.
+@export isIf_Insn :-tsv{resource="isIf_Insn.csv",format=(string,int)}.
+@export Switch_DefaultTarget :-tsv{resource="Switch_DefaultTarget.csv",format=(string, int,int)}.
+@export AssignInstruction_To :-tsv{resource="AssignInstruction_To.csv",format=(string, string,int)}.
+@export A_ArrayType :-tsv{resource="ArrayType.tsv",format=(string,int)}.
+@export A_ActualParam :-tsv{resource="ActualParam.tsv",format=(int,string,string,int)}.
+@export A_Var_Type :-tsv{resource="Var-Type.tsv",format=(string,string ,int)}.
+@export A_Var_DeclaringMethod :-tsv{resource="Var-DeclaringMethod.tsv",format=(string,string,int)}.
+@export A_Var_SimpleName :-tsv{resource="Var-SimpleName.tsv",format=(string,string,int)}.
+@export A_ApplicationClass :-tsv{resource="ApplicationClass.tsv",format=(string ,int)}.
+@export A_ApplicationPackage :-tsv{resource="ApplicationPackage.tsv",format=(string,int)}.
+@export A_ExceptionHandler_Previous :-tsv{resource="ExceptionHandler-Previous.tsv",format=(string,string,int)}.
+@export A_ArrayAllocation :-tsv{resource="ArrayAllocation.tsv",format=(string,int,string,int)}.
+@export A_ArrayInsnIndex :-tsv{resource="ArrayInsnIndex.tsv",format=(string,string,int)}.
+@export A_Type_Annotation :-tsv{resource="Type-Annotation.tsv",format=(string,string,int)}.
+@export A_Method_Annotation :-tsv{resource="Method-Annotation.tsv",format=(string,string,int)}.
+@export A_Field_Annotation :-tsv{resource="Field-Annotation.tsv",format=(string,string,int)}.
+@export A_Param_Annotation :-tsv{resource="Param-Annotation.tsv",format=(string,int,string,int)}.
+@export A_AssignBinop :-tsv{resource="AssignBinop.tsv", format=(string, int, string, string,int)}.
+@export A_AssignCast :-tsv{resource="AssignCast.tsv", format=(string, int, string, string, string, string,int)}.
+@export A_AssignCastNull :-tsv{resource="AssignCastNull.tsv", format=(string, int, string, string, string,int)}.
+@export A_AssignCastNumConstant :-tsv{resource="AssignCastNumConstant.tsv", format=(string, int, string, string, string, string,int)}.
+@export A_AssignHeapAllocation :-tsv{resource="AssignHeapAllocation.tsv", format=(string, int, string, string, string, int,int)}.
+@export A_AssignInstanceOf :-tsv{resource="AssignInstanceOf.tsv", format=(string, int, string, string, string, string,int)}.
+@export A_AssignLocal :-tsv{resource="AssignLocal.tsv", format=(string, int, string, string, string,int)}.
+@export A_AssignNull :-tsv{resource="AssignNull.tsv", format=(string, int, string, string,int)}.
+@export A_AssignNumConstant :-tsv{resource="AssignNumConstant.tsv", format=(string, int, string, string, string,int)}.
+@export A_AssignOperFrom :-tsv{resource="AssignOperFrom.tsv", format=(string, int, string,int)}.
+@export A_AssignOperFromConstant :-tsv{resource="AssignOperFromConstant.tsv", format=(string, int, any,int)}.
+@export A_AssignPhantomInvoke :-tsv{resource="AssignPhantomInvoke.tsv", format=(string, int, string,int)}.
+@export A_AssignReturnValue :-tsv{resource="AssignReturnValue.tsv", format=(string, string,int)}.
+@export A_AssignUnop :-tsv{resource="AssignUnop.tsv", format=(string, int, string, string,int)}.
+@export A_BootstrapParam :-tsv{resource="BootstrapParam.tsv", format=(int, string, string,int)}.
+@export A_BreakpointStmt :-tsv{resource="BreakpointStmt.tsv", format=(string, int, string,int)}.
+@export A_ClassArtifact :-tsv{resource="Class-Artifact.tsv", format=(string, string, string, int,int)}.
+@export A_ClassHeap :-tsv{resource="ClassHeap.tsv", format=(string, string,int)}.
+@export A_ClassModifier :-tsv{resource="ClassModifier.tsv", format=(string, string,int)}.
+@export A_ClassType :-tsv{resource="ClassType.tsv", format=(string,int)}.
+@export A_ComponentType :-tsv{resource="ComponentType.tsv", format=(string, string,int)}.
+@export A_DirectSuperclass :-tsv{resource="DirectSuperclass.tsv", format=(string, string,int)}.
+@export A_DirectSuperinterface :-tsv{resource="DirectSuperinterface.tsv", format=(string, string,int)}.
+@export A_DummyIfVar :-tsv{resource="DummyIfVar.tsv", format=(string, string,int)}.
+@export A_DynamicMethodInvocation :-tsv{resource="DynamicMethodInvocation.tsv", format=(string, int, string, string, string, int, string,int, string,int)}.
+@export A_EmptyArray :-tsv{resource="EmptyArray.tsv", format=(string,int)}.
+@export A_EnterMonitor :-tsv{resource="EnterMonitor.tsv", format=(string, int, string, string,int)}.
+@export A_ExceptionHandler :-tsv{resource="ExceptionHandler.tsv", format=(string, string, int, string, int, int,int)}.
+@export A_ExitMonitor :-tsv{resource="ExitMonitor.tsv", format=(string, int, string, string,int)}.
+@export A_Field :-tsv{resource="Field.tsv", format=(string, string, string, string,int)}.
+@export A_Field_Modifier :-tsv{resource="Field-Modifier.tsv", format=(string, string,int)}.
+@export A_FormalParam :-tsv{resource="FormalParam.tsv", format=(int, string, string,int)}.
+@export A_Goto :-tsv{resource="Goto.tsv", format=(string, int, int, string,int)}.
+@export A_If :-tsv{resource="If.tsv", format=(string, int, int, string,int)}.
+@export A_IfConstant :-tsv{resource="IfConstant.tsv", format=(string, int, string,int)}.
+@export A_IfVar :-tsv{resource="IfVar.tsv", format=(string, int, string,int)}.
+@export A_InterfaceType :-tsv{resource="InterfaceType.tsv", format=(string,int)}.
+@export A_LoadArrayIndex :-tsv{resource="LoadArrayIndex.tsv", format=(string, int, string, string, string,int)}.
+@export A_LoadInstanceField :-tsv{resource="LoadInstanceField.tsv", format=(string, int, string, string, string, string,int)}.
+@export A_LoadStaticField :-tsv{resource="LoadStaticField.tsv", format=(string, int, string, string, string,int)}.
+@export A_LookupSwitch :-tsv{resource="LookupSwitch.tsv", format=(string, int, string, string,int)}.
+@export A_LookupSwitch_Default :-tsv{resource="LookupSwitch-Default.tsv", format=(string, int,int)}.
+@export A_LookupSwitch_Target :-tsv{resource="LookupSwitch-Target.tsv", format=(string, int, int,int)}.
+@export A_Method :-tsv{resource="Method.tsv", format=(string, string, string, string, string, string, int,int)}.
+@export A_MethodHandleConstant :-tsv{resource="MethodHandleConstant.tsv", format=(string, string, string, string, int,int)}.
+@export A_MethodInvocation_Line :-tsv{resource="MethodInvocation-Line.tsv", format=(string, int,int)}.
+@export A_MethodTypeConstant :-tsv{resource="MethodTypeConstant.tsv", format=(string, int, string, string,int)}.
+@export A_MethodTypeConstantParam :-tsv{resource="MethodTypeConstantParam.tsv", format=(string, int, string,int)}.
+@export A_Method_DeclaresException :-tsv{resource="Method-DeclaresException.tsv", format=(string, string,int)}.
+@export A_Method_Modifier :-tsv{resource="Method-Modifier.tsv", format=(string, string,int)}.
+@export A_NativeLibEntryPoint :-tsv{resource="NativeLibEntryPoint.tsv", format=(string, string, string,int)}.
+@export A_NativeMethodId :-tsv{resource="NativeMethodId.tsv", format=(string, string,int)}.
+@export A_NativeMethodTypeCandidate :-tsv{resource="NativeMethodTypeCandidate.tsv", format=(string, string, string, int,int)}.
+@export A_NativeNameCandidate :-tsv{resource="NativeNameCandidate.tsv", format=(string, string, string, int,int)}.
+@export A_NativeReturnVar :-tsv{resource="NativeReturnVar.tsv", format=(string, string,int)}.
+@export A_NativeXRef :-tsv{resource="NativeXRef.tsv", format=(string, string, string, int,int)}.
+@export A_NormalHeap :-tsv{resource="NormalHeap.tsv", format=(string, string,int)}.
+@export A_OperatorAt :-tsv{resource="OperatorAt.tsv", format=(string, string,int)}.
+@export A_Return :-tsv{resource="Return.tsv", format=(string, int, string, string,int)}.
+@export A_ReturnVoid :-tsv{resource="ReturnVoid.tsv", format=(string, int, string,int)}.
+@export A_SpecialMethodInvocation :-tsv{resource="SpecialMethodInvocation.tsv", format=(string, int, string, string, string,int)}.
+@export A_StaticMethodInvocation :-tsv{resource="StaticMethodInvocation.tsv", format=(string, int, string, string,int)}.
+@export A_StoreArrayIndex :-tsv{resource="StoreArrayIndex.tsv", format=(string, int, string, string, string,int)}.
+@export A_StoreInstanceField :-tsv{resource="StoreInstanceField.tsv", format=(string, int, string, string, string, string,int)}.
+@export A_StoreStaticField :-tsv{resource="StoreStaticField.tsv", format=(string, int, string, string, string,int)}.
+@export A_StringConstant :-tsv{resource="StringConstant.tsv", format=(string,int)}.
+@export A_StringRaw :-tsv{resource="StringRaw.tsv", format=(string, string,int)}.
+@export A_SuperMethodInvocation :-tsv{resource="SuperMethodInvocation.tsv", format=(string, int, string, string, string,int)}.
+@export A_TableSwitch :-tsv{resource="TableSwitch.tsv", format=(string, int, string, string,int)}.
+@export A_TableSwitch_Default :-tsv{resource="TableSwitch-Default.tsv", format=(string, int,int)}.
+@export A_TableSwitch_Target :-tsv{resource="TableSwitch-Target.tsv", format=(string, int, int,int)}.
+@export A_ThisVar :-tsv{resource="ThisVar.tsv", format=(string, string,int)}.
+@export A_Throw :-tsv{resource="Throw.tsv", format=(string, int, string, string,int)}.
+@export A_ThrowNull :-tsv{resource="ThrowNull.tsv", format=(string, int, string,int)}.
+@export A_UnsupportedInstruction :-tsv{resource="UnsupportedInstruction.tsv",format=(string,int,string,int)}.
+@export A_VirtualMethodInvocation :-tsv{resource="VirtualMethodInvocation.tsv",format=(string,int,string,string,string,int)}.
+@export Method_ReturnType :-tsv{resource="Method_ReturnType.tsv",format=(string,string,int)}.
+@export Method_ParamTypes :-tsv{resource="Method_ParamTypes.tsv",format=(string,string,int)}.
+
+
+%@export OptInstructionFromMethodIndex :-tsv{resource="OptInstructionFromMethodIndex.tsv",format=(string, int, string,int)}.
+%@export Instruction_Next :-tsv{resource="Instruction_Next.tsv",format=(string, string,int)}.
+%@export Instruction_Prev :-tsv{resource="Instruction_Prev.tsv",format=(string, string,int)}.
+%@export JumpTarget :-tsv{resource="JumpTarget.tsv",format=(string, string,int)}.
+%@export IsJumpTarget :-tsv{resource="IsJumpTarget.tsv",format=(string,int)}.
+%@export ExceptionHandlerFirstInstruction :-tsv{resource="ExceptionHandlerFirstInstruction.tsv",format=(string,int)}.
+%@export FallThrough :-tsv{resource="FallThrough.tsv",format=(string,int)}.
+%@export BasicBlockBegin :-tsv{resource="BasicBlockBegin.tsv",format=(string,int)}.
+%@export BasicBlockHead :-tsv{resource="BasicBlockHead.tsv",format=(string, string,int)}.
+%@export BasicBlockTail :-tsv{resource="BasicBlockTail.tsv",format=(string, string,int)}.
+%@export BasicBlockEnd :-tsv{resource="BasicBlockEnd.tsv",format=(string,int)}.
+%@export UnconditionalControlTransfer :-tsv{resource="UnconditionalControlTransfer.tsv",format=(string,int)}.
+%@export MaySuccessorModuloThrow :-tsv{resource="MaySuccessorModuloThrow.tsv",format=(string, string,int)}.
+%@export MayPredecessorModuloThrow :-tsv{resource="MayPredecessorModuloThrow.tsv",format=(string, string,int)}.
+%@export MaySuccessorBBModuloThrow :-tsv{resource="MaySuccessorBBModuloThrow.tsv",format=(string, string,int)}.
+%@export MayPredecessorBBModuloThrow :-tsv{resource="MayPredecessorBBModuloThrow.tsv",format=(string, string,int)}.
+%@export Dominates :-tsv{resource="Dominates.tsv",format=(string, string,int)}.
+%@export DominatesItsPredecessorInstruction :-tsv{resource="DominatesItsPredecessorInstruction.tsv",format=(string, string,int)}.
+%@export DominatesItsSuccessorInstruction :-tsv{resource="DominatesItsSuccessorInstruction.tsv",format=(string, string,int)}.
+%@export NextInSamePhiNode :-tsv{resource="NextInSamePhiNode.tsv",format=(string, string,int)}.
+%@export PhiNodeHead :-tsv{resource="PhiNodeHead.tsv",format=(string, string,int)}.
+%@export InstructionInPhiNode :-tsv{resource="InstructionInPhiNode.tsv",format=(string, string,int)}.
+%@export NextReturn :-tsv{resource="NextReturn.tsv",format=(string, string,int)}.
+%@export NextInSameBasicBlock :-tsv{resource="NextInSameBasicBlock.tsv",format=(string, string,int)}.
+%@export PrevInSameBasicBlock :-tsv{resource="PrevInSameBasicBlock.tsv",format=(string, string,int)}.
+%@export CFGRoot :-tsv{resource="CFGRoot.tsv",format=(string, string,int)}.
+%@export ExistsMayPredecessorBBModuloThrow :-tsv{resource="ExistsMayPredecessorBBModuloThrow.tsv",format=(string,int)}.
+%@export DoesNotDominate :-tsv{resource="DoesNotDominate.tsv",format=(string, string,int)}.
+%@export OptReturnInsn :-tsv{resource="OptReturnInsn.tsv",format=(string, string,int)}.
+%@export HigherReturnIndex :-tsv{resource="HigherReturnIndex.tsv",format=(string, int,int)}.
+%@export NextReturnIndex :-tsv{resource="NextReturnIndex.tsv",format=(string, int,int)}.
+%@export ExistsPreviousReturn :-tsv{resource="ExistsPreviousReturn.tsv",format=(string,int)}.
+%@export BBHeadInMethod :-tsv{resource="BBHeadInMethod.tsv",format=(string, string,int)}.
+%@export SameMethodBBHeads :-tsv{resource="SameMethodBBHeads.tsv",format=(string, string,int)}.
+%@export PredecessorBBsToSameBB :-tsv{resource="PredecessorBBsToSameBB.tsv",format=(string, string, string,int)}.
+%@export LargerPredecessorIndexToSameBB :-tsv{resource="LargerPredecessorIndexToSameBB.tsv",format=(string, int, string,int)}.
+%@export NextPredecessorIndexToSameBB :-tsv{resource="NextPredecessorIndexToSameBB.tsv",format=(string, string, int,int)}.
+%@export NextPredecessorToSameBB :-tsv{resource="NextPredecessorToSameBB.tsv",format=(string, string, string,int)}.
+%@export PreviousPredecessorToSameB :-tsv{resource="PreviousPredecessorToSameB.tsv",format=(string, string, string,int)}.
+%@export ExistsPreviousPredecessorToSameBB :-tsv{resource="ExistsPreviousPredecessorToSameBB.tsv",format=(string, string,int)}.
+%@export NonDomPredecessorBBsToSameBB :-tsv{resource="NonDomPredecessorBBsToSameBB.tsv",format=(string, string, string, int)}.
+%@export LargerNonDomPredecessorIndexToSameBB :-tsv{resource="LargerNonDomPredecessorIndexToSameBB.tsv",format=(string, int, string,int)}.
+%@export NextNonDomPredecessorIndexToSameBB :-tsv{resource="NextNonDomPredecessorIndexToSameBB.tsv",format=(string, string, int,int)}.
+%@export NextNonDomPredecessorToSameBB :-tsv{resource="NextNonDomPredecessorToSameBB.tsv",format=(string, string, string,int)}.
+%@export PreviousNonDomPredecessorToSameBB :-tsv{resource="PreviousNonDomPredecessorToSameBB.tsv",format=(string, string, string, int)}.
+%@export ExistsPreviousNonDomPredecessorToSameBB :-tsv{resource="ExistsPreviousNonDomPredecessorToSameBB.tsv",format=(string, string,int)}.
+%@export Method_FirstInstruction :-tsv{resource="Method_FirstInstruction.tsv",format=(string,string,int)}.
+%

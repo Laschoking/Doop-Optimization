@@ -9,7 +9,9 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
     unique_rows_db1 = set()
     unique_rows_db2 = set()
     inters_db1_db2 = set()
-
+    l_rows1_files = 0
+    l_rows2_files = 0
+    l_inters_files = 0
     div = False
     for file_name,db1_file_obj in db1.files.items():
         if file_name not in db2.files:
@@ -37,13 +39,14 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
         l_rows1 = len(unique_rows1)
         l_rows2 = len(unique_rows2)
 
+        l_rows1_files += l_rows1
+        l_rows2_files += l_rows2
+        l_inters_files += l_inters
+
         if (l_rows1 > 0 or l_rows2 > 0) and print_flag:
             print(file_name)
             print("db1 unique-rows: " + str(unique_rows1))
             print("db2 unique-rows: " + str(unique_rows2))
-        inters_db1_db2 = inters_db1_db2 | inters
-        unique_rows_db1 =  unique_rows_db1 | unique_rows1
-        unique_rows_db2 = unique_rows_db2 | unique_rows2
         if l_rows1 + l_rows2 + l_inters == 0: continue
 
         cov = round(100 * l_inters / (l_rows1 + l_rows2 + l_inters))
@@ -51,18 +54,17 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
             r = [file_name, l_rows1, l_rows2, l_inters, str(cov) + "%"]
             t.add_row(r,divider=div)
 
+            # atoms appearing in more than 1 relation are only counted once
 
-    l_rows1_files = len(unique_rows_db1)
-    l_rows2_files = len(unique_rows_db2)
-    l_inters_files = len(inters_db1_db2)
+
+
     #t.add_row(['','','','',''],divider=True)
     t.add_row(["SUMMARY", l_rows1_files , l_rows2_files , l_inters_files,
                str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files),2)) + "%"])
     if (l_rows1_files > 0 or l_rows2_files > 0) and print_flag:
         print(t)
     # we return the nr. of rows for db1, db2, their intersection, and the overlap (inters/ (sum))
-    return ([l_rows1_files, l_rows2_files, l_inters_files,
-            str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files), 1))], unique_rows_db1, unique_rows_db2, inters_db1_db2)
+    return l_rows1_files, l_rows2_files, l_inters_files, str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files), 1))
 
 
 def check_data_correctness(data_frame, mapping):
@@ -77,41 +79,27 @@ def check_data_correctness(data_frame, mapping):
     # TODO: identifier in db speichern
     # this is only to verify that the original facts db can be produced from merging
     mapping.revert_db_mapping(mapping.db2_merged_facts, mapping.db1_inv_bij_facts, 1)
-    diff,unique_rows_db1,unique_rows_db2, inters_db1_db2 = diff_two_dirs(data_frame.db1_original_facts, mapping.db1_inv_bij_facts, rm_identifier='', print_flag=False)
+    diff = diff_two_dirs(data_frame.db1_original_facts, mapping.db1_inv_bij_facts, rm_identifier='')
     if (diff[0] > 0 or diff[1] > 0):
         t.add_row(
             [R + data_frame.db2_original_facts.name, diff[0], mapping.db2_merged_facts.name, diff[1], diff[2], diff[3] + "%" + N])
 
 
     # DB2-original-facts == DB2_merged_facts (split 10)
-    diff = diff_two_dirs(data_frame.db2_original_facts, mapping.db2_merged_facts, rm_identifier='10', print_flag=False)[0]
+    diff = diff_two_dirs(data_frame.db2_original_facts, mapping.db2_merged_facts, rm_identifier='10')
     if (diff[0] > 0 or diff[1] > 0):
         t.add_row(
             [R + data_frame.db2_original_facts.name, diff[0], mapping.db2_merged_facts.name, diff[1], diff[2], diff[3] + "%" + N])
 
     # DB2-separate-results == DB2_merged_results (split 10)
-    diff = diff_two_dirs(data_frame.db2_original_results, mapping.db2_nemo_merged_results, rm_identifier='10', print_flag=False)[0]
+    diff = diff_two_dirs(data_frame.db2_original_results, mapping.db2_nemo_merged_results, rm_identifier='10')
     if (diff[0] > 0 or diff[1] > 0):
         t.add_row([R + data_frame.db2_original_results.name, diff[0], mapping.db2_nemo_merged_results.name, diff[1], diff[2], diff[3] + "%" + N])
 
     # DB1-separate-results == DB1-inverse-mapping-results
-    diff,unique_rows_db1,unique_rows_db2, inters_db1_db2 = diff_two_dirs(data_frame.db1_original_results, mapping.db1_inv_bij_results, rm_identifier='', print_flag=True)
+    diff = diff_two_dirs(data_frame.db1_original_results, mapping.db1_inv_bij_results, rm_identifier='')
     if (diff[0] > 0 or diff[1] > 0):
         t.add_row([R + data_frame.db1_original_results.name, diff[0], mapping.db1_inv_bij_results.name, diff[1], diff[2], diff[3] + "%" + N])
-
-        # find out why atoms were not mapped correctly
-        wrong_mapped = PrettyTable()
-        wrong_mapped.field_names = ["terms db2 ","mapping to"]
-        inv_bijection = dict((term2, term1) for term1, term2 in mapping.mapping.items())
-
-        for rows1 in unique_rows_db1:
-            for term1 in rows1:
-                if term1 in inv_bijection:
-                    wrong_mapped.add_row([term1,inv_bijection[term1]])
-                else:
-                    wrong_mapped.add_row([term1,''])
-
-        #print(wrong_mapped)
 
     if len(t.rows) > 0:
         print(t)
@@ -122,7 +110,6 @@ def db_overlap(db):
     for file_name,file_obj in db.files.items():
         for record in file_obj.records:
             split_db[record[-1]] += 1
-        #print(file + ": " +  str(split_db['1']) + "  " + str(split_db['10']) + "  " + str(split_db['0']))
     return split_db, str(round(100 * split_db['0'] / (split_db['1'] + split_db['10'] + split_db['0']), 1))
 
 
@@ -131,7 +118,7 @@ def evaluate_mapping_overlap(data_frame):
     t.field_names = ["Method", "data set", "unique rows DB1", "unique rows DB2", "Common Rows", "Total Rows", "overlap in %"]
 
 
-    diff = diff_two_dirs(data_frame.db1_original_facts, data_frame.db2_original_facts, rm_identifier='', print_flag=False)[0]
+    diff = diff_two_dirs(data_frame.db1_original_facts, data_frame.db2_original_facts, rm_identifier='', print_flag=False)
     t.add_row(["No mapping","original facts", diff[0], diff[1], diff[2], diff[0] + diff[1] + diff[2], diff[3] + "%"])
     if data_frame.mappings:
         l_b = data_frame.mappings[-1]
@@ -142,13 +129,9 @@ def evaluate_mapping_overlap(data_frame):
             div = True
         t.add_row([mapping.name, "merged facts", split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'],
                    sim + "%"], divider=div)
-    # merged-facts-baseline
-    #split, sim = db_overlap(data_frame.db2_merge_facts_base)
-    #t.add_row(["merged-facts-baseline", split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'],
-    #           sim + "%"])
 
     diff = diff_two_dirs(data_frame.db1_original_results, data_frame.db2_original_results, rm_identifier='',
-                         print_flag=False)[0]
+                         print_flag=False)
     t.add_row(["No mapping", "original results", diff[0], diff[1], diff[2], diff[0] + diff[1] + diff[2], diff[3] + "%"])
 
     for mapping in data_frame.mappings:
@@ -156,7 +139,7 @@ def evaluate_mapping_overlap(data_frame):
         t.add_row(
             [mapping.name, "merged results", split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'], sim + "%"])
 
-    return t.get_string(fields=["Method", "data set", "Common Rows", "Total Rows", "overlap in %"])
+    return t#.get_string(fields=["Method", "data set", "Common Rows", "Total Rows", "overlap in %"])
 
 
 def plot_degree_distribution(terms):
