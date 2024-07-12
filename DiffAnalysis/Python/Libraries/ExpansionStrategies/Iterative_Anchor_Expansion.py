@@ -38,6 +38,7 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
     watch_prio_len = []
     watch_exp_sim = []
     watch_mapped_sim = []
+    count_uncertain_mappings = 0
 
     count_hub_recomp = 0
     new_hubs_flag = True
@@ -47,6 +48,7 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
     while 1:
         if prio_dict and not new_hubs_flag: # pop last item = with the highest similarity
             sim,tuples = prio_dict.peekitem(index=-1)
+            #print(prio_dict)
 
             # data could be empty because of deletion of obsolete term-tuples
             if not tuples:
@@ -64,9 +66,10 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
             if term_name1 in free_term_names1 and term_name2 in free_term_names2:
                 # if value is too bad - find new Hubs
                 # TODO find better strategy
-                if sim < 0.6 * last_sim:
+                if sim < 0.9 * last_sim:
                     new_hubs_flag = True
                     last_sim = sim
+                    prio_dict[sim].add(term_name_tuple)
                     continue
                 # means we discovered better tuples
                 #if sim > last_sim:
@@ -76,7 +79,7 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
 
                 # add new mapping
                 mapping_obj.mapping[term_name1] = term_name2
-                print(term_name1 + " : " + term_name2)
+                #print(term_name1 + " : " + term_name2)
 
                 # make terms "blocked"
                 free_term_names1.discard(term_name1)
@@ -88,8 +91,8 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
 
                 # delete all tuples from priority queue, that contain term_obj1 or term_obj2
 
-                delete_from_prio_dict(terms1_pq_mirror[term_name1],prio_dict)
-                delete_from_prio_dict(terms2_pq_mirror[term_name2],prio_dict)
+                count_uncertain_mappings = delete_from_prio_dict(terms1_pq_mirror[term_name1],prio_dict,count_uncertain_mappings,sim)
+                count_uncertain_mappings = delete_from_prio_dict(terms2_pq_mirror[term_name2],prio_dict,count_uncertain_mappings,sim)
 
                 # remove term entry from mirror
                 del terms1_pq_mirror[term_name1]
@@ -148,12 +151,13 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
                 break
         else:
             break
-            
+    # TODO Plot node distribution
+    print("mapping of tuples with uncertain similarity: " + str(count_uncertain_mappings / 2))
     # TODOL=: print strategy & make nice table or sth
     print("hub recompution: " + str(count_hub_recomp))
     print("number of calculated tuples: " + str(len(tuples_loc_sim.keys())))
     print("number of maximal tuples: " + str(len(db1.terms) * len(db2.terms)))
-    fig, ax = plt.subplots(4,1)
+    '''fig, ax = plt.subplots(4,1)
     fig.suptitle("iterativeExpansion + " + similarity_metric.__name__)
     ax[0].scatter(range(len(watch_prio_len)),watch_prio_len,s=1, label='Queue Size')
     ax[0].set_title("Queue Size")
@@ -165,9 +169,11 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
     ax[3].set_title("Distribution of Similarities")
     fig.tight_layout()
     plt.show()
+    '''
     return
 
-def delete_from_prio_dict(tuples, prio_dict):
+def delete_from_prio_dict(tuples, prio_dict,count_uncertain_mappings,mapped_sim):
+    uncertain_mapping_flag = False
     for tuple_names,sim in tuples:
         if sim not in prio_dict:
             ValueError("sim- key not in priority dict:" + str(sim))
@@ -179,6 +185,12 @@ def delete_from_prio_dict(tuples, prio_dict):
             #print("skipped value, bc it was removed from other side: " + str(tuple_names))
         else:
             prio_dict[sim].remove(tuple_names)
+            # this is for logging, how often a mapping was done, where one of the terms had other tuples with the same
+            # similarity
+            if not uncertain_mapping_flag and sim >= mapped_sim:
+                uncertain_mapping_flag = True
+    count_uncertain_mappings += 1 if uncertain_mapping_flag else 0
+    return count_uncertain_mappings
 
 def find_crossproduct_mappings(hubs1, hubs2):
     return set(itertools.product(hubs1, hubs2))
@@ -202,6 +214,7 @@ def add_mappings_to_pq(new_mapping_tuples,tuples_loc_sim,terms1_pq_mirror, terms
                     prio_dict[sim] = SortedList([term_name_tuple])
                 else:
                     prio_dict[sim].add(term_name_tuple)
+                #print(sim,term_name_tuple)
 
                 processed_mapping_tuples.add(term_name_tuple)
 
@@ -251,7 +264,7 @@ def find_hubs_std(free_term_names, terms_occ):
 
 def find_hubs_quantile(free_term_names, terms):
     nodes = [terms[term_name].degree for term_name in free_term_names]
-    print("node degree mean: " + str(np.mean(nodes)))
-    quantile = np.quantile(nodes,q=0.9)
+    print("node degree mean: " + str(round(np.mean(nodes),2)) + " standard deviation: " + str(round(np.std(nodes),2)))
+    quantile = np.quantile(nodes,q=0.98)
     # returns termobjects
     return set(terms[free_term_names[iter]] for iter in range(len(free_term_names)) if nodes[iter] >= quantile)

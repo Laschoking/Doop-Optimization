@@ -1,0 +1,26 @@
+
+% Orbits of cosmological objects
+% Rafael Caballero-Rold\'an,2007
+% Adopted from DES
+
+@import orbits :- tsv{resource ="orbits.facts",format=(int,int)} .
+
+
+orbits(?a,?b,?side_):-  
+  orbits(?a,?c,?side_1), 
+  orbits(?c,?b,?side_2),
+  merge_strat(2,?side_1 + ?side_2, side_).  
+
+satellite(?a,?b,?side_):-       
+  orbits(?a,?b,?side_1),         
+  ~intermediate(?a,?b,?side_1),
+  ?side_ = ?side_1 .
+
+intermediate(?a,?b,?side_):- 
+  orbits(?a,?c,?side_1),      
+  orbits(?c,?b,?side_2),
+  merge_strat(2,?side_1 + ?side_2, side_).  
+
+@export intermediate :- tsv{resource="intermediate.tsv",format=(int,int)} .
+@export satellite :- tsv{resource="satellite.tsv",format=(int,int)} .
+

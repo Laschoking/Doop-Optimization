@@ -1,0 +1,6 @@
+.decl X(node1:number, node2:number) input
+.decl Y(node1:number, node2:number) printsize
+
+Y(a,b) :- X(a,b).
+Y(a,c) :- Y(a,b), Y(b,c).
+

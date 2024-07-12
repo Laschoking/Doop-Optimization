@@ -5,6 +5,7 @@ from Python.Libraries.SimilarityMetric.ISUB_SequenceMatcher import *
 from Python.Libraries.SimilarityMetric.SequenceMatcherPairOccurance import *
 from Python.Libraries.SimilarityMetric.Term_Equality import *
 from Python.Libraries.SimilarityMetric.Jaccard_Term_Overlap import *
+from Python.Libraries.SimilarityMetric.Jaccard_Min import *
 from Python.Libraries.SimilarityMetric.Occurance_Multiplication import *
 
 
@@ -13,8 +14,8 @@ import time
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = Family_Renaming_db
-    program_config = Syn_Family_DL
+    db_config = Doop_Gocd_Websocket_Notifier_v1_v4
+    program_config = Doop_PointerAnalysis
 
     # TODO for synthetic DB - allow parameter for distribution of random values
     gen_new_facts = False  # if true, run doop again for new fact-gen, otherwise just copy from doop/out
@@ -49,24 +50,22 @@ if __name__ == "__main__":
     db1 = data_frame.db1_original_facts
     db2 = data_frame.db2_original_facts
 
-    # data_frame.add_mapping(StringEquality(data_frame.paths))
-    # data_frame.add_mapping(SequenceMatcher(data_frame.paths))
-    # data_frame.add_mapping(SequenceMatcherPairOccurance(data_frame.paths))
-    # data_frame.add_mapping(ISUBSequenceMatcher_Crossproduct(data_frame.paths))
-    # data_frame.add_mapping(ISUBSequenceMatcher_Iterative(data_frame.paths))
-    # data_frame.add_mapping(ISUBSequenceMatcher_Iterative_Occ(data_frame.paths))
-    # data_frame.add_mapping(TermOccuranceIterative(data_frame.paths))
+
+    #data_frame.add_mapping(
+    #    Mapping(data_frame.paths, "iterative", iterative_anchor_expansion, "jaccard_sum", jaccard_term_overlap))
     data_frame.add_mapping(
-        Mapping(data_frame.paths, "iterative", iterative_anchor_expansion, "jaccard", jaccard_term_overlap))
-    # data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"isub_sm",isub_sequence_matcher))
+        Mapping(data_frame.paths, "iterative", iterative_anchor_expansion, "jaccard_min", jaccard_min))
+    #data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"isub_sm",isub_sequence_matcher))
     # data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"occ_multiplication",occurrence_multiplication))
-    # data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"term_equality",term_equality))
+    data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"term_equality",term_equality))
 
     time_tab = PrettyTable()
     time_tab.field_names = ["Mapping", "#blocked Mappings", "# 1:1 Mappings", "#synthetic Terms", "run-time"]
 
     # iterate through all selected mapping functions
     for mapping in data_frame.mappings:
+        print("--------------------------")
+        print(mapping.name)
         t0 = time.time()
         # calculate similarity_matrix & compute maximal mapping from db1 to db2
         if comp_new_mapping:

@@ -1,0 +1,21 @@
+% Orbits of cosmological objects
+% Rafael Caballero-Rold\'an, 2007
+% Adopted from DES
+
+@import orbits :- tsv{resource ="orbits.facts",format=(int,int)} .
+
+
+orbits(?a,?b) :-  
+  orbits(?a,?c),  
+  orbits(?c,?b).
+
+satellite(?a,?b) :-       
+  orbits(?a,?b),          
+  ~intermediate(?a,?b).
+
+intermediate(?a,?b) :- 
+  orbits(?a,?c),       
+  orbits(?c,?b).
+
+@export intermediate :- tsv{resource="intermediate.tsv",format=(int,int)} .
+@export satellite :- tsv{resource="satellite.tsv",format=(int,int)} .

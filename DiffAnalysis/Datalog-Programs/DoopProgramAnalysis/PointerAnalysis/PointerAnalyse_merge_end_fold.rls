@@ -40,11 +40,11 @@ true("true"^^xsd:boolean).
 
 % assume that no relations with more than 9 relations exist
 
-Method_Descriptor(?method, ?descriptor, ?side) :-
-  Method_ReturnType(?method, ?returnType,?side_1),
-  Method_ParamTypes(?method, ?params,?side_2),
-  ?descriptor = CONCAT(?returnType, CONCAT( "(", CONCAT(?params, ")"))),
-  merge_strat(2, ?side_1 + ?side_2,?side).
+%Method_Descriptor(?method, ?descriptor, ?side) :-
+%  Method_ReturnType(?method, ?returnType,?side_1),
+%  Method_ParamTypes(?method, ?params,?side_2),
+%  ?descriptor = CONCAT(?returnType, CONCAT( "(", CONCAT(?params, ")"))),
+%  merge_strat(2, ?side_1 + ?side_2,?side).
 
 
 MainClass(?b,?side):-

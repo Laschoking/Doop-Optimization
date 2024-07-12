@@ -1,0 +1,43 @@
+@import father :- tsv{resource ="father.facts",format=(int,int)} .
+@import mother :- tsv{resource ="mother.facts",format=(int,int)} .
+
+parent(?a,?b) :-
+  father(?a,?b).
+
+parent(?a,?b) :-
+  mother(?a,?b).  
+
+
+ancestor(?a,?b) :-
+  parent(?a,?b).
+
+ancestor(?a,?b) :-
+  parent(?a,?c), 
+  ancestor(?c,?b).
+
+grandmother(?a,?b) :-
+  mother(?a,?c), 
+  ancestor(?c,?b).
+
+sibling(?a,?b) :-
+  parent(?c,?a), 
+  parent(?c,?b), 
+  ?a != ?b. 
+
+cousin(?a,?b) :-
+  ancestor(?c,?a), 
+  ancestor(?c,?b), 
+  ?a != ?b, 
+  ~sibling(?a,?b), 
+  ~parent(?a,?b).
+
+relative(?a,?b) :-
+  sibling(?a,?c),parent(?c,?b). 
+
+
+@export parent :- tsv{resource="parent.tsv",format=(int,int)} .
+@export ancestor :- tsv{resource="ancestor.tsv",format=(int,int)} .
+@export grandmother :- tsv{resource="grandmother.tsv",format=(int,int)} .
+@export sibling :- tsv{resource="sibling.tsv",format=(int,int)} .
+@export cousin :- tsv{resource="cousin.tsv",format=(int,int)} .
+@export relative :- tsv{resource="relative.tsv",format=(int,int)} .

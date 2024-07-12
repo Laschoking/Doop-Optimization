@@ -6,20 +6,20 @@ public class BasicMethod
 {
 	public static void main(String[] args) throws IOException{
 		(new BasicMethod()).test(args.length);
-                BufferedReader reader = new BufferedReader(
+                BufferedReader in = new BufferedReader(
                        new InputStreamReader(System.in)
                 );
-                String string=reader.readLine();
-                sanitize(line);
-                String output = args[0] + string;
-
-                System.out.println(output);
+                String s=in.readLine();
+                sanitize(s);
+                String ret = args[0] + s;
+                System.out.println(ret);
 	}
 
         static void sanitize(Object o) {
             
         }
-
+    	void test(int l) {
+    	}
 
 }
 
