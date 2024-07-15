@@ -27,8 +27,8 @@ DOOP_Unit_Test_Renamed_Literals = DB_Config("DoopProgramAnalysis","Unit-Tests", 
 DOOP_Unit_Test_Renamed_Method = DB_Config("DoopProgramAnalysis","Unit-Tests", "Basic", "Method-Renaming","BasicMethod" ,"Renamed")
 
 
-Doop_Constants = DB_Config("DoopProgramAnalysis","Constants", "Unit-", "v2")
-Doop_Simple_Pointer = DB_Config("DoopProgramAnalysis","Simple_Pointer", "Unit-", "v2")
+Doop_Constants = DB_Config("DoopProgramAnalysis","Constants", "v1", "v2")
+Doop_Simple_Pointer = DB_Config("DoopProgramAnalysis","Simple_Pointer", "v1", "v2")
 Doop_Simple_Java_Calculator = DB_Config("DoopProgramAnalysis","Simple_Java_Calculator", "v3_0", "v3_1_1")
 Doop_Gocd_Websocket_Notifier_v1_v4 = DB_Config("DoopProgramAnalysis","Gocd_Websocket_Notifier", "v0_1", "v0_4_2")
 Doop_Gocd_Websocket_Notifier_v3_v4 = DB_Config("DoopProgramAnalysis","Gocd_Websocket_Notifier", "v0_3", "v0_4_2")

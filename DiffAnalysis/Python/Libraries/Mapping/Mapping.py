@@ -22,7 +22,7 @@ class Mapping():
         self.mapping = mapping
 
     def compute_mapping(self,db1,db2,pa_non_mapping_terms):
-        self.expansion_strategy(self,db1,db2,pa_non_mapping_terms,self.similarity_metric)
+        return self.expansion_strategy(self,db1,db2,pa_non_mapping_terms,self.similarity_metric)
 
     def read_mapping(self,base_dir):
         out_path = base_dir.joinpath("diagnostic").joinpath(self.name)

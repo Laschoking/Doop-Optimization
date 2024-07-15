@@ -5,7 +5,7 @@ def jaccard_min(term_obj1,term_obj2,occ_overlap):
     # das sollten sie sowieso, da sie dann mehr Überlappung haben
     if occ_overlap.total() == 0:
         return 0
-    local_sim = occ_overlap.total() ** 1.5 / min(term_obj1.occurrence_c.total(),term_obj2.occurrence_c.total())
+    local_sim = 2*occ_overlap.total() / term_obj1.occurrence_c.total() + term_obj2.occurrence_c.total()
 
 
 

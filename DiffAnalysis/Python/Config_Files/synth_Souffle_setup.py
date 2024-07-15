@@ -6,6 +6,7 @@ from Python.Libraries.SimilarityMetric.SequenceMatcherPairOccurance import *
 from Python.Libraries.SimilarityMetric.Term_Equality import *
 from Python.Libraries.SimilarityMetric.Jaccard_Term_Overlap import *
 from Python.Libraries.SimilarityMetric.Jaccard_Min import *
+from Python.Libraries.SimilarityMetric.Jaccard_ISUB_Mix import *
 from Python.Libraries.SimilarityMetric.Occurance_Multiplication import *
 
 
@@ -14,8 +15,8 @@ import time
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = Doop_Gocd_Websocket_Notifier_v1_v4
-    program_config = Doop_PointerAnalysis
+    db_config = Family_Renaming_db
+    program_config = Syn_Family_DL
 
     # TODO for synthetic DB - allow parameter for distribution of random values
     gen_new_facts = False  # if true, run doop again for new fact-gen, otherwise just copy from doop/out
@@ -30,9 +31,6 @@ if __name__ == "__main__":
     # load facts into data-object
     data_frame.db1_original_facts.read_directory()
     data_frame.db2_original_facts.read_directory()
-
-    # plot_degree_distribution(data_frame.db1_original_facts.terms)
-    # plot_degree_distribution(data_frame.db2_original_facts.terms)
 
     pa_runtime = []
     eval_mappings = []
@@ -53,15 +51,18 @@ if __name__ == "__main__":
 
     #data_frame.add_mapping(
     #    Mapping(data_frame.paths, "iterative", iterative_anchor_expansion, "jaccard_sum", jaccard_term_overlap))
-    data_frame.add_mapping(
-        Mapping(data_frame.paths, "iterative", iterative_anchor_expansion, "jaccard_min", jaccard_min))
-    #data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"isub_sm",isub_sequence_matcher))
+    #data_frame.add_mapping(Mapping(data_frame.paths, "full_expansion", full_expansion_strategy, "jaccard_min", jaccard_min))
+    #data_frame.add_mapping(Mapping(data_frame.paths, "full_expansion", full_expansion_strategy, "isub", isub_sequence_matcher))
+    data_frame.add_mapping(Mapping(data_frame.paths, "local_expansion", iterative_anchor_expansion, "jaccard_min", jaccard_min))
+    #data_frame.add_mapping(Mapping(data_frame.paths, "local_expansion", iterative_anchor_expansion, "isub", isub_sequence_matcher))
+    #data_frame.add_mapping(Mapping(data_frame.paths,"local_expansion",iterative_anchor_expansion,"jaccard+isub",jaccard_isub_mix))
     # data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"occ_multiplication",occurrence_multiplication))
-    data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"term_equality",term_equality))
+    #data_frame.add_mapping(Mapping(data_frame.paths,"iterative",iterative_anchor_expansion,"term_equality",term_equality))
 
     time_tab = PrettyTable()
-    time_tab.field_names = ["Mapping", "#blocked Mappings", "# 1:1 Mappings", "#synthetic Terms", "run-time"]
+    time_tab.field_names = ["Mapping", "#blocked Mappings", "# 1:1 Mappings", "#synthetic Terms", "# hub comp.", "uncertain mappings", "# comp. tuples", "comp. tuples in %", "run-time"]
 
+    c_max_tuples = len(db1.terms) * len(db2.terms)
     # iterate through all selected mapping functions
     for mapping in data_frame.mappings:
         print("--------------------------")
@@ -69,7 +70,7 @@ if __name__ == "__main__":
         t0 = time.time()
         # calculate similarity_matrix & compute maximal mapping from db1 to db2
         if comp_new_mapping:
-            mapping.compute_mapping(db1, db2, program_config.blocked_terms)
+            (count_uncertain_mappings, count_hub_recomp, count_comp_tuples) = mapping.compute_mapping(db1, db2, program_config.blocked_terms)
         else:
             mapping.read_mapping(db_config.base_output_path)
         nr_1_1_mappings = len(mapping.mapping)
@@ -94,7 +95,7 @@ if __name__ == "__main__":
         check_data_correctness(data_frame, mapping)
         t1 = time.time()
         l_blocked_terms = len(program_config.blocked_terms)
-        time_tab.add_row([mapping.name, l_blocked_terms, nr_1_1_mappings, mapping.new_term_counter, round(t1 - t0, 4)])
+        time_tab.add_row([mapping.name, l_blocked_terms, nr_1_1_mappings, mapping.new_term_counter, count_hub_recomp,count_uncertain_mappings,  count_comp_tuples,str(round(count_comp_tuples * 100 / c_max_tuples,2)) + "%", round(t1 - t0, 4)])
 
         # Evaluation function to analyse if the mapping reduces storage
     print(time_tab)

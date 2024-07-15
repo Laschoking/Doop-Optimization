@@ -38,7 +38,7 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
     watch_prio_len = []
     watch_exp_sim = []
     watch_mapped_sim = []
-    count_uncertain_mappings = 0
+    uncertain_mapping_tuples = 0
 
     count_hub_recomp = 0
     new_hubs_flag = True
@@ -48,87 +48,90 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
     while 1:
         if prio_dict and not new_hubs_flag: # pop last item = with the highest similarity
             sim,tuples = prio_dict.peekitem(index=-1)
-            #print(prio_dict)
+            print(prio_dict)
 
             # data could be empty because of deletion of obsolete term-tuples
             if not tuples:
                 prio_dict.popitem(-1)
                 continue
 
-            # removes first data-item
-            term_name_tuple = tuples.pop()
+            # removes first data-item ( tuples appended later i.e. by hub recomputation are at the end)
+            term_name_tuple = tuples.pop(0)
             term_name1, term_name2 = term_name_tuple
             term_obj1, term_obj2 = db1.terms[term_name1], db2.terms[term_name2]
 
             # last tuple in similarity bin -> delete empty bin
 
-
-            if term_name1 in free_term_names1 and term_name2 in free_term_names2:
-                # if value is too bad - find new Hubs
-                # TODO find better strategy
-                if sim < 0.9 * last_sim:
-                    new_hubs_flag = True
-                    last_sim = sim
-                    prio_dict[sim].add(term_name_tuple)
-                    continue
-                # means we discovered better tuples
-                #if sim > last_sim:
-                #    print(sim,last_sim)
-
-                sim,common_occ = tuples_loc_sim[term_name_tuple]
-
-                # add new mapping
-                mapping_obj.mapping[term_name1] = term_name2
-                #print(term_name1 + " : " + term_name2)
-
-                # make terms "blocked"
-                free_term_names1.discard(term_name1)
-                free_term_names2.discard(term_name2)
-
-                # remove tuple from mirror so that we have no key error
-                terms1_pq_mirror[term_name1].remove((term_name_tuple,sim))
-                terms2_pq_mirror[term_name2].remove((term_name_tuple,sim))
-
-                # delete all tuples from priority queue, that contain term_obj1 or term_obj2
-
-                count_uncertain_mappings = delete_from_prio_dict(terms1_pq_mirror[term_name1],prio_dict,count_uncertain_mappings,sim)
-                count_uncertain_mappings = delete_from_prio_dict(terms2_pq_mirror[term_name2],prio_dict,count_uncertain_mappings,sim)
-
-                # remove term entry from mirror
-                del terms1_pq_mirror[term_name1]
-                del terms2_pq_mirror[term_name2]
-
+            # TODO this check should be irrelevant
+            if term_name1 not in free_term_names1 or term_name2 not in free_term_names2:
+                ValueError(term_name1, term_name2)
+            # if value is too bad - find new Hubs
+            # TODO find better strategy
+            if sim < 0.8 * last_sim:
+                new_hubs_flag = True
                 last_sim = sim
-                watch_mapped_sim.append(sim)
+                prio_dict[sim].add(term_name_tuple)
+                continue
+            # means we discovered betteWr tuples
+            #if sim > last_sim:
+            #    print(sim,last_sim)
 
-                # expansion strategy:
-                # current state: consider only terms, that occur in same colum of merged records
-                for file_name, map_term_col in common_occ.keys():
-                    db1_row_ids, db2_row_ids = term_obj1.occurrence[(file_name,map_term_col)], term_obj2.occurrence[(file_name,map_term_col)]
-                    db1_file_obj = db1.files[file_name]
-                    db2_file_obj = db2.files[file_name]
+            sim,common_occ = tuples_loc_sim[term_name_tuple]
 
-                    new_mapping_tuples = set()
+            # add new mapping
+            mapping_obj.mapping[term_name1] = term_name2
+            print(term_name1 + " : " + term_name2)
 
-                    # the mapped tuple (term_obj1, term_obj2) has the same key =  "file_name" & position "map_term_col"
-                    # this could have been multiple times (db1_row_ids & db2_row_ids) for the same key
-                    # i.e. term_obj1 "a" appears in several rows at the same spot  1:[a,b,c], 2:[a,d,f], so db1_row_ids hold all record-ids [1,2]
-                    # -> iterate through all columns and retrieve possible mapping pairs (aka. neighbours of term1 & term2)
-                    for col_ind in itertools.chain(range(map_term_col), range(map_term_col + 1,db1_file_obj.col_size)):
-                        # iterate through all records of DB1: "filename", where term1 was at place "map_term_col"
+            # make terms "blocked"
+            free_term_names1.discard(term_name1)
+            free_term_names2.discard(term_name2)
 
-                        # retrieve Term-objects that are neigbours of previously mapped terms
-                        new_term_objs1 = set(db1.terms[db1_file_obj.records[rec_ind][col_ind]] for rec_ind in db1_row_ids)
-                        new_term_objs2 = set(db2.terms[db2_file_obj.records[rec_ind][col_ind]] for rec_ind in db2_row_ids)
+            # remove tuple from mirror so that we have no key error
+            terms1_pq_mirror[term_name1].remove((term_name_tuple,sim))
+            terms2_pq_mirror[term_name2].remove((term_name_tuple,sim))
 
-                        # insert crossproduct of poss. new mappings into set
-                        new_mapping_tuples |= find_crossproduct_mappings(new_term_objs1,new_term_objs2)
+            # delete all tuples from priority queue, that contain term_obj1 or term_obj2
 
-                    # remove pairs, that are in prio_dict 
-                    new_mapping_tuples -= processed_mapping_tuples
+            uncertain_mapping_flag = delete_from_prio_dict(terms1_pq_mirror[term_name1],prio_dict,sim)
+            uncertain_mapping_flag += delete_from_prio_dict(terms2_pq_mirror[term_name2],prio_dict,sim)
 
-                    add_mappings_to_pq(new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
-                                       processed_mapping_tuples, watch_exp_sim, similarity_metric)
+            if uncertain_mapping_flag:
+                uncertain_mapping_tuples += 1
+            # remove term entry from mirror
+            del terms1_pq_mirror[term_name1]
+            del terms2_pq_mirror[term_name2]
+
+            last_sim = sim
+            watch_mapped_sim.append(sim)
+
+            # expansion strategy:
+            # current state: consider only terms, that occur in same colum of merged records
+            new_mapping_tuples = set()
+            for file_name, map_term_col in common_occ.keys():
+                db1_row_ids, db2_row_ids = term_obj1.occurrence[(file_name,map_term_col)], term_obj2.occurrence[(file_name,map_term_col)]
+                db1_file_obj = db1.files[file_name]
+                db2_file_obj = db2.files[file_name]
+
+
+                # the mapped tuple (term_obj1, term_obj2) has the same key =  "file_name" & position "map_term_col"
+                # this could have been multiple times (db1_row_ids & db2_row_ids) for the same key
+                # i.e. term_obj1 "a" appears in several rows at the same spot  1:[a,b,c], 2:[a,d,f], so db1_row_ids hold all record-ids [1,2]
+                # -> iterate through all columns and retrieve possible mapping pairs (aka. neighbours of term1 & term2)
+                for col_ind in itertools.chain(range(map_term_col), range(map_term_col + 1,db1_file_obj.col_size)):
+                    # iterate through all records of DB1: "filename", where term1 was at place "map_term_col"
+
+                    # retrieve Term-objects that are neigbours of previously mapped terms
+                    new_term_objs1 = set(db1.terms[db1_file_obj.records[rec_ind][col_ind]] for rec_ind in db1_row_ids if db1_file_obj.records[rec_ind][col_ind] in free_term_names1)
+                    new_term_objs2 = set(db2.terms[db2_file_obj.records[rec_ind][col_ind]] for rec_ind in db2_row_ids if db2_file_obj.records[rec_ind][col_ind] in free_term_names2)
+
+                    # insert crossproduct of poss. new mappings into set
+                    new_mapping_tuples |= find_crossproduct_mappings(new_term_objs1,new_term_objs2)
+
+                # remove pairs, that are in prio_dict
+            new_mapping_tuples -= processed_mapping_tuples
+
+            add_mappings_to_pq(new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
+                               processed_mapping_tuples, watch_exp_sim, similarity_metric)
 
             watch_prio_len.append(sum(len(val) for val in prio_dict.values()))
 
@@ -152,11 +155,7 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
         else:
             break
     # TODO Plot node distribution
-    print("mapping of tuples with uncertain similarity: " + str(count_uncertain_mappings / 2))
     # TODOL=: print strategy & make nice table or sth
-    print("hub recompution: " + str(count_hub_recomp))
-    print("number of calculated tuples: " + str(len(tuples_loc_sim.keys())))
-    print("number of maximal tuples: " + str(len(db1.terms) * len(db2.terms)))
     '''fig, ax = plt.subplots(4,1)
     fig.suptitle("iterativeExpansion + " + similarity_metric.__name__)
     ax[0].scatter(range(len(watch_prio_len)),watch_prio_len,s=1, label='Queue Size')
@@ -170,9 +169,9 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
     fig.tight_layout()
     plt.show()
     '''
-    return
+    return uncertain_mapping_tuples, count_hub_recomp, len(tuples_loc_sim.keys())
 
-def delete_from_prio_dict(tuples, prio_dict,count_uncertain_mappings,mapped_sim):
+def delete_from_prio_dict(tuples, prio_dict,mapped_sim):
     uncertain_mapping_flag = False
     for tuple_names,sim in tuples:
         if sim not in prio_dict:
@@ -189,8 +188,7 @@ def delete_from_prio_dict(tuples, prio_dict,count_uncertain_mappings,mapped_sim)
             # similarity
             if not uncertain_mapping_flag and sim >= mapped_sim:
                 uncertain_mapping_flag = True
-    count_uncertain_mappings += 1 if uncertain_mapping_flag else 0
-    return count_uncertain_mappings
+    return uncertain_mapping_flag
 
 def find_crossproduct_mappings(hubs1, hubs2):
     return set(itertools.product(hubs1, hubs2))
@@ -214,7 +212,7 @@ def add_mappings_to_pq(new_mapping_tuples,tuples_loc_sim,terms1_pq_mirror, terms
                     prio_dict[sim] = SortedList([term_name_tuple])
                 else:
                     prio_dict[sim].add(term_name_tuple)
-                #print(sim,term_name_tuple)
+                print(sim,term_name_tuple)
 
                 processed_mapping_tuples.add(term_name_tuple)
 
