@@ -70,7 +70,7 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
             if sim < 0.8 * last_sim:
                 new_hubs_flag = True
                 last_sim = sim
-                prio_dict[sim].add(term_name_tuple)
+                prio_dict[sim].append(term_name_tuple)
                 continue
             # means we discovered betteWr tuples
             #if sim > last_sim:
@@ -209,9 +209,9 @@ def add_mappings_to_pq(new_mapping_tuples,tuples_loc_sim,terms1_pq_mirror, terms
             # add tuple to priority_queue
             if sim > 0:
                 if sim not in prio_dict:
-                    prio_dict[sim] = SortedList([term_name_tuple])
+                    prio_dict[sim] = list([term_name_tuple])
                 else:
-                    prio_dict[sim].add(term_name_tuple)
+                    prio_dict[sim].append(term_name_tuple)
                 print(sim,term_name_tuple)
 
                 processed_mapping_tuples.add(term_name_tuple)
