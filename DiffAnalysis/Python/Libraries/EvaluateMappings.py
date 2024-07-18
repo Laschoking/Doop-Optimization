@@ -67,7 +67,7 @@ def diff_two_dirs(db1, db2, rm_identifier='', print_flag=True):
     return l_rows1_files, l_rows2_files, l_inters_files, str(round(100 * l_inters_files / (l_rows1_files + l_rows2_files + l_inters_files), 1))
 
 
-def check_data_correctness(data_frame, mapping):
+def check_data_correctness_facts(data_frame, mapping):
     t = PrettyTable()
     # Color
     R = "\033[0;31;40m"  # RED
@@ -83,7 +83,16 @@ def check_data_correctness(data_frame, mapping):
     if (diff[0] > 0 or diff[1] > 0):
         t.add_row(
             [R + data_frame.db2_original_facts.name, diff[0], mapping.db2_merged_facts.name, diff[1], diff[2], diff[3] + "%" + N])
+    if len(t.rows) > 0:
+        print(t)
 
+def check_data_correctness_results(data_frame, mapping):
+    t = PrettyTable()
+    # Color
+    R = "\033[0;31;40m"  # RED
+    N = "\033[0m"  # Reset
+
+    t.field_names = ["1. DB", "rows of 1.", "2. DB", "rows of 2.", "common rows", "overlap in %"]
 
     # DB2-original-facts == DB2_merged_facts (split 10)
     diff = diff_two_dirs(data_frame.db2_original_facts, mapping.db2_merged_facts, rm_identifier='10')
@@ -113,22 +122,25 @@ def db_overlap(db):
     return split_db, str(round(100 * split_db['0'] / (split_db['1'] + split_db['10'] + split_db['0']), 1))
 
 
-def evaluate_mapping_overlap(data_frame):
+def evaluate_mapping_overlap_facts(data_frame):
     t = PrettyTable()
     t.field_names = ["Method", "data set", "unique rows DB1", "unique rows DB2", "Common Rows", "Total Rows", "overlap in %"]
 
 
     diff = diff_two_dirs(data_frame.db1_original_facts, data_frame.db2_original_facts, rm_identifier='', print_flag=False)
     t.add_row(["No mapping","original facts", diff[0], diff[1], diff[2], diff[0] + diff[1] + diff[2], diff[3] + "%"])
-    if data_frame.mappings:
-        l_b = data_frame.mappings[-1]
+    l_m = data_frame.mappings[-1]
+    div = False
     for mapping in data_frame.mappings:
-        div = False
+        if mapping == l_m: div = True
         split, sim = db_overlap(mapping.db2_merged_facts)
-        if mapping == l_b:
-            div = True
         t.add_row([mapping.name, "merged facts", split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'],
-                   sim + "%"], divider=div)
+                   sim + "%"],divider=div)
+    return t.get_string(fields=["Method", "data set", "Common Rows", "Total Rows", "overlap in %"])
+
+def evaluate_mapping_overlap_results(data_frame):
+    t = PrettyTable()
+    t.field_names = ["Method", "data set", "unique rows DB1", "unique rows DB2", "Common Rows", "Total Rows", "overlap in %"]
 
     diff = diff_two_dirs(data_frame.db1_original_results, data_frame.db2_original_results, rm_identifier='',
                          print_flag=False)
@@ -139,7 +151,7 @@ def evaluate_mapping_overlap(data_frame):
         t.add_row(
             [mapping.name, "merged results", split['1'], split['10'], split['0'], split['0'] + split['1'] + split['10'], sim + "%"])
 
-    return t#.get_string(fields=["Method", "data set", "Common Rows", "Total Rows", "overlap in %"])
+    return t.get_string(fields=["Method", "data set", "Common Rows", "Total Rows", "overlap in %"])
 
 
 def plot_degree_distribution(terms):

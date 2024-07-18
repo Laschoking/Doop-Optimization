@@ -52,6 +52,8 @@ class DB_Instance:
 
 
     def read_directory(self):
+        if not self.path.is_dir():
+            raise FileNotFoundError("Directory does not exist: " + str(self.path))
         for rel_path in self.path.glob("*"):
             file = rel_path.stem
             records = []

@@ -26,7 +26,7 @@ def full_expansion_strategy(mapping_obj, db1, db2, blocked_terms, similarity_met
     watch_prio_len = []
     watch_exp_sim = []
     watch_mapped_sim = []
-    count_uncertain_mappings = 0
+    uncertain_mapping_tuples = 0
 
     # block certain terms, that cannot be changed without computing wrong results
     for blocked_term in blocked_terms:
@@ -84,11 +84,10 @@ def full_expansion_strategy(mapping_obj, db1, db2, blocked_terms, similarity_met
 
                 # delete all tuples from priority queue, that contain term_obj1 or term_obj2
 
-                count_uncertain_mappings = delete_from_prio_dict(terms1_pq_mirror[term_name1], prio_dict,
-                                                                 count_uncertain_mappings, sim)
-                count_uncertain_mappings = delete_from_prio_dict(terms2_pq_mirror[term_name2], prio_dict,
-                                                                 count_uncertain_mappings, sim)
-
+                uncertain_mapping_flag = delete_from_prio_dict(terms1_pq_mirror[term_name1], prio_dict,sim)
+                uncertain_mapping_flag += delete_from_prio_dict(terms2_pq_mirror[term_name2], prio_dict,sim)
+                if uncertain_mapping_flag:
+                    uncertain_mapping_tuples += 1
                 # remove term entry from mirror
                 del terms1_pq_mirror[term_name1]
                 del terms2_pq_mirror[term_name2]
@@ -114,10 +113,10 @@ def full_expansion_strategy(mapping_obj, db1, db2, blocked_terms, similarity_met
     fig.tight_layout()
     plt.show()
     '''
-    return count_uncertain_mappings, count_hub_recomp, len(tuples_loc_sim.keys())
+    return uncertain_mapping_tuples, count_hub_recomp, len(tuples_loc_sim.keys())
 
 
-def delete_from_prio_dict(tuples, prio_dict, count_uncertain_mappings, mapped_sim):
+def delete_from_prio_dict(tuples, prio_dict, mapped_sim):
     uncertain_mapping_flag = False
     for tuple_names, sim in tuples:
         if sim not in prio_dict:
@@ -134,8 +133,7 @@ def delete_from_prio_dict(tuples, prio_dict, count_uncertain_mappings, mapped_si
             # similarity
             if not uncertain_mapping_flag and sim >= mapped_sim:
                 uncertain_mapping_flag = True
-    count_uncertain_mappings += 1 if uncertain_mapping_flag else 0
-    return count_uncertain_mappings
+    return uncertain_mapping_flag
 
 
 def find_crossproduct_mappings(hubs1, hubs2):

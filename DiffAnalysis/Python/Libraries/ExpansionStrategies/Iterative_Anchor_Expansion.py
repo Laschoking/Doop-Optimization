@@ -5,11 +5,12 @@ import matplotlib.pyplot as plt
 from sortedcontainers import SortedList,SortedDict
 import itertools
 
+debug = True
+
 
 
 def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_metric):
     prio_dict = SortedDict()
-    
     # those lists hold all terms, that are still mappable
     free_term_names1 = SortedList(db1.terms.keys())
     free_term_names2 = SortedList(db2.terms.keys())
@@ -48,7 +49,7 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
     while 1:
         if prio_dict and not new_hubs_flag: # pop last item = with the highest similarity
             sim,tuples = prio_dict.peekitem(index=-1)
-            print(prio_dict)
+            if debug: print(prio_dict)
 
             # data could be empty because of deletion of obsolete term-tuples
             if not tuples:
@@ -80,7 +81,7 @@ def iterative_anchor_expansion(mapping_obj, db1,db2,blocked_terms,similarity_met
 
             # add new mapping
             mapping_obj.mapping[term_name1] = term_name2
-            print(term_name1 + " : " + term_name2)
+            if debug: print(term_name1 + " : " + term_name2)
 
             # make terms "blocked"
             free_term_names1.discard(term_name1)
@@ -212,7 +213,7 @@ def add_mappings_to_pq(new_mapping_tuples,tuples_loc_sim,terms1_pq_mirror, terms
                     prio_dict[sim] = list([term_name_tuple])
                 else:
                     prio_dict[sim].append(term_name_tuple)
-                print(sim,term_name_tuple)
+                if debug: print(sim,term_name_tuple)
 
                 processed_mapping_tuples.add(term_name_tuple)
 
@@ -262,7 +263,7 @@ def find_hubs_std(free_term_names, terms_occ):
 
 def find_hubs_quantile(free_term_names, terms):
     nodes = [terms[term_name].degree for term_name in free_term_names]
-    print("node degree mean: " + str(round(np.mean(nodes),2)) + " standard deviation: " + str(round(np.std(nodes),2)))
-    quantile = np.quantile(nodes,q=0.98)
+    if debug: print("node degree mean: " + str(round(np.mean(nodes),2)) + " standard deviation: " + str(round(np.std(nodes),2)))
+    quantile = np.quantile(nodes,q=0.95)
     # returns termobjects
     return set(terms[free_term_names[iter]] for iter in range(len(free_term_names)) if nodes[iter] >= quantile)

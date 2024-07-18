@@ -36,6 +36,9 @@ Doop_Gocd_Websocket_Notifier_v3_v4 = DB_Config("DoopProgramAnalysis","Gocd_Webso
 Doop_CFG = DatalogProgram("DoopProgramAnalysis","CFG","CFG_separate.rls","CFG_merge.rls", {'',' ',"abstract","<sun.misc.ProxyGenerator: byte[] generateClassFile()>"})
 Doop_PointerAnalysis = DatalogProgram("DoopProgramAnalysis","PointerAnalysis","PointerAnalyse_separate.rls","PointerAnalyse_merge_no_fold.rls",{'',' ',"<clinit>", "void()","public","static","main","void(java.lang.String[])","java.io.Serializable","java.lang.Cloneable","java.lang.Object","abstract"})
 
+Unit_Tests_Doublette = DB_Config("Strukturelle_Unit_Tests","Doublette_Paradox","v1","v2")
+Unit_Tests_Jacc_Finsish = DB_Config("Strukturelle_Unit_Tests","Jaccard_Finish_Problem","v1","v2")
+
 
 
 Syn_Family_Fold_DL = DatalogProgram("SouffleSynthetic","Family","Family_separate.rls","Family_merge_fold.rls", {})

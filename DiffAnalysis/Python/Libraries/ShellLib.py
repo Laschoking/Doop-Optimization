@@ -53,6 +53,8 @@ def create_doop_facts(db_config, db_name, db_file_name,fact_path):
         shutil.copy(file, target_file)
 
 def chase_nemo(dl_rule_path, fact_path, result_path):
+    if not dl_rule_path:
+        return
     command = [str(PathLib.NEMO_ENGINE.joinpath("target/release/nmo")), str(dl_rule_path), "-I", str(fact_path), "-D", str(result_path), "--overwrite-results", "-e", "keep"]
     p = subprocess.run(command,capture_output=True)
     if p.returncode != 0:
