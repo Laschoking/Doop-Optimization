@@ -2,6 +2,7 @@ from Python.Libraries.EvaluateMappings import *
 from Python.Config_Files.Analysis_Configs import *
 from itertools import chain
 from collections import Counter
+import pandas as pd
 
 from Python.Libraries.SimilarityMetric.ISUB_SequenceMatcher import *
 from Python.Libraries.SimilarityMetric.SequenceMatcherPairOccurance import *
@@ -17,7 +18,7 @@ import time
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = Unit_Tests_Jacc_Finsish
+    db_config = Doop_Gocd_Websocket_Notifier_v1_v4
     program_config = Syn_Family_DL
 
     # TODO for synthetic DB - allow parameter for distribution of random values
@@ -127,4 +128,15 @@ if __name__ == "__main__":
     print(evaluate_mapping_overlap_facts(data_frame))
     if run_DL:
         print(evaluate_mapping_overlap_results(data_frame))
+    backup_path = ""
+
+    if backup_path:
+        mapping_view = pd.read_csv(backup_path.join("Mappings.tsv"))
+        single_db_view = pd.read_csv(backup_path.join("SingleDatabase.tsv"))
+        merge_db_view = pd.read_csv(backup_path.join("MergeDatabase.tsv"))
+    else:
+
+        single_db_view = pd.DataFrame(columns=["name","Term-count" "Atom-count", "last-modified"])
+        merge_db_view = pd.DataFrame(columns=["Db1 name","DB2 name" ,"String Similarity","Mutual Termcount", "Mutual Atomcount"])
+        mapping_backup = pd.DataFrame(columns=["Date","comit-hash","Database 1", "Database 2"])
 
