@@ -7,6 +7,7 @@ from Python.Libraries import PathLib
 import shutil
 import subprocess
 from prettytable import PrettyTable
+import pandas as pd
 
 # Shell commands
 def clear_directory(directory):
@@ -60,17 +61,17 @@ def chase_nemo(dl_rule_path, fact_path, result_path):
     if p.returncode != 0:
         raise ChildProcessError(p.stderr.decode("utf-8"))
 
-    Dict = split_nemo_stdout(p.stdout)
+    nemo_runtime = split_nemo_stdout(p.stdout)
     os.chdir(PathLib.DOOP_BASE)
-    return [dl_rule_path.name] + [fact_path.parts[-2:]] + Dict
+    return nemo_runtime
 
 # parse Nemo output for runtimes
 def split_nemo_stdout(stdout):
     stdout = stdout.decode("utf-8")
     stdout = stdout.split("\n")
-    D = [re.search('[0-9m]*ms', stdout[0]).group(0), re.search('[0-9m]*ms', stdout[1]).group(0),
+    nemo_runtime = [re.search('[0-9m]*ms', stdout[0]).group(0), re.search('[0-9m]*ms', stdout[1]).group(0),
          re.search('[0-9m]*ms', stdout[2]).group(0), re.search('[0-9m]*ms', stdout[3]).group(0)]
-    return D
+    return nemo_runtime
 
 
 def print_nemo_runtime(runtime):
@@ -79,3 +80,41 @@ def print_nemo_runtime(runtime):
     t.add_rows(runtime)
     print(t)
 
+
+def LoadResults(result_path):
+    path_single_db = result_path.joinpath("SingleDatabase.tsv")
+    path_merge_db_df = result_path.joinpath("MergeDatabase.tsv")
+    path_mapping_df = result_path.joinpath("Mappings.tsv")
+    path_reasoning_df = result_path.joinpath("Reasoning.tsv")
+    if path_single_db.exists():
+        single_db_df = pd.read_csv(path_single_db, sep='\t', index_col=0, header=0)
+    else:
+        single_db_df =pd.DataFrame(columns=["name","Term-count" "Atom-count", "last-modified"])
+
+    if path_merge_db_df.exists():
+        merge_db_df = pd.read_csv(path_merge_db_df, sep='\t', index_col=0,header=0)
+    else:
+        merge_db_df = pd.DataFrame(columns=["MergeDB", "Db1 name", "DB2 name", "Mutual Termcount", "Mutual Atomcount"])
+
+    if path_merge_db_df.exists():
+        mapping_df = pd.read_csv(path_mapping_df, sep='\t', index_col=0,header=0)
+    else:
+        mapping_df = pd.DataFrame(columns=["MappingID","Date","SHA","MergeDB","Expansion","Metric","Expanded Tuples","% to crossproduct",
+                                           "1-1 Mappings","Synthetic Mappings","Hub Re-Computation","Uncertain Mappings","Runtime"])
+
+    if path_reasoning_df.exists():
+        reasoning_df = pd.read_csv(path_reasoning_df, sep='\t',index_col=0, header=0)
+    else:
+        reasoning_df = pd.DataFrame(columns=["MappingID","Database","Date","SHA", "DL-Rules", "Total Time",  "Loading Time","Reasoning Time","Saving Time"])
+
+    return single_db_df, merge_db_df, mapping_df, reasoning_df
+
+def saveResults(single_db_df, merge_db_df, mapping_df, reasoning_df,result_path):
+    path_single_db = result_path.joinpath("SingleDatabase.tsv")
+    path_merge_db_df = result_path.joinpath("MergeDatabase.tsv")
+    path_mapping_df = result_path.joinpath("Mappings.tsv")
+    path_reasoning_df = result_path.joinpath("Reasoning.tsv")
+    single_db_df.to_csv(path_single_db,sep='\t')
+    merge_db_df.to_csv(path_merge_db_df,sep='\t')
+    mapping_df.to_csv(path_mapping_df,sep='\t')
+    reasoning_df.to_csv(path_reasoning_df,sep='\t')
