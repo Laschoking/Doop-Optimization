@@ -22,15 +22,14 @@ if __name__ == "__main__":
     db_config = Syn_Family_db
     program_config = Syn_Family_DL
 
-    # TODO for synthetic DB - allow parameter for distribution of random values
     gen_new_facts = False  # if true, run doop again for new fact-gen, otherwise just copy from doop/out
     comp_new_mapping = True
     run_DL = True
 
     # for collecting results
-    single_db_df, merge_db_df, mapping_df, reasoning_df = ShellLib.LoadResults(PathLib.base_out_path.joinpath("Results"))
+    global_log = ShellLib.GlobalLogger()
     repo = git.Repo(search_parent_directories=True)
-    sha = repo.head.object.hexsha
+    commit = repo.head.object.hexsha
     date = datetime.datetime.now()
 
     # Fact Creation of Java-Files (or .Jar)
@@ -48,12 +47,12 @@ if __name__ == "__main__":
     if run_DL:
         nemo_runtime = ShellLib.chase_nemo(program_config.sep_dl, data_frame.db1_original_facts.path,
                                               data_frame.db1_original_results.path)
-        reasoning_df.loc[len(reasoning_df)] = [None, "DB1", date, sha,
+        global_log.reasoning_df.loc[len(global_log.reasoning_df)] = [None, "DB1", date, commit,
                                                program_config.sep_dl.stem] + nemo_runtime
 
         nemo_runtime = ShellLib.chase_nemo(program_config.sep_dl, data_frame.db2_original_facts.path,
                                           data_frame.db2_original_results.path)
-        reasoning_df.loc[len(reasoning_df)] = [None, "DB1", date, sha,
+        global_log.reasoning_df.loc[len(global_log.reasoning_df)] = [None, "DB1", date, commit,
                                                program_config.sep_dl.stem] + nemo_runtime
 
     if run_DL:
@@ -64,29 +63,13 @@ if __name__ == "__main__":
     db1 = data_frame.db1_original_facts
     db2 = data_frame.db2_original_facts
 
-    c_terms = 0
-    for term in chain(db1.terms.values(),db2.terms.values()):
-        c = Counter()
-        for key,val in term.occurrence.items():
-            for v in val:
-                t = (key[0],v)
-                c.update([t])
-        l = c.most_common(1)[0]
-        if l[1] > 1:
-            #print(term.name,l)
-            c_terms +=1
-    print(c_terms)
 
-
-
-
+    data_frame.add_mapping(Mapping(data_frame.paths, "local_expansion", iterative_anchor_expansion, "jaccard_min", jaccard_term_overlap))
     #data_frame.add_mapping(Mapping(data_frame.paths, "full_expansion", full_expansion_strategy, "term_equality", term_equality))
     #data_frame.add_mapping(Mapping(data_frame.paths, "full_expansion", full_expansion_strategy, "jaccard_min", jaccard_min))
     #data_frame.add_mapping(Mapping(data_frame.paths, "full_expansion", full_expansion_strategy, "isub", isub_sequence_matcher))
     #data_frame.add_mapping(Mapping(data_frame.paths, "full_expansion", full_expansion_strategy, "jaccard+isub",  jaccard_isub_mix))
-
     #data_frame.add_mapping(Mapping(data_frame.paths, "local_expansion", iterative_anchor_expansion, "term_equality", term_equality))
-    data_frame.add_mapping(Mapping(data_frame.paths, "local_expansion", iterative_anchor_expansion, "jaccard_min", jaccard_term_overlap))
     #data_frame.add_mapping(Mapping(data_frame.paths, "local_expansion", iterative_anchor_expansion, "isub", isub_sequence_matcher))
     #data_frame.add_mapping(Mapping(data_frame.paths,"local_expansion",iterative_anchor_expansion,"jaccard+isub",jaccard_isub_mix))
 
@@ -127,27 +110,23 @@ if __name__ == "__main__":
             # check if bijected results correspond to correct results from base
             check_data_correctness_results(data_frame, mapping)
 
-            # log nemo-runtime
-            reasoning_df.loc[len(reasoning_df)] = ["MappingID1","MergeDB", date,sha, program_config.merge_dl.stem] + nemo_runtime
+            # global_log nemo-runtime
+            global_log.reasoning_df.loc[len(global_log.reasoning_df)] = ["MappingID1","MergeDB", date,commit, program_config.merge_dl.stem] + nemo_runtime
 
         t1 = time.time()
 
         l_blocked_terms = len(program_config.blocked_terms)
         mapping_rt = round(t1 - t0, 4)
         time_tab.add_row([mapping.name, l_blocked_terms, nr_1_1_mappings, mapping.new_term_counter, count_hub_recomp,count_uncertain_mappings,  count_comp_tuples,str(round(count_comp_tuples * 100 / c_max_tuples,2)) + "%", mapping_rt])
-        #"MappingID", "Date", "comit-hash", "MergeDB", "Expansion", "Sim. Metric", "Runtime"
-        mapping_df.loc[len(mapping_df)] = ["MappingID1", date,sha,db_config.dir_name,mapping.expansion_strategy.__name__,
+
+        global_log.mapping_df.loc[len(global_log.mapping_df)] = ["MappingID1", date,commit,db_config.dir_name,mapping.expansion_strategy.__name__,
                                            mapping.similarity_metric.__name__,count_comp_tuples,str(round(count_comp_tuples * 100 / c_max_tuples,2)) + "%",
                                            nr_1_1_mappings, mapping.new_term_counter, count_hub_recomp,count_uncertain_mappings,mapping_rt]
-        # Evaluation function to analyse if the mapping reduces storage
+
+    # Evaluation function to analyse if the mapping reduces storage
     print(time_tab)
     print(evaluate_mapping_overlap_facts(data_frame))
     if run_DL:
         print(evaluate_mapping_overlap_results(data_frame))
 
-
-
-
-
-
-    ShellLib.saveResults(single_db_df, merge_db_df, mapping_df, reasoning_df,PathLib.base_out_path.joinpath("Results"))
+    global_log.saveResults()
