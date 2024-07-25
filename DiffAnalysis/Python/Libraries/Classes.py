@@ -1,26 +1,31 @@
 from enum import Enum
 from pathlib import Path
+
+import pandas as pd
+
 from Python.Libraries import PathLib
 from Python.Libraries import ShellLib
 from sortedcontainers import SortedList,SortedDict
 
 import csv
 from collections import Counter
-
+import os
 
 class Term:
-    def __init__(self, term_name):
+    def __init__(self, term_name, file_name,col_ind,row_ind):
         self.name = term_name
         self.occurrence = dict()
         self.occurrence_c = Counter()
-        self.type = "int" if term_name.lstrip("-").isdigit() else "string"
+        self.type = "int" if type(term_name) is int else "string"
         self.degree = 0
+
+        self.update(file_name,col_ind,row_ind)
 
     # one occurence has the following structure: file_name,col_nr,row_nr
     # the collection is of following structure {(file_name,col_nr) : [row_nr1,row_nr2, ...]}
     # this way, all row_nr are stored together, but with file_name,col_nr as keys
     # those keys can be used for later set-operations while mapping
-    def add_occurence(self,file_name,col_nr,row_nr):
+    def update(self,file_name,col_nr,row_nr):
         key = (file_name,col_nr)
         self.occurrence_c.update([key])
         if key in self.occurrence:
@@ -30,88 +35,55 @@ class Term:
         self.degree += 1
 
 
-class File:
-    def __init__(self,file_name,col_size):
-        self.name = file_name
-        self.col_size = col_size
-        self.records = []
-        self.record_count = 0
-
-    def incr_record_count(self):
-        self.record_count += 1
-
 class DB_Instance:
     def __init__(self,db_base_path, sub_dir):
         self.db_base_path = db_base_path
         self.name = db_base_path.stem + "-" + sub_dir
         self.path = db_base_path.joinpath(sub_dir)
-        self.terms = dict()
-        self.files = dict() # file : file_object
-        # delete existing files in sub_dir
+        self.files = dict()
+
         #ShellLib.clear_directory(self.path)
 
 
-    def read_directory(self):
+    def read_db_relations(self):
         if not self.path.is_dir():
             raise FileNotFoundError("Directory does not exist: " + str(self.path))
         for rel_path in self.path.glob("*"):
-            file = rel_path.stem
-            records = []
-            with open(rel_path, newline='') as db_file:
-                tsv_file = csv.reader(db_file, delimiter='\t', quotechar='"')
-                for record in tsv_file:
-                    records.append(record)
-            self.insert_records(file, records)
-
-    def insert_records(self, file_name, records):
-        if file_name not in self.files:
-            l_cols = len(records[0]) if len(records) > 0 else 0
-            file_obj = File(file_name, l_cols)
-            self.files[file_name] = file_obj
-        else:
-            file_obj = self.files[file_name]
-
-        # nur für db1-facts & db2-facts benötigt
-        #create a list of sets (one for each column)
-        for record in records:
-            file_obj.records.append(record)
-            for col_nr in range(file_obj.col_size):
-                if not record:
-                    raise ValueError("empty record detected in mapped db: " + file_name)
-                term_name = record[col_nr]
-
-                if term_name in self.terms:
-                    # retrieve object
-                    term_obj = self.terms[term_name]
-                else:
-                    # create new entry for this term
-                    term_obj = Term(term_name)
-                    self.terms[term_name] = term_obj
-
-                term_obj.add_occurence(file_name, col_nr, file_obj.record_count)
-
-            file_obj.incr_record_count()
-        return
+            file_name = rel_path.stem
+            if os.stat(rel_path).st_size == 0:
+                df = pd.DataFrame()
+            else:
+                df = pd.read_csv(rel_path,sep='\t', keep_default_na=False,dtype='string',header=None,on_bad_lines='warn')
+            self.insert_df(file_name,df)
 
 
-    def write_data_to_file(self):
+
+    def insert_df(self, file_name, df):
+        self.files[file_name] = df
+
+
+
+    def log_db_relations(self):
         ShellLib.clear_directory(self.path)
-        for file_name,file_obj in self.files.items():
-            with open(self.path.joinpath(file_name).with_suffix('.tsv'), 'w', newline='') as file_path:
-                tsv_writer = csv.writer(file_path, delimiter='\t', lineterminator='\n')
-                for record in file_obj.records:
-                    tsv_writer.writerow(record)
+        for file_name,df in self.files.items():
+            df.to_csv(self.path.joinpath(file_name).with_suffix('.tsv'),sep="\t",index=False,header=False)
+
 class BasePaths:
-    def __init__(self,db1_base_path, db2_base_path):
+    def __init__(self,base_output_path,db1_base_path, db2_base_path):
         self.db1_facts = db1_base_path.joinpath("facts")
         self.db2_facts = db2_base_path.joinpath("facts")
         self.db1_results = db1_base_path.joinpath("results")
         self.db2_results = db2_base_path.joinpath("results")
+        self.merge_facts = base_output_path.joinpath("merge_db").joinpath("facts")
+        self.merge_results = base_output_path.joinpath("merge_db").joinpath("results")
+        self.mapping_results = base_output_path.joinpath("mappings")
+        self.terms1 = base_output_path.joinpath("Terms1.tsv")
+        self.terms2 = base_output_path.joinpath("Terms2.tsv")
+        self.global_log = PathLib.base_out_path.joinpath("Results")
 
-
-class DataFrame:
-    def __init__(self, db1_base_path, db2_base_path):
-        self.paths = BasePaths(db1_base_path, db2_base_path)
+class DataBag:
+    def __init__(self, base_output_path, db1_base_path, db2_base_path):
+        self.paths = BasePaths(base_output_path,db1_base_path, db2_base_path)
         # origin of the facts for both databases
 
         self.db1_original_facts = DB_Instance(self.paths.db1_facts, "db1-original")
@@ -121,11 +93,32 @@ class DataFrame:
         self.db1_original_results = DB_Instance(self.paths.db1_results, "db1-original")
         self.db2_original_results = DB_Instance(self.paths.db2_results, "db2-original")
 
-
         self.terms1 = dict()
         self.terms2 = dict()
         self.mappings = []
 
     def add_mapping(self, mapping):
         self.mappings.append(mapping)
+
+    def read_terms_from_db(self,terms, db_instance):
+        for file_name, df in db_instance.files.items():
+            for row_ind, row in df.iterrows():
+                for col_ind, term in row.items():
+                    if term in terms:
+                        terms[term].update(file_name, col_ind,row_ind)
+                    else:
+                        terms[term] = Term(term, file_name,col_ind,row_ind)
+        return terms
+
+    def log_terms(self):
+        terms1_df = pd.Series(self.terms1.keys())
+        if not self.paths.terms1.exists():
+            terms1_df.to_csv(self.paths.terms1,sep='\t',index=False,header=False)
+
+        terms2_df = pd.Series(self.terms2.keys())
+        if not self.paths.terms2.exists():
+            terms2_df.to_csv(self.paths.terms2,sep='\t',index=False,header=False)
+
+
+
 

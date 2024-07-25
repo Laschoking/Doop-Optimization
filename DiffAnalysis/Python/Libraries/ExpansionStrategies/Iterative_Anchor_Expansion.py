@@ -2,31 +2,36 @@ from collections import deque
 import itertools
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 from sortedcontainers import SortedList, SortedDict
 import itertools
 
 debug = False
 
 
-def iterative_anchor_expansion(mapping_obj, db1, db2, blocked_terms, similarity_metric):
+def iterative_anchor_expansion(mapping_obj, db1, terms1, db2, terms2, blocked_terms, similarity_metric):
     prio_dict = SortedDict()
     # those lists hold all terms, that are still mappable
-    free_term_names1 = SortedList(db1.terms.keys())
-    free_term_names2 = SortedList(db2.terms.keys())
+    for term in terms1.keys():
+        if type(term) is not str:
+            print(term)
+    free_term_names1 = SortedList(terms1.keys())
+    free_term_names2 = SortedList(terms2.keys())
 
     # those Dicts are a mirror version of prio_dict. for each term t, the tuple objects are saved, where t is involved
     # holds {term_name : [(tuple1,sim1),(tuple2,sim2) ...]}
     terms1_pq_mirror = SortedDict()
     terms2_pq_mirror = SortedDict()
+    mapping_dict = []
 
     tuples_loc_sim = SortedDict()
     processed_mapping_tuples = set()
 
     # block certain terms, that cannot be changed without computing wrong results
     for blocked_term in blocked_terms:
-        if blocked_term in db1.terms:
+        if blocked_term in terms1:
             # map term to itself
-            mapping_obj.mapping[blocked_term] = blocked_term
+            mapping_dict.append((blocked_term,blocked_term))
             free_term_names1.discard(blocked_term)
             # if in terms2 then delete occurrence there
             if blocked_term in free_term_names2:
@@ -58,7 +63,7 @@ def iterative_anchor_expansion(mapping_obj, db1, db2, blocked_terms, similarity_
             # removes first data-item ( tuples appended later i.e. by hub recomputation are at the end)
             term_name_tuple = tuples.pop(0)
             term_name1, term_name2 = term_name_tuple
-            term_obj1, term_obj2 = db1.terms[term_name1], db2.terms[term_name2]
+            term_obj1, term_obj2 = terms1[term_name1], terms2[term_name2]
 
             # last tuple in similarity bin -> delete empty bin
 
@@ -81,7 +86,7 @@ def iterative_anchor_expansion(mapping_obj, db1, db2, blocked_terms, similarity_
             sim, common_occ = tuples_loc_sim[term_name_tuple]
 
             # add new mapping
-            mapping_obj.mapping[term_name1] = term_name2
+            mapping_dict.append((term_name1,term_name2))
             if debug: print(term_name1 + " : " + term_name2)
 
             # make terms "blocked"
@@ -112,48 +117,51 @@ def iterative_anchor_expansion(mapping_obj, db1, db2, blocked_terms, similarity_
             for file_name, map_term_col in common_occ.keys():
                 db1_row_ids, db2_row_ids = term_obj1.occurrence[(file_name, map_term_col)], term_obj2.occurrence[
                     (file_name, map_term_col)]
-                db1_file_obj = db1.files[file_name]
-                db2_file_obj = db2.files[file_name]
+                df1 = db1.files[file_name]
+                df2 = db2.files[file_name]
+                if debug: print(file_name,map_term_col)
 
                 # the mapped tuple (term_obj1, term_obj2) has the same key =  "file_name" & position "map_term_col"
                 # this could have been multiple times (db1_row_ids & db2_row_ids) for the same key
                 # i.e. term_obj1 "a" appears in several rows at the same spot  1:[a,b,c], 2:[a,d,f], so db1_row_ids hold all record-ids [1,2]
                 # -> iterate through all columns and retrieve possible mapping pairs (aka. neighbours of term1 & term2)
-                for col_ind in itertools.chain(range(map_term_col), range(map_term_col + 1, db1_file_obj.col_size)):
+                for col_ind in itertools.chain(range(map_term_col), range(map_term_col + 1, len(df1.columns) - 1)):
                     # iterate through all records of db1: "filename", where term1 was at place "map_term_col"
 
                     # retrieve Term-objects that are neigbours of previously mapped terms
-                    new_term_names1 = set(db1_file_obj.records[rec_ind][col_ind] for rec_ind in db1_row_ids if
-                                         db1_file_obj.records[rec_ind][col_ind] in free_term_names1)
-                    new_term_names2 = set(db2_file_obj.records[rec_ind][col_ind] for rec_ind in db2_row_ids if
-                                         db2_file_obj.records[rec_ind][col_ind] in free_term_names2)
+                    new_term_names1 = set(df1.at[rec_ind,col_ind] for rec_ind in db1_row_ids if
+                                         df1.at[rec_ind,col_ind] in free_term_names1)
+                    new_term_names2 = set(df2.at[rec_ind,col_ind] for rec_ind in db2_row_ids if
+                                         df2.at[rec_ind,col_ind] in free_term_names2)
 
                     # insert crossproduct of poss. new mappings into set
                     new_mapping_tuples |= find_crossproduct_mappings(new_term_names1, new_term_names2)
 
             # remove pairs, that are in prio_dict
-            update_tuples = processed_mapping_tuples & new_mapping_tuples
-            update_existing_mappings(update_tuples, prio_dict,tuples_loc_sim,terms1_pq_mirror, terms2_pq_mirror)
+            #update_tuples = processed_mapping_tuples & new_mapping_tuples
+            #update_existing_mappings(update_tuples, prio_dict,tuples_loc_sim,terms1_pq_mirror, terms2_pq_mirror)
 
             new_mapping_tuples -= processed_mapping_tuples
 
-            add_mappings_to_pq(db1, db2, new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
+            add_mappings_to_pq(terms1, terms2, new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
                                processed_mapping_tuples, watch_exp_sim, similarity_metric)
 
             watch_prio_len.append(sum(len(val) for val in prio_dict.values()))
+            if not prio_dict:
+                new_hubs_flag = True
 
 
         # add new hubs, if prio_dict is empty
-        elif len(free_term_names1) > 0 and len(free_term_names2) > 0 or new_hubs_flag:
+        elif len(free_term_names1) > 0 and len(free_term_names2) > 0 and new_hubs_flag:
             new_hubs_flag = False  # idea is to only find new hubs if in last iteration at least 1 mapping was added
             count_hub_recomp += 1
 
             # detect new hubs (term-objects) based on all free-terms for each Database
-            hubs1 = find_hubs_quantile(free_term_names1, db1.terms)
-            hubs2 = find_hubs_quantile(free_term_names2, db2.terms)
+            hubs1 = find_hubs_quantile(free_term_names1, terms1)
+            hubs2 = find_hubs_quantile(free_term_names2, terms2)
 
             new_mapping_tuples = find_crossproduct_mappings(hubs1, hubs2)
-            add_mappings_to_pq(db1,db2,new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
+            add_mappings_to_pq(terms1,terms2,new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
                                processed_mapping_tuples, watch_exp_sim, similarity_metric)
             watch_prio_len.append(sum(len(val) for val in prio_dict.values()))
 
@@ -161,7 +169,21 @@ def iterative_anchor_expansion(mapping_obj, db1, db2, blocked_terms, similarity_
             if not prio_dict:
                 break
         else:
+            # map the remaining terms to dummies
+            for term_name1 in free_term_names1:
+                new_term = "new_var_" + str(mapping_obj.new_term_counter)
+                # print("add new var: " + new_term + " for " + term)
+                mapping_dict.append((term_name1,new_term))
+                mapping_obj.new_term_counter += 1
+            if len(mapping_dict) != len(terms1):
+                s1 = set([x for (x,y) in mapping_dict])
+                s2 = set(terms1.keys())
+                print(s1 - s2)
+                print(s2 - s1)
+                raise ValueError("not same nr of mappings than terms: " + str(len(mapping_dict)) + " " + str(len(terms1)) )
+
             break
+    mapping_obj.mapping = pd.DataFrame.from_records(mapping_dict,columns=None)
     # TODO Plot node distribution
     # TODOL=: print strategy & make nice table or sth
     '''fig, ax = plt.subplots(4,1)
@@ -205,11 +227,11 @@ def find_crossproduct_mappings(hubs1, hubs2):
 
 
 # poss_mappings is a set of tuple
-def add_mappings_to_pq(db1,db2, new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
+def add_mappings_to_pq(terms1,terms2, new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
                        processed_mapping_tuples, watch_exp_sim, similarity_metric):
     for term_name_tuple in new_mapping_tuples:
         term_name1, term_name2 = term_name_tuple
-        term_obj1, term_obj2 = db1.terms[term_name1], db2.terms[term_name2]
+        term_obj1, term_obj2 = terms1[term_name1], terms2[term_name2]
 
         # this check is currently not necessary but later, when adding struc-sim we need it
         if term_name_tuple not in tuples_loc_sim:

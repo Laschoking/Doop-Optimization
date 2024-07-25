@@ -4,6 +4,7 @@ class DB_Config:
     def __init__(self, db_type, dir_name, db1_dir_name, db2_dir_name,db1_file_name=None, db2_file_name=None):
         self.db_type = db_type
         self.dir_name = dir_name
+        self.full_name = dir_name + "_"  + db1_dir_name + "_" + db2_dir_name
         self.base_output_path = PathLib.base_out_path.joinpath(db_type).joinpath(dir_name).joinpath(db1_dir_name + "_" + db2_dir_name)
         self.db1_dir_name = db1_dir_name
         self.db2_dir_name = db2_dir_name
@@ -30,8 +31,8 @@ DOOP_Unit_Test_Renamed_Method = DB_Config("DoopProgramAnalysis","Unit-Tests", "B
 Doop_Constants = DB_Config("DoopProgramAnalysis","Constants", "v1", "v2")
 Doop_Simple_Pointer = DB_Config("DoopProgramAnalysis","Simple_Pointer", "v1", "v2")
 Doop_Simple_Java_Calculator = DB_Config("DoopProgramAnalysis","Simple_Java_Calculator", "v3_0", "v3_1_1")
-Doop_Gocd_Websocket_Notifier_v1_v4 = DB_Config("DoopProgramAnalysis","Gocd_Websocket_Notifier", "v0_1", "v0_4_2")
-Doop_Gocd_Websocket_Notifier_v3_v4 = DB_Config("DoopProgramAnalysis","Gocd_Websocket_Notifier", "v0_3", "v0_4_2")
+Doop_Gocd_Websocket_Notifier_v1_v4 = DB_Config("DoopProgramAnalysis","Gocd_Websocket_Notifier", "v1", "v4")
+Doop_Gocd_Websocket_Notifier_v3_v4 = DB_Config("DoopProgramAnalysis","Gocd_Websocket_Notifier", "v3", "v4")
 
 Doop_CFG = DatalogProgram("DoopProgramAnalysis","CFG","CFG_separate.rls","CFG_merge.rls", {'',' ',"abstract","<sun.misc.ProxyGenerator: byte[] generateClassFile()>"})
 Doop_PointerAnalysis = DatalogProgram("DoopProgramAnalysis","PointerAnalysis","PointerAnalyse_separate.rls","PointerAnalyse_merge_no_fold.rls",{'',' ',"<clinit>", "void()","public","static","main","void(java.lang.String[])","java.io.Serializable","java.lang.Cloneable","java.lang.Object","abstract"})
