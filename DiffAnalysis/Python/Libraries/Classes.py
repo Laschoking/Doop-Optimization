@@ -10,7 +10,7 @@ from sortedcontainers import SortedList,SortedDict
 import csv
 from collections import Counter
 import os
-
+import Python.Config_Files.Setup as setup
 class Term:
     def __init__(self, term_name, file_name,col_ind,row_ind):
         self.name = term_name
@@ -101,13 +101,26 @@ class DataBag:
         self.mappings.append(mapping)
 
     def read_terms_from_db(self,terms, db_instance):
+        multi_col_terms = set()
         for file_name, df in db_instance.files.items():
             for row_ind, row in df.iterrows():
+                temp_dict = {}
                 for col_ind, term in row.items():
-                    if term in terms:
-                        terms[term].update(file_name, col_ind,row_ind)
+                    if term not in temp_dict:
+                        temp_dict[term] = str(col_ind)
                     else:
-                        terms[term] = Term(term, file_name,col_ind,row_ind)
+                        # in case a term appears several times in same atom i.e. A("a","a","b") -> "a" : (A,"0-1") : 1
+                        temp_dict[term] += ("-" + str(col_ind))
+
+                        multi_col_terms.add(term)
+
+                # unpack values
+                for term, cols in temp_dict.items():
+                    if term in terms:
+                        terms[term].update(file_name, cols,row_ind)
+                    else:
+                        terms[term] = Term(term, file_name,cols,row_ind)
+        print("Count of terms with multi-occurrences in " + db_instance.name + " : " + str(len(multi_col_terms)))
         return terms
 
     def log_terms(self):

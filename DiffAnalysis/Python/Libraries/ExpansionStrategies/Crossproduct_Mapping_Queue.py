@@ -4,19 +4,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sortedcontainers import SortedList, SortedDict
 import itertools
+import pandas as pd
 
-
-def full_expansion_strategy(mapping_obj, db1, db2, blocked_terms, similarity_metric):
+def full_expansion_strategy(mapping_obj, db1, terms1, db2, terms2, blocked_terms, similarity_metric):
     prio_dict = SortedDict()
 
     # those lists hold all terms, that are still mappable
-    free_term_names1 = SortedList(db1.terms.keys())
-    free_term_names2 = SortedList(db2.terms.keys())
+    free_term_names1 = SortedList(terms1.keys())
+    free_term_names2 = SortedList(terms2.keys())
 
     # those Dicts are a mirror version of prio_dict. for each term t, the tuple objects are saved, where t is involved
     # holds {term_name : [(tuple1,sim1),(tuple2,sim2) ...]}
     terms1_pq_mirror = SortedDict()
     terms2_pq_mirror = SortedDict()
+    mapping_dict = []
 
     tuples_loc_sim = SortedDict()
     processed_mapping_tuples = set()
@@ -30,9 +31,9 @@ def full_expansion_strategy(mapping_obj, db1, db2, blocked_terms, similarity_met
 
     # block certain terms, that cannot be changed without computing wrong results
     for blocked_term in blocked_terms:
-        if blocked_term in db1.terms:
+        if blocked_term in terms1:
             # map term to itself
-            mapping_obj.mapping[blocked_term] = blocked_term
+            mapping_dict.append((blocked_term,blocked_term))
             free_term_names1.discard(blocked_term)
             # if in terms2 then delete occurrence there
             if blocked_term in free_term_names2:
@@ -40,15 +41,14 @@ def full_expansion_strategy(mapping_obj, db1, db2, blocked_terms, similarity_met
             else:
                 # for counting, how many terms are mapped to synthetic values (that do not exist in DB2)
                 mapping_obj.new_term_counter += 1
-    term_objs1 = db1.terms.values()
-    term_objs2 = db2.terms.values()
+    term_objs1 = terms1.values()
+    term_objs2 = terms2.values()
     all_poss_mapping = find_crossproduct_mappings(term_objs1, term_objs2)
     # tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict, processed_mapping_tuples, watch_exp_sim, similarity_metric
     add_mappings_to_pq(all_poss_mapping,tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict, processed_mapping_tuples, watch_exp_sim,similarity_metric)
 
     count_hub_recomp = 0
 
-    # TODO auch eine Möglichkeit wäre es, alle Mappings eines Bags abzuarbeiten (falls viele sehr gut sind)
     while 1:
         if prio_dict:  # pop last item = with the highest similarity
             sim, tuples = prio_dict.peekitem(index=-1)
@@ -62,7 +62,7 @@ def full_expansion_strategy(mapping_obj, db1, db2, blocked_terms, similarity_met
             # removes first data-item
             term_name_tuple = tuples.pop()
             term_name1, term_name2 = term_name_tuple
-            term_obj1, term_obj2 = db1.terms[term_name1], db2.terms[term_name2]
+            term_obj1, term_obj2 = terms1[term_name1], terms2[term_name2]
 
             # last tuple in similarity bin -> delete empty bin
 
@@ -71,7 +71,7 @@ def full_expansion_strategy(mapping_obj, db1, db2, blocked_terms, similarity_met
                 sim, common_occ = tuples_loc_sim[term_name_tuple]
 
                 # add new mapping
-                mapping_obj.mapping[term_name1] = term_name2
+                mapping_dict.append((term_name1, term_name2))
                 # print(term_name1 + " : " + term_name2)
 
                 # make terms "blocked"
@@ -97,7 +97,13 @@ def full_expansion_strategy(mapping_obj, db1, db2, blocked_terms, similarity_met
 
             watch_prio_len.append(sum(len(val) for val in prio_dict.values()))
         else:
+            for term_name1 in free_term_names1:
+                new_term = "new_var_" + str(mapping_obj.new_term_counter)
+                # print("add new var: " + new_term + " for " + term)
+                mapping_dict.append((term_name1,new_term))
+                mapping_obj.new_term_counter += 1
             break
+    mapping_obj.mapping = pd.DataFrame.from_records(mapping_dict, columns=None)
 
     # TODO Plot node distribution
     '''fig, ax = plt.subplots(4,1)

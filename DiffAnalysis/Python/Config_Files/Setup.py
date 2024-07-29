@@ -10,22 +10,26 @@ from Python.Libraries.SimilarityMetric.Term_Equality import *
 from Python.Libraries.SimilarityMetric.Jaccard_Term_Overlap import *
 from Python.Libraries.SimilarityMetric.Jaccard_Min import *
 from Python.Libraries.SimilarityMetric.Jaccard_ISUB_Mix import *
-from Python.Libraries.SimilarityMetric.Occurance_Multiplication import *
+from Python.Libraries.ExpansionStrategies.Crossproduct_Mapping_Queue import *
 import git
 
 import time
 
+update_terms = False
+hub_recompute = False
+#concat_occ_cols = True
+
+
 if __name__ == "__main__":
 
     # specify Java-files & Programm Analysis
-    db_config = Doop_Simple_Pointer
+    db_config = Doop_Simple_Java_Calculator
     program_config = Doop_PointerAnalysis
 
     gen_new_facts = False  # if true, run doop again for new fact-gen, otherwise just copy from doop/out
     comp_new_mapping = True
-    run_DL = True
+    run_DL = False
 
-  
 
     # Fact Creation of Java-Files (or .Jar)
     data = DataBag(db_config.base_output_path,db_config.db1_path, db_config.db2_path)
@@ -69,12 +73,13 @@ if __name__ == "__main__":
     db2_facts = data.db2_original_facts
 
     # add mappings to data
-    data.add_mapping(Mapping(data.paths, "local_expansion", iterative_anchor_expansion, "jaccard_min", jaccard_term_overlap))
-    #data.add_mapping(Mapping(data.paths, "full_expansion", full_expansion_strategy, "term_equality", term_equality))
-    #data.add_mapping(Mapping(data.paths, "full_expansion", full_expansion_strategy, "jaccard_min", jaccard_min))
-    #data.add_mapping(Mapping(data.paths, "full_expansion", full_expansion_strategy, "isub", isub_sequence_matcher))
-    #data.add_mapping(Mapping(data.paths, "full_expansion", full_expansion_strategy, "jaccard+isub",  jaccard_isub_mix))
+    '''data.add_mapping(Mapping(data.paths, "full_expansion", full_expansion_strategy, "term_equality", term_equality))
+    data.add_mapping(Mapping(data.paths, "full_expansion", full_expansion_strategy, "jaccard_min", jaccard_min))
+    data.add_mapping(Mapping(data.paths, "full_expansion", full_expansion_strategy, "isub", isub_sequence_matcher))
+    data.add_mapping(Mapping(data.paths, "full_expansion", full_expansion_strategy, "jaccard+isub",  jaccard_isub_mix))
+    '''
     #data.add_mapping(Mapping(data.paths, "local_expansion", iterative_anchor_expansion, "term_equality", term_equality))
+    data.add_mapping(Mapping(data.paths, "local_expansion", iterative_anchor_expansion, "jaccard_min", jaccard_term_overlap))
     #data.add_mapping(Mapping(data.paths, "local_expansion", iterative_anchor_expansion, "isub", isub_sequence_matcher))
     #data.add_mapping(Mapping(data.paths,"local_expansion",iterative_anchor_expansion,"jaccard+isub",jaccard_isub_mix))
 

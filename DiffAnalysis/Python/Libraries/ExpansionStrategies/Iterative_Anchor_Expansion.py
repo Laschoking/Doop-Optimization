@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sortedcontainers import SortedList, SortedDict
 import itertools
+import Python.Config_Files.Setup as setup
+debug = True
 
-debug = False
-
-
+# blocked terms only if DL-computation
 def iterative_anchor_expansion(mapping_obj, db1, terms1, db2, terms2, blocked_terms, similarity_metric):
     prio_dict = SortedDict()
     # those lists hold all terms, that are still mappable
@@ -42,8 +42,9 @@ def iterative_anchor_expansion(mapping_obj, db1, terms1, db2, terms2, blocked_te
     # counts len, after mapping pop, del obsolete tuples & adding new tuples from neighbourhoods
     watch_prio_len = []
     watch_exp_sim = []
-    watch_mapped_sim = []
+    accepted_sim = []
     uncertain_mapping_tuples = 0
+    local_approval = setup.hub_recompute
 
     count_hub_recomp = 0
     new_hubs_flag = True
@@ -67,27 +68,31 @@ def iterative_anchor_expansion(mapping_obj, db1, terms1, db2, terms2, blocked_te
 
             # last tuple in similarity bin -> delete empty bin
 
-            # TODO this check should be irrelevant
             if term_name1 not in free_term_names1 or term_name2 not in free_term_names2:
-                ValueError(term_name1, term_name2)
+                ValueError("Term should not be vacant anymore: " + term_name1 + " " +  term_name2)
             # if value is too bad - find new Hubs
-            # TODO find better strategy
-            '''if sim < 0.8 * last_sim:
-                new_hubs_flag = True
-                last_sim = sim
-                prio_dict[sim].append(term_name_tuple)
-                continue
-                '''
-            # means we discovered betteWr tuples
-            # if sim > last_sim:
-            #    print(sim,last_sim)
-            if term_name1 == "<Simple_Pointer: void test(int)>":
-                print()
+
+            if setup.hub_recompute and accepted_sim and local_approval:
+                q1 = np.percentile(accepted_sim,25)
+                q3 = np.percentile(accepted_sim,75)
+                IQR = q3 - q1
+                low_outlier = q1 - 1.5 * IQR
+                if sim < low_outlier:
+                    # trigger new hub detection
+                    new_hubs_flag = True
+                    # insert sim & tuple back to dictionary
+                    prio_dict[sim].append(term_name_tuple)
+                    print("denied: " + str(sim))
+                    # mark as false so at least 1 new mapping has to be added before we can trigger recomputation again
+                    local_approval = False
+                    continue
+                
+
             sim, common_occ = tuples_loc_sim[term_name_tuple]
 
             # add new mapping
             mapping_dict.append((term_name1,term_name2))
-            if debug: print(term_name1 + " : " + term_name2)
+            if debug: print(term_name1 + " -> " + term_name2)
 
             # make terms "blocked"
             free_term_names1.discard(term_name1)
@@ -101,6 +106,10 @@ def iterative_anchor_expansion(mapping_obj, db1, terms1, db2, terms2, blocked_te
 
             uncertain_mapping_flag = delete_from_prio_dict(terms1_pq_mirror[term_name1], prio_dict, sim)
             uncertain_mapping_flag += delete_from_prio_dict(terms2_pq_mirror[term_name2], prio_dict, sim)
+            l = sum(len(val) for val in prio_dict.values())
+            if debug:
+                print("reduced length: " + str(l))
+            watch_prio_len.append(l)
 
             if uncertain_mapping_flag:
                 uncertain_mapping_tuples += 1
@@ -108,25 +117,26 @@ def iterative_anchor_expansion(mapping_obj, db1, terms1, db2, terms2, blocked_te
             del terms1_pq_mirror[term_name1]
             del terms2_pq_mirror[term_name2]
 
-            last_sim = sim
-            watch_mapped_sim.append(sim)
+            accepted_sim.append(sim)
 
             # expansion strategy:
             # current state: consider only terms, that occur in same colum of merged records
             new_mapping_tuples = set()
             for file_name, map_term_col in common_occ.keys():
+
                 db1_row_ids, db2_row_ids = term_obj1.occurrence[(file_name, map_term_col)], term_obj2.occurrence[
-                    (file_name, map_term_col)]
+                        (file_name, map_term_col)]
                 df1 = db1.files[file_name]
                 df2 = db2.files[file_name]
-                if debug: print(file_name,map_term_col)
+                cols = unpack_multi_columns(map_term_col)
+                #if debug: print(file_name,col)
 
-                # the mapped tuple (term_obj1, term_obj2) has the same key =  "file_name" & position "map_term_col"
+                # the mapped tuple (term_obj1, term_obj2) has the same key =  "file_name" & position "col"
                 # this could have been multiple times (db1_row_ids & db2_row_ids) for the same key
                 # i.e. term_obj1 "a" appears in several rows at the same spot  1:[a,b,c], 2:[a,d,f], so db1_row_ids hold all record-ids [1,2]
                 # -> iterate through all columns and retrieve possible mapping pairs (aka. neighbours of term1 & term2)
-                for col_ind in itertools.chain(range(map_term_col), range(map_term_col + 1, len(df1.columns) - 1)):
-                    # iterate through all records of db1: "filename", where term1 was at place "map_term_col"
+                for col_ind in set(range(len(df1.columns))) - set(cols):
+                    # iterate through all records of db1: "filename", where term1 was at place "col"
 
                     # retrieve Term-objects that are neigbours of previously mapped terms
                     new_term_names1 = set(df1.at[rec_ind,col_ind] for rec_ind in db1_row_ids if
@@ -138,18 +148,27 @@ def iterative_anchor_expansion(mapping_obj, db1, terms1, db2, terms2, blocked_te
                     new_mapping_tuples |= find_crossproduct_mappings(new_term_names1, new_term_names2)
 
             # remove pairs, that are in prio_dict
-            #update_tuples = processed_mapping_tuples & new_mapping_tuples
-            #update_existing_mappings(update_tuples, prio_dict,tuples_loc_sim,terms1_pq_mirror, terms2_pq_mirror)
+            if setup.update_terms:       
+                update_tuples = processed_mapping_tuples & new_mapping_tuples
+                update_existing_mappings(update_tuples, prio_dict,tuples_loc_sim,terms1_pq_mirror, terms2_pq_mirror)
 
             new_mapping_tuples -= processed_mapping_tuples
 
             add_mappings_to_pq(terms1, terms2, new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
                                processed_mapping_tuples, watch_exp_sim, similarity_metric)
 
-            watch_prio_len.append(sum(len(val) for val in prio_dict.values()))
+
             if not prio_dict:
                 new_hubs_flag = True
+            # allow new hub-recomputation
+            if not local_approval:
+                local_approval = True
+                print("now accepted: " + str(sim))
 
+            l = sum(len(val) for val in prio_dict.values())
+            if debug:
+                print("new length: " + str(l))
+            watch_prio_len.append(l)
 
         # add new hubs, if prio_dict is empty
         elif len(free_term_names1) > 0 and len(free_term_names2) > 0 and new_hubs_flag:
@@ -163,12 +182,13 @@ def iterative_anchor_expansion(mapping_obj, db1, terms1, db2, terms2, blocked_te
             new_mapping_tuples = find_crossproduct_mappings(hubs1, hubs2)
             add_mappings_to_pq(terms1,terms2,new_mapping_tuples, tuples_loc_sim, terms1_pq_mirror, terms2_pq_mirror, prio_dict,
                                processed_mapping_tuples, watch_exp_sim, similarity_metric)
-            watch_prio_len.append(sum(len(val) for val in prio_dict.values()))
+            l = sum(len(val) for val in prio_dict.values())
+            if debug:
+                print("new length hubs: " + str(l))
+            watch_prio_len.append(l)
 
-            # tried to find new mappings, but none detected -> escape while loop
-            if not prio_dict:
-                break
         else:
+            # Exit Strategy
             # map the remaining terms to dummies
             for term_name1 in free_term_names1:
                 new_term = "new_var_" + str(mapping_obj.new_term_counter)
@@ -184,23 +204,23 @@ def iterative_anchor_expansion(mapping_obj, db1, terms1, db2, terms2, blocked_te
 
             break
     mapping_obj.mapping = pd.DataFrame.from_records(mapping_dict,columns=None)
-    # TODO Plot node distribution
-    # TODOL=: print strategy & make nice table or sth
-    '''fig, ax = plt.subplots(4,1)
-	fig.suptitle("iterativeExpansion + " + similarity_metric.__name__)
-	ax[0].scatter(range(len(watch_prio_len)),watch_prio_len,s=1, label='Queue Size')
-	ax[0].set_title("Queue Size")
-	ax[1].scatter(range(len(watch_exp_sim)),np.array(watch_exp_sim),s=1,label='Expanded Similarities')
-	ax[1].set_title("Computed Similarities")
-	ax[2].scatter(range(len(watch_mapped_sim)), np.array(watch_mapped_sim), s=0.5, label='Mapped Similarities')
-	ax[2].set_title("Mapped Similarities")
-	ax[3].hist(watch_mapped_sim,100,label='Accepted Mapping Distribution')
-	ax[3].set_title("Distribution of Similarities")
-	fig.tight_layout()
-	plt.show()
-	'''
-    return uncertain_mapping_tuples, count_hub_recomp, len(tuples_loc_sim.keys())
 
+    fig, ax = plt.subplots(4,1)
+    fig.suptitle("iterativeExpansion + " + similarity_metric.__name__)
+    ax[0].scatter(range(len(watch_prio_len)),watch_prio_len,s=1, label='Queue Size')
+    ax[0].set_title("Queue Size")
+    ax[1].scatter(range(len(watch_exp_sim)),np.array(watch_exp_sim),s=1,label='Expanded Similarities')
+    ax[1].set_title("Computed Similarities")
+    ax[2].scatter(range(len(accepted_sim)), np.array(accepted_sim), s=0.5, label='Accepted Similarities')
+    ax[2].set_title("Mapped Similarities")
+    ax[3].hist(accepted_sim,100,label='Accepted Mapping Distribution')
+    ax[3].set_title("Distribution of Similarities")
+    fig.tight_layout()
+    plt.show()
+
+    return uncertain_mapping_tuples, count_hub_recomp, len(tuples_loc_sim.keys())
+# stop sim berechnung wenn maximum gefunden wurde?
+# bag weise berechnung?
 
 def delete_from_prio_dict(tuples, prio_dict, mapped_sim):
     uncertain_mapping_flag = False
@@ -247,7 +267,7 @@ def add_mappings_to_pq(terms1,terms2, new_mapping_tuples, tuples_loc_sim, terms1
                     prio_dict[sim] = list([term_name_tuple])
                 else:
                     prio_dict[sim].append(term_name_tuple)
-                if debug: print(sim, term_name_tuple)
+                #if debug: print(sim, term_name_tuple)
 
                 processed_mapping_tuples.add(term_name_tuple)
 
@@ -316,8 +336,12 @@ def find_hubs_std(free_term_names, terms_occ):
 
 def find_hubs_quantile(free_term_names, terms):
     nodes = [terms[term_name].degree for term_name in free_term_names]
-    if debug: print(
-        "node degree mean: " + str(round(np.mean(nodes), 2)) + " standard deviation: " + str(round(np.std(nodes), 2)))
+    #if debug: print(
+    #    "node degree mean: " + str(round(np.mean(nodes), 2)) + " standard deviation: " + str(round(np.std(nodes), 2)))
     quantile = np.quantile(nodes, q=0.95)
     # returns termobjects
     return set(free_term_names[iter] for iter in range(len(free_term_names)) if nodes[iter] >= quantile)
+
+def unpack_multi_columns(cols):
+    # returns a list of ints
+    return list(map(int,cols.split("-")))
